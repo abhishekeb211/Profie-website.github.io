@@ -57,9 +57,20 @@ A premium, high-performance personal portfolio website built with a focus on **A
 
 See [PERFORMANCE.md](PERFORMANCE.md) for the recommended order of work and PageSpeed-oriented improvements (LCP preload, hero image dimensions, deferred script, CLS reserves). After deploying, re-run [PageSpeed Insights](https://pagespeed.web.dev/) for Mobile and Desktop.
 
+## 🔍 Local verification
+
+Before pushing, run lint and validation:
+
+```bash
+npm ci
+npm run verify
+```
+
+This runs HTML validation (`html-validate`), CSS linting (`stylelint`), and JS linting (`eslint`) on `index.html`, `offline.html`, `css/**/*.css`, `script.js`, and `sw.js`. The same command runs in CI before each deploy.
+
 ## 🚢 Deployment (GitHub Pages)
 
-The site is deployed via **GitHub Actions** (see `.github/workflows/pages.yml`). No branch source is used; the workflow deploys the repo root as a static site.
+The site is deployed via **GitHub Actions** (see `.github/workflows/pages.yml`). No branch source is used; the workflow deploys the repo root as a static site. Each run runs `npm run verify` before uploading the artifact.
 
 ### Verifying deployment
 
@@ -69,7 +80,8 @@ The site is deployed via **GitHub Actions** (see `.github/workflows/pages.yml`).
    - Test header and footer nav (persona-aware), tab switch (AI Architect / Professor; scroll to top), theme toggle, Resume button, AI project card (modal), Professor teaching card (Join Classroom only), and back-to-top.
    - In DevTools → Network (disable cache), reload and confirm no 404s for `css/*.css`, `script.js`, `images/`, `manifest.json`.
    - In Application → Service Worker and Manifest, confirm registration and icons.
-   - Open `https://abhishekeb211.github.io/Profie-website.github.io/sitemap.xml` and confirm the `<loc>` URL matches.
+   - Open `https://abhishekeb211.github.io/Profie-website.github.io/sitemap.xml` and confirm the `<loc>` URL matches. If the live sitemap returns 500, the file in repo is valid; re-check after deploy or GitHub support.
+   - Confirm `robots.txt` contains `Sitemap: https://abhishekeb211.github.io/Profie-website.github.io/sitemap.xml`.
 
 ## 📋 Future Improvements
 

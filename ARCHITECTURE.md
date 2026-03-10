@@ -62,4 +62,4 @@ The application operates on a **Stale-While-Revalidate with Offline Fallback** s
 3.  **Fallback**: If completely offline and the cache is missed (e.g. user clears cache), `sw.js` fails gracefully to `./offline.html`.
 
 ### 3.2 Cache Versioning
-Service Worker caches (`CACHE_NAME`) must be manually bumped (e.g. `v9` -> `v10`) whenever core architectural, HTML, or large CSS shifts are deployed, triggering the `activate` event which dumps stale buckets. Pre-cached assets include `index.html`, `offline.html`, `css/*.css`, `script.js`, `manifest.json`, and hero images.
+Service Worker caches (`CACHE_NAME` in `sw.js`) must be manually bumped (e.g. `v10` -> `v11`) whenever core architectural, HTML, or large CSS/JS changes are deployed. Bumping triggers the `activate` event and removes old cache buckets so clients receive fresh assets. Pre-cached assets include `index.html`, `offline.html`, `css/*.css`, `script.js`, `manifest.json`, and hero images. The worker only intercepts same-origin requests; third-party URLs are not cached.

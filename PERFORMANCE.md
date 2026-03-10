@@ -40,7 +40,16 @@ This doc ties the [recommended order of work](README.md#-deployment-github-pages
 - **CSS**  
   - Critical above-the-fold CSS could be inlined; for a single-page portfolio it’s often acceptable to keep external CSS and rely on preload/preconnect and small file size.
 - **Cache**  
-  - GitHub Pages sends cache headers; the service worker adds offline caching. No change needed unless you add new static assets and want to version them.
+  - GitHub Pages sends cache headers; the service worker adds offline caching. Bump `CACHE_NAME` in `sw.js` when you change core HTML/CSS/JS (see ARCHITECTURE.md).
+
+### Release verification checklist
+
+Before or after each deploy, run:
+
+1. **Local:** `npm ci && npm run verify` (HTML/CSS/JS lint and validation).
+2. **Live site:** Open the [live URL](https://abhishekeb211.github.io/Profie-website.github.io/); DevTools → Console (no errors); Application → Service Worker and Manifest (registered, icons present).
+3. **SEO:** [robots.txt](https://abhishekeb211.github.io/Profie-website.github.io/robots.txt) shows correct Sitemap URL; [sitemap.xml](https://abhishekeb211.github.io/Profie-website.github.io/sitemap.xml) returns 200 and valid XML (if 500, see README deploy notes).
+4. **PageSpeed:** Re-run the report (see below).
 
 ### Re-run the report
 

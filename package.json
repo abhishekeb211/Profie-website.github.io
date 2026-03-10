@@ -1,0 +1,17 @@
+{
+  "name": "profie-website",
+  "private": true,
+  "description": "Portfolio site — Abhishek S. Raut",
+  "scripts": {
+    "lint:html": "html-validate index.html offline.html",
+    "lint:css": "stylelint \"css/**/*.css\"",
+    "lint:js": "eslint script.js sw.js",
+    "verify": "npm run lint:html && npm run lint:css && npm run lint:js"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "html-validate": "^8.14.0",
+    "stylelint": "^16.2.0",
+    "stylelint-config-standard": "^36.0.0"
+  }
+}

@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
         contactLinks.forEach(link => {
             link.addEventListener('click', () => {
                 const label = link.querySelector('.contact-link-label')?.textContent || "Contact";
-                showToast(`${label} Clicked`, 'success');
+                window.showToast(`${label} Clicked`, 'success');
             });
         });
 
@@ -219,10 +219,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function initServiceWorker() {
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js').then(reg => {
-                    console.log('SW Registered');
-                }).catch(err => {
-                    console.log('SW Registration Failed', err);
+                navigator.serviceWorker.register('./sw.js').then(() => {
+                    // SW registered; optional: check for updates
+                }).catch((err) => {
+                    if (typeof console !== 'undefined' && console.error) console.error('SW Registration Failed', err);
                 });
             });
         }
