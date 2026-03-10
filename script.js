@@ -216,8 +216,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    refreshAnimations();
-
     function initServiceWorker() {
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
