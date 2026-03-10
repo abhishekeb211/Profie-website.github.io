@@ -4,50 +4,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prof. Abhishek S. Raut | AI Engineer & Professor</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Abhishek S. Raut | AI Architect & Innovation Lead</title>
+    <meta name="description"
+        content="Official portfolio of Abhishek S. Raut, AI Architect and Innovation Lead. Expert in Agentic AI, LLMs, and Generative Transformers.">
+    <meta name="keywords"
+        content="Abhishek Raut, AI Architect, Innovation Lead, Agentic AI, LLM, RAG, Generative Transformers, DeepRacer">
+    <meta name="author" content="Abhishek S. Raut">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://abhishekeb211.github.io/Profie-website.github.io/">
+    <meta property="og:title" content="Abhishek S. Raut | AI Architect & Innovation Lead">
+    <meta property="og:description"
+        content="Architecting state-of-the-art Agentic AI ecosystems and Generative Transformers.">
+    <meta property="og:image" content="https://abhishekeb211.github.io/Profie-website.github.io/images/me.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://abhishekeb211.github.io/Profie-website.github.io/">
+    <meta property="twitter:title" content="Abhishek S. Raut | AI Architect & Innovation Lead">
+    <meta property="twitter:description"
+        content="Architecting state-of-the-art Agentic AI ecosystems and Generative Transformers.">
+    <meta property="twitter:image" content="https://abhishekeb211.github.io/Profie-website.github.io/images/me.png">
+
+    <!-- Security & Privacy -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' * data:; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://github-readme-stats.vercel.app;">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="theme-color" content="#38bdf8">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="image" href="images/me.webp" type="image/webp">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="canonical" href="https://abhishekeb211.github.io/Profie-website.github.io/">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Abhishek S. Raut",
+      "url": "https://abhishekeb211.github.io/Profie-website.github.io/",
+      "image": "https://abhishekeb211.github.io/Profie-website.github.io/images/me.png",
+      "jobTitle": "AI Architect & Innovation Lead",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Arya Systems"
+      },
+      "alumniOf": "PCCOE Pune",
+      "sameAs": [
+        "https://linkedin.com/in/abhishek-raut-087138171/",
+        "https://github.com/abhishekeb211/",
+        "https://scholar.google.com/citations?user=GxruQpkAAAAJ"
+      ]
+    }
+    </script>
 </head>
 
-<body class="ai-mode">
+<body class="dark-theme">
+
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+    <!-- UI Enhancements -->
+    <canvas id="bg-canvas" class="bg-canvas"></canvas>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+    <div class="scroll-progress-bar"></div>
+    <div class="hacker-scanline"></div>
 
     <!-- HEADER -->
     <header id="header">
-        <div class="logo">ABHISHEK.RAUT</div>
-        <nav class="nav-links">
-            <a href="#about" class="active">About</a>
-            <a href="#projects">Projects</a>
-            <a href="#experience">Experience</a>
-            <a href="#contact">Contact</a>
+        <div class="logo">ABHISHEK RAUT</div>
+        <nav id="nav-links" class="nav-links">
+            <a href="#about" class="active" data-ai="#about" data-prof="#hero-prof">About</a>
+            <a href="#projects" data-ai="#projects" data-prof="#teaching-prof">Work</a>
+            <a href="#experience" data-ai="#experience" data-prof="#highlights-prof">Journey</a>
+            <a href="#research" data-ai="#research" data-prof="#expertise-prof">Impact</a>
+            <a href="#contact" data-ai="#contact" data-prof="#contact">Connect</a>
         </nav>
-        <button class="resume-btn" onclick="window.open('./Abhishek Raut Resume 0226.pdf')">Resume</button>
+        <div class="header-actions">
+            <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <div class="theme-switcher">
+                <button id="theme-switcher-trigger" class="theme-switcher-trigger" type="button"
+                    aria-expanded="false" aria-haspopup="true"
+                    aria-label="Switch theme: Light, Dark, Hacker, Glass" title="Switch theme">
+                    <span class="theme-switcher-current" id="theme-current-label">Dark</span>
+                    <span class="theme-switcher-chevron" aria-hidden="true">▾</span>
+                </button>
+                <div id="theme-switcher-dropdown" class="theme-switcher-dropdown" role="menu"
+                    aria-label="Theme options" hidden>
+                    <button type="button" role="menuitem" data-theme="light" class="theme-option">Light</button>
+                    <button type="button" role="menuitem" data-theme="dark" class="theme-option">Dark</button>
+                    <button type="button" role="menuitem" data-theme="hacker" class="theme-option">Hacker</button>
+                    <button type="button" role="menuitem" data-theme="glass" class="theme-option">Glass</button>
+                </div>
+            </div>
+            <button class="resume-btn"
+                onclick="window.open('./Abhishek Raut Resume 0226.pdf', '_blank', 'noopener')">Resume</button>
+        </div>
     </header>
 
-    <!-- TAB SWITCHER -->
-    <div id="tab-switcher">
-        <div class="tab-pills">
-            <button class="tab-pill active" data-tab="ai">
-                <span class="icon">🤖</span> AI Engineer
-            </button>
-            <button class="tab-pill" data-tab="prof">
-                <span class="icon">👨‍🏫</span> Professor
-            </button>
-        </div>
-    </div>
 
     <main id="main">
 
-        <!-- AI ENGINEER TAB PANE -->
-        <div id="ai-pane" class="tab-pane active">
+        <!-- TAB SWITCHER -->
+        <div class="tab-switcher bottom-dock fade-up" role="tablist" aria-label="Persona">
+            <button class="tab-btn active" type="button" role="tab" aria-selected="true" aria-controls="ai-pane" id="tab-ai" data-target="ai">AI Architect</button>
+            <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="prof-pane" id="tab-prof" data-target="prof">Professor</button>
+        </div>
 
-            <!-- HERO -->
-            <section class="hero ai-hero">
+        <div id="ai-pane" class="tab-pane active fade-in" role="tabpanel" aria-labelledby="tab-ai" aria-hidden="false">
+            <!-- AI ENGINEER TAB PANE -->
+
+            <!-- HERO AI -->
+            <section id="about" class="hero ai-hero">
                 <div class="hero-orb hero-orb-1"></div>
                 <div class="hero-orb hero-orb-2"></div>
                 <div class="hero-inner">
+                    <div class="hero-visual fade-up">
+                        <div class="hero-image-container premium-blend">
+                            <picture>
+                                <source srcset="images/me.webp" type="image/webp">
+                                <img src="images/me.png" alt="Abhishek S. Raut" class="hero-main-img" width="400" height="400" fetchpriority="high">
+                            </picture>
+                        </div>
+                    </div>
                     <div class="hero-content fade-up">
                         <div class="hero-tag">
                             <span class="dot"></span>
-                            AI/ML Engineering & Optimization
+                            AI Architect & Innovation Lead @ Arya Systems | PCCoE
                         </div>
                         <h1 class="hero-name">Hi, I'm <span class="grad">Abhishek</span></h1>
                         <div class="hero-roles">
@@ -56,42 +154,12 @@
                             <span class="hero-role-chip">Data Scientist</span>
                         </div>
                         <p class="hero-desc">
-                            Building high-impact Agentic AI ecosystems and Generative Transformers.
-                            Specializing in RAG pipelines, model fine-tuning, and robust automation research.
+                            Architecting state-of-the-art Agentic AI ecosystems and Generative Transformers.
+                            Bridging the gap between industrial R&D and academic mentorship.
                         </p>
                         <div class="hero-ctas">
-                            <a href="#projects-ai" class="btn-primary">View Projects</a>
+                            <a href="#projects" class="btn-primary">View Projects</a>
                             <a href="#contact" class="btn-secondary">Get in Touch</a>
-                        </div>
-                    </div>
-                    <div class="hero-visual fade-up">
-                        <div class="hero-card">
-                            <div class="hero-card-header">
-                                <div class="hero-avatar">AR</div>
-                                <div class="hero-card-name">Abhishek S. Raut</div>
-                                <div class="hero-card-title">AI Engineer & Data Scientist</div>
-                            </div>
-                            <div class="hero-card-body">
-                                <div class="hero-stat-row">
-                                    <div class="hero-stat">
-                                        <div class="hero-stat-val">5+</div>
-                                        <div class="hero-stat-label">Years Exp</div>
-                                    </div>
-                                    <div class="hero-stat">
-                                        <div class="hero-stat-val">25+</div>
-                                        <div class="hero-stat-label">Rank World</div>
-                                    </div>
-                                    <div class="hero-stat">
-                                        <div class="hero-stat-val">SIH</div>
-                                        <div class="hero-stat-label">Winner</div>
-                                    </div>
-                                </div>
-                                <div class="hero-badges">
-                                    <span class="hero-badge">LLMs</span>
-                                    <span class="hero-badge">Agentic AI</span>
-                                    <span class="hero-badge">Cloud</span>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -102,11 +170,11 @@
                 <div class="section-inner">
                     <div class="highlights-grid">
                         <div class="highlight-item fade-up">
-                            <div class="highlight-num">05+</div>
+                            <div class="highlight-num"><span class="counter" data-target="5">0</span>+</div>
                             <div class="highlight-label">Years Experience</div>
                         </div>
                         <div class="highlight-item fade-up" style="transition-delay:0.1s">
-                            <div class="highlight-num">25</div>
+                            <div class="highlight-num"><span class="counter" data-target="25">0</span></div>
                             <div class="highlight-label">World Rank DeepRacer</div>
                         </div>
                         <div class="highlight-item fade-up" style="transition-delay:0.2s">
@@ -122,40 +190,49 @@
             </section>
 
             <!-- EXPERTISE -->
-            <section id="expertise-ai" class="section">
+            <section id="expertise" class="section">
                 <div class="section-inner">
                     <p class="section-label">Capabilities</p>
                     <h2 class="section-title">Core <span>Expertise</span></h2>
                     <div class="expertise-grid">
                         <div class="expertise-card fade-up">
                             <div class="expertise-icon">🧠</div>
-                            <h3 class="expertise-title">LLM Applications</h3>
+                            <h3 class="expertise-title">Expert: LLM & GenAI</h3>
                             <p class="expertise-desc">Implementation of Generative Transformers, fine-tuning
-                                Llama/OpenAI models for specific domains.</p>
+                                Llama/OpenAI models using <strong>PyTorch & RLHF</strong>.</p>
                         </div>
                         <div class="expertise-card fade-up" style="transition-delay:0.1s">
                             <div class="expertise-icon">🔍</div>
-                            <h3 class="expertise-title">RAG Systems</h3>
-                            <p class="expertise-desc">Building adaptive RAG pipelines with hybrid search (BM25 + Dense)
-                                and Knowledge Graphs.</p>
+                            <h3 class="expertise-title">Advanced: RAG & Cloud</h3>
+                            <p class="expertise-desc">Deploying hybrid search pipelines on <strong>AWS & Azure</strong>
+                                with vector indexing and knowledge graphs.</p>
                         </div>
                         <div class="expertise-card fade-up" style="transition-delay:0.2s">
                             <div class="expertise-icon">⚡</div>
-                            <h3 class="expertise-title">AI Agents</h3>
-                            <p class="expertise-desc">Offline-first Agentic AI with self-correcting logic and air-gapped
-                                security scanning.</p>
+                            <h3 class="expertise-title">Expert: Tech Stack</h3>
+                            <p class="expertise-desc">Mastery in <strong>Python, C, C++, SQL</strong> with industrial
+                                experience in scaling AI architectures.</p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- PROJECTS AI -->
-            <section id="projects-ai" class="section bg2">
+            <!-- PROJECTS -->
+            <section id="projects" class="section bg2">
                 <div class="section-inner">
                     <p class="section-label">Work</p>
                     <h2 class="section-title">Featured <span>Projects</span></h2>
                     <div class="projects-grid">
-                        <div class="project-card fade-up">
+                        <div class="project-card fade-up" tabindex="0"
+                            data-full-desc="A production-ready CLI that orchestrates cloud scanners, normalizes SARIF findings, and uses local LLMs to suggest policy-compliant fixes. Perfect for air-gapped environments."
+                            data-tags="Security, Python, LLM, CLI"
+                            data-link="https://github.com/abhishekeb211/coding-agent-cli">
+                            <div class="project-image-wrapper skeleton">
+                                <img src="images/data%20code.png"
+                                    alt="Visual representation of code vulnerabilities and self-healing systems"
+                                    class="project-image" loading="lazy"
+                                    onload="this.parentElement.classList.remove('skeleton')">
+                            </div>
                             <div class="project-header">
                                 <div class="project-icon">🤖</div>
                                 <span class="project-tag">Agentic AI</span>
@@ -168,7 +245,14 @@
                                     class="stack-chip">Llama 3.2</span>
                             </div>
                         </div>
-                        <div class="project-card fade-up">
+                        <div class="project-card fade-up" tabindex="0"
+                            data-full-desc="Interactive companion utilizing Llama 3.2 for emotional support and mental wellness, designed with a focus on privacy and high-performance local inference."
+                            data-tags="Llama 3.2, PyTorch, UX" data-link="https://github.com/abhishekeb211/SAMANVAY-7">
+                            <div class="project-image-wrapper skeleton">
+                                <img src="images/data%20code.png" alt="SAMANVAY-7 Mental Health AI companion interface"
+                                    class="project-image" loading="lazy"
+                                    onload="this.parentElement.classList.remove('skeleton')">
+                            </div>
                             <div class="project-header">
                                 <div class="project-icon">🧠</div>
                                 <span class="project-tag">Mental Health AI</span>
@@ -180,7 +264,14 @@
                                 <span class="stack-chip">Llama 3.2</span><span class="stack-chip">Voice UX</span>
                             </div>
                         </div>
-                        <div class="project-card fade-up">
+                        <div class="project-card fade-up" tabindex="0"
+                            data-full-desc="A decentralized, multi-agent blockchain ecosystem designed to detect real-time taxation fraud and cross-border money laundering using advanced graph analytics."
+                            data-tags="Blockchain, Hyperledger, Graph ML" data-link="#">
+                            <div class="project-image-wrapper skeleton">
+                                <img src="images/music2.png" alt="Global Taxation Fraud Blockchain"
+                                    class="project-image" loading="lazy"
+                                    onload="this.parentElement.classList.remove('skeleton')">
+                            </div>
                             <div class="project-header">
                                 <div class="project-icon">🏦</div>
                                 <span class="project-tag">Blockchain</span>
@@ -193,7 +284,13 @@
                                     Detection</span>
                             </div>
                         </div>
-                        <div class="project-card fade-up">
+                        <div class="project-card fade-up" tabindex="0"
+                            data-full-desc="A next-generation security solution leveraging Quantum Key Distribution (QKD) principles to protect user passkeys against advanced brute-force and side-channel attacks."
+                            data-tags="Quantum, Cybersecurity, encryption" data-link="#">
+                            <div class="project-image-wrapper skeleton">
+                                <img src="images/music.png" alt="Quantum Cybersec" class="project-image" loading="lazy"
+                                    onload="this.parentElement.classList.remove('skeleton')">
+                            </div>
                             <div class="project-header">
                                 <div class="project-icon">🛡️</div>
                                 <span class="project-tag">Cybersecurity</span>
@@ -205,12 +302,67 @@
                                 <span class="stack-chip">Quantum Enc</span><span class="stack-chip">Cybersec</span>
                             </div>
                         </div>
+                        <div class="project-card fade-up" tabindex="0"
+                            data-full-desc="A high-performance CLI tool for automated security auditing and patching. Built for speed and reliability in DevSecOps pipelines."
+                            data-tags="Go, CLI, Security" data-link="https://github.com/abhishekeb211/coding-agent-cli">
+                            <div class="project-image-wrapper skeleton">
+                                <img src="images/data%20code.png" alt="Coding Agent CLI" class="project-image"
+                                    loading="lazy" onload="this.parentElement.classList.remove('skeleton')">
+                            </div>
+                            <div class="project-header">
+                                <div class="project-icon">💻</div>
+                                <span class="project-tag">Tooling</span>
+                            </div>
+                            <h3 class="project-title">Coding Agent CLI</h3>
+                            <p class="project-summary">Offline-first, air-gapped GenAI security scanning and remediation
+                                CLI using local LLMs.</p>
+                            <div class="project-stack">
+                                <span class="stack-chip">Go</span><span class="stack-chip">Llama 3.2</span><span
+                                    class="stack-chip">CLI</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="marquee-container fade-up" style="margin-top: 60px;">
+                        <p class="section-label" style="text-align: center; margin-bottom: 20px;">Open Source
+                            Contribution</p>
+                        <div class="github-stats-row"
+                            style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                            <div class="project-image-wrapper skeleton" style="max-width: 495px; aspect-ratio: auto;">
+                                <img src="https://github-readme-stats.vercel.app/api?username=abhishekeb211&show_icons=true&theme=transparent&title_color=38bdf8&text_color=94a3b8&icon_color=38bdf8&border_color=38bdf8&hide_border=true"
+                                    alt="Abhishek's GitHub activity and contribution statistics"
+                                    style="max-width: 100%; height: auto;" loading="lazy"
+                                    onload="this.parentElement.classList.remove('skeleton')">
+                            </div>
+                            <div class="project-image-wrapper skeleton" style="max-width: 495px; aspect-ratio: auto;">
+                                <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=abhishekeb211&layout=compact&theme=transparent&title_color=38bdf8&text_color=94a3b8&hide_border=true"
+                                    alt="Most used programming languages in GitHub repositories"
+                                    style="max-width: 100%; height: auto;" loading="lazy"
+                                    onload="this.parentElement.classList.remove('skeleton')">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- EXPERIENCE AI -->
-            <section id="experience-ai" class="section">
+            <!-- INDUSTRY MARQUEE -->
+            <section class="section marquee-section">
+                <div class="marquee-content">
+                    <span>MICROSOFT</span>
+                    <span>AWS</span>
+                    <span>GOOGLE</span>
+                    <span>ACCENTURE</span>
+                    <span>INFOSYS</span>
+                    <span>ORACLE</span>
+                    <span>ANTHROPIC</span>
+                    <span>PALANTIR</span>
+                    <span>QUALCOMM</span>
+                    <span>INTEL</span>
+                </div>
+            </section>
+
+            <!-- EXPERIENCE -->
+            <section id="experience" class="section">
                 <div class="section-inner">
                     <p class="section-label">History</p>
                     <h2 class="section-title">Work <span>Experience</span></h2>
@@ -218,28 +370,30 @@
                         <div class="timeline-item fade-up">
                             <div class="timeline-dot">🔹</div>
                             <div class="timeline-content">
-                                <p class="timeline-date">2024 - June 2025</p>
+                                <p class="timeline-date">2020-22 & 2024-25</p>
                                 <h3 class="timeline-title">Data Scientist</h3>
                                 <p class="timeline-org">Arya Systems Startup & Freelancer</p>
                                 <div class="timeline-bullets">
-                                    <p class="timeline-bullet">Implemented Generative Chatbots and LLM research
-                                        integration.</p>
-                                    <p class="timeline-bullet">Designed automated optimization experiments and
-                                        sensitivity analysis.</p>
+                                    <p class="timeline-bullet">Engineered production-grade RAG pipelines, Generative
+                                        Transformers, and Chatbots.</p>
+                                    <p class="timeline-bullet">Implemented <strong>Design of Experiment (DoE)
+                                            Optimization</strong> and Sensitivity Analysis for industrial scaling.</p>
+                                    <p class="timeline-bullet">Led optimization research for ISRO RAG and Skoda
+                                        automation systems.</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="timeline-item fade-up">
+                        <div class="timeline-item fade-up" style="transition-delay:0.1s">
                             <div class="timeline-dot">🔹</div>
                             <div class="timeline-content">
                                 <p class="timeline-date">2019 - 2020</p>
                                 <h3 class="timeline-title">Data Scientist Intern</h3>
-                                <p class="timeline-org">R&D Lab (Under PhD Mentor)</p>
+                                <p class="timeline-org">PhD Led R&D Lab</p>
                                 <div class="timeline-bullets">
-                                    <p class="timeline-bullet">Built Topic Modeling and NLP pipelines using RNN/LSTM.
-                                    </p>
-                                    <p class="timeline-bullet">Developed anomaly detection systems using OpenCV and
-                                        TensorFlow.</p>
+                                    <p class="timeline-bullet">Implemented RNN/LSTM Topic Modeling and EV Motor
+                                        specification prediction algorithms.</p>
+                                    <p class="timeline-bullet">Developed Graphological Trait analysis and pedestrian
+                                        anomaly detection using TensorFlow.</p>
                                 </div>
                             </div>
                         </div>
@@ -247,229 +401,175 @@
                 </div>
             </section>
 
-            <!-- TECH STACK -->
-            <section id="tech-ai" class="section bg2">
+
+            <!-- INTEGRATED RESEARCH & IMPACT -->
+            <section id="research" class="section">
                 <div class="section-inner">
-                    <p class="section-label">Tools</p>
-                    <h2 class="section-title">Technical <span>Stack</span></h2>
-                    <div class="techstack-group">
-                        <p class="techstack-cat">AI & Machine Learning</p>
-                        <div class="tech-chips">
-                            <span class="tech-chip">TensorFlow</span><span class="tech-chip">PyTorch</span>
-                            <span class="tech-chip">Scikit-learn</span><span class="tech-chip">LLMs</span>
-                            <span class="tech-chip">RAG Pipelines</span><span class="tech-chip">Deep Learning</span>
+                    <p class="section-label">Impact</p>
+                    <h2 class="section-title">Research & <span>Innovation</span></h2>
+                    <div class="expertise-grid">
+                        <div class="expertise-card fade-up">
+                            <div class="expertise-icon">📚</div>
+                            <h3 class="expertise-title">Publications</h3>
+                            <p class="expertise-desc">Author of research on <strong>Generative Pretrained Models
+                                    (2024)</strong> and handwriting-based personality analysis in indexed journals.</p>
                         </div>
-                    </div>
-                    <div class="techstack-group">
-                        <p class="techstack-cat">Programming & Cloud</p>
-                        <div class="tech-chips">
-                            <span class="tech-chip">Python</span><span class="tech-chip">C/C++</span>
-                            <span class="tech-chip">SQL</span><span class="tech-chip">Azure AI</span>
-                            <span class="tech-chip">AWS DeepRacer</span><span class="tech-chip">Docker</span>
+                        <div class="expertise-card fade-up" style="transition-delay:0.1s">
+                            <div class="expertise-icon">💡</div>
+                            <h3 class="expertise-title">Innovation Mentor</h3>
+                            <p class="expertise-desc">Guiding 500+ students at PCCOE Pune in cutting-edge technology,
+                                AI, research, and product development.</p>
                         </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- RESEARCH & CERTS -->
-            <section class="section">
-                <div class="section-inner" style="display:grid; grid-template-columns: 1fr 1fr; gap:40px;">
-                    <div>
-                        <p class="section-label">Publications</p>
-                        <h2 class="section-title" style="font-size:1.8rem">Research <span>Papers</span></h2>
-                        <div class="papers-list">
-                            <div class="paper-item">
-                                <h4 class="paper-title">Future of Chatbots: Survey on GenAI Models</h4>
-                                <p class="paper-conf">ICICET 2024</p>
-                                <p class="paper-doi">10.1109/ICICET59348.2024.10616356</p>
-                            </div>
-                            <div class="paper-item">
-                                <h4 class="paper-title">Mechanical Property Prediction (Stir Casting)</h4>
-                                <p class="paper-conf">Published Research</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <p class="section-label">Awards</p>
-                        <h2 class="section-title" style="font-size:1.8rem">Recognition</h2>
-                        <div class="awards-list">
-                            <div class="award-item">
-                                <div class="award-num">25</div>
-                                <p class="award-text">AWS DeepRacer World Rank 25th</p>
-                            </div>
-                            <div class="award-item">
-                                <div class="award-num">🚀</div>
-                                <p class="award-text">SIH 2020 Hardware Winner</p>
-                            </div>
-                            <div class="award-item">
-                                <div class="award-num">🏆</div>
-                                <p class="award-text">Fujitsu Quantum Challenge 2026 Finalist</p>
-                            </div>
+                        <div class="expertise-card fade-up" style="transition-delay:0.2s">
+                            <div class="expertise-icon">🏆</div>
+                            <h3 class="expertise-title">Competition Strategist</h3>
+                            <p class="expertise-desc">Mentoring teams for global stages like ICPC, SIH, GSoC,
+                                CTF, and IEEE Xtreme.</p>
                         </div>
                     </div>
                 </div>
             </section>
-
-        </div>
-
-        <!-- PROFESSOR TAB PANE -->
-        <div id="prof-pane" class="tab-pane">
-
-            <!-- HERO PROF -->
-            <section class="hero prof-hero">
-                <div class="hero-orb hero-orb-1"></div>
-                <div class="hero-orb hero-orb-2"></div>
-                <div class="hero-inner">
-                    <div class="hero-content fade-up">
-                        <div class="hero-tag"
-                            style="background:rgba(14,164,114,.1); border-color:rgba(14,164,114,.2); color:var(--prof-accent)">
-                            Innovation Mentor @ PCCoE
-                        </div>
-                        <h1 class="hero-name">Prof. <span class="grad">Abhishek</span></h1>
-                        <p class="hero-desc">
-                            Leading the PCCOE Coding Club and mentoring the next generation of engineers in AI,
-                            Data Science, and Competitive Programming.
-                        </p>
-                        <div class="hero-ctas">
-                            <a href="#club-pccoe" class="btn-primary"
-                                style="background:var(--prof-grad); box-shadow:0 4px 22px var(--prof-glow)">Coding
-                                Club</a>
-                            <a href="#teaching" class="btn-secondary">Teaching Schedule</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- TIMETABLE -->
-            <section id="teaching" class="section">
+            <!-- CERTIFICATIONS SECTION -->
+            <section id="certifications" class="section">
                 <div class="section-inner">
-                    <p class="section-label">Academics</p>
-                    <h2 class="section-title">Teaching <span>Schedule</span></h2>
-                    <div class="timetable-wrapper fade-up">
-                        <table class="timetable">
-                            <thead>
-                                <tr>
-                                    <th>Time</th>
-                                    <th>Mon</th>
-                                    <th>Tue</th>
-                                    <th>Wed</th>
-                                    <th>Thu</th>
-                                    <th>Fri</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>9:10-10</td>
-                                    <td class="cell-empty">—</td>
-                                    <td class="cell-devl">DE&VL (SY-D)</td>
-                                    <td class="cell-empty">—</td>
-                                    <td class="cell-devl">DE&VL (SY-C)</td>
-                                    <td class="cell-empty">—</td>
-                                </tr>
-                                <tr>
-                                    <td>10-11</td>
-                                    <td class="cell-empty">—</td>
-                                    <td class="cell-empty">—</td>
-                                    <td class="cell-toc">TOC (TY-B)</td>
-                                    <td class="cell-empty">—</td>
-                                    <td class="cell-empty">—</td>
-                                </tr>
-                                <tr>
-                                    <td>11:10-12:10</td>
-                                    <td class="cell-empty">—</td>
-                                    <td class="cell-toc">TOC (TY-B)</td>
-                                    <td class="cell-empty">—</td>
-                                    <td class="cell-empty">—</td>
-                                    <td class="cell-toc">TOC (TY-B)</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="classroom-cards">
-                        <div class="classroom-card">
-                            <h3 class="classroom-card-title">Theory of Computation</h3>
-                            <p class="classroom-card-code">Code: rtfgnu4b</p>
-                            <button class="classroom-card-btn"
-                                onclick="window.open('https://classroom.google.com/c/NzAwMzE2Nzk3OTIx?cjc=rtfgnu4b')">Join
-                                Class</button>
+                    <p class="section-label">Qualifications</p>
+                    <h2 class="section-title">Certifications & <span>Training</span></h2>
+                    <div class="expertise-grid">
+                        <div class="expertise-card cert-card fade-up">
+                            <div class="expertise-icon">☁️</div>
+                            <div class="cert-info">
+                                <h3 class="expertise-title">Azure AI Fundamentals</h3>
+                                <p class="expertise-desc">Microsoft | 2021</p>
+                            </div>
                         </div>
-                        <div class="classroom-card">
-                            <h3 class="classroom-card-title">Digital Electronics & VLSI</h3>
-                            <p class="classroom-card-code">Code: od5pxfou</p>
-                            <button class="classroom-card-btn"
-                                onclick="window.open('https://classroom.google.com/c/NzgzMDA4Nzg2ODMz?cjc=od5pxfou')">Join
-                                Class</button>
+                        <div class="expertise-card cert-card fade-up" style="transition-delay:0.1s">
+                            <div class="expertise-icon">🏎️</div>
+                            <div class="cert-info">
+                                <h3 class="expertise-title">AWS DeepRacer Expert</h3>
+                                <p class="expertise-desc">AWS | 2020</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- CLUB SECTION -->
-            <section id="club-pccoe" class="section bg2">
+            <!-- EDUCATION SECTION -->
+            <section id="education" class="section bg2">
                 <div class="section-inner">
-                    <p class="section-label">Leadership</p>
-                    <h2 class="section-title">PCCOE <span>Coding Club</span></h2>
-                    <p class="section-sub">A dynamic student group focused on Open Source, AI, and competitive
-                        programming excellence.</p>
-
-                    <div class="tags-cloud fade-up">
-                        <span class="club-tag">#Tech</span><span class="club-tag">#Non-Tech</span>
-                        <span class="club-tag">#Innovation</span><span class="club-tag">#Hackathons</span>
-                        <span class="club-tag">#ICPC</span><span class="club-tag">#GSoC</span>
-                    </div>
-
-                    <div class="freebies-grid">
-                        <div class="freebie-card fade-up">
-                            <div class="freebie-num">1</div>
-                            <p class="freebie-text">Professional Profile & Career Building</p>
+                    <p class="section-label">Academic Background</p>
+                    <h2 class="section-title">Education & <span>Qualifications</span></h2>
+                    <div class="expertise-grid education-grid">
+                        <div class="expertise-card education-card fade-up">
+                            <div class="edu-year">2024</div>
+                            <h3 class="expertise-title">M.Tech AI & Data Science</h3>
+                            <p class="edu-inst">PCCOE Pune</p>
+                            <p class="edu-meta">Score: <strong>8.7 CGPA</strong></p>
+                            <p class="edu-project">Focus: GENAI, LLM, & Agentic Systems</p>
                         </div>
-                        <div class="freebie-card fade-up">
-                            <div class="freebie-num">2</div>
-                            <p class="freebie-text">Industry Grade DSA Training (C/CPP/Java)</p>
+                        <div class="expertise-card education-card fade-up" style="transition-delay:0.1s">
+                            <div class="edu-year">2021</div>
+                            <h3 class="expertise-title">Deep Reinforcement Learning</h3>
+                            <p class="edu-inst">Udacity Nanodegree</p>
+                            <p class="edu-meta">MARL (MADDPG), Actor-Critic, DQN</p>
                         </div>
-                        <div class="freebie-card fade-up">
-                            <div class="freebie-num">3</div>
-                            <p class="freebie-text">Direct Access to Internships & Jobs</p>
+                        <div class="expertise-card education-card fade-up" style="transition-delay:0.2s">
+                            <div class="edu-year">2020</div>
+                            <h3 class="expertise-title">Deep Learning & ML</h3>
+                            <p class="edu-inst">Udacity Nanodegree</p>
+                            <p class="edu-meta">GANs, RNNs, PyTorch, AWS ML</p>
+                        </div>
+                        <div class="expertise-card education-card fade-up" style="transition-delay:0.3s">
+                            <div class="edu-year">2020</div>
+                            <h3 class="expertise-title">B.E. Information Technology</h3>
+                            <p class="edu-inst">PES Modern College of Engineering</p>
+                            <p class="edu-meta">Score: <strong>7.0 SGPA</strong></p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- COMPETITIONS -->
-            <section class="section">
+
+            <!-- COMPETITIONS TRACKER -->
+            <section id="competitions" class="section bg2">
                 <div class="section-inner">
                     <p class="section-label">Opportunities</p>
-                    <h2 class="section-title">Major <span>Competitions</span></h2>
+                    <h2 class="section-title">Major Technical <span>Competitions</span></h2>
                     <div class="comp-table-wrapper fade-up">
                         <table class="comp-table">
                             <thead>
                                 <tr>
-                                    <th>Competition</th>
-                                    <th>Platform</th>
-                                    <th>Website</th>
-                                    <th>Status</th>
+                                    <th>Event / Platform</th>
+                                    <th>Category</th>
+                                    <th>Expected Dates</th>
+                                    <th>Link</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>Unstop</td>
-                                    <td>Pan-India</td>
-                                    <td><a href="https://unstop.com" target="_blank" class="comp-link">unstop.com</a>
+                                    <td><strong>Unstop (Dare2Compete)</strong></td>
+                                    <td>Multiple Hackathons</td>
+                                    <td><span class="comp-badge ongoing">Ongoing</span></td>
+                                    <td><a href="https://unstop.com/" target="_blank" class="comp-link">Visit</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>SIH (Smart India Hackathon)</strong></td>
+                                    <td>National Hackathon</td>
+                                    <td><span class="comp-badge upcoming">Sept - Dec</span></td>
+                                    <td><a href="https://sih.gov.in/" target="_blank" class="comp-link">Visit</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>ICPC</strong></td>
+                                    <td>Competitive Coding</td>
+                                    <td><span class="comp-badge upcoming">Nov - Jan</span></td>
+                                    <td><a href="https://icpc.global/" target="_blank" class="comp-link">Visit</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>NPTEL Exams</strong></td>
+                                    <td>Certification</td>
+                                    <td><span class="comp-badge upcoming">March / Sept</span></td>
+                                    <td><a href="https://nptel.ac.in/" target="_blank" class="comp-link">Visit</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>IIT Research Internships</strong></td>
+                                    <td>Research</td>
+                                    <td><span class="comp-badge upcoming">March - April</span></td>
+                                    <td><a href="https://aicte-india.org/" target="_blank" class="comp-link">Visit</a>
                                     </td>
-                                    <td><span class="comp-badge ongoing">Ongoing</span></td>
                                 </tr>
                                 <tr>
-                                    <td>HackerEarth</td>
+                                    <td><strong>AICTE Portal</strong></td>
+                                    <td>Pan-India Platform</td>
+                                    <td><span class="comp-badge varies">Varies</span></td>
+                                    <td><a href="https://aicte-india.org/" target="_blank" class="comp-link">Visit</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>HackerEarth</strong></td>
+                                    <td>Hackathons</td>
+                                    <td><span class="comp-badge ongoing">Ongoing</span></td>
+                                    <td><a href="https://hackerearth.com/" target="_blank" class="comp-link">Visit</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>MachineHack</strong></td>
+                                    <td>AI/ML Hackathons</td>
+                                    <td><span class="comp-badge ongoing">Ongoing</span></td>
+                                    <td><a href="https://machinehack.com/" target="_blank" class="comp-link">Visit</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>ISRO Research</strong></td>
+                                    <td>Space Research</td>
+                                    <td><span class="comp-badge upcoming">Dec 2025</span></td>
+                                    <td><a href="https://www.isro.gov.in/" target="_blank" class="comp-link">Visit</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>MyGov Innovate</strong></td>
                                     <td>Pan-India</td>
-                                    <td><a href="https://hackerearth.com" target="_blank"
-                                            class="comp-link">hackerearth.com</a></td>
-                                    <td><span class="comp-badge ongoing">Ongoing</span></td>
-                                </tr>
-                                <tr>
-                                    <td>IIT Research</td>
-                                    <td>IITs</td>
-                                    <td><a href="#" class="comp-link">IIT Portals</a></td>
-                                    <td><span class="comp-badge upcoming">March 2026</span></td>
+                                    <td><span class="comp-badge varies">As Announced</span></td>
+                                    <td><a href="https://innovateindia.mygov.in/" target="_blank"
+                                            class="comp-link">Visit</a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -477,47 +577,259 @@
                 </div>
             </section>
 
-        </div>
+        </div> <!-- END AI PANE -->
 
-        <!-- SHARED CONTACT -->
-        <section id="contact" class="section">
-            <div class="section-inner">
-                <p class="section-label">Connect</p>
-                <h2 class="section-title">Let's <span>Work Together</span></h2>
-                <div class="contact-grid">
-                    <div class="contact-links fade-up">
-                        <a href="mailto:abhishekeb98@gmail.com" class="contact-link">
-                            <span class="contact-link-icon">📧</span>
-                            <div>
-                                <p class="contact-link-label">Email</p>
-                                <p class="contact-link-val">abhishekeb98@gmail.com</p>
-                            </div>
-                        </a>
-                        <a href="https://linkedin.com/in/abhishek-raut-087138171/" target="_blank" class="contact-link">
-                            <span class="contact-link-icon">🔗</span>
-                            <div>
-                                <p class="contact-link-label">LinkedIn</p>
-                                <p class="contact-link-val">abhishek-raut</p>
-                            </div>
-                        </a>
+        <!-- PROFESSOR TAB PANE -->
+        <div id="prof-pane" class="tab-pane fade-in" role="tabpanel" aria-labelledby="tab-prof" aria-hidden="true">
+
+            <!-- HERO PROFESSOR -->
+            <section id="hero-prof" class="hero ai-hero">
+                <div class="hero-orb hero-orb-1"></div>
+                <div class="hero-orb hero-orb-2"></div>
+                <div class="hero-inner">
+                    <div class="hero-visual fade-up">
+                        <div class="hero-image-container premium-blend">
+                            <picture>
+                                <source srcset="images/me.webp" type="image/webp">
+                                <img src="images/me.png" alt="Abhishek S. Raut" class="hero-main-img" width="400" height="400">
+                            </picture>
+                        </div>
                     </div>
-                    <div class="footer-socials fade-up">
-                        <!-- Add social icons here -->
+                    <div class="hero-content fade-up">
+                        <div class="hero-tag">
+                            <span class="dot"></span>
+                            Professor & Innovation Mentor @ PCCoE
+                        </div>
+                        <h1 class="hero-name">Hi, I'm <span class="grad">Abhishek</span></h1>
+                        <div class="hero-roles">
+                            <span class="hero-role-chip">Educator</span>
+                            <span class="hero-role-chip">Mentor</span>
+                            <span class="hero-role-chip">TOC Instructor</span>
+                        </div>
+                        <p class="hero-desc">
+                            Teaching core CS fundamentals and mentoring students in competitive programming, research, and industry-ready skills at PCCoE Pune.
+                        </p>
+                        <div class="hero-ctas">
+                            <a href="#teaching-prof" class="btn-primary">View Teaching</a>
+                            <a href="#contact" class="btn-secondary">Get in Touch</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+
+            <!-- PROFESSOR HIGHLIGHTS -->
+            <section id="highlights-prof" class="section highlights">
+                <div class="section-inner">
+                    <div class="highlights-grid">
+                        <div class="highlight-item fade-up">
+                            <div class="highlight-num"><span class="counter" data-target="500">0</span>+</div>
+                            <div class="highlight-label">Students Mentored</div>
+                        </div>
+                        <div class="highlight-item fade-up" style="transition-delay:0.1s">
+                            <div class="highlight-num">Lead</div>
+                            <div class="highlight-label">PCCoE Coding Club</div>
+                        </div>
+                        <div class="highlight-item fade-up" style="transition-delay:0.2s">
+                            <div class="highlight-num">Strategist</div>
+                            <div class="highlight-label">ICPC & SIH</div>
+                        </div>
+                        <div class="highlight-item fade-up" style="transition-delay:0.3s">
+                            <div class="highlight-num"><span class="counter" data-target="4">0</span>+</div>
+                            <div class="highlight-label">Core Subjects</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PROFESSOR EXPERTISE -->
+            <section id="expertise-prof" class="section">
+                <div class="section-inner">
+                    <p class="section-label">Academics</p>
+                    <h2 class="section-title">Teaching <span>Expertise</span></h2>
+                    <div class="expertise-grid">
+                        <div class="expertise-card fade-up">
+                            <div class="expertise-icon">🏫</div>
+                            <h3 class="expertise-title">Theory of Computation</h3>
+                            <p class="expertise-desc">Automata theory, Turing machines, formal languages, and computability. Lead instructor for TOC at PCCoE.</p>
+                        </div>
+                        <div class="expertise-card fade-up" style="transition-delay:0.1s">
+                            <div class="expertise-icon">⚙️</div>
+                            <h3 class="expertise-title">Digital Electronics & VLSI</h3>
+                            <p class="expertise-desc">Hands-on teaching of digital logic design, circuit architecture, and VLSI systems for undergrad engineers.</p>
+                        </div>
+                        <div class="expertise-card fade-up" style="transition-delay:0.2s">
+                            <div class="expertise-icon">📊</div>
+                            <h3 class="expertise-title">Data Exploration & FSDL</h3>
+                            <p class="expertise-desc">Practical sessions on Pandas, exploratory data analysis, and open-source full-stack development labs.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TEACHING & RESOURCES -->
+            <section id="teaching-prof" class="section bg2">
+                <div class="section-inner">
+                    <p class="section-label">Resources</p>
+                    <h2 class="section-title">Teaching & <span>Resources</span></h2>
+                    <div class="projects-grid">
+                        <div class="project-card fade-up" tabindex="0">
+                            <div class="project-image-wrapper">
+                                <span class="project-image-placeholder" aria-hidden="true">🏫</span>
+                            </div>
+                            <div class="project-header">
+                                <div class="project-icon">🏫</div>
+                                <span class="project-tag">Automata</span>
+                            </div>
+                            <h3 class="project-title">Theory of Computation</h3>
+                            <p class="project-summary">Lead Instructor for TOC, focusing on automata theory, Turing machines, and formal languages.</p>
+                            <div class="project-stack">
+                                <span class="stack-chip">rtfgnu4b</span>
+                            </div>
+                            <a href="https://classroom.google.com/c/NzAwMzE2Nzk3OTIx?cjc=rtfgnu4b" target="_blank" rel="noopener" class="btn-primary">Join Classroom</a>
+                        </div>
+                        <div class="project-card fade-up" tabindex="0" style="transition-delay:0.1s">
+                            <div class="project-image-wrapper">
+                                <span class="project-image-placeholder" aria-hidden="true">⚙️</span>
+                            </div>
+                            <div class="project-header">
+                                <div class="project-icon">⚙️</div>
+                                <span class="project-tag">Hardware</span>
+                            </div>
+                            <h3 class="project-title">Digital Electronics & VLSI</h3>
+                            <p class="project-summary">Hands-on teaching of digital logic design, circuit architecture, and VLSI systems.</p>
+                            <div class="project-stack">
+                                <span class="stack-chip">od5pxfou</span>
+                            </div>
+                            <a href="https://classroom.google.com/c/NzA3MjAxMzYyMzE1?cjc=od5pxfou" target="_blank" rel="noopener" class="btn-primary">Join Classroom</a>
+                        </div>
+                        <div class="project-card fade-up" tabindex="0" style="transition-delay:0.2s">
+                            <div class="project-image-wrapper">
+                                <span class="project-image-placeholder" aria-hidden="true">📊</span>
+                            </div>
+                            <div class="project-header">
+                                <div class="project-icon">📊</div>
+                                <span class="project-tag">Analytics</span>
+                            </div>
+                            <h3 class="project-title">Data Exploration Lab</h3>
+                            <p class="project-summary">Practical sessions on using Pandas, and conducting end-to-end exploratory data analysis.</p>
+                            <div class="project-stack">
+                                <span class="stack-chip">r4er6t5</span>
+                            </div>
+                            <!-- TODO: Add Google Classroom join URL for Data Exploration Lab (code r4er6t5) when available -->
+                            <a href="#" class="btn-primary">Join Classroom</a>
+                        </div>
+                        <div class="project-card fade-up" tabindex="0" style="transition-delay:0.3s">
+                            <div class="project-image-wrapper">
+                                <span class="project-image-placeholder" aria-hidden="true">💻</span>
+                            </div>
+                            <div class="project-header">
+                                <div class="project-icon">💻</div>
+                                <span class="project-tag">Open Source</span>
+                            </div>
+                            <h3 class="project-title">FSDL Lab</h3>
+                            <p class="project-summary">Free and Open Source Software labs focusing on Full stack development and system management.</p>
+                            <div class="project-stack">
+                                <span class="stack-chip">avixrhy</span>
+                            </div>
+                            <!-- TODO: Add full Google Classroom join URL for FSDL Lab (code avixrhy) when available -->
+                            <a href="https://classroom.google.com" target="_blank" rel="noopener" class="btn-primary">Join Classroom</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div> <!-- END PROF PANE -->
 
     </main>
 
-    <footer class="section">
-        <div class="footer-copy">© 2026 Abhishek S. Raut. All rights reserved.</div>
-        <div class="footer-socials">
-            <!-- Icons can be added here -->
+    <!-- FOOTER -->
+    <footer id="contact" class="footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <h2 class="logo">ABHISHEK RAUT</h2>
+                    <p id="footer-tagline">AI Engineer & Innovation Mentor</p>
+                    <p class="footer-quote"
+                        style="margin-top: 10px; font-style: italic; color: var(--accent); font-weight: 600; font-size: 0.75rem; letter-spacing: 1px;">
+                        "NO PAIN NO PORSCHE !!!"</p>
+                </div>
+                <nav class="footer-nav">
+                    <a href="#about" data-ai="#about" data-prof="#hero-prof">About</a>
+                    <a href="#projects" data-ai="#projects" data-prof="#teaching-prof">Work</a>
+                    <a href="mailto:abhishek.raut@pccoe.org">Email</a>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="footer-year">2025</span> Abhishek S. Raut. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="https://linkedin.com/in/abhishek-raut-087138171/" target="_blank" title="LinkedIn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                            <rect x="2" y="9" width="4" height="12" />
+                            <circle cx="4" cy="4" r="2" />
+                        </svg>
+                    </a>
+                    <a href="https://github.com/abhishekeb211/" target="_blank" title="GitHub">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                        </svg>
+                    </a>
+                    <a href="https://scholar.google.com/citations?hl=en&authuser=1&user=GxruQpkAAAAJ" target="_blank"
+                        title="Google Scholar">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                            <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                        </svg>
+                    </a>
+                    <a href="https://x.com/abhishekeb981" target="_blank" title="X (Twitter)">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M4 4l11.733 16h4.267l-11.733-16zM4 20l6.768-6.133m4.464-4.045L20 4" />
+                        </svg>
+                    </a>
+                    <a href="https://www.instagram.com/pccoe_coding_club/" target="_blank" title="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- MODAL OVERLAY -->
+    <div id="project-modal" class="modal-overlay">
+        <div class="modal-card">
+            <button class="modal-close" aria-label="Close modal">&times;</button>
+            <div class="modal-image-container">
+                <img src="" alt="" id="modal-img">
+            </div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modal-title"></h2>
+                    <div id="modal-tags"></div>
+                </div>
+                <p id="modal-description"></p>
+                <div class="modal-footer">
+                    <a href="#" id="modal-link" class="btn-primary" target="_blank">View Project</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container" class="toast-container"></div>
+
+    <button id="scroll-to-top" class="back-to-top" aria-label="Back to top">
+        <span>↑</span>
+    </button>
+
+    <script src="script.js" defer></script>
 </body>
 
 </html>
