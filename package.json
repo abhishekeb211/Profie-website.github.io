@@ -6,7 +6,8 @@
     "lint:html": "html-validate index.html offline.html",
     "lint:css": "stylelint \"css/**/*.css\"",
     "lint:js": "eslint script.js sw.js",
-    "verify": "npm run lint:html && npm run lint:css && npm run lint:js"
+    "check-assets": "node scripts/check-assets.js",
+    "verify": "npm run lint:html && npm run lint:css && npm run lint:js && npm run check-assets"
   },
   "devDependencies": {
     "eslint": "^8.57.0",

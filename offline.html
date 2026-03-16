@@ -18,6 +18,22 @@
             color: #fff;
         }
 
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 12px;
+            z-index: 1000;
+            background: #fff;
+            color: #0f172a;
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        .skip-link:focus {
+            top: 12px;
+        }
+
         .offline-container {
             max-width: 500px;
             padding: 40px;
@@ -71,12 +87,13 @@
 </head>
 
 <body class="dark-theme">
-    <div class="offline-container">
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <main id="main" class="offline-container">
         <h1>Offline</h1>
         <p>It seems you're currently disconnected. Don't worry, the portfolio is designed to work offline once visited,
             but some resources might be missing.</p>
         <button type="button" id="retry-btn" class="btn-retry">Try Again</button>
-    </div>
+    </main>
     <script>
         const retryBtn = document.getElementById('retry-btn');
         if (retryBtn) retryBtn.addEventListener('click', () => window.location.reload());

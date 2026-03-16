@@ -12,13 +12,13 @@
   "categories": ["education", "developer", "portfolio"],
   "icons": [
     {
-      "src": "images/Me Suit with white bg1.png",
+      "src": "images/Me%20Suit%20with%20white%20bg1.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "images/Me Suit with white bg1.png",
+      "src": "images/Me%20Suit%20with%20white%20bg1.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"

@@ -66,7 +66,7 @@ npm ci
 npm run verify
 ```
 
-This runs HTML validation (`html-validate`), CSS linting (`stylelint`), and JS linting (`eslint`) on `index.html`, `offline.html`, `css/**/*.css`, `script.js`, and `sw.js`. The same command runs in CI before each deploy.
+This runs HTML validation (`html-validate`), CSS linting (`stylelint`), JS linting (`eslint`), and image-reference checks (`scripts/check-assets.js`) across `index.html`, `offline.html`, `css/**/*.css`, `script.js`, and `sw.js`. The same command runs in CI before each deploy.
 
 ## 🚢 Deployment (GitHub Pages)
 
@@ -82,6 +82,7 @@ The site is deployed via **GitHub Actions** (see `.github/workflows/pages.yml`).
    - In Application → Service Worker and Manifest, confirm registration and icons.
    - Open `https://abhishekeb211.github.io/Profie-website.github.io/sitemap.xml` and confirm the `<loc>` URL matches. If the live sitemap returns 500, the file in repo is valid; re-check after deploy or GitHub support.
    - Confirm `robots.txt` contains `Sitemap: https://abhishekeb211.github.io/Profie-website.github.io/sitemap.xml`.
+   - If app shell content changes (`index.html`, `offline.html`, `script.js`, `css/*`, `manifest.json`, precached images), bump `CACHE_NAME` in `sw.js` so clients refresh stale caches.
 
 ## 📋 Future Improvements
 
