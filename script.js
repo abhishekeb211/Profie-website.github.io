@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             const footerTagline = document.getElementById('footer-tagline');
-            if (footerTagline) footerTagline.textContent = isProf ? 'Professor & Innovation Mentor' : 'Assistant Professor & Data Scientist';
+            if (footerTagline) footerTagline.textContent = isProf ? 'Professor & Innovation Mentor' : 'AI Engineer & Innovation Mentor';
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
             refreshAnimations();
