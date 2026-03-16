@@ -45,7 +45,7 @@ a:focus-visible,
 button:focus-visible,
 .project-card:focus-visible,
 .back-to-top:focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--focus-ring);
     outline-offset: 2px;
 }
 
@@ -122,7 +122,19 @@ body::before {
     background-size: 200px;
     pointer-events: none;
     z-index: -1;
-    opacity: .3;
+    opacity: .24;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background:
+        radial-gradient(60vw 60vw at 95% -10%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%),
+        radial-gradient(55vw 55vw at -10% 105%, color-mix(in srgb, var(--accent2) 10%, transparent), transparent 64%);
+    opacity: 0.55;
 }
 
 @keyframes fadeIn {

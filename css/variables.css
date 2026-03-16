@@ -23,6 +23,12 @@
     --font-mono: 'JetBrains Mono', monospace;
     --overlay-bg: rgba(15, 23, 42, 0.5);
     --card-shadow-hover: 0 20px 50px rgba(0, 0, 0, 0.25);
+    --accent-soft: color-mix(in srgb, var(--accent) 18%, transparent);
+    --accent-border-soft: color-mix(in srgb, var(--accent) 38%, transparent);
+    --focus-ring: color-mix(in srgb, var(--accent) 72%, #ffffff);
+    --surface-elev: color-mix(in srgb, var(--bg2) 84%, transparent);
+    --surface-strong: color-mix(in srgb, var(--bg3) 88%, transparent);
+    --particle-tint: 34, 211, 238;
 }
 
 /* --- THEME DEFINITIONS --- */
@@ -40,6 +46,9 @@ body.light-theme {
     --particle-color: rgba(15, 23, 42, 0.1);
     --overlay-bg: rgba(0, 0, 0, 0.35);
     --card-shadow-hover: 0 20px 50px rgba(15, 23, 42, 0.15);
+    --surface-elev: rgba(255, 255, 255, 0.86);
+    --surface-strong: rgba(248, 250, 252, 0.92);
+    --particle-tint: 20, 184, 166;
 }
 
 body.dark-theme {
@@ -56,6 +65,9 @@ body.dark-theme {
     --particle-color: rgba(255, 255, 255, 0.15);
     --overlay-bg: rgba(15, 23, 42, 0.5);
     --card-shadow-hover: 0 18px 40px rgba(2, 8, 23, 0.55);
+    --surface-elev: rgba(9, 16, 30, 0.84);
+    --surface-strong: rgba(16, 26, 43, 0.9);
+    --particle-tint: 34, 211, 238;
 }
 
 body.hacker-theme {
@@ -85,6 +97,9 @@ body.hacker-theme {
 
     --overlay-bg: rgba(0, 0, 0, 0.6);
     --card-shadow-hover: 0 20px 50px rgba(0, 255, 65, 0.15);
+    --surface-elev: rgba(1, 8, 3, 0.9);
+    --surface-strong: rgba(3, 17, 7, 0.92);
+    --particle-tint: 0, 255, 65;
 }
 
 /* Modern Glass (glassmorphism) — dark base so frosted panels show through */
@@ -112,4 +127,23 @@ body.glass-theme {
     --prof-accent2: #059669;
     --prof-glow: rgba(16, 185, 129, 0.3);
     --prof-grad: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    --surface-elev: rgba(10, 18, 34, 0.58);
+    --surface-strong: rgba(255, 255, 255, 0.12);
+    --particle-tint: 56, 189, 248;
+}
+
+/* Persona state stays declarative in CSS; JS only toggles data-persona */
+body[data-persona="prof"] {
+    --accent: var(--prof-accent);
+    --accent2: var(--prof-accent2);
+    --glow: var(--prof-glow);
+    --grad: var(--prof-grad);
+    --accent-soft: color-mix(in srgb, var(--prof-accent) 18%, transparent);
+    --accent-border-soft: color-mix(in srgb, var(--prof-accent) 42%, transparent);
+    --focus-ring: color-mix(in srgb, var(--prof-accent) 72%, #ffffff);
+    --particle-tint: 45, 212, 191;
+}
+
+body.hacker-theme[data-persona="prof"] {
+    --particle-tint: 50, 205, 50;
 }

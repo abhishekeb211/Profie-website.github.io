@@ -42,7 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function initTabs() {
         const tabBtns = document.querySelectorAll('.tab-btn');
         const tabPanes = document.querySelectorAll('.tab-pane');
-        const root = document.documentElement;
 
         if (!tabBtns.length || !tabPanes.length) return;
 
@@ -73,16 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const isProf = targetId === 'prof-pane';
             if (isProf) {
                 document.body.setAttribute('data-persona', 'prof');
-                root.style.setProperty('--accent', 'var(--prof-accent)');
-                root.style.setProperty('--accent2', 'var(--prof-accent2)');
-                root.style.setProperty('--glow', 'var(--prof-glow)');
-                root.style.setProperty('--grad', 'var(--prof-grad)');
             } else {
                 document.body.removeAttribute('data-persona');
-                root.style.removeProperty('--accent');
-                root.style.removeProperty('--accent2');
-                root.style.removeProperty('--glow');
-                root.style.removeProperty('--grad');
             }
 
             const navLinks = document.querySelectorAll('#nav-links a');
@@ -601,16 +592,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
             }
             draw() {
-                const isHacker = document.body.classList.contains('hacker-theme');
-                const isProf = document.body.getAttribute('data-persona') === 'prof';
-
-                let color = 'rgba(56, 189, 248, '; // default AI Light/Dark
-                if (isProf) color = 'rgba(16, 185, 129, '; // Prof Light/Dark
-                if (isHacker) {
-                    color = isProf ? 'rgba(50, 205, 50, ' : 'rgba(0, 255, 65, ';
-                }
-
-                ctx.fillStyle = color + this.opacity + ')';
+                const computed = getComputedStyle(document.body);
+                const particleTint = (computed.getPropertyValue('--particle-tint') || '34, 211, 238').trim();
+                ctx.fillStyle = `rgba(${particleTint}, ${this.opacity})`;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
