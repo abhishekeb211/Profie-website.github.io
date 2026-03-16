@@ -49,17 +49,20 @@ body.glass-theme #header.scrolled {
 
 .nav-links a {
     font-size: .88rem;
-    font-weight: 500;
-    padding: 6px 14px;
-    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    padding: 8px 14px;
+    border-radius: 999px;
     color: var(--text-muted);
     transition: var(--transition);
+    border: 1px solid transparent;
 }
 
 .nav-links a:hover,
 .nav-links a.active {
     color: var(--text);
-    background: rgba(15, 23, 42, 0.05);
+    background: rgba(34, 211, 238, 0.1);
+    border-color: rgba(34, 211, 238, 0.35);
 }
 
 .nav-links.active {
@@ -183,6 +186,69 @@ body.glass-theme #header.scrolled {
     opacity: 1;
 }
 
+.section-inner {
+    width: min(1160px, 100%);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.highlights-grid,
+.expertise-grid,
+.projects-grid {
+    display: grid;
+    gap: 24px;
+}
+
+.highlights-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.expertise-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.projects-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+#prof-pane .section {
+    padding-block: 86px;
+}
+
+#prof-pane .section:first-child {
+    padding-top: 112px;
+}
+
+#prof-pane .section-label {
+    margin-bottom: 8px;
+}
+
+#prof-pane .section-title {
+    margin-bottom: 22px;
+}
+
+#hero-prof .hero-inner {
+    align-items: center;
+    gap: 52px;
+}
+
+#hero-prof .hero-visual {
+    flex: 0.9;
+}
+
+#hero-prof .hero-content {
+    flex: 1.1;
+    max-width: 630px;
+}
+
+#hero-prof .hero-image-container {
+    max-width: 360px;
+}
+
+#hero-prof .hero-ctas {
+    margin-top: 20px;
+}
+
 /* --- SECTION STRUCTURE --- */
 .section {
     padding: 100px 0;
@@ -268,5 +334,22 @@ body.glass-theme #header.scrolled {
         flex-direction: column;
         text-align: center;
         gap: 40px;
+    }
+
+    .highlights-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .expertise-grid,
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #prof-pane .section {
+        padding-block: 72px;
+    }
+
+    #hero-prof .hero-content {
+        max-width: 100%;
     }
 }

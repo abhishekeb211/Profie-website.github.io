@@ -434,3 +434,289 @@ body.hacker-theme .hacker-scanline {
     gap: 6px;
     margin-top: 14px;
 }
+
+/* --- SECTION TYPOGRAPHY & CONTENT HIERARCHY --- */
+.section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.section-title {
+    margin-bottom: 24px;
+    font-size: clamp(1.7rem, 2.8vw, 2.6rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.section-title span,
+.grad {
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    color: var(--text-muted);
+    font-size: 0.86rem;
+    font-weight: 600;
+}
+
+.hero-tag .dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+.hero-name {
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    line-height: 1.05;
+    margin-bottom: 14px;
+    letter-spacing: -0.03em;
+}
+
+.hero-desc {
+    max-width: 60ch;
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+.hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.hero-roles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.hero-role-chip,
+.stack-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--card-border);
+    background: color-mix(in srgb, var(--bg3) 76%, transparent);
+    color: var(--text-muted);
+    font-size: 0.76rem;
+    font-weight: 600;
+}
+
+/* --- GRID CARD HIERARCHY --- */
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.project-tag {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.project-title,
+.expertise-title {
+    font-size: 1.12rem;
+    line-height: 1.3;
+    margin-top: 6px;
+}
+
+.project-summary,
+.expertise-desc {
+    color: var(--text-muted);
+    font-size: 0.94rem;
+    line-height: 1.58;
+}
+
+.project-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.highlights-grid .highlight-item {
+    text-align: center;
+}
+
+.highlight-num {
+    font-size: clamp(1.3rem, 2.5vw, 2rem);
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.highlight-label {
+    margin-top: 8px;
+    font-size: 0.86rem;
+    color: var(--text-muted);
+}
+
+/* --- PROFESSOR PANE CONSISTENCY --- */
+#prof-pane .expertise-card,
+#prof-pane .project-card {
+    padding: 24px;
+    border-color: color-mix(in srgb, var(--prof-accent) 30%, var(--card-border));
+    background:
+        linear-gradient(165deg, color-mix(in srgb, var(--prof-accent) 7%, transparent), transparent 42%),
+        var(--card);
+}
+
+#prof-pane .project-card {
+    min-height: 100%;
+    gap: 14px;
+}
+
+#prof-pane .project-card:hover,
+#prof-pane .expertise-card:hover {
+    border-color: color-mix(in srgb, var(--prof-accent) 48%, transparent);
+    box-shadow: 0 16px 36px color-mix(in srgb, var(--prof-glow) 46%, transparent);
+}
+
+#prof-pane .project-image-placeholder {
+    font-size: 2.4rem;
+    height: 150px;
+    color: color-mix(in srgb, var(--prof-accent) 65%, #ffffff);
+    background: color-mix(in srgb, var(--prof-accent) 16%, var(--bg2));
+}
+
+#prof-pane .project-tag,
+#prof-pane .section-label,
+#prof-pane .stack-chip {
+    color: var(--prof-accent);
+}
+
+#prof-pane .stack-chip {
+    border-color: color-mix(in srgb, var(--prof-accent) 35%, transparent);
+    background: color-mix(in srgb, var(--prof-accent) 12%, transparent);
+}
+
+#prof-pane .btn-primary {
+    background: var(--prof-grad);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--prof-glow) 55%, transparent);
+}
+
+#prof-pane .hero-desc,
+#prof-pane .project-summary,
+#prof-pane .expertise-desc {
+    color: color-mix(in srgb, var(--text-muted) 92%, #ffffff);
+}
+
+/* --- FOOTER & SOCIAL POLISH --- */
+.footer {
+    margin-top: 88px;
+    border-top: 1px solid var(--card-border);
+    background:
+        radial-gradient(1200px 420px at 80% -120px, color-mix(in srgb, var(--accent) 14%, transparent), transparent 65%),
+        var(--bg2);
+}
+
+.footer-inner {
+    width: min(1160px, 100%);
+    margin: 0 auto;
+    padding: 44px 20px 26px;
+}
+
+.footer-top,
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer-top {
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.footer-nav a {
+    padding: 8px 12px;
+    border-radius: 999px;
+    color: var(--text-muted);
+    border: 1px solid transparent;
+    font-size: 0.86rem;
+    font-weight: 600;
+}
+
+.footer-nav a:hover {
+    color: var(--text);
+    border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+    background: color-mix(in srgb, var(--accent) 11%, transparent);
+}
+
+.footer-bottom {
+    padding-top: 16px;
+}
+
+.footer-bottom p {
+    color: var(--text-dim);
+    font-size: 0.84rem;
+}
+
+.social-links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.social-links a {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    border: 1px solid var(--card-border);
+    color: var(--text-muted);
+    background: color-mix(in srgb, var(--bg3) 60%, transparent);
+}
+
+.social-links a:hover {
+    color: var(--text);
+    border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    transform: translateY(-1px);
+}
+
+@media (max-width: 900px) {
+    .hero-ctas {
+        justify-content: center;
+    }
+
+    .hero-desc {
+        margin-inline: auto;
+    }
+
+    .footer-top,
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
