@@ -57,9 +57,10 @@ The repository acts as an offline-first PWA, heavily utilizing `manifest.json` a
 
 ### 3.1 Fetch and Cache Strategy (`sw.js`)
 The application operates on a **Stale-While-Revalidate with Offline Fallback** strategy.
-1.  **Cache First**: Requests intercept `sw.js` and serve matching static assets immediately if available in `abhishek-raut-v9` (or current `CACHE_NAME`) cache.
-2.  **Network Resolution**: Requests are mirrored over the network. If successful, the cache is quietly overwritten with updated assets for the *next* reload.
+1.  **Cache First**: Requests intercept `sw.js` and serve matching static assets immediately if available in `abhishek-raut-v11` (or current `CACHE_NAME`) cache.
+2.  **Network Resolution**: Same-origin GET requests are mirrored over the network. Cache updates are applied only for core resource destinations (document/script/style/image/font).
 3.  **Fallback**: If completely offline and the cache is missed (e.g. user clears cache), `sw.js` fails gracefully to `./offline.html`.
 
 ### 3.2 Cache Versioning
 Service Worker caches (`CACHE_NAME` in `sw.js`) must be manually bumped (e.g. `v10` -> `v11`) whenever core architectural, HTML, or large CSS/JS changes are deployed. Bumping triggers the `activate` event and removes old cache buckets so clients receive fresh assets. Pre-cached assets include `index.html`, `offline.html`, `css/*.css`, `script.js`, `manifest.json`, and hero images. The worker only intercepts same-origin requests; third-party URLs are not cached.
+

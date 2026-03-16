@@ -5,6 +5,10 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- INITIALIZE ALL COMPONENTS ---
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+    const shouldReduceMotion = prefersReducedMotion || isTouchDevice;
+
     initScrollAnimations();
     initServiceWorker();
     initNavbar();
@@ -12,17 +16,27 @@ document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     initModals();
     initCounters();
-    initTiltEffects();
-    initCursor();
-    initParallaxOrbs();
     initImageErrorHandler();
     initNotifications();
     initMobileMenu();
-    initCanvasParticles();
     initTabs();
+
+    if (!shouldReduceMotion) {
+        initTiltEffects();
+        initCursor();
+        initParallaxOrbs();
+        initCanvasParticles();
+    }
 
     const footerYear = document.getElementById('footer-year');
     if (footerYear) footerYear.textContent = new Date().getFullYear();
+
+    const resumeBtn = document.getElementById('resume-btn');
+    if (resumeBtn) {
+        resumeBtn.addEventListener('click', () => {
+            window.open('./Abhishek Raut Resume 0226.pdf', '_blank', 'noopener,noreferrer');
+        });
+    }
 
     // --- TAB SWITCHER LOGIC ---
     function initTabs() {
@@ -38,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!targetPane) return;
 
             // Remove active classes and update ARIA
-            tabBtns.forEach((b, i) => {
+            tabBtns.forEach((b) => {
                 b.classList.remove('active');
                 b.setAttribute('aria-selected', 'false');
                 b.setAttribute('tabindex', '-1');
@@ -130,19 +144,38 @@ document.addEventListener('DOMContentLoaded', () => {
         const nav = document.getElementById('nav-links');
         if (!toggle || !nav) return;
 
+        toggle.setAttribute('aria-controls', 'nav-links');
+        toggle.setAttribute('aria-expanded', 'false');
+
+        const openMenu = () => {
+            toggle.classList.add('active');
+            nav.classList.add('active');
+            toggle.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden';
+        };
+
+        const closeMenu = () => {
+            toggle.classList.remove('active');
+            nav.classList.remove('active');
+            toggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+            toggle.focus();
+        };
+
         toggle.addEventListener('click', () => {
-            toggle.classList.toggle('active');
-            nav.classList.toggle('active');
-            document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
+            if (nav.classList.contains('active')) closeMenu();
+            else openMenu();
         });
 
-        // Close menu on link click
         nav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                toggle.classList.remove('active');
-                nav.classList.remove('active');
-                document.body.style.overflow = '';
-            });
+            link.addEventListener('click', closeMenu);
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && nav.classList.contains('active')) {
+                e.preventDefault();
+                closeMenu();
+            }
         });
     }
 
@@ -297,9 +330,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        navLinks.forEach(a => {
+        navLinks.forEach((a) => {
             a.classList.remove('active');
-            if (a.getAttribute('href').includes(current)) {
+            if (current && a.getAttribute('href') === `#${current}`) {
                 a.classList.add('active');
             }
         });
@@ -446,42 +479,86 @@ document.addEventListener('DOMContentLoaded', () => {
         const projectCards = document.querySelectorAll('.project-card[data-full-desc]');
         const body = document.body;
 
-        projectCards.forEach(card => {
-            card.addEventListener('click', () => {
-                const title = card.querySelector('.project-title')?.textContent || "Project";
-                const img = card.querySelector('.project-image')?.src || "";
-                const desc = card.getAttribute('data-full-desc') || "No description available.";
-                const tags = card.getAttribute('data-tags') ? card.getAttribute('data-tags').split(',') : [];
-                const link = card.getAttribute('data-link') || '#';
+        let lastFocused = null;
 
-                if (modalTitle) modalTitle.textContent = title;
-                if (modalImg) modalImg.src = img;
-                if (modalDesc) modalDesc.textContent = desc;
-                if (modalLink) modalLink.href = link;
-
-                if (modalTags) {
-                    modalTags.innerHTML = '';
-                    tags.forEach(tag => {
-                        const span = document.createElement('span');
-                        span.className = 'hero-badge';
-                        span.textContent = tag.trim();
-                        modalTags.appendChild(span);
-                    });
-                }
-
-                modal.classList.add('active');
-                body.style.overflow = 'hidden';
-            });
-        });
+        const getFocusable = () => modal.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])');
 
         const closeModal = () => {
             modal.classList.remove('active');
+            modal.setAttribute('hidden', '');
             body.style.overflow = '';
+            if (lastFocused) lastFocused.focus();
         };
 
+        const openModal = (card) => {
+            const title = card.querySelector('.project-title')?.textContent || 'Project';
+            const img = card.querySelector('.project-image')?.src || '';
+            const desc = card.getAttribute('data-full-desc') || 'No description available.';
+            const tags = card.getAttribute('data-tags') ? card.getAttribute('data-tags').split(',') : [];
+            const link = card.getAttribute('data-link') || '#';
+
+            if (modalTitle) modalTitle.textContent = title;
+            if (modalImg) modalImg.src = img;
+            if (modalImg) modalImg.alt = title;
+            if (modalDesc) modalDesc.textContent = desc;
+            if (modalLink) modalLink.href = link;
+
+            if (modalTags) {
+                modalTags.innerHTML = '';
+                tags.forEach(tag => {
+                    const span = document.createElement('span');
+                    span.className = 'hero-badge';
+                    span.textContent = tag.trim();
+                    modalTags.appendChild(span);
+                });
+            }
+
+            lastFocused = document.activeElement;
+            modal.removeAttribute('hidden');
+            modal.classList.add('active');
+            body.style.overflow = 'hidden';
+            if (modalClose) modalClose.focus();
+        };
+
+        projectCards.forEach(card => {
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('role', 'button');
+            card.setAttribute('aria-haspopup', 'dialog');
+            card.addEventListener('click', () => openModal(card));
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openModal(card);
+                }
+            });
+        });
+
         if (modalClose) modalClose.addEventListener('click', closeModal);
+
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closeModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!modal.classList.contains('active')) return;
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                closeModal();
+                return;
+            }
+            if (e.key === 'Tab') {
+                const focusable = getFocusable();
+                if (!focusable.length) return;
+                const first = focusable[0];
+                const last = focusable[focusable.length - 1];
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            }
         });
     }
 
@@ -550,6 +627,14 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             animationFrame = requestAnimationFrame(animate);
         }
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                cancelAnimationFrame(animationFrame);
+                return;
+            }
+            animate();
+        });
 
         init();
         animate();
@@ -680,3 +765,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
+
+
+
+
+

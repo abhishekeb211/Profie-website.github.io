@@ -1,9 +1,5 @@
-/**
- * Service Worker — Stale-While-Revalidate with offline fallback.
- * Bump CACHE_NAME (e.g. v9 -> v10) when core HTML/CSS/JS or pre-cached assets change
- * so clients drop old caches on activate.
- */
-const CACHE_NAME = 'abhishek-raut-v10';
+/** Bump CACHE_NAME when core assets change so clients drop old caches. */
+const CACHE_NAME = 'abhishek-raut-v11';
 const ASSETS = [
     './',
     './index.html',
@@ -20,7 +16,7 @@ const ASSETS = [
 
 self.addEventListener('install', (event) => {
     event.waitUntil(
-        caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+        caches.open(CACHE_NAME).then((cache) => Promise.allSettled(ASSETS.map((asset) => cache.add(asset))))
     );
     self.skipWaiting();
 });
@@ -40,30 +36,36 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-    const url = new URL(event.request.url);
-    if (url.origin !== self.location.origin) {
+    if (event.request.method !== 'GET') {
         return;
     }
-
+    if (new URL(event.request.url).origin !== self.location.origin) {
+        return;
+    }
     event.respondWith(
         caches.match(event.request).then((cachedResponse) => {
-            const fetchPromise = fetch(event.request)
-                .then((networkResponse) => {
-                    if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+            const fetchPromise = fetch(event.request).then((networkResponse) => {
+                // Cache only core resource types to avoid unbounded growth
+                if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+                    const cacheableDestinations = ['document', 'script', 'style', 'image', 'font'];
+                    if (cacheableDestinations.includes(event.request.destination)) {
                         const responseToCache = networkResponse.clone();
                         caches.open(CACHE_NAME).then((cache) => {
                             cache.put(event.request, responseToCache);
                         });
                     }
-                    return networkResponse;
-                })
-                .catch(() => {
-                    if (event.request.mode === 'navigate') {
-                        return caches.match('./offline.html') || caches.match('./index.html') || caches.match('./');
-                    }
-                    return Promise.reject(new Error('offline'));
-                });
-            return cachedResponse ? Promise.resolve(cachedResponse) : fetchPromise;
+                }
+                return networkResponse;
+            }).catch(() => {
+                // Navigation: try offline.html, then index.html, then root (Promise chain, not ||)
+                if (event.request.mode === 'navigate') {
+                    return caches.match('./offline.html')
+                        .then((r) => r || caches.match('./index.html'))
+                        .then((r) => r || caches.match('./'));
+                }
+                return Promise.reject(new Error('offline'));
+            });
+            return cachedResponse || fetchPromise;
         })
     );
 });

@@ -70,7 +70,7 @@ This runs HTML validation (`html-validate`), CSS linting (`stylelint`), and JS l
 
 ## 🚢 Deployment (GitHub Pages)
 
-The site is deployed via **GitHub Actions** (see `.github/workflows/pages.yml`). No branch source is used; the workflow deploys the repo root as a static site. Each run runs `npm run verify` before uploading the artifact.
+The site is deployed via **GitHub Actions** (see `.github/workflows/pages.yml`). No branch source is used; the workflow builds a deterministic `_site` artifact and deploys only website assets. Each run executes `npm run verify` before packaging the artifact.
 
 ### Verifying deployment
 
@@ -91,3 +91,4 @@ The site is deployed via **GitHub Actions** (see `.github/workflows/pages.yml`).
 
 ---
 *Built with ❤️ by Prof. Abhishek S. Raut | AI Engineer & Innovation Mentor*
+

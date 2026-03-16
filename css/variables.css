@@ -65,8 +65,8 @@ body.hacker-theme {
     --card: #050505;
     --card-border: rgba(0, 255, 65, 0.3);
     --text: #00FF41;
-    --text-muted: #008F11;
-    --text-dim: #003B00;
+    --text-muted: #4dff72;
+    --text-dim: #1faa3d;
     --header-bg: rgba(0, 0, 0, 0.85);
     --header-border: rgba(0, 255, 65, 0.2);
     --particle-color: rgba(0, 255, 65, 0.2);
@@ -95,8 +95,8 @@ body.glass-theme {
     --card: rgba(255, 255, 255, 0.08);
     --card-border: rgba(255, 255, 255, 0.12);
     --text: #F8FAFC;
-    --text-muted: #94A3B8;
-    --text-dim: #64748B;
+    --text-muted: #c7d6ea;
+    --text-dim: #9fb4cf;
     --header-bg: rgba(255, 255, 255, 0.06);
     --header-border: rgba(255, 255, 255, 0.1);
     --particle-color: rgba(255, 255, 255, 0.12);

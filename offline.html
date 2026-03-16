@@ -48,6 +48,8 @@
             background: #38bdf8;
             color: #0f172a;
             text-decoration: none;
+            border: 0;
+            cursor: pointer;
             border-radius: 10px;
             font-weight: 700;
             transition: transform 0.2s ease;
@@ -73,8 +75,12 @@
         <h1>Offline</h1>
         <p>It seems you're currently disconnected. Don't worry, the portfolio is designed to work offline once visited,
             but some resources might be missing.</p>
-        <a href="javascript:window.location.reload()" class="btn-retry">Try Again</a>
+        <button type="button" id="retry-btn" class="btn-retry">Try Again</button>
     </div>
+    <script>
+        const retryBtn = document.getElementById('retry-btn');
+        if (retryBtn) retryBtn.addEventListener('click', () => window.location.reload());
+    </script>
 </body>
 
 </html>

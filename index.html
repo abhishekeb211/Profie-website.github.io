@@ -16,7 +16,7 @@
     <meta property="og:url" content="https://abhishekeb211.github.io/Profie-website.github.io/">
     <meta property="og:title" content="Abhishek S. Raut | AI Architect & Innovation Lead">
     <meta property="og:description"
-        content="Architecting state-of-the-art Agentic AI ecosystems and Generative Transformers.">
+        content="Building production-grade agentic AI systems and modern generative platforms.">
     <meta property="og:image" content="https://abhishekeb211.github.io/Profie-website.github.io/images/me.png">
 
     <!-- Twitter -->
@@ -24,12 +24,12 @@
     <meta property="twitter:url" content="https://abhishekeb211.github.io/Profie-website.github.io/">
     <meta property="twitter:title" content="Abhishek S. Raut | AI Architect & Innovation Lead">
     <meta property="twitter:description"
-        content="Architecting state-of-the-art Agentic AI ecosystems and Generative Transformers.">
+        content="Building production-grade agentic AI systems and modern generative platforms.">
     <meta property="twitter:image" content="https://abhishekeb211.github.io/Profie-website.github.io/images/me.png">
 
     <!-- Security & Privacy -->
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' * data:; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://github-readme-stats.vercel.app;">
+        content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://github-readme-stats.vercel.app; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests;">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="theme-color" content="#38bdf8">
 
@@ -84,7 +84,7 @@
     <!-- HEADER -->
     <header id="header">
         <div class="logo">ABHISHEK RAUT</div>
-        <nav id="nav-links" class="nav-links">
+        <nav id="nav-links" class="nav-links" aria-label="Primary navigation">
             <a href="#about" class="active" data-ai="#about" data-prof="#hero-prof">About</a>
             <a href="#projects" data-ai="#projects" data-prof="#teaching-prof">Work</a>
             <a href="#experience" data-ai="#experience" data-prof="#highlights-prof">Journey</a>
@@ -112,8 +112,7 @@
                     <button type="button" role="menuitem" data-theme="glass" class="theme-option">Glass</button>
                 </div>
             </div>
-            <button type="button" class="resume-btn"
-                onclick="window.open('./Abhishek Raut Resume 0226.pdf', '_blank', 'noopener')">Resume</button>
+            <button type="button" id="resume-btn" class="resume-btn">Resume</button>
         </div>
     </header>
 
@@ -154,8 +153,8 @@
                             <span class="hero-role-chip">Data Scientist</span>
                         </div>
                         <p class="hero-desc">
-                            Architecting state-of-the-art Agentic AI ecosystems and Generative Transformers.
-                            Bridging the gap between industrial R&D and academic mentorship.
+                            Building production-grade agentic AI platforms and modern generative systems.
+                            Translating research outcomes into reliable products and classroom impact.
                         </p>
                         <div class="hero-ctas">
                             <a href="#projects" class="btn-primary">View Projects</a>
@@ -175,14 +174,14 @@
                         </div>
                         <div class="highlight-item fade-up" style="transition-delay:0.1s">
                             <div class="highlight-num"><span class="counter" data-target="25">0</span></div>
-                            <div class="highlight-label">World Rank DeepRacer</div>
+                            <div class="highlight-label">AWS DeepRacer Rank</div>
                         </div>
                         <div class="highlight-item fade-up" style="transition-delay:0.2s">
                             <div class="highlight-num">Winner</div>
                             <div class="highlight-label">SIH Hardware 2020</div>
                         </div>
                         <div class="highlight-item fade-up" style="transition-delay:0.3s">
-                            <div class="highlight-num">MTech</div>
+                            <div class="highlight-num">M.Tech</div>
                             <div class="highlight-label">AI & Data Science</div>
                         </div>
                     </div>
@@ -197,19 +196,19 @@
                     <div class="expertise-grid">
                         <div class="expertise-card fade-up">
                             <div class="expertise-icon">🧠</div>
-                            <h3 class="expertise-title">Expert: LLM & GenAI</h3>
+                            <h3 class="expertise-title">Specialization: LLM & GenAI</h3>
                             <p class="expertise-desc">Implementation of Generative Transformers, fine-tuning
                                 Llama/OpenAI models using <strong>PyTorch & RLHF</strong>.</p>
                         </div>
                         <div class="expertise-card fade-up" style="transition-delay:0.1s">
                             <div class="expertise-icon">🔍</div>
-                            <h3 class="expertise-title">Advanced: RAG & Cloud</h3>
+                            <h3 class="expertise-title">Specialization: RAG & Cloud</h3>
                             <p class="expertise-desc">Deploying hybrid search pipelines on <strong>AWS & Azure</strong>
                                 with vector indexing and knowledge graphs.</p>
                         </div>
                         <div class="expertise-card fade-up" style="transition-delay:0.2s">
                             <div class="expertise-icon">⚡</div>
-                            <h3 class="expertise-title">Expert: Tech Stack</h3>
+                            <h3 class="expertise-title">Specialization: Engineering Stack</h3>
                             <p class="expertise-desc">Mastery in <strong>Python, C, C++, SQL</strong> with industrial
                                 experience in scaling AI architectures.</p>
                         </div>
@@ -509,66 +508,66 @@
                                     <td><strong>Unstop (Dare2Compete)</strong></td>
                                     <td>Multiple Hackathons</td>
                                     <td><span class="comp-badge ongoing">Ongoing</span></td>
-                                    <td><a href="https://unstop.com/" target="_blank" rel="noopener" class="comp-link">Visit</a></td>
+                                    <td><a href="https://unstop.com/" target="_blank" rel="noopener noreferrer" class="comp-link">Visit</a></td>
                                 </tr>
                                 <tr>
                                     <td><strong>SIH (Smart India Hackathon)</strong></td>
                                     <td>National Hackathon</td>
                                     <td><span class="comp-badge upcoming">Sept - Dec</span></td>
-                                    <td><a href="https://sih.gov.in/" target="_blank" rel="noopener" class="comp-link">Visit</a></td>
+                                    <td><a href="https://sih.gov.in/" target="_blank" rel="noopener noreferrer" class="comp-link">Visit</a></td>
                                 </tr>
                                 <tr>
                                     <td><strong>ICPC</strong></td>
                                     <td>Competitive Coding</td>
                                     <td><span class="comp-badge upcoming">Nov - Jan</span></td>
-                                    <td><a href="https://icpc.global/" target="_blank" rel="noopener" class="comp-link">Visit</a></td>
+                                    <td><a href="https://icpc.global/" target="_blank" rel="noopener noreferrer" class="comp-link">Visit</a></td>
                                 </tr>
                                 <tr>
                                     <td><strong>NPTEL Exams</strong></td>
                                     <td>Certification</td>
                                     <td><span class="comp-badge upcoming">March / Sept</span></td>
-                                    <td><a href="https://nptel.ac.in/" target="_blank" rel="noopener" class="comp-link">Visit</a></td>
+                                    <td><a href="https://nptel.ac.in/" target="_blank" rel="noopener noreferrer" class="comp-link">Visit</a></td>
                                 </tr>
                                 <tr>
                                     <td><strong>IIT Research Internships</strong></td>
                                     <td>Research</td>
                                     <td><span class="comp-badge upcoming">March - April</span></td>
-                                    <td><a href="https://aicte-india.org/" target="_blank" rel="noopener" class="comp-link">Visit</a>
+                                    <td><a href="https://aicte-india.org/" target="_blank" rel="noopener noreferrer" class="comp-link">Visit</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><strong>AICTE Portal</strong></td>
                                     <td>Pan-India Platform</td>
                                     <td><span class="comp-badge varies">Varies</span></td>
-                                    <td><a href="https://aicte-india.org/" target="_blank" rel="noopener" class="comp-link">Visit</a>
+                                    <td><a href="https://aicte-india.org/" target="_blank" rel="noopener noreferrer" class="comp-link">Visit</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><strong>HackerEarth</strong></td>
                                     <td>Hackathons</td>
                                     <td><span class="comp-badge ongoing">Ongoing</span></td>
-                                    <td><a href="https://hackerearth.com/" target="_blank" rel="noopener" class="comp-link">Visit</a>
+                                    <td><a href="https://hackerearth.com/" target="_blank" rel="noopener noreferrer" class="comp-link">Visit</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><strong>MachineHack</strong></td>
                                     <td>AI/ML Hackathons</td>
                                     <td><span class="comp-badge ongoing">Ongoing</span></td>
-                                    <td><a href="https://machinehack.com/" target="_blank" rel="noopener" class="comp-link">Visit</a>
+                                    <td><a href="https://machinehack.com/" target="_blank" rel="noopener noreferrer" class="comp-link">Visit</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><strong>ISRO Research</strong></td>
                                     <td>Space Research</td>
                                     <td><span class="comp-badge upcoming">Dec 2025</span></td>
-                                    <td><a href="https://www.isro.gov.in/" target="_blank" rel="noopener" class="comp-link">Visit</a>
+                                    <td><a href="https://www.isro.gov.in/" target="_blank" rel="noopener noreferrer" class="comp-link">Visit</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><strong>MyGov Innovate</strong></td>
                                     <td>Pan-India</td>
                                     <td><span class="comp-badge varies">As Announced</span></td>
-                                    <td><a href="https://innovateindia.mygov.in/" target="_blank" rel="noopener" class="comp-link">Visit</a></td>
+                                    <td><a href="https://innovateindia.mygov.in/" target="_blank" rel="noopener noreferrer" class="comp-link">Visit</a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -684,7 +683,7 @@
                             <div class="project-stack">
                                 <span class="stack-chip">rtfgnu4b</span>
                             </div>
-                            <a href="https://classroom.google.com/c/NzAwMzE2Nzk3OTIx?cjc=rtfgnu4b" target="_blank" rel="noopener" class="btn-primary">Join Classroom</a>
+                            <a href="https://classroom.google.com/c/NzAwMzE2Nzk3OTIx?cjc=rtfgnu4b" target="_blank" rel="noopener noreferrer" class="btn-primary">Join Classroom</a>
                         </div>
                         <div class="project-card fade-up" tabindex="0" style="transition-delay:0.1s">
                             <div class="project-image-wrapper">
@@ -699,7 +698,7 @@
                             <div class="project-stack">
                                 <span class="stack-chip">od5pxfou</span>
                             </div>
-                            <a href="https://classroom.google.com/c/NzA3MjAxMzYyMzE1?cjc=od5pxfou" target="_blank" rel="noopener" class="btn-primary">Join Classroom</a>
+                            <a href="https://classroom.google.com/c/NzA3MjAxMzYyMzE1?cjc=od5pxfou" target="_blank" rel="noopener noreferrer" class="btn-primary">Join Classroom</a>
                         </div>
                         <div class="project-card fade-up" tabindex="0" style="transition-delay:0.2s">
                             <div class="project-image-wrapper">
@@ -715,7 +714,7 @@
                                 <span class="stack-chip">r4er6t5</span>
                             </div>
                             <!-- TODO: Add Google Classroom join URL for Data Exploration Lab (code r4er6t5) when available -->
-                            <a href="#" class="btn-primary">Join Classroom</a>
+                            <a href="#" class="btn-primary" aria-disabled="true" tabindex="-1">Classroom Link Coming Soon</a>
                         </div>
                         <div class="project-card fade-up" tabindex="0" style="transition-delay:0.3s">
                             <div class="project-image-wrapper">
@@ -731,7 +730,7 @@
                                 <span class="stack-chip">avixrhy</span>
                             </div>
                             <!-- TODO: Add full Google Classroom join URL for FSDL Lab (code avixrhy) when available -->
-                            <a href="https://classroom.google.com" target="_blank" rel="noopener" class="btn-primary">Join Classroom</a>
+                            <a href="#" class="btn-primary" aria-disabled="true" tabindex="-1">Classroom Link Coming Soon</a>
                         </div>
                     </div>
                 </div>
@@ -749,9 +748,9 @@
                     <p id="footer-tagline">AI Engineer & Innovation Mentor</p>
                     <p class="footer-quote"
                         style="margin-top: 10px; font-style: italic; color: var(--accent); font-weight: 600; font-size: 0.75rem; letter-spacing: 1px;">
-                        "NO PAIN NO PORSCHE !!!"</p>
+                        Focused on reliable engineering, measurable impact, and responsible innovation.</p>
                 </div>
-                <nav class="footer-nav">
+                <nav class="footer-nav" aria-label="Footer navigation">
                     <a href="#about" data-ai="#about" data-prof="#hero-prof">About</a>
                     <a href="#projects" data-ai="#projects" data-prof="#teaching-prof">Work</a>
                     <a href="mailto:abhishek.raut@pccoe.org">Email</a>
@@ -760,7 +759,7 @@
             <div class="footer-bottom">
                 <p>&copy; <span id="footer-year">2025</span> Abhishek S. Raut. All rights reserved.</p>
                 <div class="social-links">
-                    <a href="https://linkedin.com/in/abhishek-raut-087138171/" target="_blank" rel="noopener" title="LinkedIn">
+                    <a href="https://linkedin.com/in/abhishek-raut-087138171/" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
                             <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
@@ -768,28 +767,28 @@
                             <circle cx="4" cy="4" r="2" />
                         </svg>
                     </a>
-                    <a href="https://github.com/abhishekeb211/" target="_blank" rel="noopener" title="GitHub">
+                    <a href="https://github.com/abhishekeb211/" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
                             <path
                                 d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
                         </svg>
                     </a>
-                    <a href="https://scholar.google.com/citations?hl=en&amp;authuser=1&amp;user=GxruQpkAAAAJ" target="_blank" rel="noopener"
-                        title="Google Scholar">
+                    <a href="https://scholar.google.com/citations?hl=en&amp;authuser=1&amp;user=GxruQpkAAAAJ" target="_blank" rel="noopener noreferrer"
+                        title="Google Scholar" aria-label="Google Scholar">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
                             <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
                             <path d="M6 12v5c3 3 9 3 12 0v-5" />
                         </svg>
                     </a>
-                    <a href="https://x.com/abhishekeb981" target="_blank" rel="noopener" title="X (Twitter)">
+                    <a href="https://x.com/abhishekeb981" target="_blank" rel="noopener noreferrer" title="X (Twitter)" aria-label="X (Twitter)">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
                             <path d="M4 4l11.733 16h4.267l-11.733-16zM4 20l6.768-6.133m4.464-4.045L20 4" />
                         </svg>
                     </a>
-                    <a href="https://www.instagram.com/pccoe_coding_club/" target="_blank" rel="noopener" title="Instagram">
+                    <a href="https://www.instagram.com/pccoe_coding_club/" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
                             <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
@@ -803,7 +802,7 @@
     </footer>
 
     <!-- MODAL OVERLAY -->
-    <div id="project-modal" class="modal-overlay">
+    <div id="project-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-description" hidden>
         <div class="modal-card">
             <button type="button" class="modal-close" aria-label="Close modal">&times;</button>
             <div class="modal-image-container">
@@ -816,7 +815,7 @@
                 </div>
                 <p id="modal-description"></p>
                 <div class="modal-footer">
-                    <a href="#" id="modal-link" class="btn-primary" target="_blank" rel="noopener">View Project</a>
+                    <a href="#" id="modal-link" class="btn-primary" target="_blank" rel="noopener noreferrer">View Project</a>
                 </div>
             </div>
         </div>
@@ -832,3 +831,9 @@
 </body>
 
 </html>
+
+
+
+
+
+

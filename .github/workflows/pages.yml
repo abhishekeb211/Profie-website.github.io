@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   deploy:
@@ -33,8 +33,14 @@ jobs:
       - name: Install and verify
         run: npm ci && npm run verify
 
-      - name: Remove dev dependencies from artifact
-        run: rm -rf node_modules
+      - name: Prepare deploy artifact
+        run: |
+          rm -rf _site
+          mkdir -p _site
+          cp -r css _site/css
+          cp -r images _site/images
+          cp index.html script.js sw.js manifest.json robots.txt sitemap.xml offline.html _site/
+          if ls *.pdf >/dev/null 2>&1; then cp *.pdf _site/; fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -42,8 +48,9 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: '_site'
       
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
