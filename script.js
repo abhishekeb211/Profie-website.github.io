@@ -214,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function initImageErrorHandler() {
         document.addEventListener('error', (e) => {
             if (e.target.tagName === 'IMG') {
-                e.target.src = 'images/data%20code.png'; // Fallback to a known local image
+                e.target.src = 'images/ANHACK.jpg'; // Fallback to a known local image
                 e.target.style.filter = 'grayscale(1) opacity(0.5)';
             }
         }, true);

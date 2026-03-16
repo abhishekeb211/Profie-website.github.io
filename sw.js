@@ -1,5 +1,5 @@
 /** Bump CACHE_NAME when core assets change so clients drop old caches. */
-const CACHE_NAME = 'abhishek-raut-v11';
+const CACHE_NAME = 'abhishek-raut-v12';
 const ASSETS = [
     './',
     './index.html',
@@ -10,8 +10,8 @@ const ASSETS = [
     './css/components.css',
     './script.js',
     './manifest.json',
-    './images/me.png',
-    './images/me.webp'
+    './images/Me Suit with white bg1.png',
+    './images/ANHACK.jpg'
 ];
 
 self.addEventListener('install', (event) => {
