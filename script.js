@@ -3,6 +3,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+    let observer;
 
     // --- INITIALIZE ALL COMPONENTS ---
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -213,7 +214,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- SCROLL REVEAL ANIMATIONS ---
-    let observer;
     function initScrollAnimations() {
         const observerOptions = {
             threshold: 0.1,
