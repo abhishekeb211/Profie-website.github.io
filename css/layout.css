@@ -123,6 +123,10 @@
     padding-top: 100px;
 }
 
+.tab-pane>.section:first-of-type {
+    padding-top: clamp(6.2rem, 9vw, 7.5rem);
+}
+
 /* --- TAB SWITCHER LOGIC --- */
 .tab-switcher {
     display: flex;
@@ -187,6 +191,8 @@
     width: min(1160px, 100%);
     margin: 0 auto;
     padding: 0 20px;
+    display: grid;
+    gap: var(--space-content);
 }
 
 .highlights-grid,
@@ -209,11 +215,11 @@
 }
 
 #prof-pane .section {
-    padding-block: 86px;
+    padding-block: clamp(4.5rem, 8vw, 6rem);
 }
 
 #prof-pane .section:first-child {
-    padding-top: 112px;
+    padding-top: clamp(6.2rem, 9vw, 7.6rem);
 }
 
 #prof-pane .section-label {
@@ -248,15 +254,21 @@
 
 /* --- SECTION STRUCTURE --- */
 .section {
-    padding: 100px 0;
+    padding: var(--section-gap) 0;
     position: relative;
+}
+
+.section.bg2 {
+    background: linear-gradient(180deg,
+            color-mix(in srgb, var(--bg2) 88%, transparent),
+            color-mix(in srgb, var(--bg) 94%, transparent));
 }
 
 /* --- HERO SECTIONS --- */
 .hero {
     display: flex;
     align-items: center;
-    padding: 120px 0 80px;
+    padding: clamp(6.6rem, 9vw, 8.2rem) 0 clamp(4rem, 7vw, 5.2rem);
     position: relative;
     overflow: hidden;
 }
@@ -318,6 +330,10 @@
     flex: 1.2;
 }
 
+.highlights {
+    margin-top: -8px;
+}
+
 @media (max-width: 900px) {
     .nav-links {
         display: none;
@@ -343,7 +359,7 @@
     }
 
     #prof-pane .section {
-        padding-block: 72px;
+        padding-block: clamp(3.8rem, 10vw, 4.8rem);
     }
 
     #hero-prof .hero-content {

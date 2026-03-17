@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const footerTagline = document.getElementById('footer-tagline');
             if (footerTagline) footerTagline.textContent = isProf ? 'Professor & Innovation Mentor' : 'AI Engineer & Innovation Mentor';
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: shouldReduceMotion ? 'auto' : 'smooth' });
             refreshAnimations();
         }
 
@@ -305,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (targetEntry) {
                     window.scrollTo({
                         top: targetEntry.offsetTop - 80,
-                        behavior: 'smooth'
+                        behavior: shouldReduceMotion ? 'auto' : 'smooth'
                     });
                 }
             });
@@ -373,6 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!THEMES.includes(theme)) theme = 'dark';
             body.classList.remove('light-theme', 'dark-theme', 'hacker-theme', 'glass-theme');
             body.classList.add(`${theme}-theme`);
+            body.setAttribute('data-mode', theme);
 
             const labels = { light: 'Light', dark: 'Dark', hacker: 'Hacker', glass: 'Glass' };
             currentLabel.textContent = labels[theme];
@@ -565,6 +566,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!ctx) return;
         let particles = [];
         let animationFrame;
+        let particleCount = 40;
+
+        const getParticleCount = () => {
+            const baseCount = window.innerWidth < 760 ? 22 : 42;
+            if (document.body.classList.contains('hacker-theme')) return baseCount + 10;
+            if (document.body.classList.contains('glass-theme')) return Math.max(16, baseCount - 10);
+            return baseCount;
+        };
 
         function resize() {
             canvas.width = window.innerWidth;
@@ -602,8 +611,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function init() {
+            particleCount = getParticleCount();
             particles = [];
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < particleCount; i++) {
                 particles.push(new Particle());
             }
         }
@@ -624,6 +634,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             animate();
         });
+
+        const themeObserver = new MutationObserver(() => {
+            init();
+        });
+        themeObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 
         init();
         animate();

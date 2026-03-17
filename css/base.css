@@ -122,7 +122,7 @@ body::before {
     background-size: 200px;
     pointer-events: none;
     z-index: -1;
-    opacity: .24;
+    opacity: var(--noise-opacity);
 }
 
 body::after {
@@ -179,5 +179,9 @@ body::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+    }
+
+    .hacker-scanline {
+        display: none !important;
     }
 }

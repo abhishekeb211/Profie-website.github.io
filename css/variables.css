@@ -23,6 +23,15 @@
     --font-mono: 'JetBrains Mono', monospace;
     --overlay-bg: rgba(15, 23, 42, 0.5);
     --card-shadow-hover: 0 20px 50px rgba(0, 0, 0, 0.25);
+    --shadow-soft: 0 12px 32px rgba(2, 8, 23, 0.18);
+    --shadow-strong: 0 20px 54px rgba(2, 8, 23, 0.28);
+    --section-gap: clamp(4.5rem, 10vw, 7.25rem);
+    --space-content: clamp(0.95rem, 2vw, 1.4rem);
+    --motion-fast: 180ms;
+    --motion-medium: 320ms;
+    --motion-slow: 560ms;
+    --noise-opacity: 0.24;
+    --scanline-opacity: 0;
     --accent-soft: color-mix(in srgb, var(--accent) 18%, transparent);
     --accent-border-soft: color-mix(in srgb, var(--accent) 38%, transparent);
     --focus-ring: color-mix(in srgb, var(--accent) 72%, #ffffff);
@@ -49,6 +58,8 @@ body.light-theme {
     --surface-elev: rgba(255, 255, 255, 0.86);
     --surface-strong: rgba(248, 250, 252, 0.92);
     --particle-tint: 20, 184, 166;
+    --noise-opacity: 0.1;
+    --scanline-opacity: 0;
 }
 
 body.dark-theme {
@@ -68,6 +79,8 @@ body.dark-theme {
     --surface-elev: rgba(9, 16, 30, 0.84);
     --surface-strong: rgba(16, 26, 43, 0.9);
     --particle-tint: 34, 211, 238;
+    --noise-opacity: 0.2;
+    --scanline-opacity: 0;
 }
 
 body.hacker-theme {
@@ -100,6 +113,8 @@ body.hacker-theme {
     --surface-elev: rgba(1, 8, 3, 0.9);
     --surface-strong: rgba(3, 17, 7, 0.92);
     --particle-tint: 0, 255, 65;
+    --noise-opacity: 0.34;
+    --scanline-opacity: 0.46;
 }
 
 /* Modern Glass (glassmorphism) — dark base so frosted panels show through */
@@ -130,6 +145,8 @@ body.glass-theme {
     --surface-elev: rgba(10, 18, 34, 0.58);
     --surface-strong: rgba(255, 255, 255, 0.12);
     --particle-tint: 56, 189, 248;
+    --noise-opacity: 0.08;
+    --scanline-opacity: 0;
 }
 
 /* Persona state stays declarative in CSS; JS only toggles data-persona */
