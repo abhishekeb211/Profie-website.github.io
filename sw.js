@@ -3,7 +3,7 @@
  * - Bump CACHE_NAME whenever core app shell assets change (index/offline/css/script/manifest/precache images).
  * - Keep the ASSETS list aligned with real files so install does not cache-fail missing entries.
  */
-const CACHE_NAME = 'abhishek-raut-v15';
+const CACHE_NAME = 'abhishek-raut-v16';
 const ASSETS = [
     './',
     './index.html',
