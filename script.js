@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (tabList) {
             tabList.addEventListener('keydown', (e) => {
                 const idx = Array.from(tabBtns).indexOf(document.activeElement);
-                if (idx === -1) return;
+                if idx === -1 return;
                 let next = idx;
                 if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
                     e.preventDefault();
@@ -582,7 +582,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (modalImg) modalImg.src = img;
             if (modalImg) modalImg.alt = title;
             if (modalDesc) modalDesc.textContent = desc;
-            if (modalLink) modalLink.href = link;
+            if (modalLink) {
+                modalLink.href = link;
+                modalLink.style.display = (link && link !== '#') ? '' : 'none';
+            }
 
             if (modalTags) {
                 modalTags.innerHTML = '';
