@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
     const shouldReduceMotion = prefersReducedMotion || isTouchDevice;
 
+    // T4-E: tag mobile devices for CSS animation budget reduction
+    if (isTouchDevice) document.body.classList.add('reduce-motion-mobile');
+
     initScrollAnimations();
     initServiceWorker();
     initNavbar();
@@ -21,12 +24,17 @@ document.addEventListener('DOMContentLoaded', () => {
     initNotifications();
     initMobileMenu();
     initTabs();
+    initOrbitChips();
 
     if (!shouldReduceMotion) {
         initTiltEffects();
         initCursor();
         initParallaxOrbs();
         initCanvasParticles();
+        initCardSpotlight();
+        initRipple();
+        initCardMagnetic();
+        initTypewriter();
     }
 
     const footerYear = document.getElementById('footer-year');
@@ -45,6 +53,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const tabPanes = document.querySelectorAll('.tab-pane');
 
         if (!tabBtns.length || !tabPanes.length) return;
+
+        // T2-F: inject sliding indicator element
+        const switcher = document.querySelector('.tab-switcher.bottom-dock');
+        let indicator = null;
+        if (switcher) {
+            indicator = document.createElement('div');
+            indicator.className = 'tab-switcher-indicator';
+            switcher.prepend(indicator);
+        }
+
+        function updateIndicator(btn) {
+            if (!indicator || !switcher) return;
+            const sr = switcher.getBoundingClientRect();
+            const br = btn.getBoundingClientRect();
+            indicator.style.left = `${br.left - sr.left}px`;
+            indicator.style.width = `${br.width}px`;
+        }
 
         function switchToTab(btn) {
             const targetId = `${btn.getAttribute('data-target')}-pane`;
@@ -69,6 +94,8 @@ document.addEventListener('DOMContentLoaded', () => {
             targetPane.style.display = 'block';
             targetPane.setAttribute('aria-hidden', 'false');
             setTimeout(() => targetPane.classList.add('active'), 10);
+
+            updateIndicator(btn);
 
             const isProf = targetId === 'prof-pane';
             if (isProf) {
@@ -104,6 +131,10 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.setAttribute('tabindex', index === 0 ? '0' : '-1');
             btn.addEventListener('click', () => switchToTab(btn));
         });
+
+        // initialise indicator position on first active tab
+        const activeBtn = document.querySelector('.tab-btn.active');
+        if (activeBtn) requestAnimationFrame(() => updateIndicator(activeBtn));
 
         const tabList = document.querySelector('.tab-switcher[role="tablist"]');
         if (tabList) {
@@ -221,7 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
+            entries.forEach((entry) => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                 }
@@ -231,13 +262,26 @@ document.addEventListener('DOMContentLoaded', () => {
         refreshAnimations();
     }
 
+    // T1-E: Smart per-grid stagger — resets and re-observes fade-up elements
     function refreshAnimations() {
         if (!observer) return;
-        const fadeElements = document.querySelectorAll('.fade-up');
-        fadeElements.forEach((el, index) => {
-            el.classList.remove('visible'); // Reset
-            el.style.transitionDelay = `${index * 0.05}s`; // Staggered reveal
-            observer.observe(el);
+        const grids = document.querySelectorAll('.highlights-grid, .expertise-grid, .projects-grid');
+        // Stagger children within each grid independently
+        grids.forEach(grid => {
+            Array.from(grid.querySelectorAll('.fade-up')).forEach((el, i) => {
+                el.classList.remove('visible');
+                el.style.transitionDelay = `${i * 0.08}s`;
+                observer.observe(el);
+            });
+        });
+        // Remaining fade-ups outside grids (section titles, heroes, etc.)
+        const gridItems = new Set(document.querySelectorAll('.highlights-grid .fade-up, .expertise-grid .fade-up, .projects-grid .fade-up'));
+        document.querySelectorAll('.fade-up').forEach((el, index) => {
+            if (!gridItems.has(el)) {
+                el.classList.remove('visible');
+                el.style.transitionDelay = `${index * 0.05}s`;
+                observer.observe(el);
+            }
         });
     }
 
@@ -245,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js').then(() => {
-                    // SW registered; optional: check for updates
+
                 }).catch((err) => {
                     if (typeof console !== 'undefined' && console.error) console.error('SW Registration Failed', err);
                 });
@@ -369,8 +413,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const THEMES = ['light', 'dark', 'hacker', 'glass'];
 
+        // T4-D: inject theme-flash overlay once
+        let flashEl = document.querySelector('.theme-flash');
+        if (!flashEl) {
+            flashEl = document.createElement('div');
+            flashEl.className = 'theme-flash';
+            document.body.appendChild(flashEl);
+        }
+
+        function triggerFlash() {
+            if (shouldReduceMotion) return;
+            flashEl.classList.add('active');
+            setTimeout(() => flashEl.classList.remove('active'), 300);
+        }
+
+        // T3-C: confetti burst when switching TO light theme
+        function spawnConfetti() {
+            if (shouldReduceMotion) return;
+            const colors = ['#22d3ee', '#14b8a6', '#f59e0b', '#ec4899', '#a78bfa', '#34d399'];
+            for (let i = 0; i < 32; i++) {
+                const dot = document.createElement('div');
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const size = 6 + Math.random() * 8;
+                const startX = 30 + Math.random() * 40;
+                dot.style.cssText = `
+                    position:fixed; z-index:99998; pointer-events:none; border-radius:50%;
+                    width:${size}px; height:${size}px; background:${color};
+                    left:${startX}vw; top:50vh;
+                    animation: confetti-fall ${1.8 + Math.random() * 1.2}s ease-out ${Math.random() * 0.4}s forwards;
+                    transform: translateX(${(Math.random() - 0.5) * 40}vw);
+                `;
+                document.body.appendChild(dot);
+                dot.addEventListener('animationend', () => dot.remove());
+            }
+        }
+
+        let prevTheme = '';
+
         function applyTheme(theme) {
             if (!THEMES.includes(theme)) theme = 'dark';
+            if (prevTheme && prevTheme !== theme) triggerFlash();
+            if (theme === 'light' && prevTheme && prevTheme !== 'light') spawnConfetti();
+            prevTheme = theme;
+
             body.classList.remove('light-theme', 'dark-theme', 'hacker-theme', 'glass-theme');
             body.classList.add(`${theme}-theme`);
             body.setAttribute('data-mode', theme);
@@ -558,122 +643,308 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- HIGH-PERFORMANCE CANVAS PARTICLES ---
+    // --- HIGH-PERFORMANCE CANVAS PARTICLES (T4-B DPR, T4-C FPS, T3-A/B/D/E) ---
     function initCanvasParticles() {
         const canvas = document.getElementById('bg-canvas');
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
-        let particles = [];
+
+        // T4-C: FPS throttle
+        const targetFPS = isTouchDevice ? 30 : 60;
+        const frameInterval = 1000 / targetFPS;
+        let lastFrame = 0;
         let animationFrame;
-        let particleCount = 40;
 
-        const getParticleCount = () => {
-            const baseCount = window.innerWidth < 760 ? 22 : 42;
-            if (document.body.classList.contains('hacker-theme')) return baseCount + 10;
-            if (document.body.classList.contains('glass-theme')) return Math.max(16, baseCount - 10);
-            return baseCount;
-        };
+        const isHacker = () => document.body.classList.contains('hacker-theme');
+        const isGlass = () => document.body.classList.contains('glass-theme');
+        const isDark = () => document.body.classList.contains('dark-theme');
+        const isProf = () => document.body.hasAttribute('data-persona');
 
+        // T4-B: DPR-aware resize
         function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = window.innerWidth * dpr;
+            canvas.height = window.innerHeight * dpr;
+            canvas.style.width = window.innerWidth + 'px';
+            canvas.style.height = window.innerHeight + 'px';
+            ctx.scale(dpr, dpr);
         }
-        window.addEventListener('resize', resize);
+        window.addEventListener('resize', () => { resize(); init(); });
         resize();
 
+        const W = () => window.innerWidth;
+        const H = () => window.innerHeight;
+
+        // --- PARTICLES ---
+        let particles = [];
+
+        const getParticleCount = () => {
+            const base = W() < 760 ? 22 : 42;
+            if (isHacker()) return base + 28;
+            if (isGlass()) return Math.max(16, base - 10);
+            return base;
+        };
+
         class Particle {
-            constructor() {
-                this.init();
-            }
+            constructor() { this.init(); }
             init() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 1;
-                this.speedX = (Math.random() - 0.5) * 0.5;
-                this.speedY = (Math.random() - 0.5) * 0.5;
-                this.opacity = Math.random() * 0.5 + 0.2;
+                this.x = Math.random() * W();
+                this.y = Math.random() * H();
+                const hacker = isHacker();
+                this.size = hacker ? Math.random() * 2.2 + 0.8 : Math.random() * 2 + 1;
+                const speed = hacker ? 1.1 : 0.5;
+                this.speedX = (Math.random() - 0.5) * speed;
+                this.speedY = (Math.random() - 0.5) * speed;
+                this.opacity = hacker ? Math.random() * 0.65 + 0.25 : Math.random() * 0.5 + 0.2;
+                // T3-A: twinkling phase
+                this.twinklePhase = Math.random() * Math.PI * 2;
+                this.twinkleSpeed = 0.008 + Math.random() * 0.012;
+                this.baseOpacity = this.opacity;
+                // T3-B: hacker flicker
+                this.flickerOffset = Math.random() * Math.PI * 2;
+                this.flickerSpeed = 0.02 + Math.random() * 0.03;
             }
             update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
-                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+                if (this.x < 0 || this.x > W()) this.speedX *= -1;
+                if (this.y < 0 || this.y > H()) this.speedY *= -1;
+                if (isHacker()) {
+                    this.flickerOffset += this.flickerSpeed;
+                    this.opacity = 0.25 + Math.abs(Math.sin(this.flickerOffset)) * 0.55;
+                } else if (isDark()) {
+                    // T3-A: twinkling
+                    this.twinklePhase += this.twinkleSpeed;
+                    this.opacity = this.baseOpacity + Math.sin(this.twinklePhase) * 0.2;
+                    this.opacity = Math.max(0.05, Math.min(0.85, this.opacity));
+                }
             }
             draw() {
                 const computed = getComputedStyle(document.body);
-                const particleTint = (computed.getPropertyValue('--particle-tint') || '34, 211, 238').trim();
-                ctx.fillStyle = `rgba(${particleTint}, ${this.opacity})`;
+                const tint = (computed.getPropertyValue('--particle-tint') || '34, 211, 238').trim();
+                if (isHacker()) {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size * 0.55, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 180, 180, ${this.opacity * 0.85})`;
+                    ctx.fill();
+                    const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 2.8);
+                    g.addColorStop(0, `rgba(${tint}, ${this.opacity * 0.9})`);
+                    g.addColorStop(0.5, `rgba(${tint}, ${this.opacity * 0.35})`);
+                    g.addColorStop(1, `rgba(${tint}, 0)`);
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size * 2.8, 0, Math.PI * 2);
+                    ctx.fillStyle = g;
+                    ctx.fill();
+                } else {
+                    ctx.fillStyle = `rgba(${tint}, ${this.opacity})`;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+        }
+
+        function drawHackerConnections() {
+            const computed = getComputedStyle(document.body);
+            const tint = (computed.getPropertyValue('--particle-tint') || '255, 26, 26').trim();
+            const maxDist = 130;
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < maxDist) {
+                        const alpha = (1 - dist / maxDist) * 0.28;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(${tint}, ${alpha})`;
+                        ctx.lineWidth = 0.7;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        // T3-B: Glass bokeh blobs
+        let bokehBlobs = [];
+
+        class BokehBlob {
+            constructor() { this.init(); }
+            init() {
+                this.x = Math.random() * W();
+                this.y = Math.random() * H();
+                this.r = 20 + Math.random() * 40;
+                this.speedX = (Math.random() - 0.5) * 0.18;
+                this.speedY = (Math.random() - 0.5) * 0.18;
+                this.opacity = 0.03 + Math.random() * 0.06;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < -this.r) this.x = W() + this.r;
+                if (this.x > W() + this.r) this.x = -this.r;
+                if (this.y < -this.r) this.y = H() + this.r;
+                if (this.y > H() + this.r) this.y = -this.r;
+            }
+            draw() {
+                const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r);
+                g.addColorStop(0, `rgba(56, 189, 248, ${this.opacity})`);
+                g.addColorStop(1, 'rgba(56, 189, 248, 0)');
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                ctx.fillStyle = g;
                 ctx.fill();
             }
         }
 
-        function init() {
-            particleCount = getParticleCount();
-            particles = [];
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
+        // T3-D: Hacker binary rain
+        let rainCols = [];
+        let rainSkip = 0;
+        const RAIN_CHARS = '01';
+        const RAIN_FONT_SIZE = 14;
+
+        function initRain() {
+            const cols = Math.floor(W() / RAIN_FONT_SIZE);
+            rainCols = Array.from({ length: cols }, () => Math.random() * -H());
+        }
+
+        function drawRain() {
+            rainSkip++;
+            if (rainSkip < 3) return;
+            rainSkip = 0;
+            ctx.fillStyle = 'rgba(10, 0, 0, 0.08)';
+            ctx.fillRect(0, 0, W(), H());
+            ctx.font = `${RAIN_FONT_SIZE}px monospace`;
+            rainCols.forEach((y, i) => {
+                const ch = RAIN_CHARS[Math.floor(Math.random() * RAIN_CHARS.length)];
+                const x = i * RAIN_FONT_SIZE;
+                const bright = y > 0 && y < RAIN_FONT_SIZE * 2;
+                ctx.fillStyle = bright ? 'rgba(255, 120, 120, 0.95)' : `rgba(180, 0, 0, ${0.15 + Math.random() * 0.25})`;
+                ctx.fillText(ch, x, y > 0 ? y : 0);
+                rainCols[i] += RAIN_FONT_SIZE;
+                if (y > H() + RAIN_FONT_SIZE) {
+                    rainCols[i] = Math.random() * -H() * 0.5;
+                }
+            });
+        }
+
+        // T3-E: Professor drifting formula symbols
+        let formulaSymbols = [];
+        const FORMULA_CHARS = ['∑', '∫', 'λ', '∇', '∂', '⊕', '{}', '</>', 'π', 'Δ', '≈', '∞'];
+
+        class FormulaSymbol {
+            constructor() { this.init(); }
+            init() {
+                this.x = Math.random() * W();
+                this.y = Math.random() * H();
+                this.char = FORMULA_CHARS[Math.floor(Math.random() * FORMULA_CHARS.length)];
+                this.opacity = 0.04 + Math.random() * 0.08;
+                this.speedX = (Math.random() - 0.5) * 0.35;
+                this.speedY = (Math.random() - 0.5) * 0.35;
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotSpeed = (Math.random() - 0.5) * 0.004;
+                this.size = 13 + Math.random() * 12;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.rotation += this.rotSpeed;
+                if (this.x < 0) this.x = W();
+                if (this.x > W()) this.x = 0;
+                if (this.y < 0) this.y = H();
+                if (this.y > H()) this.y = 0;
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = 'rgba(45, 212, 191, 1)';
+                ctx.font = `${this.size}px monospace`;
+                ctx.fillText(this.char, 0, 0);
+                ctx.restore();
+                ctx.globalAlpha = 1;
             }
         }
 
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
+        function init() {
+            particles = Array.from({ length: getParticleCount() }, () => new Particle());
+            bokehBlobs = isGlass() ? Array.from({ length: 10 }, () => new BokehBlob()) : [];
+            formulaSymbols = isProf() && !isHacker() ? Array.from({ length: 18 }, () => new FormulaSymbol()) : [];
+            if (isHacker()) initRain();
+        }
+
+        function animate(timestamp) {
+            if (timestamp - lastFrame < frameInterval) {
+                animationFrame = requestAnimationFrame(animate);
+                return;
+            }
+            lastFrame = timestamp;
+
+            if (isHacker()) {
+                drawRain();
+                drawHackerConnections();
+            } else {
+                ctx.clearRect(0, 0, W(), H());
+                if (isGlass()) bokehBlobs.forEach(b => { b.update(); b.draw(); });
+            }
+
+            if (isProf() && !isHacker()) {
+                formulaSymbols.forEach(s => { s.update(); s.draw(); });
+            }
+
+            particles.forEach(p => { p.update(); p.draw(); });
             animationFrame = requestAnimationFrame(animate);
         }
 
         document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                cancelAnimationFrame(animationFrame);
-                return;
-            }
-            animate();
+            if (document.hidden) { cancelAnimationFrame(animationFrame); return; }
+            animationFrame = requestAnimationFrame(animate);
         });
 
-        const themeObserver = new MutationObserver(() => {
-            init();
-        });
-        themeObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+        const themeObserver = new MutationObserver(() => init());
+        themeObserver.observe(document.body, { attributes: true, attributeFilter: ['class', 'data-persona'] });
 
         init();
-        animate();
+        animationFrame = requestAnimationFrame(animate);
     }
 
 
-    // --- IMPACT COUNTER ENGINE ---
+    // --- T2-D: EASED COUNTER ENGINE (rAF + easeOutCubic) ---
     function initCounters() {
         const counters = document.querySelectorAll('.counter');
-        const counterObserverOptions = { threshold: 0.5 };
+        const duration = 1800;
+
+        function easeOutCubic(t) {
+            return 1 - Math.pow(1 - t, 3);
+        }
 
         const counterObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const counter = entry.target;
-                    const target = +counter.getAttribute('data-target');
-                    const speed = 200;
-                    const increment = target / speed;
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                const counter = entry.target;
+                const target = +counter.getAttribute('data-target');
+                const start = performance.now();
 
-                    const updateCount = () => {
-                        const currentCount = +counter.innerText;
-                        if (currentCount < target) {
-                            counter.innerText = Math.ceil(currentCount + increment);
-                            setTimeout(updateCount, 1);
-                        } else {
-                            counter.innerText = target;
-                        }
-                    };
-                    updateCount();
-                    counterObserver.unobserve(counter);
+                function tick(now) {
+                    const elapsed = now - start;
+                    const progress = Math.min(elapsed / duration, 1);
+                    counter.textContent = Math.round(easeOutCubic(progress) * target);
+                    if (progress < 1) {
+                        requestAnimationFrame(tick);
+                    } else {
+                        counter.textContent = target;
+                    }
                 }
-            });
-        }, counterObserverOptions);
 
-        counters.forEach(counter => counterObserver.observe(counter));
+                requestAnimationFrame(tick);
+                counterObserver.unobserve(counter);
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(c => counterObserver.observe(c));
     }
 
     // --- 3D TILT EFFECT ---
@@ -768,7 +1039,417 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- T2-C: MOUSE-TRACKING CARD SPOTLIGHT ---
+    function initCardSpotlight() {
+        const cards = document.querySelectorAll('.project-card, .expertise-card, .education-card, .cert-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                card.style.setProperty('--mouse-x', `${x}%`);
+                card.style.setProperty('--mouse-y', `${y}%`);
+            });
+        });
+    }
+
+    // --- T2-B: CLICK RIPPLE BURST ---
+    function initRipple() {
+        const rippleTargets = document.querySelectorAll('.btn-primary, .btn-secondary, .resume-btn, .classroom-card-btn, .tab-btn');
+        rippleTargets.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height) * 1.5;
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple';
+                ripple.style.cssText = `
+                    width: ${size}px; height: ${size}px;
+                    left: ${e.clientX - rect.left - size / 2}px;
+                    top: ${e.clientY - rect.top - size / 2}px;
+                `;
+                btn.appendChild(ripple);
+                ripple.addEventListener('animationend', () => ripple.remove());
+            });
+        });
+    }
+
+    // --- T2-A: CARD MAGNETIC HOVER (subtle) ---
+    function initCardMagnetic() {
+        const cards = document.querySelectorAll('.project-card, .expertise-card, .highlight-item');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = (e.clientX - rect.left - rect.width / 2) * 0.08;
+                const y = (e.clientY - rect.top - rect.height / 2) * 0.08;
+                card.style.setProperty('--mag-x', `${x}px`);
+                card.style.setProperty('--mag-y', `${y}px`);
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.setProperty('--mag-x', '0px');
+                card.style.setProperty('--mag-y', '0px');
+            });
+        });
+    }
+
+    // --- T1-B: TYPEWRITER ROLE CYCLING ---
+    function initTypewriter() {
+        const heroTags = document.querySelectorAll('.hero-tag');
+        const rolesAI = ['AI Architect', 'Agentic AI Engineer', 'GenAI Researcher', 'RL Practitioner'];
+        const rolesProf = ['Innovation Mentor', 'PCCOE Professor', 'Coding Club Lead', 'Data Science Educator'];
+
+        heroTags.forEach(tag => {
+            const dot = tag.querySelector('.dot');
+            const isProf = tag.closest('#prof-pane') !== null;
+            const roles = isProf ? rolesProf : rolesAI;
+            let roleIdx = 0;
+            let charIdx = 0;
+            let deleting = false;
+            let paused = false;
+
+            // Wrap text node in a span for typewriter, preserve dot
+            const span = document.createElement('span');
+            span.className = 'typewriter-text';
+            span.textContent = roles[0];
+            // clear and rebuild
+            tag.textContent = '';
+            if (dot) tag.appendChild(dot);
+            tag.appendChild(span);
+
+            // Add caret
+            const caret = document.createElement('span');
+            caret.className = 'typewriter-caret';
+            caret.textContent = '|';
+            tag.appendChild(caret);
+
+            function tick() {
+                if (paused) return;
+                const current = roles[roleIdx];
+                if (!deleting) {
+                    charIdx++;
+                    span.textContent = current.slice(0, charIdx);
+                    if (charIdx === current.length) {
+                        paused = true;
+                        setTimeout(() => { deleting = true; paused = false; }, 1800);
+                        return;
+                    }
+                    setTimeout(tick, 80);
+                } else {
+                    charIdx--;
+                    span.textContent = current.slice(0, charIdx);
+                    if (charIdx === 0) {
+                        deleting = false;
+                        roleIdx = (roleIdx + 1) % roles.length;
+                        setTimeout(tick, 300);
+                        return;
+                    }
+                    setTimeout(tick, 40);
+                }
+            }
+            setTimeout(tick, 1200);
+        });
+    }
+
+    // --- T1-D: ORBIT CHIPS ---
+    function initOrbitChips() {
+        if (shouldReduceMotion) return;
+        const containers = document.querySelectorAll('.hero-image-container');
+        const chipsAI = ['Python', 'LLM', 'RAG', 'AWS', 'PyTorch', 'Agentic'];
+        const chipsProf = ['TOC', 'FSDL', 'ML', 'GSoC', 'ICPC', 'GenAI'];
+
+        containers.forEach(container => {
+            const isProf = container.closest('#prof-pane') !== null;
+            const chips = isProf ? chipsProf : chipsAI;
+            const ring = document.createElement('div');
+            ring.className = 'orbit-ring';
+            ring.setAttribute('aria-hidden', 'true');
+
+            chips.forEach((label, i) => {
+                const chip = document.createElement('span');
+                chip.className = 'orbit-chip';
+                chip.textContent = label;
+                const angle = (360 / chips.length) * i;
+                const r = 52 + (i % 2) * 18;
+                const dur = 10 + (i % 3) * 4;
+                const delay = -(dur / chips.length) * i;
+                chip.style.setProperty('--orbit-start', `${angle}deg`);
+                chip.style.setProperty('--orbit-r', `${r}%`);
+                chip.style.setProperty('--orbit-dur', `${dur}s`);
+                chip.style.setProperty('--orbit-delay', `${delay}s`);
+                ring.appendChild(chip);
+            });
+
+            container.appendChild(ring);
+        });
+    }
+
+    // --- T5-B: TIMELINE DOT SPRING BOUNCE ---
+    (function initTimelineDots() {
+        const dots = document.querySelectorAll('.timeline-dot');
+        if (!dots.length) return;
+        const dotObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    dotObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.6 });
+        dots.forEach(d => dotObserver.observe(d));
+    }());
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

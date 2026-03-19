@@ -52,14 +52,27 @@
     color: var(--text-muted);
     transition: var(--transition);
     border: 1px solid transparent;
+    position: relative;
 }
 
-.nav-links a:hover,
-.nav-links a.active {
-    color: var(--text);
-    background: var(--accent-soft);
-    border-color: var(--accent-border-soft);
-    box-shadow: 0 6px 16px color-mix(in srgb, var(--glow) 40%, transparent);
+/* T2-E: Sliding underline on nav links */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 14px;
+    right: 14px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    transform: scaleX(1);
 }
 
 .nav-links.active {
@@ -149,31 +162,46 @@
     box-shadow: 0 14px 36px color-mix(in srgb, var(--bg) 72%, transparent);
     z-index: 1000;
     margin-bottom: 0;
+    overflow: hidden;
+}
+
+.tab-switcher-indicator {
+    position: absolute;
+    top: 10px;
+    height: calc(100% - 20px);
+    background: var(--grad);
+    border-radius: 30px;
+    box-shadow: 0 8px 20px color-mix(in srgb, var(--glow) 52%, transparent);
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 0;
 }
 
 .tab-btn {
     padding: 10px 24px;
     border-radius: 30px;
-    background: var(--card);
-    border: 1px solid var(--card-border);
+    background: transparent;
+    border: 1px solid transparent;
     color: var(--text-muted);
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
-    transition: var(--transition);
+    transition: color var(--motion-fast) ease;
+    position: relative;
+    z-index: 1;
 }
 
 .tab-btn:hover {
     color: var(--text);
-    border-color: var(--accent);
-    transform: translateY(-2px);
+    border-color: transparent;
+    transform: none;
 }
 
 .tab-btn.active {
-    background: var(--grad);
+    background: transparent;
     color: #fff;
     border-color: transparent;
-    box-shadow: 0 8px 20px color-mix(in srgb, var(--glow) 52%, transparent);
+    box-shadow: none;
 }
 
 .tab-pane {
@@ -364,5 +392,90 @@
 
     #hero-prof .hero-content {
         max-width: 100%;
+    }
+}
+
+/* T1-C: Per-section gradient mesh shifts */
+#expertise::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 80% 20%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+#projects::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 10% 80%, color-mix(in srgb, var(--accent2) 8%, transparent), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+#experience::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 40% at 90% 50%, color-mix(in srgb, var(--accent) 6%, transparent), transparent 65%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+#research::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 55% 60% at 20% 30%, color-mix(in srgb, var(--accent2) 7%, transparent), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* T1-D: Orbit chip wrapper */
+.orbit-ring {
+    position: absolute;
+    inset: -28px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.orbit-chip {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: var(--surface-elev);
+    border: 1px solid var(--accent-border-soft);
+    color: var(--accent);
+    font-size: 0.68rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    white-space: nowrap;
+    box-shadow: 0 4px 14px color-mix(in srgb, var(--glow) 30%, transparent);
+    animation: orbit-chip var(--orbit-dur, 12s) linear infinite;
+    animation-delay: var(--orbit-delay, 0s);
+    transform-origin: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .orbit-chip {
+        display: none;
+    }
+
+    .tab-switcher-indicator {
+        transition: none;
+    }
+
+    .nav-links a::after {
+        transition: none;
+    }
+}
+
+@media (max-width: 900px) {
+    .orbit-ring {
+        display: none;
     }
 }

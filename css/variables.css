@@ -84,37 +84,44 @@ body.dark-theme {
 }
 
 body.hacker-theme {
-    --bg: #000000;
-    --bg2: #0a0a0a;
-    --bg3: #111111;
-    --card: #050505;
-    --card-border: rgba(0, 255, 65, 0.3);
-    --text: #00FF41;
-    --text-muted: #4dff72;
-    --text-dim: #1faa3d;
-    --header-bg: rgba(0, 0, 0, 0.85);
-    --header-border: rgba(0, 255, 65, 0.2);
-    --particle-color: rgba(0, 255, 65, 0.2);
+    --bg: #0a0000;
+    --bg2: #0f0202;
+    --bg3: #180404;
+    --card: #0c0101;
+    --card-border: rgba(220, 20, 60, 0.35);
+    --text: #ff2a2a;
+    --text-muted: #ff6666;
+    --text-dim: #992020;
+    --header-bg: rgba(10, 0, 0, 0.88);
+    --header-border: rgba(220, 20, 60, 0.25);
+    --particle-color: rgba(220, 20, 60, 0.22);
 
-    /* Hacker AI Accent */
-    --accent: #00FF41;
-    --accent2: #008F11;
-    --glow: rgba(0, 255, 65, 0.4);
-    --grad: linear-gradient(135deg, #00FF41 0%, #008F11 100%);
+    /* Hacker AI Accent — Crimson / Blood Red */
+    --accent: #ff1a1a;
+    --accent2: #cc0000;
+    --glow: rgba(255, 26, 26, 0.5);
+    --grad: linear-gradient(135deg, #ff2a2a 0%, #8b0000 100%);
 
-    /* Hacker Professor Accent (Deeper matrix green) */
-    --prof-accent: #32CD32;
-    --prof-accent2: #228B22;
-    --prof-glow: rgba(50, 205, 50, 0.4);
-    --prof-grad: linear-gradient(135deg, #32CD32 0%, #228B22 100%);
+    /* Hacker Professor Accent — Deep Scarlet */
+    --prof-accent: #e8173d;
+    --prof-accent2: #9b1224;
+    --prof-glow: rgba(232, 23, 61, 0.45);
+    --prof-grad: linear-gradient(135deg, #e8173d 0%, #9b1224 100%);
 
-    --overlay-bg: rgba(0, 0, 0, 0.6);
-    --card-shadow-hover: 0 20px 50px rgba(0, 255, 65, 0.15);
-    --surface-elev: rgba(1, 8, 3, 0.9);
-    --surface-strong: rgba(3, 17, 7, 0.92);
-    --particle-tint: 0, 255, 65;
-    --noise-opacity: 0.34;
-    --scanline-opacity: 0.46;
+    --overlay-bg: rgba(10, 0, 0, 0.65);
+    --card-shadow-hover: 0 20px 50px rgba(220, 20, 60, 0.2);
+    --surface-elev: rgba(12, 1, 1, 0.92);
+    --surface-strong: rgba(22, 3, 3, 0.94);
+    --particle-tint: 255, 26, 26;
+    --noise-opacity: 0.38;
+    --scanline-opacity: 0.5;
+
+    /* Glitch & flicker extras */
+    --hacker-glow-soft: rgba(255, 26, 26, 0.18);
+    --hacker-glow-mid: rgba(255, 26, 26, 0.38);
+    --hacker-glow-hot: rgba(255, 80, 80, 0.65);
+    --hacker-grid-color: rgba(180, 10, 10, 0.12);
+    --hacker-flicker-color: rgba(255, 26, 26, 0.07);
 }
 
 /* Modern Glass (glassmorphism) — dark base so frosted panels show through */
@@ -162,5 +169,5 @@ body[data-persona="prof"] {
 }
 
 body.hacker-theme[data-persona="prof"] {
-    --particle-tint: 50, 205, 50;
+    --particle-tint: 232, 23, 61;
 }
