@@ -217,7 +217,7 @@
 .project-card,
 .expertise-card,
 .highlight-item {
-    transform: translate(var(--mag-x, 0), var(--mag-y, 0));
+    transform: translate(calc(var(--mag-x, 0) + var(--fade-x, 0px)), calc(var(--mag-y, 0) + var(--fade-y, 0px)));
 }
 
 /* --- IMAGES & WRAPPERS --- */
@@ -925,15 +925,11 @@ body.glass-theme .skills-block {
 
 /* Staggered card entry: alternating slide directions */
 .projects-grid .fade-up:nth-child(odd) {
-    transform: translateY(32px) translateX(-12px);
+    --fade-x: -12px;
 }
 
 .projects-grid .fade-up:nth-child(even) {
-    transform: translateY(32px) translateX(12px);
-}
-
-.projects-grid .fade-up.visible {
-    transform: translateY(0) translateX(0);
+    --fade-x: 12px;
 }
 
 /* Skill chip: pop and glow on hover */

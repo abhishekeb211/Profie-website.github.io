@@ -462,16 +462,19 @@ body::after {
 
 /* SCROLL REVEAL: fade-up base state & transition */
 .fade-up {
+    --fade-x: 0px;
+    --fade-y: 32px;
     opacity: 0;
-    transform: translateY(32px);
+    transform: translate(var(--fade-x), var(--fade-y));
     transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
                 transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform, opacity;
 }
 
 .fade-up.visible {
+    --fade-x: 0px;
+    --fade-y: 0px;
     opacity: 1;
-    transform: translateY(0);
     will-change: auto;
 }
 
