@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (tabList) {
             tabList.addEventListener('keydown', (e) => {
                 const idx = Array.from(tabBtns).indexOf(document.activeElement);
-                if idx === -1 return;
+                if (idx === -1) return;
                 let next = idx;
                 if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
                     e.preventDefault();
