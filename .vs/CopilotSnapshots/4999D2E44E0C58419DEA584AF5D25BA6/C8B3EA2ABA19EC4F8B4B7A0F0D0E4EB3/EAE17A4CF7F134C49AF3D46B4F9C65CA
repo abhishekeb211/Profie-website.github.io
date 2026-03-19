@@ -1,0 +1,365 @@
+﻿# 🎨 Graphics, Animation & Speed — Master To-Do Plan
+**Repository:** Profie-website.github.io  
+**Branch:** main  
+**Audit Date:** 2025  
+**Scope:** All themes, all sections, all interactive elements
+
+---
+
+## 📊 Current State Audit
+
+### ✅ Already Implemented
+| Feature | File | Status |
+|---------|------|--------|
+| Canvas floating particles | `script.js` | ✅ Done — upgraded for hacker red |
+| Particle connecting lines (hacker) | `script.js` | ✅ Done |
+| 3D tilt on cards | `script.js` | ✅ Done |
+| Custom cursor (dot + outline) | `script.js` | ✅ Done |
+| Parallax hero orbs | `script.js` | ✅ Done |
+| Scroll fade-up reveal | `script.js` | ✅ Done |
+| Animated counters | `script.js` | ✅ Done |
+| Mesh gradient hero background | `css/layout.css` | ✅ Done — `mesh-float 20s` |
+| Noise texture overlay | `css/base.css` | ✅ Done |
+| Scanline effect (hacker) | `css/components.css` | ✅ Done |
+| Hacker red sweep line | `css/components.css` | ✅ Done |
+| Hero name glitch (hacker) | `css/components.css` | ✅ Done |
+| Text flicker (hacker) | `css/base.css` | ✅ Done |
+| Pulsing card borders (hacker) | `css/components.css` | ✅ Done |
+| Red grid drift overlay (hacker) | `css/components.css` | ✅ Done |
+| Scroll progress bar | `css/base.css` | ✅ Done |
+| Magnetic button effect | `script.js` | ✅ Done |
+| Project card radial hover glow | `css/components.css` | ✅ Done |
+| Theme transition animation | `css/base.css` | ✅ Done |
+| Tab pane fade-in | `css/layout.css` | ✅ Done |
+| Mobile menu hamburger → X | `css/layout.css` | ✅ Done |
+| Toast notifications | `script.js` | ✅ Done |
+| Shimmer skeleton loader | `css/components.css` | ✅ Done |
+| Image zoom on hover | `css/components.css` | ✅ Done |
+
+### ❌ Missing / To Be Built
+> Prioritized by visual impact and interactivity
+
+---
+
+## 🗂️ TO-DO LIST — Grouped by Category
+
+---
+
+### 🔴 PRIORITY 1 — HIGH IMPACT, CORE VISUALS
+> These change how the site *feels* immediately
+
+---
+
+#### [ ] T1-A · Hero Image Ring Glow Animation
+**File:** `css/components.css`  
+**What:** Animated glowing ring that rotates around the hero profile image — accent-colored, theme-aware.  
+**How:** CSS `conic-gradient` + `@keyframes spin` on a `::before` pseudo-element on `.hero-image-container`.  
+**Themes:** Blue (dark/light), Red (hacker), Teal (glass/prof).  
+**Speed:** `spin 6s linear infinite` — constant smooth rotation.  
+**Accessibility:** `prefers-reduced-motion` → pause animation.
+
+---
+
+#### [ ] T1-B · Typewriter / Text Cycling on Hero Role
+**File:** `script.js` + `css/components.css`  
+**What:** The hero `.hero-tag` text cycles through 3–4 roles with a typewriter effect and blinking caret.  
+**Roles to cycle:**
+- AI Architect (AI pane)
+- `"Agentic AI Engineer"` → `"GenAI Researcher"` → `"RL Practitioner"` → `"AI Architect"`
+- Professor pane: `"Innovation Mentor"` → `"PCCOE Professor"` → `"Coding Club Lead"`  
+**How:** JS `setInterval` deletes/types chars; CSS `@keyframes caret-blink` on `::after`.  
+**Speed:** 80ms per char type, 40ms delete, 1.8s pause between words.  
+**Accessibility:** `prefers-reduced-motion` → show static text, no caret.
+
+---
+
+#### [ ] T1-C · Gradient Mesh Background — Per-Section Color Shifts
+**File:** `css/layout.css`  
+**What:** Each section gets a subtle, unique mesh gradient that shifts as user scrolls — gives depth vs flat same-color sections.  
+**How:** Unique `radial-gradient` values per `#expertise`, `#projects`, `#experience`, `#research` sections using CSS custom properties.  
+**Speed:** No animation needed; pure CSS static gradients with smooth transitions on scroll via IntersectionObserver class toggle.
+
+---
+
+#### [ ] T1-D · Floating Skill Tags / Orbit Chips around Hero Image
+**File:** `css/components.css` + `css/layout.css`  
+**What:** Small floating chips (`Python`, `LLM`, `RAG`, `AWS`, etc.) orbit slowly around the hero image container like satellites.  
+**How:** Absolutely positioned spans on `.hero-image-container`, each on a different `animation-delay` with `@keyframes orbit-chip`.  
+**Speed:** `orbit-chip 12s linear infinite` — staggered delays per chip.  
+**Accessibility:** Hidden via `aria-hidden="true"`, skip on `prefers-reduced-motion`.
+
+---
+
+#### [ ] T1-E · Section Entry Stagger — Faster + Smoother Reveal
+**File:** `script.js` + `css/base.css`  
+**What:** Current `fade-up` applies uniform 0.05s stagger. Replace with a smarter stagger:
+- Cards within a grid get progressive delays (0.08s each)
+- Section title enters from left, label from right simultaneously  
+**How:** `refreshAnimations()` assigns `transitionDelay` based on element index within its parent grid, not globally.  
+**Speed:** Reduce `transition-duration` from default to `0.45s` for cards, `0.35s` for text elements.
+
+---
+
+### 🟠 PRIORITY 2 — INTERACTIVE ENHANCEMENTS
+> Respond to user actions — clicks, hovers, scrolls
+
+---
+
+#### [ ] T2-A · Magnetic Hover on ALL Cards (not just buttons)
+**File:** `script.js`  
+**What:** Current magnetic effect only on `.btn-primary`, `.btn-secondary`, `.resume-btn`. Extend with a subtler (×0.08 factor) version to `.project-card`, `.expertise-card`, `.highlight-item`.  
+**How:** Add second `magneticElements` query for cards with a lower multiplier (`0.08` vs `0.3`).  
+**Speed:** Immediate — follows `mousemove` in real time.
+
+---
+
+#### [ ] T2-B · Click / Ripple Burst Effect on Buttons
+**File:** `script.js` + `css/components.css`  
+**What:** On click of `.btn-primary`, `.btn-secondary`, `.resume-btn`, `.tab-btn` — a radial ripple expands from the click point and fades.  
+**How:** JS injects a `<span class="ripple">` absolutely positioned at `(clientX - rect.left, clientY - rect.top)`, CSS `@keyframes ripple-burst` scales it from 0→3× and fades opacity 0.5→0.  
+**Speed:** `ripple-burst 0.5s ease-out forwards`.  
+**Cleanup:** `animationend` event removes the span from DOM.
+
+---
+
+#### [ ] T2-C · Card Hover Spotlight (Mouse-tracking radial on each card)
+**File:** `script.js` + `css/components.css`  
+**What:** Each card has a radial gradient spotlight that follows the mouse *within* the card — the glow follows cursor position, not a fixed top-center.  
+**How:** `mousemove` event on each card updates `--mouse-x` and `--mouse-y` CSS custom properties; CSS uses `radial-gradient(circle at var(--mouse-x) var(--mouse-y), ...)` on `::before`.  
+**Speed:** Immediate `mousemove`, no debounce needed.  
+**Applies to:** `.project-card`, `.expertise-card`, `.education-card`, `.cert-card`.
+
+---
+
+#### [ ] T2-D · Scroll-Triggered Counter with Easing Curve
+**File:** `script.js`  
+**What:** Current counter uses linear `setTimeout` — replace with `requestAnimationFrame` + easeOutCubic curve so numbers decelerate smoothly as they approach the target.  
+**How:** `easeOutCubic(t) = 1 - (1-t)^3` applied to progress `t ∈ [0,1]` over 1800ms.  
+**Speed:** 1800ms total duration, `rAF` loop.
+
+---
+
+#### [ ] T2-E · Nav Link Underline Slide Animation
+**File:** `css/layout.css`  
+**What:** Active/hover nav link gets a sliding underline that animates from left. Currently uses `background` pill — add a bottom-border `::after` that scales from 0→1 on hover.  
+**How:** `nav-links a::after { scaleX(0) }` → `nav-links a:hover::after { scaleX(1) }` using `transform-origin: left`.  
+**Speed:** `0.2s ease`.
+
+---
+
+#### [ ] T2-F · Tab Switcher Active Pill Slide (Indicator Bar)
+**File:** `script.js` + `css/layout.css`  
+**What:** When switching between AI Architect / Professor tabs, a sliding indicator pill animates between the two buttons instead of a hard background swap.  
+**How:** JS calculates `offsetLeft` and `offsetWidth` of the active tab button, sets `--pill-left` and `--pill-width` on the `.tab-switcher`, CSS positions an absolutely-placed `::before` that transitions those properties.  
+**Speed:** `transition: left 0.3s cubic-bezier(.4,0,.2,1), width 0.3s`.
+
+---
+
+### 🟡 PRIORITY 3 — THEME-SPECIFIC ENHANCEMENTS
+> Each theme gets its own signature effect
+
+---
+
+#### [ ] T3-A · Dark Theme — Twinkling Star Particles
+**File:** `script.js`  
+**What:** In dark theme, some canvas particles should slowly pulse (twinkle) — opacity oscillates independently per particle using a sine wave, like distant stars.  
+**How:** Add `this.twinklePhase = Math.random() * Math.PI * 2` and `this.twinkleSpeed = 0.008 + Math.random() * 0.012` to `Particle.init()`; in `update()`, apply `this.opacity = baseOpacity + Math.sin(this.twinklePhase) * 0.2` when dark theme.  
+**Speed:** Very slow (0.008–0.02 rad/frame).
+
+---
+
+#### [ ] T3-B · Glass Theme — Floating Bokeh Blobs
+**File:** `script.js`  
+**What:** In glass theme, replace circular particles with large soft blurred circles (bokeh) that drift slowly — 6–10 large (20–50px radius) semi-transparent accent blobs.  
+**How:** Second pass in `animate()` draws large `ctx.arc` with very low opacity (0.03–0.08) and large radius when `glass-theme` is active. Separate array `bokehBlobs` with slow speed (0.1–0.2).  
+**Speed:** Very slow drift — `0.15` speed multiplier.
+
+---
+
+#### [ ] T3-C · Light Theme — Confetti Dot Burst on Page Load
+**File:** `script.js`  
+**What:** When switching *to* light theme, 30 confetti-like dots burst from the center and fall with gravity, then disappear.  
+**How:** On `applyTheme('light')`, spawn `ConfettiParticle[]` with random colors, velocities, and gravity; run for 2.5s then clear.  
+**Speed:** `vy += 0.3` gravity per frame, `vx ∈ [-4, 4]`, initial `vy ∈ [-8, -2]`.
+
+---
+
+#### [ ] T3-D · Hacker Theme — Binary Rain Column Effect (Canvas Layer)
+**File:** `script.js`  
+**What:** When hacker theme is active, draw falling columns of `0` and `1` characters on the canvas — classic matrix-rain style but in red, behind particles.  
+**How:** Separate `BinaryColumn[]` array; each column has a `y` position that resets to top randomly. On each frame draw characters in red with decreasing opacity (head bright, trailing dim).  
+**Speed:** `y += 18px` per frame (approx 60fps → 1080px/s), `setInterval` or `rAF` skip every 3 frames for performance.  
+**Character set:** `"01"` + optional `"アイウエオ"` mix.  
+**Brightness:** Head char: `rgba(255,60,60,0.9)`, trail: `rgba(180,0,0, 0.15–0.4)` gradient.
+
+---
+
+#### [ ] T3-E · Professor Theme — Subtle Floating Formula Symbols
+**File:** `script.js`  
+**What:** When prof persona is active (`.hacker-theme` + `[data-persona="prof"]` or just `[data-persona="prof"]`), canvas draws slowly drifting math/code symbols: `∑`, `∫`, `λ`, `∇`, `{}`, `</>`.  
+**How:** `FormulaSymbol[]` array, each with random position, opacity 0.04–0.1, slow drift speed 0.2–0.5, random rotation.  
+**Speed:** 0.2–0.5px/frame, rotation `+= 0.002`.
+
+---
+
+### 🔵 PRIORITY 4 — PERFORMANCE & POLISH
+> Speed, smoothness, and cross-browser quality
+
+---
+
+#### [ ] T4-A · GPU-Accelerate All Animated Elements
+**File:** `css/components.css` + `css/layout.css`  
+**What:** Add `will-change: transform` to elements that animate on scroll, hover, or tick — prevents layout reflow and promotes to compositor layer.  
+**Applies to:** `.fade-up`, `.project-card`, `.expertise-card`, `.hero-orb`, `.cursor-dot`, `.cursor-outline`, `.tab-btn`, `.hacker-scanline`.  
+**Note:** Remove `will-change` after animation completes via JS `animationend` / `transitionend` to free GPU memory.
+
+---
+
+#### [ ] T4-B · Canvas `devicePixelRatio` Sharpness Fix
+**File:** `script.js`  
+**What:** On Retina/HiDPI screens, the canvas looks blurry because it's not scaled by `window.devicePixelRatio`. Fix the `resize()` function to multiply width/height by `dpr` and scale the context.  
+**How:**
+```js
+const dpr = window.devicePixelRatio || 1;
+canvas.width  = window.innerWidth  * dpr;
+canvas.height = window.innerHeight * dpr;
+canvas.style.width  = window.innerWidth  + 'px';
+canvas.style.height = window.innerHeight + 'px';
+ctx.scale(dpr, dpr);
+```
+**Impact:** Particles look crisp on MacBooks, modern Android/iOS devices.
+
+---
+
+#### [ ] T4-C · `requestAnimationFrame` Throttle for Low-End Devices
+**File:** `script.js`  
+**What:** Canvas runs uncapped at 60fps. On mobile or low-end devices this wastes battery and causes jank. Add a configurable `targetFPS` and timestamp-delta throttle.  
+**How:**
+```js
+const targetFPS = isMobile ? 30 : 60;
+const frameInterval = 1000 / targetFPS;
+let lastFrame = 0;
+function animate(timestamp) {
+    if (timestamp - lastFrame < frameInterval) { requestAnimationFrame(animate); return; }
+    lastFrame = timestamp;
+    // ... draw ...
+}
+```
+
+---
+
+#### [ ] T4-D · Smooth Theme Transition Crossfade
+**File:** `script.js` + `css/base.css`  
+**What:** Current theme switch is instant for non-color properties. Add a CSS `transition` on `body` that crossfades the background image/gradient and accent colors over 400ms, plus a brief flash overlay that fades out.  
+**How:** On `applyTheme()`, add a `.theme-transitioning` class that activates a full-screen `<div class="theme-flash">` overlay at 0.25 opacity, then fades out over 300ms.  
+**Speed:** Flash in: 0ms, Flash out: `300ms ease`.
+
+---
+
+#### [ ] T4-E · Reduce Animation Budget on Mobile
+**File:** `script.js` + `css/components.css`  
+**What:** On mobile (`pointer: coarse`), already skip tilt/cursor/particles/parallax — but CSS animations (hacker keyframes, card pulses) still run. Add a mobile-aware class to disable heavy CSS animations.  
+**How:** JS adds `body.reduce-motion-mobile` on touch devices. CSS rules: `body.reduce-motion-mobile .project-card { animation: none; }`, etc.
+
+---
+
+### 🟣 PRIORITY 5 — NEW SECTIONS / CONTENT ANIMATIONS
+> Section-specific motion design
+
+---
+
+#### [ ] T5-A · Expertise Cards — Icon Float Animation
+**File:** `css/components.css`  
+**What:** The emoji icons (🧠, 🔍, ⚡) on expertise cards should gently float up and down like they're breathing.  
+**How:** `@keyframes icon-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }` on `.expertise-icon`.  
+**Speed:** `3s ease-in-out infinite`, staggered `animation-delay` per card (0s, 0.5s, 1s).
+
+---
+
+#### [ ] T5-B · Timeline Dot Pulse — Staggered Entry
+**File:** `css/components.css`  
+**What:** Each `.timeline-dot` should pop in with a scale bounce when the section enters the viewport, staggered left to right (top to bottom).  
+**How:** Add `scale-in` class via IntersectionObserver in `refreshAnimations()`; `@keyframes scale-in { 0% { transform: scale(0); } 70% { transform: scale(1.15); } 100% { transform: scale(1); } }`.  
+**Speed:** `0.4s cubic-bezier(.34,1.56,.64,1)` (spring bounce).
+
+---
+
+#### [ ] T5-C · Skills / Cert Cards — Shimmer Sweep on Hover
+**File:** `css/components.css`  
+**What:** When hovering `.cert-card`, `.award-item`, a bright diagonal shimmer sweeps across the card (like a glint of light).  
+**How:** `::after` pseudo with `linear-gradient(110deg, transparent 40%, rgba(255,255,255,0.12) 50%, transparent 60%)` at `background-position: -200%`; on hover transitions to `background-position: 200%`.  
+**Speed:** `0.55s ease` on hover.
+
+---
+
+#### [ ] T5-D · Marquee / Ticker Acceleration
+**File:** `css/components.css` + `script.js`  
+**What:** The partner/industry marquee should pause on hover (already?) and speed up on hacker theme.  
+**Check:** Verify `animation-play-state: paused` on hover is implemented. If not, add it.  
+**Hacker speed:** `animation-duration: 12s` (vs default 30s) when hacker theme active.
+
+---
+
+#### [ ] T5-E · Section Label — Animated Underline Draw
+**File:** `css/components.css`  
+**What:** The `.section-label` text (e.g., "Proof", "Capabilities", "Work") gets a small underline that draws in from left when the section enters viewport.  
+**How:** `::after` with `width: 0 → 100%` triggered by `.visible` class added by IntersectionObserver.  
+**Speed:** `0.5s ease 0.2s` (slight delay after parent fades in).
+
+---
+
+#### [ ] T5-F · Hero CTA Buttons — Shimmer on Load
+**File:** `css/components.css`  
+**What:** On initial page load, the hero CTA buttons (`.btn-primary`, `.btn-secondary`) get a one-time shimmer sweep to draw attention.  
+**How:** `@keyframes btn-load-shimmer` runs once with `animation-fill-mode: forwards` triggered by `.hero-content.visible`.  
+**Speed:** `0.8s ease 1.2s` — fires 1.2s after page load.
+
+---
+
+## 🗓️ Execution Schedule
+
+| Phase | Tasks | Est. Effort | Priority |
+|-------|-------|-------------|----------|
+| **Phase 1** | T1-A (ring glow), T1-B (typewriter), T4-B (DPR fix), T4-C (FPS throttle) | Medium | 🔴 High |
+| **Phase 2** | T2-B (ripple), T2-C (spotlight), T1-D (orbit chips) | Medium | 🟠 High |
+| **Phase 3** | T3-D (binary rain), T3-A (twinkling), T3-B (bokeh) | Medium | 🟡 Medium |
+| **Phase 4** | T2-A (card magnetic), T2-D (eased counter), T2-E (nav underline), T2-F (tab indicator) | Small | 🟠 Medium |
+| **Phase 5** | T5-A (icon float), T5-B (timeline bounce), T5-C (shimmer sweep), T5-E (label draw) | Small | 🟡 Low |
+| **Phase 6** | T4-A (will-change), T4-D (theme crossfade), T4-E (mobile budget), T3-C (confetti), T3-E (formulas) | Small | 🔵 Polish |
+
+---
+
+## ⚡ Speed Targets (by element)
+
+| Element | Target Duration | Easing |
+|---------|----------------|--------|
+| Hover transitions (cards, buttons) | 180–220ms | `ease` |
+| Scroll reveal (fade-up) | 450ms | `cubic-bezier(.4,0,.2,1)` |
+| Theme switch flash | 300ms | `ease` |
+| Typewriter char speed | 80ms/char | linear |
+| Counter animation | 1800ms | `easeOutCubic` |
+| Ripple burst | 500ms | `ease-out` |
+| Hero ring spin | 6s | `linear` |
+| Orbit chips | 12s | `linear` |
+| Binary rain (hacker) | 3 frames skip | `rAF` |
+| Twinkling (dark) | 0.008–0.02 rad/frame | sine wave |
+| Bokeh drift (glass) | 0.1–0.2 px/frame | linear |
+| Icon float | 3s | `ease-in-out` |
+| Tab indicator slide | 300ms | `cubic-bezier(.4,0,.2,1)` |
+
+---
+
+## ✅ Verification Checklist (per task)
+
+Before marking any task complete:
+- [ ] `npm run verify` passes (lint:html + lint:css + lint:js + check-assets)
+- [ ] `prefers-reduced-motion` respected — animation disabled or instant
+- [ ] Mobile touch device tested — no janky rAF loops
+- [ ] All 4 themes tested — no color bleed from hacker red into dark/light/glass
+- [ ] ARIA not broken — no `aria-hidden` missing on decorative elements
+- [ ] Canvas DPR fix applied before any new canvas features
+- [ ] `CACHE_NAME` in `sw.js` bumped after any `index.html`/`css`/`script.js` change
+
+---
+
+*Plan generated by GitHub Copilot — Abhishek S. Raut Portfolio*

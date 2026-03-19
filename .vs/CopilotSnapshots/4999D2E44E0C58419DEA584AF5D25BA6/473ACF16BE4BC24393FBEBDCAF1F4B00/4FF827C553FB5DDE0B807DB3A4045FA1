@@ -1,0 +1,166 @@
+﻿/* ============================================================
+   VARIABLES & DESIGN TOKENS
+   ============================================================ */
+
+:root {
+    /* Unified Brand Palette (AI Architect) */
+    --accent: #22d3ee;
+    --accent2: #14b8a6;
+    --glow: rgba(56, 189, 248, 0.35);
+    --grad: linear-gradient(135deg, #22d3ee 0%, #14b8a6 100%);
+
+    /* Premium Professor Palette (Emerald/Teal) */
+    --prof-accent: #2dd4bf;
+    --prof-accent2: #0ea5a4;
+    --prof-glow: rgba(16, 185, 129, 0.35);
+    --prof-grad: linear-gradient(135deg, #2dd4bf 0%, #0ea5a4 100%);
+
+    --radius: 14px;
+    --radius-lg: 22px;
+    --transition: 0.4s cubic-bezier(.4, 0, .2, 1);
+    --font-main: 'Outfit', sans-serif;
+    --font-display: 'Outfit', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --overlay-bg: rgba(15, 23, 42, 0.5);
+    --card-shadow-hover: 0 20px 50px rgba(0, 0, 0, 0.25);
+    --shadow-soft: 0 12px 32px rgba(2, 8, 23, 0.18);
+    --shadow-strong: 0 20px 54px rgba(2, 8, 23, 0.28);
+    --section-gap: clamp(4.5rem, 10vw, 7.25rem);
+    --space-content: clamp(0.95rem, 2vw, 1.4rem);
+    --motion-fast: 180ms;
+    --motion-medium: 320ms;
+    --motion-slow: 560ms;
+    --noise-opacity: 0.24;
+    --scanline-opacity: 0;
+    --accent-soft: color-mix(in srgb, var(--accent) 18%, transparent);
+    --accent-border-soft: color-mix(in srgb, var(--accent) 38%, transparent);
+    --focus-ring: color-mix(in srgb, var(--accent) 72%, #ffffff);
+    --surface-elev: color-mix(in srgb, var(--bg2) 84%, transparent);
+    --surface-strong: color-mix(in srgb, var(--bg3) 88%, transparent);
+    --particle-tint: 34, 211, 238;
+}
+
+/* --- THEME DEFINITIONS --- */
+body.light-theme {
+    --bg: #FFFFFF;
+    --bg2: #F8FAFC;
+    --bg3: #F1F5F9;
+    --card: #FFFFFF;
+    --card-border: rgba(15, 23, 42, 0.08);
+    --text: #0F172A;
+    --text-muted: #475569;
+    --text-dim: #64748B;
+    --header-bg: rgba(255, 255, 255, 0.7);
+    --header-border: rgba(255, 255, 255, 0.3);
+    --particle-color: rgba(15, 23, 42, 0.1);
+    --overlay-bg: rgba(0, 0, 0, 0.35);
+    --card-shadow-hover: 0 20px 50px rgba(15, 23, 42, 0.15);
+    --surface-elev: rgba(255, 255, 255, 0.86);
+    --surface-strong: rgba(248, 250, 252, 0.92);
+    --particle-tint: 20, 184, 166;
+    --noise-opacity: 0.1;
+    --scanline-opacity: 0;
+}
+
+body.dark-theme {
+    --bg: #060b15;
+    --bg2: #0e1625;
+    --bg3: #162235;
+    --card: #101a2b;
+    --card-border: rgba(148, 163, 184, 0.24);
+    --text: #e5edf8;
+    --text-muted: #9db0c7;
+    --text-dim: #6f839c;
+    --header-bg: rgba(15, 23, 42, 0.7);
+    --header-border: rgba(148, 163, 184, 0.2);
+    --particle-color: rgba(255, 255, 255, 0.15);
+    --overlay-bg: rgba(15, 23, 42, 0.5);
+    --card-shadow-hover: 0 18px 40px rgba(2, 8, 23, 0.55);
+    --surface-elev: rgba(9, 16, 30, 0.84);
+    --surface-strong: rgba(16, 26, 43, 0.9);
+    --particle-tint: 34, 211, 238;
+    --noise-opacity: 0.2;
+    --scanline-opacity: 0;
+}
+
+body.hacker-theme {
+    --bg: #000000;
+    --bg2: #0a0a0a;
+    --bg3: #111111;
+    --card: #050505;
+    --card-border: rgba(0, 255, 65, 0.3);
+    --text: #00FF41;
+    --text-muted: #4dff72;
+    --text-dim: #1faa3d;
+    --header-bg: rgba(0, 0, 0, 0.85);
+    --header-border: rgba(0, 255, 65, 0.2);
+    --particle-color: rgba(0, 255, 65, 0.2);
+
+    /* Hacker AI Accent */
+    --accent: #00FF41;
+    --accent2: #008F11;
+    --glow: rgba(0, 255, 65, 0.4);
+    --grad: linear-gradient(135deg, #00FF41 0%, #008F11 100%);
+
+    /* Hacker Professor Accent (Deeper matrix green) */
+    --prof-accent: #32CD32;
+    --prof-accent2: #228B22;
+    --prof-glow: rgba(50, 205, 50, 0.4);
+    --prof-grad: linear-gradient(135deg, #32CD32 0%, #228B22 100%);
+
+    --overlay-bg: rgba(0, 0, 0, 0.6);
+    --card-shadow-hover: 0 20px 50px rgba(0, 255, 65, 0.15);
+    --surface-elev: rgba(1, 8, 3, 0.9);
+    --surface-strong: rgba(3, 17, 7, 0.92);
+    --particle-tint: 0, 255, 65;
+    --noise-opacity: 0.34;
+    --scanline-opacity: 0.46;
+}
+
+/* Modern Glass (glassmorphism) — dark base so frosted panels show through */
+body.glass-theme {
+    --bg: #0c1222;
+    --bg2: rgba(30, 41, 59, 0.4);
+    --bg3: rgba(51, 65, 85, 0.35);
+    --card: rgba(255, 255, 255, 0.08);
+    --card-border: rgba(255, 255, 255, 0.12);
+    --text: #F8FAFC;
+    --text-muted: #c7d6ea;
+    --text-dim: #9fb4cf;
+    --header-bg: rgba(255, 255, 255, 0.06);
+    --header-border: rgba(255, 255, 255, 0.1);
+    --particle-color: rgba(255, 255, 255, 0.12);
+    --overlay-bg: rgba(12, 18, 34, 0.6);
+    --card-shadow-hover: 0 20px 50px rgba(0, 0, 0, 0.35);
+
+    /* Glass keeps default accent; optional softer glow */
+    --accent: #38BDF8;
+    --accent2: #06B6D4;
+    --glow: rgba(56, 189, 248, 0.3);
+    --grad: linear-gradient(135deg, #38BDF8 0%, #06B6D4 100%);
+    --prof-accent: #10B981;
+    --prof-accent2: #059669;
+    --prof-glow: rgba(16, 185, 129, 0.3);
+    --prof-grad: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    --surface-elev: rgba(10, 18, 34, 0.58);
+    --surface-strong: rgba(255, 255, 255, 0.12);
+    --particle-tint: 56, 189, 248;
+    --noise-opacity: 0.08;
+    --scanline-opacity: 0;
+}
+
+/* Persona state stays declarative in CSS; JS only toggles data-persona */
+body[data-persona="prof"] {
+    --accent: var(--prof-accent);
+    --accent2: var(--prof-accent2);
+    --glow: var(--prof-glow);
+    --grad: var(--prof-grad);
+    --accent-soft: color-mix(in srgb, var(--prof-accent) 18%, transparent);
+    --accent-border-soft: color-mix(in srgb, var(--prof-accent) 42%, transparent);
+    --focus-ring: color-mix(in srgb, var(--prof-accent) 72%, #ffffff);
+    --particle-tint: 45, 212, 191;
+}
+
+body.hacker-theme[data-persona="prof"] {
+    --particle-tint: 50, 205, 50;
+}

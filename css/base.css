@@ -464,6 +464,7 @@ body::after {
 .fade-up {
     --fade-x: 0px;
     --fade-y: 32px;
+
     opacity: 0;
     transform: translate(var(--fade-x), var(--fade-y));
     transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
@@ -474,6 +475,7 @@ body::after {
 .fade-up.visible {
     --fade-x: 0px;
     --fade-y: 0px;
+
     opacity: 1;
     will-change: auto;
 }

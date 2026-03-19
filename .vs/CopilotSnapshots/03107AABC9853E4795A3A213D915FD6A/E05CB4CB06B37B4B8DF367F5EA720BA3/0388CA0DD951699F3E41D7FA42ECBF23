@@ -1,0 +1,24 @@
+﻿---
+description: Master execution loop and failure handling
+alwaysApply: true
+---
+
+# Master Execution Loop
+
+## Loop
+
+REASON → ACT → VERIFY → [GREEN → Checkpoint | RED → Reflect → Retry/Decompose/Escalate]
+
+- Establish baseline first; if baseline fails, fix or abort.
+- Decompose work into a task DAG (dependencies, verification commands per task).
+- Select next task, execute in appropriate sandbox, run verification.
+- Only checkpoint when verification is GREEN. On RED, classify failure and respond.
+
+## Failure handling
+
+1. **Classify:** Deterministic (code/logic), Environmental (config/dependency/infra), Transient (network/flaky service), Policy (permission/approval violation).
+2. **Respond:** Deterministic → fix (max 3 tries), then decompose if still failing. Environmental → fix config or document requirement, retry with backoff. Transient → exponential backoff + jitter (max 5 retries). Policy → immediate halt and escalate to human (no retry).
+3. **Reflect:** Generate what failed, why, and how to prevent recurrence. Store in failure memory when applicable.
+4. **Decide:** Fix, decompose, retry, or escalate based on classification.
+
+For goal contracts, task DAG templates, and verification gates, use the agentic-orchestrator skill.

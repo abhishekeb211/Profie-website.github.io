@@ -1,0 +1,492 @@
+﻿/* ============================================================
+   RESET & BASE STYLES
+   ============================================================ */
+
+/* --- SKIP LINK (visible on focus for keyboard/screen reader) --- */
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+    padding: 12px 24px;
+    background: var(--accent);
+    color: #0F172A;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+    top: 16px;
+    outline: 2px solid var(--text);
+    outline-offset: 2px;
+}
+
+/* --- SCROLL PROGRESS BAR (theme-aware) --- */
+.scroll-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0;
+    background: var(--accent);
+    z-index: 1001;
+    transition: width 0.05s ease-out;
+    will-change: width;
+}
+
+/* --- FOCUS VISIBILITY (keyboard accessibility) --- */
+a:focus,
+button:focus {
+    outline: none;
+}
+
+a:focus-visible,
+button:focus-visible,
+.project-card:focus-visible,
+.back-to-top:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+}
+
+.bg-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-main);
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    line-height: 1.6;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+section {
+    padding: 100px 5%;
+    position: relative;
+    content-visibility: auto;
+    contain-intrinsic-size: 0 800px;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+ul {
+    list-style: none;
+}
+
+/* --- SCROLLBAR --- */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 3px;
+}
+
+/* --- GLOBAL ANIMATIONS & OVERLAYS --- */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    background-size: 200px;
+    pointer-events: none;
+    z-index: -1;
+    opacity: var(--noise-opacity);
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background:
+        radial-gradient(60vw 60vw at 95% -10%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%),
+        radial-gradient(55vw 55vw at -10% 105%, color-mix(in srgb, var(--accent2) 10%, transparent), transparent 64%);
+    opacity: 0.55;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: .4;
+    }
+}
+
+@keyframes scanline {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(4px);
+    }
+}
+
+/* --- HACKER-MODE RED ANIMATIONS --- */
+@keyframes hacker-glitch {
+    0% {
+        clip-path: inset(0 0 98% 0);
+        transform: translateX(-3px);
+    }
+    10% {
+        clip-path: inset(20% 0 60% 0);
+        transform: translateX(3px);
+    }
+    20% {
+        clip-path: inset(55% 0 30% 0);
+        transform: translateX(-2px);
+    }
+    30% {
+        clip-path: inset(10% 0 80% 0);
+        transform: translateX(4px);
+    }
+    40% {
+        clip-path: inset(70% 0 10% 0);
+        transform: translateX(-3px);
+    }
+    50% {
+        clip-path: inset(40% 0 50% 0);
+        transform: translateX(2px);
+    }
+    60% {
+        clip-path: inset(85% 0 5% 0);
+        transform: translateX(-4px);
+    }
+    70% {
+        clip-path: inset(5% 0 88% 0);
+        transform: translateX(3px);
+    }
+    80% {
+        clip-path: inset(60% 0 28% 0);
+        transform: translateX(-2px);
+    }
+    90% {
+        clip-path: inset(30% 0 62% 0);
+        transform: translateX(4px);
+    }
+    100% {
+        clip-path: inset(0 0 98% 0);
+        transform: translateX(0);
+    }
+}
+
+@keyframes hacker-flicker {
+    0%,
+    19%,
+    21%,
+    23%,
+    25%,
+    54%,
+    56%,
+    100% {
+        opacity: 1;
+    }
+    20%,
+    24%,
+    55% {
+        opacity: 0.4;
+    }
+}
+
+@keyframes hacker-red-pulse {
+    0%,
+    100% {
+        box-shadow: 0 0 8px var(--glow), 0 0 20px var(--hacker-glow-soft);
+    }
+    50% {
+        box-shadow: 0 0 18px var(--glow), 0 0 40px var(--hacker-glow-mid), 0 0 60px var(--hacker-glow-soft);
+    }
+}
+
+@keyframes hacker-border-flare {
+    0% {
+        border-color: rgba(255, 26, 26, 0.2);
+    }
+    50% {
+        border-color: rgba(255, 26, 26, 0.6);
+    }
+    100% {
+        border-color: rgba(255, 26, 26, 0.2);
+    }
+}
+
+@keyframes hacker-grid-drift {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 40px 40px;
+    }
+}
+
+@keyframes hacker-text-flicker {
+    0%,
+    96%,
+    98%,
+    100% {
+        text-shadow: 0 0 8px var(--glow);
+    }
+    97%,
+    99% {
+        text-shadow: none;
+    }
+}
+
+@keyframes hacker-scanline-drift {
+    0% {
+        transform: translateY(-100vh);
+    }
+    100% {
+        transform: translateY(100vh);
+    }
+}
+
+/* --- T4-A: GPU LAYER HINTS --- */
+.fade-up {
+    will-change: transform, opacity;
+}
+
+.fade-up.visible {
+    will-change: auto;
+}
+
+.hero-orb {
+    will-change: transform;
+}
+
+.cursor-dot,
+.cursor-outline {
+    will-change: left, top;
+}
+
+.tab-btn {
+    will-change: transform;
+}
+
+.hacker-scanline {
+    will-change: opacity;
+}
+
+/* --- T5-E: SECTION LABEL UNDERLINE DRAW-IN --- */
+.section-label {
+    position: relative;
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-bottom: 6px;
+}
+
+.section-label::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 0;
+    background: var(--grad);
+    border-radius: 2px;
+    transition: width 0.5s ease 0.2s;
+}
+
+.section-label.visible::after,
+.fade-up.visible .section-label::after,
+.section-inner .section-label::after {
+    width: 100%;
+}
+
+/* --- T4-D: THEME SWITCH FLASH OVERLAY --- */
+.theme-flash {
+    position: fixed;
+    inset: 0;
+    background: var(--accent);
+    z-index: 99999;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.theme-flash.active {
+    opacity: 0.06;
+}
+
+/* --- NEW KEYFRAMES --- */
+
+/* T1-A: Hero image rotating glow ring */
+@keyframes ring-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* T1-B: Caret blink for typewriter */
+@keyframes caret-blink {
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* T1-D: Orbit chip around hero */
+@keyframes orbit-chip {
+    from {
+        transform: rotate(var(--orbit-start)) translateX(var(--orbit-r)) rotate(calc(-1 * var(--orbit-start)));
+    }
+
+    to {
+        transform: rotate(calc(var(--orbit-start) + 360deg)) translateX(var(--orbit-r)) rotate(calc(-1 * (var(--orbit-start) + 360deg)));
+    }
+}
+
+/* T2-B: Button ripple burst */
+@keyframes ripple-burst {
+    from {
+        transform: scale(0);
+        opacity: 0.5;
+    }
+
+    to {
+        transform: scale(3);
+        opacity: 0;
+    }
+}
+
+/* T5-A: Expertise icon float */
+@keyframes icon-float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-7px);
+    }
+}
+
+/* T5-B: Timeline dot spring bounce */
+@keyframes scale-in {
+    0% {
+        transform: scale(0);
+    }
+
+    70% {
+        transform: scale(1.18);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* T3-C: Confetti particle fall */
+@keyframes confetti-fall {
+    to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* T4-D: Theme crossfade mesh pulse */
+@keyframes mesh-pulse {
+    0%,
+    100% {
+        opacity: 0.55;
+    }
+
+    50% {
+        opacity: 0.75;
+    }
+}
+
+/* T5-C: Shimmer sweep on cert/award cards */
+@keyframes shimmer-sweep {
+    from {
+        background-position: -200% center;
+    }
+
+    to {
+        background-position: 200% center;
+    }
+}
+
+/* T5-F: Hero CTA one-time load shimmer */
+@keyframes btn-load-shimmer {
+    0% {
+        background-position: -200% center;
+    }
+
+    100% {
+        background-position: 200% center;
+    }
+}
+
+/* Respect user motion preference */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .hacker-scanline {
+        display: none !important;
+    }
+}

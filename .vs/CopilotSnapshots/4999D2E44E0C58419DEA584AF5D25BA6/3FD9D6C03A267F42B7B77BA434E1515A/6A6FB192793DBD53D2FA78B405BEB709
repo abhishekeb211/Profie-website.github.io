@@ -1,0 +1,845 @@
+﻿/* ============================================================
+   REUSABLE COMPONENTS
+   ============================================================ */
+
+/* --- BUTTONS --- */
+.btn-primary,
+.btn-secondary,
+.resume-btn,
+.classroom-card-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: .88rem;
+    transition: transform var(--motion-fast) ease, box-shadow var(--motion-medium) ease, border-color var(--motion-medium) ease, background var(--motion-medium) ease, color var(--motion-medium) ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--grad);
+    color: #fff;
+    box-shadow: 0 10px 28px color-mix(in srgb, var(--glow) 48%, transparent);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 36px color-mix(in srgb, var(--glow) 62%, transparent);
+}
+
+.btn-secondary {
+    background: var(--surface-elev);
+    border: 1px solid var(--card-border);
+    color: var(--text);
+}
+
+.btn-secondary:hover {
+    border-color: var(--accent-border-soft);
+    background: var(--surface-strong);
+}
+
+.resume-btn {
+    padding: 8px 18px;
+    background: var(--grad);
+    color: #fff;
+    box-shadow: 0 10px 24px color-mix(in srgb, var(--glow) 42%, transparent);
+}
+
+/* --- THEME SWITCHER (dropdown) --- */
+.theme-switcher {
+    position: relative;
+}
+
+.theme-switcher-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 9px;
+    color: var(--text);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.theme-switcher-trigger:hover {
+    border-color: var(--accent);
+    background: var(--bg2);
+}
+
+.theme-switcher-trigger:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+}
+
+.theme-switcher-chevron {
+    font-size: 0.7rem;
+    opacity: 0.8;
+    transition: transform 0.2s ease;
+}
+
+.theme-switcher-trigger[aria-expanded="true"] .theme-switcher-chevron {
+    transform: rotate(180deg);
+}
+
+.theme-switcher-dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    min-width: 120px;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    box-shadow: var(--card-shadow-hover);
+    padding: 6px;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.theme-switcher-dropdown[hidden] {
+    display: none !important;
+}
+
+.theme-option {
+    padding: 10px 14px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.theme-option:hover {
+    background: var(--bg2);
+}
+
+.theme-option[aria-current="true"],
+.theme-option.active {
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+
+.theme-option:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+}
+
+/* --- CARDS --- */
+.card,
+.expertise-card,
+.education-card,
+.project-card,
+.highlight-item,
+.cert-card,
+.award-item {
+    background: var(--surface-elev);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 28px;
+    transition: transform var(--motion-fast) ease, box-shadow var(--motion-medium) ease, border-color var(--motion-medium) ease, background var(--motion-medium) ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+}
+
+.project-card {
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.project-card::before {
+    content: "";
+    position: absolute;
+    inset: -40% -10% auto;
+    height: 70%;
+    background: radial-gradient(circle at center, color-mix(in srgb, var(--accent) 24%, transparent), transparent 72%);
+    opacity: 0;
+    transform: translateY(-18px);
+    transition: opacity var(--motion-medium) ease, transform var(--motion-medium) ease;
+    pointer-events: none;
+}
+
+.project-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-5px);
+    box-shadow: var(--card-shadow-hover), 0 0 0 1px color-mix(in srgb, var(--accent) 25%, transparent) inset;
+}
+
+.project-card:hover::before {
+    opacity: 0.65;
+    transform: translateY(0);
+}
+
+/* --- IMAGES & WRAPPERS --- */
+.project-image-wrapper {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--bg3);
+}
+
+.project-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.project-card:hover .project-image {
+    transform: scale(1.05);
+}
+
+.project-image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 200px;
+    font-size: 3.5rem;
+    background: var(--bg3);
+}
+
+/* --- MODALS --- */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--overlay-bg);
+    backdrop-filter: blur(8px);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--surface-elev);
+    width: 100%;
+    max-width: 800px;
+    max-height: 90vh;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--card-border);
+    padding: 40px;
+    color: var(--text);
+    overflow-y: auto;
+}
+
+/* --- GLASS THEME: frosted panels --- */
+body.glass-theme .card,
+body.glass-theme .expertise-card,
+body.glass-theme .education-card,
+body.glass-theme .project-card,
+body.glass-theme .highlight-item,
+body.glass-theme .cert-card,
+body.glass-theme .award-item {
+    backdrop-filter: blur(16px) saturate(150%);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+}
+
+body.glass-theme .modal-content {
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+}
+
+/* --- TIMELINES --- */
+.timeline {
+    position: relative;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 18px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+}
+
+.timeline-item {
+    display: flex;
+    gap: 32px;
+    padding-bottom: 48px;
+    position: relative;
+}
+
+.timeline-dot {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--grad);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px var(--glow);
+    z-index: 1;
+}
+
+/* --- TOAST NOTIFICATIONS --- */
+.toast-container {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+}
+
+.toast {
+    background: var(--surface-elev);
+    border: 1px solid var(--accent);
+    color: var(--text);
+    padding: 12px 24px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+    animation: toastIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1) forwards;
+    pointer-events: auto;
+}
+
+.toast.hiding {
+    animation: toastOut 0.4s ease forwards;
+}
+
+.toast-icon {
+    color: var(--accent);
+    font-size: 1.2rem;
+}
+
+@keyframes toastIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes toastOut {
+    to {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.9);
+    }
+}
+
+/* --- OTHER COMPONENTS --- */
+.skeleton {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--card-border);
+}
+
+.skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+    animation: shimmer 2.5s infinite;
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--grad);
+    color: #fff;
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 12px 26px color-mix(in srgb, var(--bg) 70%, transparent);
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.hacker-scanline {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0, 255, 65, 0.05) 50%);
+    background-size: 100% 4px;
+    z-index: 9998;
+    pointer-events: none;
+    display: none;
+    animation: scanline 10s linear infinite;
+    opacity: var(--scanline-opacity);
+}
+
+body.hacker-theme .hacker-scanline {
+    display: block;
+}
+
+/* --- TEACHING SUBJECT LIST --- */
+.subject-list {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+    list-style: none;
+}
+
+.subject-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.subject-name {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text);
+    flex: 1;
+    min-width: 120px;
+}
+
+.subject-code {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    background: var(--bg3);
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--card-border);
+    white-space: nowrap;
+}
+
+.classroom-link {
+    font-size: 0.75rem !important;
+    padding: 4px 10px !important;
+    white-space: nowrap;
+}
+
+/* --- EXPERTISE CHIPS (tag row inside expertise-card) --- */
+.expertise-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+}
+
+/* --- SECTION TYPOGRAPHY & CONTENT HIERARCHY --- */
+.section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    color: color-mix(in srgb, var(--accent) 88%, #ffffff);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.section-title {
+    margin-bottom: 24px;
+    font-size: clamp(1.7rem, 2.8vw, 2.6rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.section-title span,
+.grad {
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    color: var(--text-muted);
+    font-size: 0.86rem;
+    font-weight: 600;
+}
+
+.hero-tag .dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+.hero-name {
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    line-height: 1.05;
+    margin-bottom: 14px;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+}
+
+.hero-desc {
+    max-width: 60ch;
+    color: var(--text-muted);
+    font-size: 1.02rem;
+    line-height: 1.65;
+}
+
+.hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.hero-roles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.hero-role-chip,
+.stack-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--card-border);
+    background: color-mix(in srgb, var(--bg3) 76%, transparent);
+    color: var(--text-muted);
+    font-size: 0.76rem;
+    font-weight: 600;
+}
+
+/* --- GRID CARD HIERARCHY --- */
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.project-tag {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.project-title,
+.expertise-title {
+    font-size: clamp(1.06rem, 1.3vw, 1.2rem);
+    line-height: 1.3;
+    margin-top: 6px;
+}
+
+.project-summary,
+.expertise-desc {
+    color: var(--text-muted);
+    font-size: clamp(0.92rem, 1.4vw, 0.98rem);
+    line-height: 1.58;
+}
+
+.project-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.highlights-grid .highlight-item {
+    text-align: center;
+}
+
+.highlights .section-label,
+.highlights .section-title {
+    text-align: center;
+    justify-content: center;
+}
+
+.highlight-num {
+    font-size: clamp(1.3rem, 2.5vw, 2rem);
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.highlight-label {
+    margin-top: 8px;
+    font-size: 0.86rem;
+    color: var(--text-muted);
+}
+
+/* --- PROFESSOR PANE CONSISTENCY --- */
+#prof-pane .expertise-card,
+#prof-pane .project-card {
+    padding: 24px;
+    border-color: color-mix(in srgb, var(--prof-accent) 30%, var(--card-border));
+    background:
+        linear-gradient(165deg, color-mix(in srgb, var(--prof-accent) 7%, transparent), transparent 42%),
+        var(--card);
+}
+
+#prof-pane .project-card {
+    min-height: 100%;
+    gap: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#prof-pane .project-card:hover,
+#prof-pane .expertise-card:hover {
+    border-color: color-mix(in srgb, var(--prof-accent) 48%, transparent);
+    box-shadow: 0 18px 38px color-mix(in srgb, var(--prof-glow) 48%, transparent);
+}
+
+#prof-pane .project-image-placeholder {
+    font-size: 2.4rem;
+    height: 150px;
+    color: color-mix(in srgb, var(--prof-accent) 65%, #ffffff);
+    background: color-mix(in srgb, var(--prof-accent) 16%, var(--bg2));
+}
+
+#prof-pane #teaching-prof .project-card .btn-primary {
+    margin-top: auto;
+    width: 100%;
+    justify-content: center;
+}
+
+#prof-pane #teaching-prof .prof-resource-cta {
+    min-height: 44px;
+}
+
+#prof-pane #teaching-prof .project-summary {
+    min-height: 5em;
+}
+
+#prof-pane #teaching-prof .project-stack {
+    min-height: 34px;
+}
+
+#prof-pane #teaching-prof .project-title {
+    min-height: 2.5em;
+}
+
+#prof-pane #teaching-prof .projects-grid {
+    align-items: stretch;
+}
+
+#prof-pane #teaching-prof .project-header {
+    min-height: 28px;
+}
+
+#prof-pane #teaching-prof .project-image-wrapper {
+    min-height: 150px;
+}
+
+#prof-pane .hero-tag,
+#prof-pane .section-label {
+    color: color-mix(in srgb, var(--prof-accent) 92%, #ffffff);
+}
+
+#prof-pane .highlight-item {
+    border-color: color-mix(in srgb, var(--prof-accent) 24%, var(--card-border));
+}
+
+#prof-pane .highlight-num {
+    font-size: clamp(1.15rem, 2vw, 1.7rem);
+}
+
+#prof-pane .highlight-label {
+    line-height: 1.4;
+}
+
+#prof-pane .project-tag,
+#prof-pane .section-label,
+#prof-pane .stack-chip {
+    color: var(--prof-accent);
+}
+
+#prof-pane .stack-chip {
+    border-color: color-mix(in srgb, var(--prof-accent) 35%, transparent);
+    background: color-mix(in srgb, var(--prof-accent) 12%, transparent);
+}
+
+#prof-pane .btn-primary {
+    background: var(--prof-grad);
+    box-shadow: 0 12px 28px color-mix(in srgb, var(--prof-glow) 58%, transparent);
+}
+
+#prof-pane .hero-desc,
+#prof-pane .project-summary,
+#prof-pane .expertise-desc {
+    color: color-mix(in srgb, var(--text-muted) 92%, #ffffff);
+}
+
+/* --- FOOTER & SOCIAL POLISH --- */
+.footer {
+    margin-top: 88px;
+    border-top: 1px solid var(--card-border);
+    background:
+        radial-gradient(1200px 420px at 80% -120px, color-mix(in srgb, var(--accent) 20%, transparent), transparent 65%),
+        var(--bg2);
+}
+
+.footer-inner {
+    width: min(1160px, 100%);
+    margin: 0 auto;
+    padding: 44px 20px 26px;
+}
+
+.footer-top,
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer-top {
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.footer-nav a {
+    padding: 8px 12px;
+    border-radius: 999px;
+    color: var(--text-muted);
+    border: 1px solid transparent;
+    font-size: 0.86rem;
+    font-weight: 600;
+}
+
+.footer-nav a:hover {
+    color: var(--text);
+    border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+    background: color-mix(in srgb, var(--accent) 11%, transparent);
+}
+
+.footer-bottom {
+    padding-top: 16px;
+}
+
+.footer-bottom p {
+    color: var(--text-dim);
+    font-size: 0.84rem;
+}
+
+.social-links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.social-links a {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    border: 1px solid var(--card-border);
+    color: var(--text-muted);
+    background: color-mix(in srgb, var(--bg3) 60%, transparent);
+}
+
+.social-links a:hover {
+    color: var(--text);
+    border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    transform: translateY(-1px) scale(1.03);
+}
+
+/* Professional/Hacker contrast balancing */
+body.hacker-theme .section-label,
+body.hacker-theme .project-tag {
+    letter-spacing: 0.08em;
+}
+
+body.hacker-theme .section-label,
+body.hacker-theme .project-tag,
+body.hacker-theme .hero-role-chip,
+body.hacker-theme .stack-chip {
+    font-family: var(--font-mono);
+}
+
+body.hacker-theme .project-card,
+body.hacker-theme .expertise-card,
+body.hacker-theme .highlight-item {
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 24%, transparent), 0 0 26px color-mix(in srgb, var(--glow) 24%, transparent);
+}
+
+body.hacker-theme .btn-primary,
+body.hacker-theme .resume-btn {
+    text-shadow: 0 0 8px color-mix(in srgb, var(--accent) 44%, transparent);
+}
+
+body.hacker-theme .hero-role-chip,
+body.hacker-theme .stack-chip {
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    border-color: color-mix(in srgb, var(--accent) 38%, transparent);
+}
+
+body.hacker-theme .hero-desc,
+body.hacker-theme .project-summary,
+body.hacker-theme .expertise-desc {
+    color: color-mix(in srgb, var(--text) 76%, #0f2415);
+}
+
+body.light-theme .hero-desc,
+body.light-theme .project-summary,
+body.light-theme .expertise-desc {
+    color: color-mix(in srgb, var(--text-muted) 92%, #ffffff);
+}
+
+@media (max-width: 900px) {
+    .hero-ctas {
+        justify-content: center;
+    }
+
+    .hero-desc {
+        margin-inline: auto;
+    }
+
+    .footer-top,
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

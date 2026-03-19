@@ -952,7 +952,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 3D TILT EFFECT ---
     function initTiltEffects() {
-        const tiltCards = document.querySelectorAll('.education-card, .mentorship-card, .teaching-card, .expertise-card, .highlight-item, .project-card, .award-item, .cert-card, .freebie-card');
+        const tiltCards = document.querySelectorAll('.education-card, .mentorship-card, .teaching-card, .expertise-card, .highlight-item, .project-card, .award-item, .cert-card, .freebie-card, .cta-content');
         tiltCards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
@@ -975,8 +975,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function initCursor() {
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
-        const hoverElements = document.querySelectorAll('a, button, .tab-pill, .project-card, .photo-item, .hero-avatar, .hero-image-container, .expertise-card, .education-card, .mentorship-card, .teaching-card');
-        const magneticElements = document.querySelectorAll('.btn-primary, .btn-secondary, .resume-btn');
+        const hoverElements = document.querySelectorAll('a, button, .tab-pill, .project-card, .photo-item, .hero-avatar, .hero-image-container, .expertise-card, .education-card, .mentorship-card, .teaching-card, .cta-content');
+        const magneticElements = document.querySelectorAll('.btn-primary, .btn-secondary, .resume-btn, .social-links-grid a');
 
         if (!cursorDot || !cursorOutline) return;
 
@@ -1058,7 +1058,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- T2-B: CLICK RIPPLE BURST ---
     function initRipple() {
-        const rippleTargets = document.querySelectorAll('.btn-primary, .btn-secondary, .resume-btn, .classroom-card-btn, .tab-btn');
+        const rippleTargets = document.querySelectorAll('.btn-primary, .btn-secondary, .resume-btn, .classroom-card-btn, .tab-btn, .social-links-grid a');
         rippleTargets.forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const rect = btn.getBoundingClientRect();

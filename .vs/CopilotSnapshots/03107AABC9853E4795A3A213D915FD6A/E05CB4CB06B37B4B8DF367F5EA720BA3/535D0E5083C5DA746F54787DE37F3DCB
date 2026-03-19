@@ -1,0 +1,82 @@
+﻿---
+name: agentic-orchestrator
+description: Applies Agentic AI Orchestrator protocols: goal contracts, task DAGs, verification-first execution, sandbox tiers, human approval gates. Use when planning multi-step autonomous tasks, when the user asks for agentic or Super-IDE behavior, or when decomposing work into verifiable steps.
+---
+
+# Agentic Orchestrator Protocol
+
+## When to use this skill
+
+- User asks for agentic behavior, Super-IDE protocol, or verification-first execution.
+- Planning multi-step or autonomous tasks that need decomposition and verification.
+- Defining outcomes, acceptance criteria, and rollback before making changes.
+- Classifying failure types and choosing fix / retry / escalate.
+- Determining risk level, sandbox tier, and whether human approval is required.
+
+## Goal contract (minimal)
+
+Every non-trivial request should be shaped into a goal contract:
+
+```yaml
+goal_contract:
+  id: "TASK-{timestamp}"
+  user_facing_outcome:
+    description: "Observable change for end user"
+  system_behavior:
+    invariants: []
+    edge_cases: []
+  acceptance_criteria: []
+  non_goals: []
+  constraints:
+    hard_limits: []
+    soft_preferences: []
+  risk_profile:
+    level: "low|medium|high|critical"
+    what_could_break: []
+  rollback_plan: "How to undo"
+```
+
+## Task DAG (node shape)
+
+Tasks in the DAG should have:
+
+- `id`, `name`, `dependencies` (list of task ids), `estimated_effort`
+- `verification_commands` (e.g. tests, lint)
+- `risk_level`, `sandbox_tier` (1–5), `approval_required` (bool)
+- `outputs`, `success_criteria`
+
+Execute in dependency order; verify each task before checkpointing.
+
+## Risk → sandbox and approval
+
+| Indicator | Risk | Sandbox | Approval |
+|-----------|------|---------|----------|
+| Read-only, local files | Low | T1 | No |
+| Code changes with tests | Medium | T2 | No |
+| External API calls | High | T3 | Yes |
+| Secret access | High | T3 | Yes |
+| Production deploy | Critical | T4 | Yes (2 humans) |
+| Infrastructure change | Critical | T4 | Yes (2 humans) |
+| Untrusted code | Critical | T5 | Yes + audit |
+
+T1 = process; T2 = container; T3 = rootless container; T4 = user-space kernel; T5 = microVM.
+
+## Verification gates
+
+- **Inner loop:** Every file save — targeted unit tests + lint + types. Must pass; no checkpoint on failure.
+- **Outer loop:** Task completion — integration + contract tests. On failure: diagnose, decompose, or retry.
+- **Merge gate:** PR creation — full suite + security + coverage. Block until human review if failed.
+- **Deploy gate:** Production push — canary + SLO verification. Auto-rollback and alert on failure.
+
+## Failure handling (classify → respond)
+
+- **Deterministic:** Fix (max 3 tries) → still fail → decompose task.
+- **Environmental:** Fix config or document requirement → retry with backoff → fail → escalate.
+- **Transient:** Retry with exponential backoff + jitter (max 5) → then escalate.
+- **Policy:** Immediate halt and escalate; no retry.
+
+After each failure: reflect (what, why, how to prevent) and store learnings when useful.
+
+## Full reference
+
+For the complete Knowledge Base (constitutional laws, security architecture, secret management, memory and learning, tool schema template, master prompt, glossary, regulatory alignment), see [reference.md](reference.md).

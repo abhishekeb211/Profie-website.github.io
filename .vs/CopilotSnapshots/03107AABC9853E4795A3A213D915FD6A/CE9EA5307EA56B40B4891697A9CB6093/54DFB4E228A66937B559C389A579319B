@@ -1,0 +1,59 @@
+﻿---
+description: "Master execution loop, Brain Skills matrix (S1–S6), 6-phase protocol, failure handling. Applies to every request."
+alwaysApply: true
+---
+
+# Master Execution Loop
+*Full detail: [Skill.md](../../Skill.md) — SKILLs 2 & 3*
+
+## 6-Phase Sovereign Command Protocol *(planning is mandatory — no exceptions)*
+
+```
+1. HEARTBEAT    — Proactive baseline check (lint, build, health)
+2. INDEXING     — Complete workspace context indexing
+3. PLANNING     — Mandatory Goal Contract & Task DAG (ALWAYS, even for single-line changes)
+4. EXECUTION    — Multi-file Composer-style editing
+5. VERIFICATION — Automated Super-IDE proof gates
+6. SYNTHESIS    — Memory consolidation & learning
+```
+
+## Super-IDE Algorithm
+
+```
+REASON → ACT → VERIFY → [GREEN → Checkpoint | RED → Reflect → Retry/Decompose/Escalate]
+```
+
+PHASE 0 — INITIALISE: state check, baseline checks. If baseline fails, stop.
+PHASE 1 — PLAN: goal contract, task DAG, risk assessment. Mandatory for all requests.
+PHASE 2 — EXECUTE: select task → constitutional check → approval if required → sandbox execute → verify. GREEN → checkpoint; RED → handle failure.
+PHASE 3 — FINALISE: full verification; if GREEN deliver; else escalate.
+
+## Brain Skills Matrix (S1–S6)
+
+| Skill | Goal | Rules |
+|-------|------|-------|
+| S1 — File Understanding | Understand file structure, imports, dependencies | Never assume paths; read in context |
+| S2 — Planning | Create atomic ordered plans | One verb+target per step; 5–12 steps |
+| S3 — Code Editing | Apply precise minimal changes | Include 3–5 lines context; group by file |
+| S4 — Testing & Validation | Run and verify tests, builds | Discover before running; fail fast |
+| S5 — Error Diagnosis | Classify and respond to failures | Deterministic / Environmental / Transient / Policy |
+| S6 — Learning & Memory | Capture session learnings | Triggered by corrections, standards, preferences |
+
+## Seven-Step Workflow
+
+```
+ANALYSE → GATHER → PLAN → IMPLEMENT → VALIDATE → FINALISE → PERSIST
+```
+
+ALWAYS create a goal contract and task DAG for EVERY request. No exceptions. No skip conditions.
+
+## Failure Handling
+
+1. **CLASSIFY:** Deterministic (code/logic) · Environmental (config/dependency) · Transient (network/flaky) · Policy (permission/approval)
+2. **RESPOND:**
+   - Deterministic → fix (max 3 tries) → still failing → decompose task
+   - Environmental → fix config or document requirement → retry with backoff → fail → escalate
+   - Transient → exponential backoff + jitter (max 5 retries) → then escalate
+   - Policy → **immediate halt; escalate to human; no retry**
+3. **REFLECT:** What failed, why, how to prevent. Store in failure memory.
+4. **DECIDE:** Fix / Decompose / Retry / Escalate

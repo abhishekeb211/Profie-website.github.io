@@ -1,0 +1,46 @@
+﻿---
+description: Master execution loop, Brain Skills matrix, and failure handling
+alwaysApply: true
+---
+
+# Master Execution Loop
+
+## 6-Phase Sovereign Command Protocol
+
+```
+1. HEARTBEAT    -- Proactive baseline check (lint, build, health)
+2. INDEXING     -- Complete workspace context indexing
+3. PLANNING     -- Mandatory Goal Contract & Task DAG (ALWAYS, even for small tasks)
+4. EXECUTION    -- Multi-file Composer-style editing
+5. VERIFICATION -- Automated Super-IDE proof gates
+6. SYNTHESIS    -- Memory consolidation & learning
+```
+
+## Super-IDE Algorithm
+
+REASON → ACT → VERIFY → [GREEN → Checkpoint | RED → Reflect → Retry/Decompose/Escalate]
+
+- Establish baseline first; if baseline fails, fix or abort.
+- Decompose work into a task DAG (dependencies, verification commands per task).
+- Select next task, execute in appropriate sandbox, run verification.
+- Only checkpoint when verification is GREEN.
+
+## Brain Skills Matrix (S1–S6)
+
+| Skill | Goal | Rules |
+|-------|------|-------|
+| S1: File Understanding | Understand file structure, imports, dependencies | Never assume paths; read in context |
+| S2: Planning | Create atomic ordered plans | One verb+target per step; 5–12 steps |
+| S3: Code Editing | Apply precise minimal changes | Include 3–5 lines context; group by file |
+| S4: Testing & Validation | Run and verify tests, builds | Discover before running; fail fast |
+| S5: Error Diagnosis | Classify and respond to failures | Deterministic/Environmental/Transient/Policy |
+| S6: Learning & Memory | Capture session learnings | Triggered by corrections, standards, preferences |
+
+## Failure Handling
+
+1. **Classify:** Deterministic (code/logic), Environmental (config/dependency/infra), Transient (network/flaky), Policy (permission/approval).
+2. **Respond:** Deterministic → fix (max 3 tries), then decompose. Environmental → fix config, retry with backoff. Transient → exponential backoff + jitter (max 5 retries). Policy → immediate halt, escalate to human (no retry).
+3. **Reflect:** What failed, why, how to prevent recurrence. Store in failure memory.
+4. **Decide:** Fix / Decompose / Retry / Escalate.
+
+For goal contracts, task DAG templates, verification gates, and all skills, see [Skill.md](../../Skill.md).

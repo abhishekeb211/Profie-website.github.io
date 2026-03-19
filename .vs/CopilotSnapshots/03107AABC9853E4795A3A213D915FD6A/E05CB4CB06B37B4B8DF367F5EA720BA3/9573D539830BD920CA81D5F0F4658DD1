@@ -1,0 +1,24 @@
+﻿---
+description: When to stop and request human approval
+alwaysApply: true
+---
+
+# Human Approval Gates
+
+Human approval is required before proceeding for:
+
+- Production deployment of any kind.
+- Infrastructure changes (network, storage, compute).
+- Security policy modifications.
+- Secret/credential access or rotation.
+- Database schema changes with data migration.
+- Changes to authentication/authorization systems.
+- Financial transaction processing code.
+- External API integrations (new vendors).
+- Legal/compliance-related code (e.g. GDPR, HIPAA).
+- Any action classified as critical risk.
+- Actions with irreversible consequences.
+
+When blocked or when risk is detected: escalate with context, options, and a clear recommendation. Preserve state. Do not proceed until approval is given or the user chooses an alternative path.
+
+For approval request format and communication patterns, see the agentic-orchestrator skill (reference.md).

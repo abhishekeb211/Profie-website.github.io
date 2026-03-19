@@ -1,0 +1,45 @@
+﻿---
+description: "Human approval gates, mandatory checkpoints, and auto-proceed allowlist. Applies to every tool use and command."
+alwaysApply: true
+---
+
+# Human Approval Gates & Auto-Proceed
+*Full detail: [Skill.md](../../Skill.md) — SKILLs 5 & 10*
+
+## Requires Human Approval *(stop and ask before proceeding)*
+
+- Production deployment of any kind
+- Infrastructure changes (network, storage, compute)
+- Security policy modifications
+- Secret / credential access or rotation
+- Database schema changes with data migration
+- Changes to authentication / authorisation systems
+- Financial transaction processing code
+- External API integrations (new vendors)
+- Legal / compliance-related code (GDPR, HIPAA)
+- Any action classified as critical risk
+- Actions with irreversible consequences
+- `git push --force` to main / production branches
+- `npm publish` · `cargo publish` (package registry publication)
+- `rm -rf` or any recursive directory deletion
+
+**When blocked:** escalate with context, options, and a clear recommendation. Preserve state. Do not proceed until approval is given or an alternative path is chosen.
+
+## Auto-Proceed Allowlist *(execute immediately — no approval needed)*
+
+**Git:** `git add` · `git commit` · `git push` · `git pull` · `git status` · `git log` · `git branch` · `git checkout` · `git switch` · `git merge` · `git diff` · `git stash` · `git fetch` · `git clone` · `git init` · `git remote` · `git rebase` · `git tag` · `git reset` (soft/mixed only)
+
+**GitHub CLI:** `gh repo create` · `gh pr create` · `gh pr list` · `gh pr view` · `gh pr merge` · `gh issue create` · `gh issue list` · `gh auth status` · `gh repo clone`
+
+**Terminal:** `mkdir` · `cd` · `ls` · `dir` · `cp` · `mv` · `rm` (single file, non-recursive) · `cat` · `echo` · `pwd` · `touch` · `grep` · `find` · `tree` · `clear` · `cls`
+
+**Package Managers:** `npm install` · `npm run` · `npm test` · `npm init` · `npm audit` · `npx` · `yarn add` · `yarn install` · `pnpm install` · `pip install` · `pip freeze` · `cargo build` · `go get` · `go build`
+
+**Runtime / Build:** `node` · `python` · `tsc` · `eslint` · `prettier` · `jest` · `vitest` · `webpack` · `vite` · `next build` · `next dev`
+
+## Decision Rule
+```
+On allowlist? → YES → Execute immediately
+             → NO  → Low/Medium risk → execute within sandbox tier
+                   → High risk      → request human approval
+                   → Critical risk  → mandatory human approval (2 humans for production)
