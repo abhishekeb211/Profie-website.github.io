@@ -1,9 +1,11 @@
 ---
-description: When to stop and request human approval
+description: When to stop and request human approval; auto-proceed allowlist
 alwaysApply: true
 ---
 
 # Human Approval Gates
+
+## Requires Human Approval
 
 Human approval is required before proceeding for:
 
@@ -18,7 +20,22 @@ Human approval is required before proceeding for:
 - Legal/compliance-related code (e.g. GDPR, HIPAA).
 - Any action classified as critical risk.
 - Actions with irreversible consequences.
+- `git push --force` to main/production branches.
+- `npm publish`, `cargo publish` (package registry publication).
+- `rm -rf` or recursive deletion of directories.
 
-When blocked or when risk is detected: escalate with context, options, and a clear recommendation. Preserve state. Do not proceed until approval is given or the user chooses an alternative path.
+When blocked: escalate with context, options, and a clear recommendation. Preserve state. Do not proceed until approval is given.
 
-For approval request format and communication patterns, see the agentic-orchestrator skill (reference.md).
+## Auto-Proceed (No Approval Needed)
+
+**Git:** `git add/commit/push/pull/status/log/branch/checkout/switch/merge/diff/stash/fetch/clone/init/remote/rebase/tag/reset` (soft/mixed only)
+
+**GitHub CLI:** `gh repo create/pr create/pr list/pr view/pr merge/issue create/issue list/auth status/repo clone`
+
+**Terminal:** `mkdir/cd/ls/dir/cp/mv/rm` (single file, non-recursive) `cat/echo/pwd/touch/grep/find/tree/clear`
+
+**Package Managers:** `npm install/run/test/init/audit/npx`, `yarn add/install`, `pnpm install`, `pip install/freeze`, `cargo build/test`, `go get/build/test`
+
+**Runtime/Build:** `node`, `python`, `tsc`, `eslint`, `prettier`, `jest`, `vitest`, `webpack`, `vite`, `next build/dev`
+
+For approval request format and full risk matrix, see [Skill.md](../../Skill.md).

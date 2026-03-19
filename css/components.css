@@ -849,3 +849,64 @@ body.reduce-motion-mobile .orbit-chip {
         animation: none;
     }
 }
+
+/* === SKILLS & TECH STACK SECTION === */
+.section-skills .section-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.skills-block {
+    background: var(--surface-elev);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 24px 28px;
+    transition: border-color var(--motion-medium) ease, box-shadow var(--motion-medium) ease;
+}
+
+.skills-block:hover {
+    border-color: var(--accent-border-soft);
+    box-shadow: 0 8px 32px color-mix(in srgb, var(--glow) 18%, transparent);
+}
+
+.skills-category {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--accent);
+    margin-bottom: 14px;
+}
+
+.skills-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+@media (max-width: 600px) {
+    .skills-block {
+        padding: 18px 16px;
+    }
+
+    .skills-category {
+        font-size: 0.78rem;
+    }
+}
+
+body.hacker-theme .skills-block {
+    border-color: var(--accent);
+    background: rgba(0, 255, 65, 0.03);
+}
+
+body.hacker-theme .skills-block:hover {
+    background: rgba(0, 255, 65, 0.07);
+    box-shadow: 0 0 24px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+body.glass-theme .skills-block {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+}
