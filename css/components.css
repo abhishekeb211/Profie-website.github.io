@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    REUSABLE COMPONENTS
    ============================================================ */
 
@@ -484,7 +484,7 @@ body.hacker-theme .hacker-scanline {
     display: block;
 }
 
-/* Card glows — pulsing red border */
+/* Card glows ΓÇö pulsing red border */
 body.hacker-theme .project-card,
 body.hacker-theme .expertise-card,
 body.hacker-theme .highlight-item {
@@ -505,7 +505,7 @@ body.hacker-theme .highlight-item:hover {
     transform: translateY(-6px);
 }
 
-/* Buttons — red neon glow with flicker */
+/* Buttons ΓÇö red neon glow with flicker */
 body.hacker-theme .btn-primary,
 body.hacker-theme .resume-btn {
     text-shadow: 0 0 8px rgba(255, 26, 26, 0.6), 0 0 20px rgba(255, 26, 26, 0.3);
@@ -527,7 +527,7 @@ body.hacker-theme .stack-chip {
     text-shadow: 0 0 5px rgba(255, 26, 26, 0.35);
 }
 
-/* Hero name — glitch effect */
+/* Hero name ΓÇö glitch effect */
 body.hacker-theme .hero-name {
     animation: hacker-text-flicker 8s step-start infinite;
     text-shadow: 0 0 12px var(--glow), 0 0 30px rgba(255, 26, 26, 0.3);
@@ -555,7 +555,7 @@ body.hacker-theme .hero-name::after {
     animation: hacker-glitch 6s infinite linear alternate;
 }
 
-/* Section titles — red glow */
+/* Section titles ΓÇö red glow */
 body.hacker-theme .section-title {
     text-shadow: 0 0 14px rgba(255, 26, 26, 0.25);
     animation: hacker-text-flicker 12s step-start infinite;
@@ -565,29 +565,29 @@ body.hacker-theme .section-title span {
     text-shadow: 0 0 18px var(--glow), 0 0 40px rgba(255, 26, 26, 0.3);
 }
 
-/* Logo — flicker */
+/* Logo ΓÇö flicker */
 body.hacker-theme .logo {
     text-shadow: 0 0 10px var(--glow);
     animation: hacker-text-flicker 7s step-start infinite;
 }
 
-/* Timeline dot — red pulse */
+/* Timeline dot ΓÇö red pulse */
 body.hacker-theme .timeline-dot {
     animation: hacker-red-pulse 2s ease-in-out infinite;
 }
 
-/* Highlight numbers — red glow */
+/* Highlight numbers ΓÇö red glow */
 body.hacker-theme .highlight-num {
     text-shadow: 0 0 16px var(--glow), 0 0 40px rgba(255, 26, 26, 0.25);
 }
 
-/* Scroll progress bar — red */
+/* Scroll progress bar ΓÇö red */
 body.hacker-theme .scroll-progress-bar {
     background: linear-gradient(90deg, #8b0000, #ff1a1a, #ff6666);
     box-shadow: 0 0 8px rgba(255, 26, 26, 0.6);
 }
 
-/* Cursor dot/outline — red in hacker mode */
+/* Cursor dot/outline ΓÇö red in hacker mode */
 body.hacker-theme .cursor-dot {
     background: #ff1a1a;
     box-shadow: 0 0 8px rgba(255, 26, 26, 0.9), 0 0 16px rgba(255, 26, 26, 0.5);
@@ -598,7 +598,7 @@ body.hacker-theme .cursor-outline {
     box-shadow: 0 0 10px rgba(255, 26, 26, 0.3);
 }
 
-/* Input/focus highlight — red */
+/* Input/focus highlight ΓÇö red */
 body.hacker-theme a:focus-visible,
 body.hacker-theme button:focus-visible,
 body.hacker-theme .project-card:focus-visible {
@@ -606,30 +606,30 @@ body.hacker-theme .project-card:focus-visible {
     box-shadow: 0 0 0 3px rgba(255, 26, 26, 0.25);
 }
 
-/* Hero orbs — red glow */
+/* Hero orbs ΓÇö red glow */
 body.hacker-theme .hero-orb {
     filter: hue-rotate(220deg) saturate(2.5) brightness(1.2);
 }
 
-/* Header — red accent border */
+/* Header ΓÇö red accent border */
 body.hacker-theme #header.scrolled {
     border-bottom-color: rgba(255, 26, 26, 0.3);
     box-shadow: 0 4px 24px rgba(255, 26, 26, 0.12);
 }
 
-/* Modal — red glow */
+/* Modal ΓÇö red glow */
 body.hacker-theme .modal-content {
     box-shadow: 0 0 0 1px rgba(255, 26, 26, 0.3), 0 24px 64px rgba(255, 26, 26, 0.18);
 }
 
-/* Text description muted — reddish dark, not greenish */
+/* Text description muted ΓÇö reddish dark, not greenish */
 body.hacker-theme .hero-desc,
 body.hacker-theme .project-summary,
 body.hacker-theme .expertise-desc {
     color: rgba(255, 102, 102, 0.82);
 }
 
-/* Back-to-top — red pulse */
+/* Back-to-top ΓÇö red pulse */
 body.hacker-theme .back-to-top {
     animation: hacker-red-pulse 2.4s ease-in-out infinite;
 }
@@ -909,4 +909,170 @@ body.glass-theme .skills-block {
     background: rgba(255, 255, 255, 0.06);
     border-color: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(8px);
+}
+
+
+/* =============================================================
+   ENHANCED ANIMATIONS AND UI EFFECTS
+   ============================================================= */
+
+/* Expertise card: glow border on hover */
+.expertise-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 18px 44px color-mix(in srgb, var(--glow) 28%, transparent),
+                0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent) inset;
+}
+
+/* Staggered card entry: alternating slide directions */
+.projects-grid .fade-up:nth-child(odd) {
+    transform: translateY(32px) translateX(-12px);
+}
+
+.projects-grid .fade-up:nth-child(even) {
+    transform: translateY(32px) translateX(12px);
+}
+
+.projects-grid .fade-up.visible {
+    transform: translateY(0) translateX(0);
+}
+
+/* Skill chip: pop and glow on hover */
+.stack-chip {
+    transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
+                background 0.18s ease,
+                box-shadow 0.18s ease,
+                color 0.18s ease;
+    cursor: default;
+}
+
+.stack-chip:hover {
+    transform: translateY(-3px) scale(1.06);
+    background: color-mix(in srgb, var(--accent) 22%, transparent);
+    color: var(--accent);
+    box-shadow: 0 4px 14px color-mix(in srgb, var(--glow) 35%, transparent);
+}
+
+/* Footer: gradient accent top border */
+.footer {
+    position: relative;
+}
+
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    width: 80%;
+    height: 1px;
+    background: var(--grad);
+    opacity: 0.45;
+    filter: blur(1px);
+}
+
+/* Project card: bottom accent bar on hover */
+.project-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--grad);
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.project-card:hover::after {
+    transform: scaleX(1);
+}
+
+/* Hero role chips: hover lift */
+.hero-role-chip {
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.2s ease;
+}
+
+.hero-role-chip:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--glow) 32%, transparent);
+}
+
+/* Comp table: animated row highlight */
+.comp-table tbody tr {
+    transition: background 0.18s ease, transform 0.18s ease;
+}
+
+.comp-table tbody tr:hover {
+    background: color-mix(in srgb, var(--accent) 6%, transparent);
+    transform: translateX(3px);
+}
+
+/* Back to top: pulse ring */
+@keyframes ring-expand {
+    from {
+        transform: scale(1);
+        opacity: 0.45;
+    }
+    to {
+        transform: scale(1.9);
+        opacity: 0;
+    }
+}
+
+.back-to-top::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--grad);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.back-to-top.visible::before {
+    animation: ring-expand 1.8s ease-out infinite;
+}
+
+/* Glass theme: enhanced blur panels */
+body.glass-theme .expertise-card,
+body.glass-theme .project-card,
+body.glass-theme .highlight-item {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border-color: rgba(255, 255, 255, 0.14);
+}
+
+/* Reduce motion: disable new animations */
+@media (prefers-reduced-motion: reduce) {
+    .hero-content {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+
+    .hero-visual {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+
+    .tab-pane.active {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+
+    .back-to-top::before {
+        animation: none;
+    }
+
+    .projects-grid .fade-up:nth-child(odd),
+    .projects-grid .fade-up:nth-child(even) {
+        transform: translateY(32px);
+    }
 }

@@ -1200,6 +1200,91 @@ document.addEventListener('DOMContentLoaded', () => {
         dots.forEach(d => dotObserver.observe(d));
     }());
 
+    // --- TIMELINE LINE DRAW-IN ---
+    (function initTimelineLineDraw() {
+        const timelines = document.querySelectorAll('.timeline');
+        if (!timelines.length) return;
+        const tlObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    tlObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.05 });
+        timelines.forEach(t => tlObserver.observe(t));
+    }());
+
+    // --- HIGHLIGHT ITEM VISIBLE CLASS (for num-reveal animation) ---
+    (function initHighlightReveal() {
+        const items = document.querySelectorAll('.highlight-item');
+        if (!items.length) return;
+        const hiObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    hiObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.35 });
+        items.forEach(i => hiObserver.observe(i));
+    }());
+
+    // --- SECTION ACTIVE NAV: precise scroll spy using IntersectionObserver ---
+    (function initScrollSpy() {
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        if (!sections.length || !navLinks.length) return;
+
+        const spyObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const id = entry.target.getAttribute('id');
+                navLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    link.classList.toggle('active', href === `#${id}`);
+                });
+            });
+        }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+
+        sections.forEach(s => spyObserver.observe(s));
+    }());
+
+    // --- EXPERTISE ICON: pause float on hover for better interaction ---
+    (function initIconHoverPause() {
+        document.querySelectorAll('.expertise-card').forEach(card => {
+            const icon = card.querySelector('.expertise-icon');
+            if (!icon) return;
+            card.addEventListener('mouseenter', () => { icon.style.animationPlayState = 'paused'; });
+            card.addEventListener('mouseleave', () => { icon.style.animationPlayState = 'running'; });
+        });
+    }());
+
+    // --- COMP TABLE ROW: staggered fade-in on scroll ---
+    (function initTableRowReveal() {
+        const tables = document.querySelectorAll('.comp-table tbody');
+        if (!tables.length) return;
+        const tableObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const rows = entry.target.querySelectorAll('tr');
+                rows.forEach((row, i) => {
+                    row.style.opacity = '0';
+                    row.style.transform = 'translateX(-10px)';
+                    row.style.transition = `opacity 0.35s ease ${i * 0.05}s, transform 0.35s ease ${i * 0.05}s`;
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            row.style.opacity = '1';
+                            row.style.transform = 'translateX(0)';
+                        });
+                    });
+                });
+                tableObserver.unobserve(entry.target);
+            });
+        }, { threshold: 0.1 });
+        tables.forEach(t => tableObserver.observe(t));
+    }());
+
 });
 
 

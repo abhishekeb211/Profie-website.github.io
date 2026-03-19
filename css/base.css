@@ -292,14 +292,6 @@ body::after {
 }
 
 /* --- T4-A: GPU LAYER HINTS --- */
-.fade-up {
-    will-change: transform, opacity;
-}
-
-.fade-up.visible {
-    will-change: auto;
-}
-
 .hero-orb {
     will-change: transform;
 }
@@ -307,14 +299,6 @@ body::after {
 .cursor-dot,
 .cursor-outline {
     will-change: left, top;
-}
-
-.tab-btn {
-    will-change: transform;
-}
-
-.hacker-scanline {
-    will-change: opacity;
 }
 
 /* --- T5-E: SECTION LABEL UNDERLINE DRAW-IN --- */
@@ -474,6 +458,203 @@ body::after {
     100% {
         background-position: 200% center;
     }
+}
+
+/* SCROLL REVEAL: fade-up base state & transition */
+.fade-up {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform, opacity;
+}
+
+.fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+    will-change: auto;
+}
+
+/* PAGE LOAD: hero content entry */
+@keyframes hero-entry {
+    from {
+        opacity: 0;
+        transform: translateY(22px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes hero-img-pop {
+    from {
+        opacity: 0;
+        transform: scale(0.88);
+        filter: blur(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+    }
+}
+
+.hero-content {
+    animation: hero-entry 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+}
+
+.hero-visual {
+    animation: hero-img-pop 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+}
+
+/* TAB PANE: crossfade + micro-slide */
+.tab-pane {
+    display: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.38s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tab-pane.active {
+    display: block;
+    animation: pane-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes pane-in {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* HIGHLIGHT ITEMS: scale-in on reveal */
+.highlight-item {
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.35s ease,
+                border-color 0.35s ease,
+                opacity 0.45s ease;
+}
+
+/* HIGHLIGHT NUMBERS: shimmer gradient sweep on enter */
+@keyframes num-reveal {
+    from {
+        opacity: 0;
+        transform: scale(0.75) translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.highlight-item.visible .highlight-num {
+    animation: num-reveal 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+}
+
+/* TIMELINE LINE: animated draw-in */
+.timeline::before {
+    width: 2px;
+    transform-origin: top;
+    transform: scaleY(0);
+    transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.timeline.visible::before {
+    transform: scaleY(1);
+}
+
+/* SECTION TITLE: word-by-word reveal */
+@keyframes word-slide {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section-title .grad {
+    display: inline-block;
+    animation: word-slide 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.18s both;
+}
+
+/* CARD PERFORMANCE CONTAIN */
+.project-card,
+.expertise-card,
+.education-card,
+.cert-card,
+.highlight-item {
+    contain: layout style;
+}
+
+/* CUSTOM CURSOR */
+.cursor-dot {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, background 0.2s ease, width 0.2s ease, height 0.2s ease;
+    box-shadow: 0 0 8px color-mix(in srgb, var(--glow) 80%, transparent);
+}
+
+.cursor-outline {
+    position: fixed;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid color-mix(in srgb, var(--accent) 55%, transparent);
+    pointer-events: none;
+    z-index: 99998;
+    transform: translate(-50%, -50%);
+    transition: border-color 0.25s ease, width 0.25s ease, height 0.25s ease;
+}
+
+.cursor-dot.hovered {
+    width: 12px;
+    height: 12px;
+    background: var(--accent2);
+}
+
+.cursor-outline.hovered {
+    width: 52px;
+    height: 52px;
+    border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+@media (pointer: coarse) {
+    .cursor-dot,
+    .cursor-outline { display: none; }
+}
+
+/* --- SCROLL-LINKED ACTIVE NAV PILL --- */
+.nav-links a.active {
+    color: var(--text);
+    background: var(--accent-soft);
+    border-color: var(--accent-border-soft);
+}
+
+/* --- HIGHLIGHT-ITEM HOVER LIFT --- */
+.highlight-item:hover {
+    transform: translateY(-6px) scale(1.03);
+    border-color: var(--accent-border-soft);
+    box-shadow: 0 16px 40px color-mix(in srgb, var(--glow) 30%, transparent);
 }
 
 /* Respect user motion preference */
