@@ -1,4 +1,4 @@
-name: Deploy GitHub Pages
+name: Deploy Astro to GitHub Pages
 
 on:
   push:
@@ -15,10 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -29,28 +26,33 @@ jobs:
         with:
           node-version: "20"
           cache: "npm"
+          cache-dependency-path: "v2-astro/package-lock.json"
 
-      - name: Install and verify
-        run: npm ci && npm run verify
-
-      - name: Prepare deploy artifact
+      - name: Install dependencies
         run: |
-          rm -rf _site
-          mkdir -p _site
-          cp -r css _site/css
-          cp -r images _site/images
-          cp index.html script.js sw.js manifest.json robots.txt sitemap.xml offline.html _site/
-          if ls *.pdf >/dev/null 2>&1; then cp *.pdf _site/; fi
+          cd v2-astro
+          npm ci
+
+      - name: Build Astro
+        run: |
+          cd v2-astro
+          npm run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '_site'
-      
+          path: 'v2-astro/dist'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
