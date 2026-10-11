@@ -1,0 +1,102 @@
+---
+// BaseLayout.astro — shared shell for both personas
+// Props:
+//   title: page <title>
+//   description: meta description
+//   persona: 'architect' | 'professor'
+//   ogImage: OG image path (optional)
+
+interface Props {
+  title: string;
+  description: string;
+  persona: 'architect' | 'professor';
+  ogImage?: string;
+}
+
+const { title, description, persona, ogImage } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const defaultOgImage = ogImage ?? `${base}/images/og-${persona}.png`;
+---
+<!doctype html>
+<html lang="en-IN" data-persona={persona}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- No-flash theme bootstrap — must be first, no defer -->
+  <script is:inline>
+    (() => {
+      const r = document.documentElement;
+      try {
+        r.dataset.theme = localStorage.getItem('theme') === 'hacker' ? 'hacker' : 'light';
+      } catch { r.dataset.theme = 'light'; }
+    })();
+  </script>
+
+  <!-- Theme color synced to active theme -->
+  <meta name="theme-color" content="#FFFFFF" id="meta-theme-color" />
+
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalURL} />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content={new URL(defaultOgImage, Astro.site)} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={new URL(defaultOgImage, Astro.site)} />
+
+  <!-- JSON-LD Person -->
+  <script is:inline type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Abhishek S. Raut",
+    "jobTitle": "AI Architect & Innovation Lead",
+    "url": "https://abhishekeb211.github.io/Profie-website.github.io/",
+    "sameAs": []
+  }
+  </script>
+
+  <!-- Fonts — self-hosted, subset Latin -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href={`${base}/styles/tokens.css`} />
+  <link rel="stylesheet" href={`${base}/styles/global.css`} />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+
+  <!-- Sitemap -->
+  <link rel="sitemap" href={`${base}/sitemap-index.xml`} />
+</head>
+<body>
+  <!-- Skip navigation -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <slot name="header" />
+
+  <main id="main-content" tabindex="-1">
+    <slot />
+  </main>
+
+  <slot name="footer" />
+
+  <!-- Theme + persona controller -->
+  <script>
+    import { initTheme } from '../scripts/theme.ts';
+    initTheme();
+  </script>
+</body>
+</html>

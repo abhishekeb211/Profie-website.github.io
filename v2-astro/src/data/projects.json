@@ -1,0 +1,62 @@
+[
+  {
+    "id": "agentic-ai-code-correction",
+    "title": "Agentic AI with Code Correction",
+    "domain": "Agentic AI & Security",
+    "summary": "Self-healing code systems that detect vulnerabilities and propose local LLM-based autonomous fixes.",
+    "role": "Lead Architect & Developer",
+    "stack": ["Python", "Local LLMs", "Llama 3.2", "AST Parsing"],
+    "status": "Active R&D",
+    "outcome": "Autonomous detection & remediation loop for vulnerability patching",
+    "github": "",
+    "link": ""
+  },
+  {
+    "id": "samanvay-7",
+    "title": "Best Friend Forever (SAMANVAY-7)",
+    "domain": "Mental Health & Edge AI",
+    "summary": "Privacy-first offline AI mental health pod using local Llama 3.2 for anonymous therapy and affective support.",
+    "role": "System Designer & AI Engineer",
+    "stack": ["Llama 3.2", "Edge AI", "Speech UX", "Privacy-Preserving ML"],
+    "status": "Deployed / Prototype",
+    "outcome": "Zero-cloud transmission offline therapeutic interaction model",
+    "github": "",
+    "link": ""
+  },
+  {
+    "id": "swasthya-ai",
+    "title": "Swasthya AI Healthcare",
+    "domain": "Healthcare Intelligence",
+    "summary": "Decentralized AI health intelligence platform for real-time triage, hospital operations, and clinical decision support.",
+    "role": "AI Architect",
+    "stack": ["Multi-Agent Architecture", "Distributed Systems", "FHIR", "Python"],
+    "status": "Production Prototype",
+    "outcome": "Cross-facility real-time clinical triage and resource optimization",
+    "github": "",
+    "link": ""
+  },
+  {
+    "id": "zerotrust-ai",
+    "title": "ZeroTrust AI Credibility Engine",
+    "domain": "Trust & Safety / AI Security",
+    "summary": "Cross-modal credibility engine for misinformation detection with explainable, source-linked verification.",
+    "role": "Lead Researcher & Engineer",
+    "stack": ["Multimodal Transformers", "Fact Verification", "Graph RAG", "Python"],
+    "status": "Research & Prototype",
+    "outcome": "Auditable cross-modal misinformation scoring with provenance links",
+    "github": "",
+    "link": ""
+  },
+  {
+    "id": "coding-agent-cli",
+    "title": "Coding Agent CLI",
+    "domain": "Developer Tooling",
+    "summary": "Offline-first, air-gapped intelligent developer CLI assistant powered by quantized local foundation models.",
+    "role": "Creator & Maintainer",
+    "stack": ["Rust/Python", "Quantized GGUF Models", "Terminal UI", "Local AI"],
+    "status": "Active Development",
+    "outcome": "Sub-100ms air-gapped terminal code intelligence",
+    "github": "https://github.com/abhishekeb211",
+    "link": ""
+  }
+]

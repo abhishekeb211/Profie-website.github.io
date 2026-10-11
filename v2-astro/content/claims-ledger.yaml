@@ -1,0 +1,167 @@
+# Claims Ledger — Website V2.0
+# Every visible claim must have a row here before it appears in data/*.json
+# Build fails if any row has status: unverified
+
+claims:
+
+  - claim: "students taught / impacted"
+    variants_seen: ["500+", "100+", "105", "1000+"]
+    exact_wording: "500+"
+    definition: "Total students taught / impacted at PCCOE"
+    source_url: ""
+    as_of: "2026-10"
+    verified: true
+    status: "VERIFIED ✅ (500+)"
+
+  - claim: "projects completed / deployed"
+    variants_seen: ["25+", "10+", "5+"]
+    exact_wording: "5+"
+    definition: "Distinct software & AI projects shipped to production / real users"
+    source_url: ""
+    as_of: "2026-10"
+    verified: true
+    status: "VERIFIED ✅ (5+)"
+
+  - claim: "research works / publications"
+    variants_seen: ["10+"]
+    definition: "Peer-reviewed papers published or accepted"
+    source_url: "abhishekeb98@gmail.com / Google Scholar"
+    as_of: "2026-10"
+    verified: false
+    status: "PENDING VERIFICATION via abhishekeb98@gmail.com / Scholar"
+
+  - claim: "citations"
+    variants_seen: ["500+"]
+    definition: "Google Scholar citation count"
+    source_url: ""
+    as_of: ""
+    verified: false
+    status: "OMIT UNTIL SCHOLAR PROFILE LINKED"
+
+  - claim: "events organized"
+    variants_seen: ["20+"]
+    definition: "Technical or academic events organized"
+    source_url: ""
+    as_of: ""
+    verified: false
+    status: "UNVERIFIED"
+
+  # ── ROLE / TITLE ─────────────────────────────────────────────────────────
+  - claim: "Coding Club role"
+    variants_seen: ["Founder & Mentor", "Faculty In-charge & Secretary"]
+    exact_wording: "Faculty In-charge"
+    definition: "Official role at PCCOE Coding Club"
+    source_url: ""
+    as_of: "2026-10"
+    verified: true
+    status: "VERIFIED ✅"
+
+  - claim: "Motorsports Club role"
+    variants_seen: []
+    exact_wording: "Faculty In-charge, Institute-Level Motorsports Club"
+    definition: "Official Faculty In-charge role at the institute-level motorsports club"
+    source_url: ""
+    as_of: "2026-10"
+    verified: true
+    status: "VERIFIED ✅ — add club name and any event/competition links"
+
+  - claim: "Job title"
+    variants_seen: ["Professor", "Assistant Professor (Industry Expert)", "AI Architect"]
+    exact_wording: "AI Research Engineer"
+    definition: "Official job title"
+    source_url: ""
+    as_of: "2026-10"
+    verified: true
+    status: "VERIFIED ✅"
+
+  - claim: "Department"
+    variants_seen: ["Computer Engineering"]
+    definition: "Department name at PCCOE"
+    source_url: ""
+    as_of: ""
+    verified: false
+    status: "UNVERIFIED — confirm spelling"
+
+  # ── PUBLICATIONS ─────────────────────────────────────────────────────────
+  - claim: "IEEE 2024 paper"
+    variants_seen: ["(title from mockup)"]
+    definition: "Full title, DOI, conference/journal name"
+    source_url: ""
+    as_of: ""
+    verified: false
+    status: "UNVERIFIED — provide DOI"
+
+  - claim: "Springer 2023 paper"
+    variants_seen: ["(title from mockup)"]
+    definition: "Full title, DOI, conference/journal name"
+    source_url: ""
+    as_of: ""
+    verified: false
+    status: "UNVERIFIED — provide DOI"
+
+  - claim: "IEEE 2023 paper"
+    variants_seen: ["(title from mockup)"]
+    definition: "Full title, DOI, conference/journal name"
+    source_url: ""
+    as_of: ""
+    verified: false
+    status: "UNVERIFIED — provide DOI"
+
+  - claim: "Generative pretrained models paper (2024)"
+    variants_seen: ["(from current live site)"]
+    definition: "Full title, DOI"
+    source_url: ""
+    as_of: ""
+    verified: false
+    status: "UNVERIFIED"
+
+  - claim: "Handwriting personality analysis paper"
+    variants_seen: ["(from current live site)"]
+    definition: "Full title, DOI"
+    source_url: ""
+    as_of: ""
+    verified: false
+    status: "UNVERIFIED"
+
+  # ── AWARDS / COMPETITIONS ────────────────────────────────────────────────
+  - claim: "SIH Hardware 2020 winner"
+    variants_seen: ["SIH Hardware 2020 winner"]
+    definition: "Smart India Hackathon 2020 Hardware edition win"
+    source_url: ""
+    as_of: ""
+    verified: false
+    status: "SKIPPED / OMITTED per user instruction"
+
+  # ── PROJECTS ─────────────────────────────────────────────────────────────
+  - claim: "Smart Campus Companion"
+    variants_seen: ["(from mockup)"]
+    definition: "Project exists and was shipped"
+    source_url: ""
+    as_of: ""
+    verified: false
+    status: "UNVERIFIED — confirm exists, add link"
+
+  - claim: "Medical Report Intelligence"
+    variants_seen: ["(from mockup)"]
+    definition: "Project exists and was shipped"
+    source_url: ""
+    as_of: ""
+    verified: false
+    status: "UNVERIFIED — confirm exists, add link"
+
+  # ── PERMISSIONS ──────────────────────────────────────────────────────────
+  - claim: "PCCOE logo usage"
+    variants_seen: ["logo in mockup"]
+    definition: "Institutional permission to display PCCOE logo"
+    source_url: ""
+    as_of: ""
+    verified: false
+    status: "PERMISSION NEEDED"
+
+  - claim: "Group photo usage"
+    variants_seen: ["group photo in mockup"]
+    definition: "Consent from all visible individuals"
+    source_url: ""
+    as_of: ""
+    verified: false
+    status: "PERMISSION NEEDED"
