@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Site Profile",
+  "description": "Single source of truth for all profile data. Every metric MUST have source + asOf + verified=true before build succeeds.",
+
+  "identity": {
+    "name": "Abhishek S. Raut",
+    "title": "AI Research Engineer",
+    "tagline_architect": "AI Research Engineer & Innovation Lead",
+    "tagline_professor": "Educator · Researcher · Faculty",
+    "location": "Pune, India",
+    "descriptor": "Trustworthy AI",
+    "email": "abhishekeb98@gmail.com",
+    "linkedin": "",
+    "github": "https://github.com/abhishekeb211",
+    "scholar": ""
+  },
+
+  "metrics": [
+    {
+      "label": "Students Impacted",
+      "value": "500",
+      "unit": "+",
+      "source": "PCCOE teaching and mentorship",
+      "asOf": "2026-10",
+      "verified": true
+    },
+    {
+      "label": "Projects Shipped",
+      "value": "5",
+      "unit": "+",
+      "source": "Production & research AI deployments",
+      "asOf": "2026-10",
+      "verified": true
+    }
+  ],
+
+  "roles": [
+    {
+      "org": "PCCOE",
+      "title": "AI Research Engineer",
+      "type": "primary",
+      "verified": true
+    },
+    {
+      "org": "PCCOE Coding Club",
+      "title": "Faculty In-charge",
+      "type": "leadership",
+      "verified": true
+    },
+    {
+      "org": "Institute Motorsports Club",
+      "title": "Faculty In-charge",
+      "type": "leadership",
+      "verified": true
+    }
+  ],
+
+  "projects": [],
+
+  "publications": [],
+
+  "awards": []
+}
