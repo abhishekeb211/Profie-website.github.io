@@ -73,7 +73,7 @@ const defaultOgImage = ogImage ?? `${base}/images/og-${persona}.png`;
 
   <!-- Styles -->
   <link rel="stylesheet" href={`${base}/styles/tokens.css`} />
-  <link rel="stylesheet" href={`${base}/styles/global.css`} />
+  <link rel="stylesheet" href={`${base}/styles/motion.css`} />
 
   <!-- Favicons -->
   <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
@@ -93,10 +93,14 @@ const defaultOgImage = ogImage ?? `${base}/images/og-${persona}.png`;
 
   <slot name="footer" />
 
-  <!-- Theme + persona controller -->
+  <!-- Theme + motion controllers -->
   <script>
     import { initTheme } from '../scripts/theme.ts';
+    import { initScrollReveals, initCountUps, initAmbientCanvas } from '../scripts/reveals.js';
     initTheme();
+    initScrollReveals();
+    initCountUps();
+    initAmbientCanvas();
   </script>
 </body>
 </html>

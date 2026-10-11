@@ -9,48 +9,75 @@ import projects from '../data/projects.json';
 const base = import.meta.env.BASE_URL;
 ---
 <BaseLayout
-  title="Abhishek S. Raut — AI Research Engineer"
-  description="AI Research Engineer at PCCOE Pune. Building trustworthy AI systems, local agentic architectures, and mentoring 500+ developers."
+  title="Abhishek S. Raut — AI Research Engineer & Innovation Lead"
+  description="Building reliable, trustworthy AI systems. Research-driven architecture, secure intelligence, and scalable deployments."
   persona="architect"
 >
   <Header slot="header" activePersona="architect" />
 
   <!-- Hero Section -->
   <section id="about" class="section hero-section">
+    <!-- Ambient Canvas for Hacker Grid Visualization -->
+    <canvas id="ambient-canvas"></canvas>
+
     <div class="container hero-grid">
-      <div class="hero-content">
+      <div class="hero-content" data-reveal>
         <div class="badge-pill">
           <span class="status-indicator"></span>
-          <span>Pune, India · Trustworthy AI</span>
+          <span>Pune, India · Trustworthy AI Systems</span>
         </div>
-        <h1 class="hero-title">{profile.identity.name}</h1>
-        <p class="hero-subtitle">{profile.identity.title}</p>
-        <p class="hero-bio">
-          AI Research Engineer and Faculty In-charge at PCCOE Pune. Specializing in autonomous agentic loops, local LLM orchestration (Llama 3.2), and privacy-preserving inference models. Faculty In-charge of the PCCOE Coding Club and Institute Motorsports Club.
+
+        <h1 class="hero-title">
+          Building Reliable<br/>
+          <span class="text-gradient">AI Systems</span>
+        </h1>
+        
+        <p class="hero-subtitle">
+          AI Research Engineer // Secure Intelligence & Agentic Loops
         </p>
 
-        <!-- Metrics Row -->
-        <div class="metrics-row">
-          {profile.metrics.map(m => (
-            <div class="metric-card">
-              <span class="metric-value">{m.value}{m.unit}</span>
-              <span class="metric-label">{m.label}</span>
-            </div>
-          ))}
-          <div class="metric-card">
-            <span class="metric-value">2</span>
-            <span class="metric-label">Clubs Led</span>
-          </div>
-        </div>
+        <p class="hero-bio">
+          Bridging research, real-world innovation, and education to build human-centric, trustworthy, and scalable AI solutions. Faculty In-charge of the PCCOE Coding Club and Institute Motorsports Club.
+        </p>
 
         <div class="hero-actions">
-          <a href="#projects" class="btn btn-primary">View Projects ↓</a>
-          <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+          <a href="#projects" class="btn btn-primary">
+            Explore Projects →
+          </a>
+          <a href="#experience" class="btn btn-secondary">
+            Leadership & Experience
+          </a>
+          <a href={`mailto:${profile.identity.email}`} class="btn btn-ghost">
+            Contact Me ↗
+          </a>
+        </div>
+
+        <!-- 4 Verified Metrics with Count-up Attributes -->
+        <div class="metrics-row" data-reveal data-reveal-delay="2">
+          <div class="metric-card interactive-card badge-blue">
+            <span class="metric-value" data-count-target="500" data-count-suffix="+">500+</span>
+            <span class="metric-label">Students Mentored</span>
+          </div>
+
+          <div class="metric-card interactive-card badge-teal">
+            <span class="metric-value" data-count-target="5" data-count-suffix="+">5+</span>
+            <span class="metric-label">Shipped Systems</span>
+          </div>
+
+          <div class="metric-card interactive-card badge-violet">
+            <span class="metric-value" data-count-target="2" data-count-suffix="">2</span>
+            <span class="metric-label">Clubs Led</span>
+          </div>
+
+          <div class="metric-card interactive-card badge-amber">
+            <span class="metric-value" data-count-target="4" data-count-suffix="+">4+</span>
+            <span class="metric-label">Years R&D</span>
+          </div>
         </div>
       </div>
 
-      <div class="hero-image-wrap">
-        <div class="portrait-container">
+      <div class="hero-image-wrap" data-reveal data-reveal-delay="1">
+        <div class="portrait-container interactive-card">
           <img 
             src={`${base}/images/Me%20Suit%20with%20white%20bg1.png`} 
             alt="Abhishek S. Raut — AI Research Engineer" 
@@ -60,61 +87,67 @@ const base = import.meta.env.BASE_URL;
             loading="eager"
             decoding="async"
           />
+          <div class="portrait-badge">
+            <span class="portrait-badge-title">Trustworthy AI</span>
+            <span class="portrait-badge-sub">Edge & Cloud Architect</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Projects Section -->
+  <!-- Featured Work / Projects Section -->
   <section id="projects" class="section section-projects">
     <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Featured Work</span>
+      <div class="section-header" data-reveal>
+        <span class="section-tag badge-teal">Featured Work</span>
         <h2 class="section-title">Production & Research Systems</h2>
-        <p class="section-desc">Key systems deployed across agentic architectures, healthcare, and air-gapped terminal developer tooling.</p>
+        <p class="section-desc">Auditable agentic loops, privacy-first local foundation models, and decentralized clinical triage.</p>
       </div>
 
       <div class="projects-grid">
-        {projects.map(proj => (
-          <ProjectCard project={proj} />
+        {projects.map((proj, idx) => (
+          <div data-reveal data-reveal-delay={String((idx % 3) + 1)}>
+            <ProjectCard project={proj} />
+          </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- Experience & Leadership Section -->
+  <!-- Leadership & Experience -->
   <section id="experience" class="section section-experience">
     <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Leadership & Experience</span>
+      <div class="section-header" data-reveal>
+        <span class="section-tag badge-violet">Leadership & Impact</span>
         <h2 class="section-title">Roles & Institutional Contributions</h2>
       </div>
 
       <div class="experience-list">
-        <div class="exp-card">
+        <div class="exp-card interactive-card" data-reveal data-reveal-delay="1">
           <div class="exp-header">
             <h3>AI Research Engineer</h3>
-            <span class="exp-org">PCCOE Pune</span>
+            <span class="exp-org badge-blue">PCCOE Pune</span>
           </div>
           <p class="exp-desc">
             Directing engineering research in autonomous code patching, multimodal reasoning models, and local LLM edge applications. Teaching Data Exploration and Full Stack Engineering.
           </p>
         </div>
 
-        <div class="exp-card">
+        <div class="exp-card interactive-card" data-reveal data-reveal-delay="2">
           <div class="exp-header">
             <h3>Faculty In-charge</h3>
-            <span class="exp-org">PCCOE Coding Club</span>
+            <span class="exp-org badge-teal">PCCOE Coding Club</span>
           </div>
           <p class="exp-desc">
             Mentoring over 500+ student developers across algorithm optimization, hackathon systems, AI projects, and national technical challenges.
           </p>
         </div>
 
-        <div class="exp-card">
+        <div class="exp-card interactive-card" data-reveal data-reveal-delay="3">
           <div class="exp-header">
             <h3>Faculty In-charge</h3>
-            <span class="exp-org">Institute-Level Motorsports Club</span>
+            <span class="exp-org badge-amber">Institute-Level Motorsports Club</span>
           </div>
           <p class="exp-desc">
             Advising the institute motorsports team on telemetry systems, engineering strategy, and competitive vehicle design initiatives.
@@ -124,11 +157,12 @@ const base = import.meta.env.BASE_URL;
     </div>
   </section>
 
-  <!-- Contact Section -->
+  <!-- Editorial Collaboration Banner -->
   <section id="contact" class="section section-contact">
     <div class="container">
-      <div class="contact-box">
-        <h2>Let's Collaborate</h2>
+      <div class="contact-box interactive-card" data-reveal>
+        <span class="section-tag badge-amber">Connect</span>
+        <h2>Engineering + Education + Community = Impact</h2>
         <p>Interested in trustworthy AI systems, research initiatives, or tech mentorship?</p>
         <div class="contact-links">
           <a href={`mailto:${profile.identity.email}`} class="btn btn-primary">
@@ -144,7 +178,7 @@ const base = import.meta.env.BASE_URL;
 
   <footer slot="footer" class="site-footer">
     <div class="container footer-content">
-      <p>© {new Date().getFullYear()} Abhishek S. Raut. Built with Astro & View Transitions.</p>
+      <p>© {new Date().getFullYear()} Abhishek S. Raut · Professional Light + Pro Hacker V2.0</p>
       <div class="footer-links">
         <a href="#about">Top ↑</a>
       </div>
@@ -157,16 +191,20 @@ const base = import.meta.env.BASE_URL;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 var(--space-6);
+  position: relative;
+  z-index: 2;
 }
 
 .section {
   padding: var(--space-16) 0;
+  position: relative;
 }
 
 /* Hero */
 .hero-section {
-  padding-top: var(--space-16);
-  background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-bg) 100%);
+  padding-top: var(--space-20);
+  background: var(--hero-bg-gradient);
+  overflow: hidden;
 }
 
 .hero-grid {
@@ -178,34 +216,8 @@ const base = import.meta.env.BASE_URL;
 
 @media (min-width: 860px) {
   .hero-grid {
-    grid-template-columns: 1.2fr 0.8fr;
+    grid-template-columns: 1.25fr 0.75fr;
   }
-}
-
-.hero-image-wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.portrait-container {
-  position: relative;
-  width: 100%;
-  max-width: 340px;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  border: 2px solid var(--color-border);
-  background: var(--color-surface);
-  box-shadow: var(--shadow-lg);
-  aspect-ratio: 4 / 5;
-}
-
-.portrait-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  display: block;
 }
 
 .badge-pill {
@@ -231,58 +243,45 @@ const base = import.meta.env.BASE_URL;
 .hero-title {
   font-size: var(--text-4xl);
   font-weight: 800;
+  line-height: 1.15;
   letter-spacing: -0.02em;
-  margin: 0 0 var(--space-2) 0;
+  margin: 0 0 var(--space-3) 0;
   color: var(--color-text);
 }
 
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--accent-violet) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+:root[data-theme="hacker"] .text-gradient {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-success) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .hero-subtitle {
-  font-size: var(--text-xl);
+  font-size: var(--text-lg);
   color: var(--color-primary);
   font-weight: 600;
+  font-family: var(--font-mono);
   margin: 0 0 var(--space-4) 0;
 }
 
 .hero-bio {
   font-size: var(--text-base);
   color: var(--color-text-secondary);
-  max-width: 700px;
+  max-width: 680px;
   line-height: 1.6;
-  margin-bottom: var(--space-8);
-}
-
-.metrics-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: var(--space-4);
-  max-width: 600px;
-  margin-bottom: var(--space-8);
-}
-
-.metric-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-4);
-  text-align: center;
-}
-
-.metric-value {
-  display: block;
-  font-size: var(--text-2xl);
-  font-weight: 800;
-  color: var(--color-primary);
-}
-
-.metric-label {
-  font-size: var(--text-xs);
-  color: var(--color-text-secondary);
+  margin-bottom: var(--space-6);
 }
 
 .hero-actions {
   display: flex;
-  gap: var(--space-4);
+  gap: var(--space-3);
   flex-wrap: wrap;
+  margin-bottom: var(--space-8);
 }
 
 .btn {
@@ -318,17 +317,106 @@ const base = import.meta.env.BASE_URL;
   border-color: var(--color-primary);
 }
 
+.btn-ghost {
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid transparent;
+}
+
+.btn-ghost:hover {
+  border-color: var(--color-border);
+}
+
+/* Metrics Row */
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: var(--space-4);
+  max-width: 640px;
+}
+
+.metric-card {
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  text-align: center;
+}
+
+.metric-value {
+  display: block;
+  font-size: var(--text-2xl);
+  font-weight: 800;
+}
+
+.metric-label {
+  font-size: var(--text-xs);
+  opacity: 0.9;
+}
+
+/* Portrait */
+.hero-image-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.portrait-container {
+  position: relative;
+  width: 100%;
+  max-width: 330px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 2px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-lg);
+  aspect-ratio: 4 / 5;
+}
+
+.portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.portrait-badge {
+  position: absolute;
+  bottom: var(--space-3);
+  left: var(--space-3);
+  right: var(--space-3);
+  background: rgb(15 23 42 / 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgb(255 255 255 / 0.15);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+}
+
+.portrait-badge-title {
+  font-size: var(--text-xs);
+  font-weight: 700;
+}
+
+.portrait-badge-sub {
+  font-size: 11px;
+  color: rgb(255 255 255 / 0.75);
+}
+
 /* Sections */
 .section-header {
-  margin-bottom: var(--space-10);
+  margin-bottom: var(--space-8);
 }
 
 .section-tag {
+  display: inline-block;
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--color-primary);
   font-weight: 700;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-2);
 }
 
 .section-title {
@@ -378,8 +466,9 @@ const base = import.meta.env.BASE_URL;
 }
 
 .exp-org {
-  font-size: var(--text-sm);
-  color: var(--color-primary);
+  font-size: var(--text-xs);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
   font-weight: 600;
 }
 
@@ -401,7 +490,7 @@ const base = import.meta.env.BASE_URL;
 
 .contact-box h2 {
   font-size: var(--text-2xl);
-  margin-bottom: var(--space-2);
+  margin: var(--space-2) 0;
   color: var(--color-text);
 }
 

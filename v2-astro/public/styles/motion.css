@@ -1,0 +1,109 @@
+/*
+ * motion.css — Declarative transitions, reveals, and card hover effects
+ */
+
+/* Scroll Reveal Initial States */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--duration-slow) var(--ease-out),
+              transform var(--duration-slow) var(--ease-out);
+}
+
+[data-reveal].revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger Delays */
+[data-reveal-delay="1"] { transition-delay: 80ms; }
+[data-reveal-delay="2"] { transition-delay: 160ms; }
+[data-reveal-delay="3"] { transition-delay: 240ms; }
+[data-reveal-delay="4"] { transition-delay: 320ms; }
+
+/* ─── CARD HOVER & BORDER ILLUMINATION ─────────────────────────────────── */
+.interactive-card {
+  transition: transform var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
+  position: relative;
+}
+
+/* Light Theme: 4px hover lift with soft shadow */
+:root[data-theme="light"] .interactive-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent-blue);
+}
+
+/* Pro Hacker Theme: Border illumination with crimson/green edge accent */
+:root[data-theme="hacker"] .interactive-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 16px rgb(239 68 68 / 0.18);
+}
+
+/* ─── ACCENT PILLS & BADGES ────────────────────────────────────────────── */
+.badge-blue {
+  background: rgb(37 99 235 / 0.08);
+  color: var(--accent-blue);
+  border: 1px solid rgb(37 99 235 / 0.2);
+}
+
+.badge-teal {
+  background: rgb(15 118 110 / 0.08);
+  color: var(--accent-teal);
+  border: 1px solid rgb(15 118 110 / 0.2);
+}
+
+.badge-violet {
+  background: rgb(124 58 237 / 0.08);
+  color: var(--accent-violet);
+  border: 1px solid rgb(124 58 237 / 0.2);
+}
+
+.badge-amber {
+  background: rgb(217 119 6 / 0.08);
+  color: var(--accent-amber-text);
+  border: 1px solid rgb(217 119 6 / 0.2);
+}
+
+:root[data-theme="hacker"] .badge-blue {
+  background: rgb(56 189 248 / 0.1);
+  color: var(--accent-blue);
+  border-color: rgb(56 189 248 / 0.3);
+}
+
+:root[data-theme="hacker"] .badge-teal {
+  background: rgb(20 83 45 / 0.4);
+  color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+:root[data-theme="hacker"] .badge-violet {
+  background: rgb(168 85 247 / 0.12);
+  color: var(--accent-violet);
+  border-color: rgb(168 85 247 / 0.3);
+}
+
+:root[data-theme="hacker"] .badge-amber {
+  background: rgb(239 68 68 / 0.12);
+  color: var(--color-primary);
+  border-color: rgb(239 68 68 / 0.35);
+}
+
+/* ─── AMBIENT CANVAS OVERLAY ───────────────────────────────────────────── */
+#ambient-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.85;
+}
+
+:root[data-theme="light"] #ambient-canvas {
+  display: none;
+}

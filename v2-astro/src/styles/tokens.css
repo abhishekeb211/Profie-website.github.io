@@ -1,59 +1,62 @@
 /*
  * tokens.css — Single source of truth for all design tokens
- * Both themes defined here. Components reference tokens only, never raw values.
  *
- * Ownership rules:
- *   CSS         → hover, focus states
- *   motion/mini → entrance, reveal, counters
- *   View Transitions → theme swap, persona swap
+ * Theme A: Professional Light (Royal Blue #2563EB, Teal #0F766E, Violet #7C3AED, Amber #D97706)
+ * Theme B: Pro Hacker (Canvas #080D0B, Crimson #EF4444, Forest Green #14532D, Terminal Green #22C55E)
  */
 
-/* ─── LIGHT THEME (default) ───────────────────────────────────────────── */
+/* ─── THEME A: PROFESSIONAL LIGHT ─────────────────────────────────────────── */
 :root,
 :root[data-theme="light"] {
   color-scheme: light;
 
-  /* Brand */
-  --color-primary:        #2563EB;   /* 5.17:1 on white ✅ */
+  /* Primary Action: Royal Blue */
+  --color-primary:        #2563EB;
   --color-primary-hover:  #1D4ED8;
   --color-on-primary:     #FFFFFF;
-  --color-accent:         #D97706;   /* decorative only — fails text contrast */
-  --color-accent-text:    #92400E;   /* ~7:1 on white ✅ use for text */
+
+  /* 4 Characteristic Accent Families */
+  --accent-blue:          #2563EB;   /* Primary Actions & Core Focus */
+  --accent-teal:          #0F766E;   /* Technology, Systems, Outcomes */
+  --accent-violet:        #7C3AED;   /* Research, AI Architecture, Innovation */
+  --accent-amber:         #D97706;   /* Decorative highlights */
+  --accent-amber-text:    #92400E;   /* High-contrast text rating (>4.5:1) */
 
   /* Surfaces */
   --color-bg:             #FFFFFF;
-  --color-surface:        #F9FAFB;
+  --color-surface:        #F8FAFC;
   --color-surface-raised: #FFFFFF;
-  --color-border:         #E5E7EB;
+  --color-border:         #E2E8F0;
+  --color-border-hover:   #CBD5E1;
   --color-border-focus:   #2563EB;
 
-  /* Text */
-  --color-text:           #111827;
-  --color-text-secondary: #6B7280;
-  --color-text-disabled:  #9CA3AF;
+  /* Text & Foreground */
+  --color-text:           #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-disabled:  #94A3B8;
 
-  /* Semantic */
+  /* Semantic Feedback */
   --color-success:        #16A34A;
   --color-warning:        #D97706;
   --color-error:          #DC2626;
-  --color-info:           #2563EB;
+  --color-info:           #0F766E;
 
-  /* Focus ring */
+  /* Focus Indicator */
   --focus-ring:           #2563EB;
   --focus-ring-offset:    2px;
 
-  /* Shadows */
-  --shadow-sm:   0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md:   0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg:   0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  /* Soft Ambient Shadows */
+  --shadow-sm:   0 1px 3px 0 rgb(15 23 42 / 0.06);
+  --shadow-md:   0 4px 6px -1px rgb(15 23 42 / 0.08), 0 2px 4px -2px rgb(15 23 42 / 0.04);
+  --shadow-lg:   0 12px 20px -3px rgb(15 23 42 / 0.08), 0 4px 6px -4px rgb(15 23 42 / 0.04);
 
   /* Radii */
-  --radius-sm:   4px;
-  --radius-md:   8px;
+  --radius-sm:   6px;
+  --radius-md:   10px;
   --radius-lg:   16px;
   --radius-full: 9999px;
 
-  /* Spacing scale (4px base) */
+  /* Spacing Scale */
   --space-1:  4px;
   --space-2:  8px;
   --space-3:  12px;
@@ -68,8 +71,8 @@
   --space-24: 96px;
 
   /* Typography */
-  --font-sans: 'Inter Variable', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono Variable', 'Cascadia Code', monospace;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
 
   --text-xs:   clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
   --text-sm:   clamp(0.875rem, 0.825rem + 0.25vw, 1rem);
@@ -80,66 +83,79 @@
   --text-3xl:  clamp(1.875rem, 1.5rem  + 1.875vw, 2.5rem);
   --text-4xl:  clamp(2.25rem,  1.75rem + 2.5vw,   3.5rem);
 
-  /* Motion */
+  /* Motion Timings */
   --duration-fast:   150ms;
   --duration-base:   250ms;
   --duration-slow:   400ms;
-  --duration-slower: 600ms;
+  --duration-slower: 650ms;
   --ease-default:    cubic-bezier(0.4, 0, 0.2, 1);
   --ease-out:        cubic-bezier(0, 0, 0.2, 1);
   --ease-in:         cubic-bezier(0.4, 0, 1, 1);
-  --ease-spring:     cubic-bezier(0.34, 1.56, 0.64, 1);
 
-  /* Z-index scale */
+  /* Z-index */
   --z-base:    0;
   --z-raised:  10;
   --z-overlay: 100;
   --z-modal:   200;
   --z-toast:   300;
   --z-nav:     400;
+
+  /* Hero Canvas FX */
+  --hero-bg-gradient: radial-gradient(circle at 85% 15%, rgb(124 58 237 / 0.08) 0%, rgb(37 99 235 / 0.06) 45%, transparent 70%);
+  --grid-pattern: none;
 }
 
-/* ─── HACKER THEME ─────────────────────────────────────────────────────── */
+/* ─── THEME B: PRO HACKER ─────────────────────────────────────────────────── */
 :root[data-theme="hacker"] {
   color-scheme: dark;
 
-  /* Brand */
-  --color-primary:        #EF4444;   /* ~5.2:1 on #080D0B ✅ */
-  --color-primary-hover:  #F87171;
+  /* Primary Action: Crimson */
+  --color-primary:        #EF4444;
+  --color-primary-hover:  #DC2626;
   --color-on-primary:     #FFFFFF;
-  --color-accent:         #22C55E;   /* ~8.5:1 on #080D0B ✅ */
-  --color-accent-text:    #22C55E;
 
-  /* Surfaces */
+  /* 4 Characteristic Hacker Accent Families */
+  --accent-blue:          #38BDF8;   /* Telemetry / Secondary query */
+  --accent-teal:          #14532D;   /* Forest Green structural elements */
+  --accent-violet:        #A855F7;   /* Neural / Cryptographic indicators */
+  --accent-amber:         #EF4444;   /* Crimson system alert & primary focus */
+  --accent-amber-text:    #EF4444;
+
+  /* Surfaces: Black & Deep Forest Slate */
   --color-bg:             #080D0B;
-  --color-surface:        #0F1612;
-  --color-surface-raised: #162019;
-  --color-border:         #1F2E24;
+  --color-surface:        #101915;
+  --color-surface-raised: #16241E;
+  --color-border:         #1E3328;
+  --color-border-hover:   #22C55E;
   --color-border-focus:   #22C55E;
 
-  /* Text */
-  --color-text:           #E2E8F0;
-  --color-text-secondary: #94A3B8;
-  --color-text-disabled:  #475569;
+  /* Text: Near-white & Terminal muted */
+  --color-text:           #F2F7F4;
+  --color-text-secondary: #A5B9AD;
+  --color-text-disabled:  #4B6355;
 
-  /* Semantic */
-  --color-success:        #22C55E;
+  /* Semantic Feedback */
+  --color-success:        #22C55E;   /* Terminal Green (>8.5:1 on #080D0B) */
   --color-warning:        #F59E0B;
   --color-error:          #EF4444;
-  --color-info:           #38BDF8;
+  --color-info:           #22C55E;
 
-  /* Focus ring — high contrast green */
-  --focus-ring:           #22C55E;   /* ~8.5:1 ✅ */
+  /* Focus Indicator */
+  --focus-ring:           #22C55E;
+  --focus-ring-offset:    2px;
 
-  /* Shadows (more glow-like) */
-  --shadow-sm:   0 1px 2px 0 rgb(0 0 0 / 0.4);
-  --shadow-md:   0 4px 6px -1px rgb(0 0 0 / 0.5), 0 0 12px rgb(34 197 94 / 0.05);
-  --shadow-lg:   0 10px 15px -3px rgb(0 0 0 / 0.6), 0 0 24px rgb(34 197 94 / 0.08);
+  /* Glow Shadows */
+  --shadow-sm:   0 1px 3px 0 rgb(0 0 0 / 0.6);
+  --shadow-md:   0 4px 6px -1px rgb(0 0 0 / 0.7), 0 0 10px rgb(34 197 94 / 0.08);
+  --shadow-lg:   0 12px 20px -3px rgb(0 0 0 / 0.8), 0 0 20px rgb(239 68 68 / 0.12);
 
-  /* Radii, spacing, type scale, motion: inherit from :root (light) */
+  /* Hero Canvas FX: Cybersecurity Subtle Grid */
+  --hero-bg-gradient: radial-gradient(circle at 80% 20%, rgb(239 68 68 / 0.08) 0%, rgb(20 83 45 / 0.12) 50%, transparent 75%);
+  --grid-pattern: linear-gradient(to right, rgb(34 197 94 / 0.04) 1px, transparent 1px),
+                  linear-gradient(to bottom, rgb(34 197 94 / 0.04) 1px, transparent 1px);
 }
 
-/* ─── GLOBAL BASE STYLES ───────────────────────────────────────────────── */
+/* ─── GLOBAL RESET & BASE RULES ─────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
 
 html {
@@ -162,18 +178,19 @@ body {
   line-height: 1.6;
   color: var(--color-text);
   background-color: var(--color-bg);
+  background-image: var(--grid-pattern);
+  background-size: 32px 32px;
   margin: 0;
   min-block-size: 100dvh;
+  transition: background-color var(--duration-base) var(--ease-default), color var(--duration-base) var(--ease-default);
 }
 
-/* Accessible focus styles */
 :focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: var(--focus-ring-offset);
   border-radius: var(--radius-sm);
 }
 
-/* Skip link */
 .skip-link {
   position: absolute;
   inset-block-start: var(--space-2);
@@ -189,25 +206,27 @@ body {
 }
 .skip-link:focus { translate: 0 0; }
 
-/* View transition — circular reveal from toggle button */
-:root[data-theme="light"]  { color-scheme: light; }
-:root[data-theme="hacker"] { color-scheme: dark;  }
-
+/* ─── CIRCULAR VIEW TRANSITIONS REVEAL ─────────────────────────────────── */
 ::view-transition-old(root),
-::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
 
 ::view-transition-new(root) {
-  animation: vt-reveal var(--duration-slow) var(--ease-out) both;
+  animation: vt-circle-reveal var(--duration-slow) cubic-bezier(0.16, 1, 0.3, 1) both;
   z-index: 2;
 }
 
-@keyframes vt-reveal {
-  from { clip-path: circle(0 at var(--vt-x, 50%) var(--vt-y, 50%)); }
-  to   { clip-path: circle(150vmax at var(--vt-x, 50%) var(--vt-y, 50%)); }
+@keyframes vt-circle-reveal {
+  from { clip-path: circle(0 at var(--vt-x, 85%) var(--vt-y, 25px)); }
+  to   { clip-path: circle(150vmax at var(--vt-x, 85%) var(--vt-y, 25px)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(*),
   ::view-transition-old(*),
-  ::view-transition-new(*) { animation: none !important; }
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }
