@@ -168,8 +168,11 @@ const base = import.meta.env.BASE_URL;
           <a href={`mailto:${profile.identity.email}`} class="btn btn-primary">
             📧 {profile.identity.email}
           </a>
+          <a href={profile.identity.linkedin} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+            💼 LinkedIn Profile ↗
+          </a>
           <a href={profile.identity.github} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
-            GitHub Profile ↗
+            💻 GitHub Profile ↗
           </a>
         </div>
       </div>

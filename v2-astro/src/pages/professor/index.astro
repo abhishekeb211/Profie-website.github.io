@@ -123,6 +123,30 @@ const base = import.meta.env.BASE_URL;
     </div>
   </section>
 
+  <!-- Contact & Collaboration -->
+  <section id="contact" class="section section-contact">
+    <div class="container">
+      <div class="card" style="text-align: center; padding: var(--space-12);">
+        <span class="badge" style="margin-bottom: var(--space-2); display: inline-block;">Academic Inquiries & Research</span>
+        <h2 style="font-size: var(--text-2xl); margin: var(--space-2) 0; color: var(--color-text);">Faculty Office & Collaboration</h2>
+        <p style="color: var(--color-text-secondary); margin-bottom: var(--space-6); max-width: 600px; margin-left: auto; margin-right: auto;">
+          For academic mentorship, club advisory, or collaborative research publications at PCCOE Pune:
+        </p>
+        <div style="display: flex; justify-content: center; gap: var(--space-4); flex-wrap: wrap;">
+          <a href={`mailto:${profile.identity.email}`} style="display: inline-flex; align-items: center; padding: var(--space-3) var(--space-6); font-size: var(--text-sm); font-weight: 600; border-radius: var(--radius-md); text-decoration: none; background: var(--color-primary); color: var(--color-on-primary);">
+            📧 {profile.identity.email}
+          </a>
+          <a href={profile.identity.linkedin} target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; padding: var(--space-3) var(--space-6); font-size: var(--text-sm); font-weight: 600; border-radius: var(--radius-md); text-decoration: none; background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-border);">
+            💼 LinkedIn Profile ↗
+          </a>
+          <a href={profile.identity.github} target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; padding: var(--space-3) var(--space-6); font-size: var(--text-sm); font-weight: 600; border-radius: var(--radius-md); text-decoration: none; background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-border);">
+            💻 GitHub Profile ↗
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer slot="footer" class="site-footer">
     <div class="container footer-content">
       <p>© {new Date().getFullYear()} Abhishek S. Raut. Professor & Faculty Persona.</p>
