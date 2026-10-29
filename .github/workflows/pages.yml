@@ -38,6 +38,11 @@ jobs:
           cd v2-astro
           npm run build
 
+      - name: Audit & Verify Links
+        run: |
+          cd v2-astro
+          npm test
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

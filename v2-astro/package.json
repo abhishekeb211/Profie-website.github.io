@@ -9,7 +9,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "node scripts/verify-dist.cjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^8.1.2",

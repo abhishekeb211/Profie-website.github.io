@@ -80,15 +80,18 @@ const base = import.meta.env.BASE_URL;
 
       <div class="hero-image-wrap" data-reveal data-reveal-delay="1">
         <div class="portrait-container interactive-card">
-          <img 
-            src={`${base}/images/Me%20Suit%20with%20white%20bg1.png`} 
-            alt="Abhishek S. Raut — AI Research Engineer" 
-            class="portrait-img"
-            width="380"
-            height="460"
-            loading="eager"
-            decoding="async"
-          />
+          <picture>
+            <source srcset={`${base}/images/abhishek-portrait.webp`} type="image/webp" />
+            <img 
+              src={`${base}/images/abhishek-portrait.png`} 
+              alt="Abhishek S. Raut — AI Research Engineer" 
+              class="portrait-img"
+              width="640"
+              height="800"
+              loading="eager"
+              decoding="async"
+            />
+          </picture>
           <div class="portrait-badge">
             <span class="portrait-badge-title">Trustworthy AI</span>
             <span class="portrait-badge-sub">Edge & Cloud Architect</span>
@@ -372,21 +375,37 @@ const base = import.meta.env.BASE_URL;
 .portrait-container {
   position: relative;
   width: 100%;
-  max-width: 330px;
+  max-width: 340px;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  border: 2px solid var(--color-border);
-  background: var(--color-surface);
-  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-border);
+  background: radial-gradient(circle at 50% 35%, var(--color-surface-raised) 0%, var(--color-surface) 80%);
+  box-shadow: var(--shadow-lg), 0 0 30px rgb(37 99 235 / 0.08);
   aspect-ratio: 4 / 5;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+:root[data-theme="dark"] .portrait-container,
+:root[data-theme="hacker"] .portrait-container {
+  background: radial-gradient(circle at 50% 30%, rgb(30 51 40 / 0.6) 0%, #080D0B 85%);
+  box-shadow: var(--shadow-lg), 0 0 35px rgb(34 197 94 / 0.12);
+  border-color: var(--color-border);
 }
 
 .portrait-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top center;
+  object-position: center top;
   display: block;
+  filter: drop-shadow(0 12px 24px rgb(0 0 0 / 0.22));
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.portrait-container:hover .portrait-img {
+  transform: scale(1.03);
 }
 
 .portrait-badge {
