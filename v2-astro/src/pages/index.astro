@@ -3,6 +3,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import SystemsAtlasGraph from '../components/SystemsAtlasGraph.astro';
 import profile from '../data/profile.json';
 import { getCollection } from 'astro:content';
 
@@ -97,6 +98,23 @@ const base = import.meta.env.BASE_URL;
             <span class="portrait-badge-sub">Edge & Cloud Architect</span>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Systems Atlas Architecture Graph Section -->
+  <section id="atlas-graph" class="section section-atlas">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="section-tag badge-blue">Interactive Architecture</span>
+        <h2 class="section-title">Systems Atlas Constellation</h2>
+        <p class="section-desc">
+          Interactive knowledge graph mapping dependencies, memory middleware, and security governance across R&D streams. Click or tap any node to inspect system differentiators and case studies.
+        </p>
+      </div>
+
+      <div data-reveal data-reveal-delay="1">
+        <SystemsAtlasGraph />
       </div>
     </div>
   </section>

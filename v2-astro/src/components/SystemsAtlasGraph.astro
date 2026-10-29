@@ -1,0 +1,774 @@
+---
+/**
+ * SystemsAtlasGraph.astro — Interactive Architecture Knowledge Graph
+ * Progressive enhancement: Interactive SVG Canvas with 2D accessible fallback,
+ * cluster filtering, node inspection panel, and full Light/Dark theme sync.
+ */
+import { ATLAS_NODES, ATLAS_LINKS, ATLAS_CLUSTERS } from '../lib/atlas-graph.ts';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<div class="atlas-system-widget" id="systems-atlas-widget">
+  <!-- Top Control Bar -->
+  <div class="atlas-controls-bar">
+    <div class="cluster-filters" role="group" aria-label="Filter systems by cluster">
+      <button type="button" class="cluster-btn active" data-cluster="all">
+        <span class="dot" style="background: var(--color-primary);"></span>
+        All Clusters ({ATLAS_NODES.length})
+      </button>
+      {ATLAS_CLUSTERS.map(c => (
+        <button type="button" class="cluster-btn" data-cluster={c.id}>
+          <span class="dot" style={`background: ${c.color};`}></span>
+          {c.label}
+        </button>
+      ))}
+    </div>
+
+    <div class="view-mode-toggle" role="group" aria-label="View representation mode">
+      <button type="button" class="mode-btn active" id="btn-view-graph" aria-pressed="true">
+        Graph Map
+      </button>
+      <button type="button" class="mode-btn" id="btn-view-list" aria-pressed="false">
+        List View
+      </button>
+    </div>
+  </div>
+
+  <!-- Interactive Graphic Canvas Area -->
+  <div class="graph-canvas-wrapper" id="graph-wrapper">
+    <!-- SVG Graph Layer -->
+    <svg 
+      id="atlas-svg" 
+      viewBox="-110 -80 220 160" 
+      preserveAspectRatio="xMidYMid meet" 
+      role="img" 
+      aria-label="Interactive Systems Atlas Architecture Graph"
+    >
+      <defs>
+        <!-- Gradients for connections -->
+        <linearGradient id="link-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="var(--color-primary)" stop-opacity="0.4" />
+          <stop offset="100%" stop-color="var(--accent-teal)" stop-opacity="0.4" />
+        </linearGradient>
+
+        <!-- Drop Shadow Filter for Nodes -->
+        <filter id="node-shadow" x="-30%" y="-30%" width="160%" height="160%">
+          <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.3" />
+        </filter>
+        <filter id="node-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="4" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+      </defs>
+
+      <!-- Grid lines for engineering visual aesthetic -->
+      <g class="graph-grid-lines">
+        <circle cx="0" cy="0" r="30" class="radar-circle" />
+        <circle cx="0" cy="0" r="60" class="radar-circle" />
+        <circle cx="0" cy="0" r="90" class="radar-circle" />
+        <line x1="-100" y1="0" x2="100" y2="0" class="axis-line" />
+        <line x1="0" y1="-70" x2="0" y2="70" class="axis-line" />
+      </g>
+
+      <!-- Links (Edges) -->
+      <g class="graph-links" id="svg-links">
+        {ATLAS_LINKS.map(link => {
+          const s = ATLAS_NODES.find(n => n.id === link.source);
+          const t = ATLAS_NODES.find(n => n.id === link.target);
+          if (!s || !t) return null;
+          return (
+            <g class="link-group" data-source={s.id} data-target={t.id}>
+              <line 
+                x1={s.x} 
+                y1={s.y} 
+                x2={t.x} 
+                y2={t.y} 
+                class="graph-edge" 
+              />
+              <!-- Midpoint relation marker -->
+              <circle cx={(s.x + t.x)/2} cy={(s.y + t.y)/2} r="1.5" class="edge-dot" />
+            </g>
+          );
+        })}
+      </g>
+
+      <!-- Nodes -->
+      <g class="graph-nodes" id="svg-nodes">
+        {ATLAS_NODES.map(node => {
+          const clusterMeta = ATLAS_CLUSTERS.find(c => c.id === node.cluster);
+          const color = clusterMeta?.color || 'var(--color-primary)';
+          const r = node.tier === 'Tier A' ? 8 : 6;
+          return (
+            <g 
+              class="node-group" 
+              data-node-id={node.id} 
+              data-cluster={node.cluster}
+              data-tier={node.tier}
+              transform={`translate(${node.x}, ${node.y})`}
+              tabindex="0"
+              role="button"
+              aria-label={`${node.name} (${node.tier}) - ${node.cluster}`}
+            >
+              <!-- Outer pulse ring on hover/focus -->
+              <circle r={r + 3} class="node-halo" style={`stroke: ${color};`} />
+              
+              <!-- Core node circle -->
+              <circle 
+                r={r} 
+                class="node-core" 
+                style={`fill: ${color};`} 
+              />
+              
+              <!-- Inner center pin -->
+              <circle r="2.5" class="node-pin" />
+
+              <!-- Label text -->
+              <text 
+                y={r + 7} 
+                class="node-label" 
+                text-anchor="middle"
+              >
+                {node.name}
+              </text>
+            </g>
+          );
+        })}
+      </g>
+    </svg>
+
+    <!-- Side Inspection HUD Panel (Appears on click/hover) -->
+    <div class="atlas-inspector-card" id="inspector-card" aria-live="polite">
+      <div class="inspector-header">
+        <span class="inspector-badge" id="insp-badge">Flagship System</span>
+        <button type="button" class="inspector-close" id="insp-close" aria-label="Close inspector">✕</button>
+      </div>
+      
+      <h3 class="inspector-title" id="insp-title">Paradox AI</h3>
+      <div class="inspector-cluster" id="insp-cluster">Agentic AI & Runtimes</div>
+      
+      <p class="inspector-desc" id="insp-desc">
+        Contract-governed agent runtime with verifiable task-DAG execution.
+      </p>
+
+      <div class="inspector-diff-box">
+        <strong>Key Differentiator:</strong>
+        <p id="insp-diff">Separates agent reasoning from persistent intent, decisions, and execution state.</p>
+      </div>
+
+      <div class="inspector-connections">
+        <strong>Architectural Links:</strong>
+        <ul id="insp-links-list"></ul>
+      </div>
+
+      <div class="inspector-footer">
+        <a href={`${base}/projects/paradox-ai/`} class="btn-inspect-action" id="insp-cta">
+          Explore Technical Case Study →
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accessible 2D Fallback List View -->
+  <div class="atlas-list-view" id="atlas-list-view" hidden>
+    <div class="list-grid">
+      {ATLAS_NODES.map(node => (
+        <article class="list-card" data-cluster={node.cluster}>
+          <div class="list-card-top">
+            <span class="pill-tier">{node.tier}</span>
+            <span class="pill-cluster">{node.cluster}</span>
+            <span class="pill-stage">{node.stage}</span>
+          </div>
+          <h4>{node.name}</h4>
+          <p class="desc">{node.shortDesc}</p>
+          <div class="diff-block">
+            <strong>Differentiator:</strong> {node.differentiator}
+          </div>
+          {node.slug && (
+            <a href={`${base}/projects/${node.slug}/`} class="card-link">
+              Read Case Study →
+            </a>
+          )}
+        </article>
+      ))}
+    </div>
+  </div>
+</div>
+
+<script>
+  import { ATLAS_NODES, ATLAS_LINKS } from '../lib/atlas-graph.ts';
+
+  const base = '/Profie-website.github.io';
+  const widget = document.getElementById('systems-atlas-widget');
+  const svg = document.getElementById('atlas-svg');
+  const nodeGroups = document.querySelectorAll<SVGGElement>('.node-group');
+  const linkGroups = document.querySelectorAll<SVGGElement>('.link-group');
+  const clusterBtns = document.querySelectorAll<HTMLButtonElement>('.cluster-btn');
+  const btnGraph = document.getElementById('btn-view-graph');
+  const btnList = document.getElementById('btn-view-list');
+  const graphWrapper = document.getElementById('graph-wrapper');
+  const listView = document.getElementById('atlas-list-view');
+
+  // Inspector elements
+  const inspector = document.getElementById('inspector-card');
+  const inspBadge = document.getElementById('insp-badge');
+  const inspTitle = document.getElementById('insp-title');
+  const inspCluster = document.getElementById('insp-cluster');
+  const inspDesc = document.getElementById('insp-desc');
+  const inspDiff = document.getElementById('insp-diff');
+  const inspLinksList = document.getElementById('insp-links-list');
+  const inspCta = document.getElementById('insp-cta') as HTMLAnchorElement;
+  const inspClose = document.getElementById('insp-close');
+
+  let activeNodeId: string = 'PX01';
+
+  function showInspector(nodeId: string) {
+    const node = ATLAS_NODES.find(n => n.id === nodeId);
+    if (!node || !inspector) return;
+
+    activeNodeId = nodeId;
+    if (inspBadge) inspBadge.textContent = `${node.tier} · ${node.stage}`;
+    if (inspTitle) inspTitle.textContent = node.name;
+    if (inspCluster) inspCluster.textContent = node.cluster;
+    if (inspDesc) inspDesc.textContent = node.shortDesc;
+    if (inspDiff) inspDiff.textContent = node.differentiator;
+
+    if (inspCta) {
+      if (node.slug) {
+        inspCta.href = `${base}/projects/${node.slug}/`;
+        inspCta.textContent = 'Explore Technical Case Study →';
+        inspCta.style.display = 'inline-flex';
+      } else {
+        inspCta.href = `${base}/projects/`;
+        inspCta.textContent = 'View in Systems Catalog →';
+        inspCta.style.display = 'inline-flex';
+      }
+    }
+
+    // Populate links
+    if (inspLinksList) {
+      inspLinksList.innerHTML = '';
+      const connected = ATLAS_LINKS.filter(l => l.source === nodeId || l.target === nodeId);
+      if (connected.length === 0) {
+        inspLinksList.innerHTML = '<li>Standalone system cluster node</li>';
+      } else {
+        connected.forEach(link => {
+          const otherId = link.source === nodeId ? link.target : link.source;
+          const otherNode = ATLAS_NODES.find(n => n.id === otherId);
+          const li = document.createElement('li');
+          li.textContent = `${otherNode?.name || otherId}: ${link.relation}`;
+          inspLinksList.appendChild(li);
+        });
+      }
+    }
+
+    inspector.classList.add('visible');
+
+    // Highlight active node and connected links in SVG
+    nodeGroups.forEach(g => {
+      const isSelf = g.dataset.nodeId === nodeId;
+      g.classList.toggle('selected', isSelf);
+    });
+
+    linkGroups.forEach(lg => {
+      const isConnected = lg.dataset.source === nodeId || lg.dataset.target === nodeId;
+      lg.classList.toggle('highlighted', isConnected);
+    });
+  }
+
+  // Node Click and Keyboard Enter/Space
+  nodeGroups.forEach(g => {
+    const id = g.dataset.nodeId;
+    if (!id) return;
+
+    g.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showInspector(id);
+    });
+
+    g.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        showInspector(id);
+      }
+    });
+
+    g.addEventListener('mouseenter', () => {
+      linkGroups.forEach(lg => {
+        const isConnected = lg.dataset.source === id || lg.dataset.target === id;
+        lg.classList.toggle('hovered', isConnected);
+      });
+    });
+
+    g.addEventListener('mouseleave', () => {
+      linkGroups.forEach(lg => lg.classList.remove('hovered'));
+    });
+  });
+
+  // Close inspector
+  inspClose?.addEventListener('click', () => {
+    inspector?.classList.remove('visible');
+    nodeGroups.forEach(g => g.classList.remove('selected'));
+    linkGroups.forEach(lg => lg.classList.remove('highlighted'));
+  });
+
+  // Cluster Filter Buttons
+  clusterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      clusterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const cluster = btn.dataset.cluster;
+      nodeGroups.forEach(g => {
+        const match = cluster === 'all' || g.dataset.cluster === cluster;
+        g.style.opacity = match ? '1' : '0.15';
+        g.style.pointerEvents = match ? 'auto' : 'none';
+      });
+
+      linkGroups.forEach(lg => {
+        const s = ATLAS_NODES.find(n => n.id === lg.dataset.source);
+        const t = ATLAS_NODES.find(n => n.id === lg.dataset.target);
+        const match = cluster === 'all' || (s?.cluster === cluster || t?.cluster === cluster);
+        lg.style.opacity = match ? '1' : '0.1';
+      });
+
+      // Filter list view items as well
+      const listCards = document.querySelectorAll<HTMLElement>('.list-card');
+      listCards.forEach(c => {
+        const match = cluster === 'all' || c.dataset.cluster === cluster;
+        c.style.display = match ? 'flex' : 'none';
+      });
+    });
+  });
+
+  // Toggle View Mode (Graph vs List)
+  btnGraph?.addEventListener('click', () => {
+    btnGraph.classList.add('active');
+    btnGraph.setAttribute('aria-pressed', 'true');
+    btnList?.classList.remove('active');
+    btnList?.setAttribute('aria-pressed', 'false');
+    if (graphWrapper) graphWrapper.hidden = false;
+    if (listView) listView.hidden = true;
+  });
+
+  btnList?.addEventListener('click', () => {
+    btnList.classList.add('active');
+    btnList.setAttribute('aria-pressed', 'true');
+    btnGraph?.classList.remove('active');
+    btnGraph?.setAttribute('aria-pressed', 'false');
+    if (graphWrapper) graphWrapper.hidden = true;
+    if (listView) listView.hidden = false;
+  });
+
+  // Initialize inspector on Paradox AI
+  showInspector('PX01');
+</script>
+
+<style>
+.atlas-system-widget {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-md);
+  margin: var(--space-8) 0;
+  overflow: hidden;
+}
+
+/* Control Bar */
+.atlas-controls-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cluster-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.cluster-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: var(--space-1) var(--space-3);
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+
+.cluster-btn .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.cluster-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-text);
+}
+
+.cluster-btn.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.view-mode-toggle {
+  display: flex;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 2px;
+}
+
+.mode-btn {
+  padding: 3px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-full);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+
+.mode-btn.active {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+/* Graph Canvas Area */
+.graph-canvas-wrapper {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  background: radial-gradient(circle at 50% 50%, var(--color-surface-raised) 0%, var(--color-bg) 95%);
+  border-radius: var(--radius-md);
+  margin-top: var(--space-4);
+  overflow: hidden;
+}
+
+#atlas-svg {
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+}
+
+/* SVG Elements */
+.radar-circle {
+  fill: none;
+  stroke: var(--color-border);
+  stroke-width: 0.5;
+  stroke-dasharray: 2 2;
+  opacity: 0.6;
+}
+
+.axis-line {
+  stroke: var(--color-border);
+  stroke-width: 0.4;
+  opacity: 0.4;
+}
+
+.graph-edge {
+  stroke: var(--color-border);
+  stroke-width: 1.2;
+  stroke-dasharray: 3 1.5;
+  transition: stroke var(--duration-fast), stroke-width var(--duration-fast);
+}
+
+.edge-dot {
+  fill: var(--color-border-hover);
+  opacity: 0.7;
+}
+
+.link-group.hovered .graph-edge,
+.link-group.highlighted .graph-edge {
+  stroke: var(--color-primary);
+  stroke-width: 2.2;
+  stroke-dasharray: none;
+}
+
+.link-group.highlighted .edge-dot {
+  fill: var(--color-primary);
+  r: 2.5;
+}
+
+/* Nodes */
+.node-group {
+  cursor: pointer;
+  outline: none;
+  transition: transform var(--duration-fast);
+}
+
+.node-halo {
+  fill: transparent;
+  stroke-width: 1.5;
+  opacity: 0;
+  transition: opacity var(--duration-fast), r var(--duration-fast);
+}
+
+.node-core {
+  stroke: var(--color-surface);
+  stroke-width: 1.5;
+  transition: filter var(--duration-fast), r var(--duration-fast);
+}
+
+.node-pin {
+  fill: #FFFFFF;
+}
+
+.node-label {
+  font-family: var(--font-sans);
+  font-size: 4px;
+  font-weight: 700;
+  fill: var(--color-text);
+  paint-order: stroke;
+  stroke: var(--color-bg);
+  stroke-width: 1px;
+  stroke-linejoin: round;
+  pointer-events: none;
+  transition: fill var(--duration-fast);
+}
+
+.node-group:hover .node-halo,
+.node-group:focus-visible .node-halo,
+.node-group.selected .node-halo {
+  opacity: 0.8;
+  r: 12;
+}
+
+.node-group:hover .node-core,
+.node-group:focus-visible .node-core,
+.node-group.selected .node-core {
+  filter: url(#node-glow);
+}
+
+.node-group.selected .node-label {
+  fill: var(--color-primary);
+  font-weight: 800;
+  font-size: 4.5px;
+}
+
+/* Inspector Card */
+.atlas-inspector-card {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  width: 320px;
+  max-width: calc(100% - 32px);
+  max-height: calc(100% - 32px);
+  overflow-y: auto;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-lg);
+  display: none;
+  flex-direction: column;
+  gap: var(--space-2);
+  z-index: 10;
+  backdrop-filter: blur(8px);
+  animation: fadeInRight var(--duration-fast) var(--ease-out);
+}
+
+.atlas-inspector-card.visible {
+  display: flex;
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.inspector-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.inspector-badge {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.inspector-close {
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.inspector-title {
+  margin: 0;
+  font-size: var(--text-base);
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.inspector-cluster {
+  font-size: var(--text-xs);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.inspector-desc {
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.inspector-diff-box {
+  background: var(--color-surface-raised);
+  border-left: 3px solid var(--color-primary);
+  padding: var(--space-2) var(--space-3);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 11px;
+}
+
+.inspector-diff-box p {
+  margin: 2px 0 0;
+  color: var(--color-text-secondary);
+}
+
+.inspector-connections {
+  font-size: 11px;
+}
+
+.inspector-connections ul {
+  margin: 4px 0 0;
+  padding-left: var(--space-4);
+  color: var(--color-text-secondary);
+}
+
+.inspector-footer {
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border);
+}
+
+.btn-inspect-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--color-on-primary);
+  background: var(--color-primary);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: background-color var(--duration-fast);
+}
+
+.btn-inspect-action:hover {
+  background: var(--color-primary-hover);
+}
+
+/* List View (2D Fallback) */
+.atlas-list-view {
+  margin-top: var(--space-4);
+}
+
+.list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-4);
+}
+
+.list-card {
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.list-card-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.pill-tier, .pill-cluster, .pill-stage {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text-secondary);
+}
+
+.pill-tier {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.list-card h4 {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.list-card .desc {
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+.diff-block {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  border-left: 2px solid var(--color-primary);
+  padding-left: var(--space-2);
+}
+
+.list-card .card-link {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+  margin-top: var(--space-2);
+}
+
+.list-card .card-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .graph-canvas-wrapper {
+    height: 440px;
+  }
+  .atlas-inspector-card {
+    position: static;
+    width: 100%;
+    max-width: 100%;
+    margin-top: var(--space-3);
+  }
+}
+</style>
