@@ -1,0 +1,40 @@
+---
+id: "vehiclegpt"
+title: "VehicleGPT"
+tagline: "Edge telemetry reasoning and predictive diagnostics under hardware constraints"
+domain: "Edge AI & Automotive Telemetry"
+stage: "Prototype"
+role: "Edge Systems & Telemetry Architect"
+stack: ["C++", "Python", "CAN-bus / OBD-II Protocols", "Edge TPU / NPU", "Quantized GGUF"]
+metrics:
+  - label: "Telemetry Ingestion Rate"
+    value: "1000"
+    unit: "Hz"
+    source: "Simulated CAN-bus packet generator benchmark"
+    verified: true
+  - label: "Edge Power Envelope"
+    value: "<12"
+    unit: "W"
+    source: "Embedded developer board power meter"
+    verified: true
+verification_date: "2026-10"
+github: "https://github.com/abhishekeb211"
+architecture_overview: "Embedded real-time telemetry analyzer processing high-frequency vehicular sensor packets with edge ML models for anomaly forecasting and natural language driver diagnostics."
+constraints:
+  - "Maximum 12W power draw for embedded automotive computing"
+  - "Zero cloud connectivity requirement during transit"
+tradeoffs:
+  - "Quantization to INT4 precision reduces diagnostic narrative complexity while preserving quantitative anomaly alerts"
+---
+
+## Context & Problem
+Connected vehicles generate gigabytes of sensor readings per hour, but remote cloud analytics incur latency, cellular data costs, and disconnection risks in remote transit corridors. VehicleGPT brings diagnostic reasoning to the vehicle edge.
+
+## Implementation Architecture
+1. **High-Throughput CAN Ingestion:** Ring-buffered daemon capturing sensor telemetry at up to 1000Hz without packet drops.
+2. **Streaming Anomaly Detection:** Statistical bounds filter normal operating envelopes; anomalies trigger localized deep inspection.
+3. **Edge Conversational Diagnostics:** Driver questions (e.g. "What caused that braking vibration?") are resolved against buffered physical logs rather than speculation.
+
+## Evidence & Hardware Testing
+- Profiled on ARM-based SBCs (Jetson / Raspberry Pi 5 class hardware).
+- Maintained stable sub-12W thermal envelope under continuous packet ingestion.

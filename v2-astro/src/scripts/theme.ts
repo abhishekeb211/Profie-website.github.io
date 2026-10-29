@@ -1,37 +1,78 @@
 /**
- * theme.ts — Theme and persona controller
+ * theme.ts — Atlas v2.2 Adaptive Light/Dark appearance controller
  *
- * Ownership:
- *   - CSS owns hover/focus states
- *   - This module owns theme swap (View Transitions) + localStorage
- *   - View Transitions own the circular reveal animation (defined in tokens.css)
+ * Implements the single source of truth contract:
+ *   explicit local override ('light' | 'dark') > OS/browser preference > 'light' compatibility fallback.
+ *
+ * Emits 'atlas:theme-applied' on document.documentElement
+ * Listens to 'atlas:theme-selection' on window
  */
 
-type Theme = 'light' | 'hacker';
+export const THEME_KEY = 'atlas-theme-preference';
+export type Theme = 'light' | 'dark';
+export type ThemePreference = 'system' | Theme;
+
+const isValidTheme = (val: unknown): val is Theme => val === 'light' || val === 'dark';
 
 /** Update theme-color meta tag */
-function updateMetaThemeColor(theme: Theme) {
+export function updateMetaThemeColor(theme: Theme) {
   document.querySelector('meta[name="theme-color"]')
-    ?.setAttribute('content', theme === 'hacker' ? '#080D0B' : '#FFFFFF');
+    ?.setAttribute('content', theme === 'dark' ? '#080D0B' : '#FFFFFF');
 }
 
-/** Apply theme to <html> and persist */
-function applyTheme(theme: Theme) {
-  document.documentElement.dataset.theme = theme;
+/** Get resolved active theme */
+export function getActiveTheme(): Theme {
+  return (document.documentElement.dataset.theme as Theme) || 'light';
+}
+
+/** Get stored preference */
+export function getStoredPreference(): ThemePreference {
+  try {
+    const saved = localStorage.getItem(THEME_KEY);
+    if (isValidTheme(saved)) return saved;
+  } catch {
+    /* storage may be unavailable */
+  }
+  return 'system';
+}
+
+/** Apply resolved theme to <html> */
+export function applyTheme(theme: Theme, preference: ThemePreference) {
+  const root = document.documentElement;
+  root.dataset.theme = theme;
+  root.dataset.themePreference = preference;
+  root.style.colorScheme = theme;
   updateMetaThemeColor(theme);
-  try { localStorage.setItem('theme', theme); } catch { /* private mode */ }
+
+  root.dispatchEvent(
+    new CustomEvent('atlas:theme-applied', {
+      detail: { theme, preference },
+    })
+  );
 }
 
-/** Toggle theme with circular View Transition from the origin element */
-export function setTheme(next: Theme, originEl?: Element) {
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+/** Set theme with circular View Transition if supported */
+export function setTheme(preference: ThemePreference, originEl?: Element | null) {
+  const query = window.matchMedia('(prefers-color-scheme: dark)');
+  const resolved: Theme = preference === 'system' ? (query.matches ? 'dark' : 'light') : preference;
 
+  // Persist preference
+  try {
+    if (preference === 'system') {
+      localStorage.removeItem(THEME_KEY);
+    } else {
+      localStorage.setItem(THEME_KEY, preference);
+    }
+  } catch {
+    /* private browsing / quota exceeded */
+  }
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduce || !document.startViewTransition) {
-    applyTheme(next);
+    applyTheme(resolved, preference);
     return;
   }
 
-  // Set CSS custom properties for the clip-path origin point
   if (originEl) {
     const b = originEl.getBoundingClientRect();
     const s = document.documentElement.style;
@@ -39,29 +80,93 @@ export function setTheme(next: Theme, originEl?: Element) {
     s.setProperty('--vt-y', `${b.top + b.height / 2}px`);
   }
 
-  document.startViewTransition(() => applyTheme(next)).finished.catch(() => {});
+  document.startViewTransition(() => applyTheme(resolved, preference)).finished.catch(() => {});
 }
 
-/** Toggle between light ↔ hacker */
-export function toggleTheme(originEl?: Element) {
-  const current = document.documentElement.dataset.theme as Theme;
-  setTheme(current === 'hacker' ? 'light' : 'hacker', originEl);
+/** One-click toggle between light ↔ dark (pins an explicit preference) */
+export function toggleTheme(originEl?: Element | null) {
+  const current = getActiveTheme();
+  const next: Theme = current === 'dark' ? 'light' : 'dark';
+  setTheme(next, originEl);
 }
 
-/** Wire up the theme toggle button */
+/** Reset to device/system theme */
+export function resetToSystemTheme(originEl?: Element | null) {
+  setTheme('system', originEl);
+}
+
+/** Initialize listeners and wire buttons */
 export function initTheme() {
-  // Sync meta tag with current theme on load
-  const current = (document.documentElement.dataset.theme ?? 'light') as Theme;
-  updateMetaThemeColor(current);
+  const root = document.documentElement;
+  const query = window.matchMedia('(prefers-color-scheme: dark)');
 
-  // Wire toggle button
-  document.addEventListener('click', (e) => {
-    const btn = (e.target as Element).closest('[data-theme-toggle]');
-    if (btn) {
-      toggleTheme(btn);
-      // Update aria-label
-      const next = document.documentElement.dataset.theme as Theme;
-      btn.setAttribute('aria-label', `Switch to ${next === 'hacker' ? 'Light' : 'Console'} appearance`);
+  // Sync state on boot
+  const currentTheme = getActiveTheme();
+  updateMetaThemeColor(currentTheme);
+
+  // Sync button labels and state
+  const syncControls = () => {
+    const active = getActiveTheme();
+    const preference = root.dataset.themePreference || 'system';
+    const next: Theme = active === 'dark' ? 'light' : 'dark';
+
+    document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((btn) => {
+      btn.setAttribute('aria-label', `Switch to ${next} mode`);
+      btn.setAttribute('title', `Switch to ${next} mode (currently ${active})`);
+      const iconLight = btn.querySelector('.theme-icon-light');
+      const iconDark = btn.querySelector('.theme-icon-dark');
+      if (iconLight && iconDark) {
+        (iconLight as HTMLElement).hidden = active === 'light';
+        (iconDark as HTMLElement).hidden = active === 'dark';
+      }
+    });
+
+    document.querySelectorAll<HTMLButtonElement>('[data-theme-auto]').forEach((btn) => {
+      const isAuto = preference === 'system';
+      btn.setAttribute('aria-pressed', String(isAuto));
+      btn.classList.toggle('active', isAuto);
+    });
+  };
+
+  root.addEventListener('atlas:theme-applied', syncControls);
+  syncControls();
+
+  // Listen for external atlas:theme-selection events
+  window.addEventListener('atlas:theme-selection', ((event: CustomEvent<ThemePreference>) => {
+    const next = event.detail;
+    if (next === 'system' || isValidTheme(next)) {
+      setTheme(next);
     }
+  }) as EventListener);
+
+  // Wire quick toggle clicks
+  document.addEventListener('click', (e) => {
+    const toggleBtn = (e.target as Element).closest<HTMLButtonElement>('[data-theme-toggle]');
+    if (toggleBtn) {
+      toggleTheme(toggleBtn);
+      return;
+    }
+
+    const autoBtn = (e.target as Element).closest<HTMLButtonElement>('[data-theme-auto]');
+    if (autoBtn) {
+      resetToSystemTheme(autoBtn);
+    }
+  });
+
+  // OS dynamic preference changes when on 'system' mode
+  query.addEventListener?.('change', () => {
+    if (getStoredPreference() === 'system') {
+      const resolved: Theme = query.matches ? 'dark' : 'light';
+      applyTheme(resolved, 'system');
+    }
+  });
+
+  // Cross-tab synchronization
+  window.addEventListener('storage', (event) => {
+    if (event.key !== THEME_KEY) return;
+    const val = event.newValue;
+    const pref: ThemePreference = isValidTheme(val) ? val : 'system';
+    const resolved: Theme = pref === 'system' ? (query.matches ? 'dark' : 'light') : pref;
+    applyTheme(resolved, pref);
   });
 }

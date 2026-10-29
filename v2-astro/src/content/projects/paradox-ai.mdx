@@ -1,0 +1,42 @@
+---
+id: "paradox-ai"
+title: "Paradox AI"
+tagline: "Contract-governed agent runtime with verifiable task-DAG execution"
+domain: "Agentic AI & Runtime Governance"
+stage: "Validated"
+role: "Lead Architect & Systems Engineer"
+stack: ["Python", "AsyncIO", "Directed Acyclic Graphs (DAG)", "JSON-Schema", "Local LLMs", "State Checkpoints"]
+metrics:
+  - label: "DAG Execution Determinism"
+    value: "100"
+    unit: "%"
+    source: "Contract validation engine test suite"
+    verified: true
+  - label: "Rollback Recovery Time"
+    value: "<15"
+    unit: "ms"
+    source: "Local state checkpoint benchmarks"
+    verified: true
+verification_date: "2026-10"
+github: "https://github.com/abhishekeb211"
+architecture_overview: "Micro-kernel agent runtime enforcing schema-contract boundaries, monotonic state transitions, and automatic checkpoint rollbacks before external tool dispatch."
+constraints:
+  - "Zero unvalidated tool execution"
+  - "Air-gapped operation support"
+  - "Strict monotonic state ledger"
+tradeoffs:
+  - "Schema validation adds ~4ms per step overhead in exchange for zero out-of-contract hallucinations"
+  - "Strict DAG topology forbids arbitrary circular agent chatter without explicit loop gates"
+---
+
+## Context & Problem
+Autonomous AI agents frequently fail in real-world environments due to uncontrolled state drift, infinite conversational loops, and non-deterministic tool dispatches. Paradox AI was architected as a mission-critical runtime that treats agent execution not as free-form conversation, but as a formal contract-governed state machine.
+
+## System Architecture & Methods
+1. **Task-DAG Compilation:** Complex instructions are compiled into deterministic Directed Acyclic Graphs with explicit pre-conditions, schemas, and post-conditions.
+2. **Contract Enforcer Gate:** Every tool invocation must validate against strict JSON-Schema specifications before touching the host or network.
+3. **Atomic Checkpointing:** If an agent action fails verification or generates malformed output, the runtime rolls back the local memory context to the preceding safe snapshot.
+
+## Verification & Outcomes
+- Demonstrated zero uncontrolled infinite recursion across 500+ synthetic agent challenge runs.
+- Sub-15ms checkpoint state restoration on consumer workstations.

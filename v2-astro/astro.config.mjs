@@ -1,4 +1,7 @@
 import { defineConfig } from 'astro/config';
+import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   // GitHub Pages: https://abhishekeb211.github.io/Profie-website.github.io/
@@ -7,5 +10,9 @@ export default defineConfig({
   output: 'static',
   build: {
     assets: 'assets',
+  },
+  integrations: [mdx(), sitemap()],
+  vite: {
+    plugins: [tailwindcss()],
   },
 });

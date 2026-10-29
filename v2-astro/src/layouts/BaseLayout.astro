@@ -1,5 +1,5 @@
 ---
-// BaseLayout.astro — shared shell for both personas
+// BaseLayout.astro — shared shell for all Atlas v2.2 pages and personas
 // Props:
 //   title: page <title>
 //   description: meta description
@@ -9,11 +9,11 @@
 interface Props {
   title: string;
   description: string;
-  persona: 'architect' | 'professor';
+  persona?: 'architect' | 'professor';
   ogImage?: string;
 }
 
-const { title, description, persona, ogImage } = Astro.props;
+const { title, description, persona = 'architect', ogImage } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const defaultOgImage = ogImage ?? `${base}/images/og-${persona}.png`;
@@ -23,14 +23,47 @@ const defaultOgImage = ogImage ?? `${base}/images/og-${persona}.png`;
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
 
-  <!-- No-flash theme bootstrap — must be first, no defer -->
+  <!-- No-flash parser-blocking theme bootstrap — loaded before CSS -->
   <script is:inline>
     (() => {
-      const r = document.documentElement;
+      const KEY = 'atlas-theme-preference';
+      const root = document.documentElement;
+      const query = matchMedia('(prefers-color-scheme: dark)');
+      let override = null;
+      const valid = value => value === 'light' || value === 'dark';
       try {
-        r.dataset.theme = localStorage.getItem('theme') === 'hacker' ? 'hacker' : 'light';
-      } catch { r.dataset.theme = 'light'; }
+        const saved = localStorage.getItem(KEY);
+        if (valid(saved)) override = saved;
+      } catch (_) { /* storage may be unavailable */ }
+
+      const apply = () => {
+        const resolved = override || (query.matches ? 'dark' : 'light');
+        root.dataset.theme = resolved;
+        root.dataset.themePreference = override || 'system';
+        root.style.colorScheme = resolved;
+        root.dispatchEvent(new CustomEvent('atlas:theme-applied', {
+          detail: { theme: resolved, preference: override || 'system' }
+        }));
+      };
+      apply();
+      query.addEventListener?.('change', () => { if (!override) apply(); });
+      addEventListener('storage', event => {
+        if (event.key !== KEY) return;
+        override = valid(event.newValue) ? event.newValue : null;
+        apply();
+      });
+      addEventListener('atlas:theme-selection', event => {
+        const next = event.detail;
+        if (next !== 'system' && !valid(next)) return;
+        override = valid(next) ? next : null;
+        try {
+          if (override) localStorage.setItem(KEY, override);
+          else localStorage.removeItem(KEY);
+        } catch (_) { /* apply in memory anyway */ }
+        apply();
+      });
     })();
   </script>
 
@@ -71,9 +104,6 @@ const defaultOgImage = ogImage ?? `${base}/images/og-${persona}.png`;
     ]
   }
   </script>
-
-  <!-- Fonts — self-hosted, subset Latin -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
 
   <!-- Styles -->
   <link rel="stylesheet" href={`${base}/styles/tokens.css`} />

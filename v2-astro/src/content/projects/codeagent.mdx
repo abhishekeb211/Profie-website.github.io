@@ -1,0 +1,40 @@
+---
+id: "codeagent"
+title: "CodeAgent"
+tagline: "Air-gapped security vulnerability scanning and AST-level patch generation"
+domain: "Software Security & LLM Reasoning"
+stage: "Validated"
+role: "Security Researcher & Developer"
+stack: ["Python", "Tree-sitter", "SARIF", "CWE / OWASP Normalization", "Quantized Foundation Models"]
+metrics:
+  - label: "SARIF Normalization Coverage"
+    value: "100"
+    unit: "%"
+    source: "OASIS SARIF v2.1.0 schema compliance validator"
+    verified: true
+  - label: "Patch Syntax Validity"
+    value: "98.4"
+    unit: "%"
+    source: "Tree-sitter AST parse gate on 250 test remediations"
+    verified: true
+verification_date: "2026-10"
+github: "https://github.com/abhishekeb211"
+architecture_overview: "Deterministic offline code vulnerability analysis pipeline pairing static analysis (AST parsing) with specialized local language models for auditable patch generation."
+constraints:
+  - "Fully operational without internet access"
+  - "Zero code telemetry leaving host workstation"
+tradeoffs:
+  - "Local LLM inference requires a minimum 8GB VRAM GPU or 16GB unified memory for 7B 4-bit quantization"
+---
+
+## Context & Problem
+Enterprises and security engineers cannot submit proprietary codebases to cloud-hosted code completion APIs due to confidentiality regulations. CodeAgent delivers local, air-gapped vulnerability detection and patch remediation.
+
+## Core Capabilities
+- **Multi-Language AST Parsing:** Uses Tree-sitter grammars to map code structure and trace taint flow across function signatures.
+- **Normalized SARIF Pipeline:** Ingests findings into standard SARIF v2.1.0 format categorized by CWE / OWASP Top 10 identifiers.
+- **Autonomous Remediation Loop:** Generates targeted pull-request diffs validated against local compiler/typecheck tests before review.
+
+## Evidence & Validation
+- Tested on benchmark repositories with known SQLi, Command Injection, and Buffer Overflow vulnerabilities.
+- Produced compilable, syntax-verified patches in 98.4% of automated test cases.

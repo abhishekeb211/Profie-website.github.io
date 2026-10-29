@@ -26,7 +26,7 @@ const resumeHref = `${base}/Abhishek%20Raut%20Resume%200226.pdf`;
       <a href="#contact" class="nav-item">Contact</a>
     </nav>
 
-    <!-- Controls: Persona Switch + Theme Toggle + Resume + Mobile Hamburger -->
+    <!-- Controls: Persona Switch + Theme Controls + Resume + Mobile Hamburger -->
     <div class="header-actions">
       <!-- Persona Segmented Control -->
       <div class="persona-switch" role="group" aria-label="Persona view">
@@ -46,18 +46,28 @@ const resumeHref = `${base}/Abhishek%20Raut%20Resume%200226.pdf`;
         </a>
       </div>
 
-      <!-- Theme Button -->
-      <button 
-        type="button" 
-        class="theme-toggle-btn" 
-        data-theme-toggle 
-        aria-label="Switch to Console appearance"
-        title="Toggle Light / Console appearance"
-      >
-        <span class="theme-icon light-icon" aria-hidden="true">☀️</span>
-        <span class="theme-icon hacker-icon" aria-hidden="true">📟</span>
-        <span class="theme-label">Theme</span>
-      </button>
+      <!-- Theme Actions: One-click Light/Dark Toggle + Device Auto Reset -->
+      <div class="theme-actions" role="group" aria-label="Appearance controls">
+        <button 
+          type="button" 
+          class="theme-toggle-btn" 
+          data-theme-toggle 
+          aria-label="Switch color theme"
+          title="Switch Light/Dark"
+        >
+          <span class="theme-icon theme-icon-light" aria-hidden="true">☀️</span>
+          <span class="theme-icon theme-icon-dark" aria-hidden="true">🌙</span>
+        </button>
+        <button 
+          type="button" 
+          class="theme-auto-btn" 
+          data-theme-auto 
+          aria-label="Use device appearance" 
+          title="Follow device appearance"
+        >
+          Auto
+        </button>
+      </div>
 
       <a href={resumeHref} target="_blank" rel="noopener noreferrer" class="resume-btn desktop-only">
         Resume ↗
@@ -102,11 +112,7 @@ const resumeHref = `${base}/Abhishek%20Raut%20Resume%200226.pdf`;
     toggleBtn.addEventListener('click', () => {
       const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
       toggleBtn.setAttribute('aria-expanded', String(!isExpanded));
-      if (isExpanded) {
-        drawer.hidden = true;
-      } else {
-        drawer.hidden = false;
-      }
+      drawer.hidden = isExpanded;
     });
 
     // Close drawer when clicking any link inside
@@ -210,28 +216,69 @@ const resumeHref = `${base}/Abhishek%20Raut%20Resume%200226.pdf`;
   color: var(--color-on-primary);
 }
 
-/* Theme Toggle Button */
-.theme-toggle-btn {
+/* Theme Controls */
+.theme-actions {
   display: flex;
   align-items: center;
-  gap: var(--space-1);
-  padding: var(--space-1) var(--space-3);
-  font-size: var(--text-xs);
-  font-weight: 600;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-full);
+  padding: 2px;
+  gap: 2px;
+}
+
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-full);
   color: var(--color-text);
   cursor: pointer;
-  transition: border-color var(--duration-fast), background-color var(--duration-fast);
+  font-size: 14px;
+  transition: background-color var(--duration-fast);
 }
 
 .theme-toggle-btn:hover {
-  border-color: var(--color-primary);
+  background: var(--color-surface-raised);
 }
 
-:root[data-theme="light"] .hacker-icon { display: none; }
-:root[data-theme="hacker"] .light-icon { display: none; }
+.theme-auto-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  height: 28px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-full);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  transition: background-color var(--duration-fast), color var(--duration-fast);
+}
+
+.theme-auto-btn:hover {
+  color: var(--color-text);
+}
+
+.theme-auto-btn.active,
+.theme-auto-btn[aria-pressed="true"] {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+:root[data-theme="light"] .theme-icon-light { display: inline-block; }
+:root[data-theme="light"] .theme-icon-dark  { display: none; }
+:root[data-theme="dark"] .theme-icon-light  { display: none; }
+:root[data-theme="dark"] .theme-icon-dark   { display: inline-block; }
+:root[data-theme="hacker"] .theme-icon-light { display: none; }
+:root[data-theme="hacker"] .theme-icon-dark  { display: inline-block; }
 
 .resume-btn {
   padding: var(--space-1) var(--space-3);
@@ -249,11 +296,7 @@ const resumeHref = `${base}/Abhishek%20Raut%20Resume%200226.pdf`;
   color: var(--color-on-primary);
 }
 
-.desktop-only {
-  display: inline-block;
-}
-
-/* Mobile Hamburger Button */
+/* Mobile Menu Button */
 .mobile-menu-btn {
   display: none;
   flex-direction: column;
@@ -261,17 +304,18 @@ const resumeHref = `${base}/Abhishek%20Raut%20Resume%200226.pdf`;
   width: 32px;
   height: 32px;
   background: transparent;
-  border: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 6px;
   cursor: pointer;
-  padding: 4px;
 }
 
 .hamburger-bar {
   width: 100%;
   height: 2px;
-  background-color: var(--color-text);
+  background: var(--color-text);
   border-radius: 1px;
-  transition: all var(--duration-fast);
+  transition: all var(--duration-fast) var(--ease-default);
 }
 
 /* Mobile Drawer */
@@ -321,7 +365,6 @@ const resumeHref = `${base}/Abhishek%20Raut%20Resume%200226.pdf`;
 
 @media (max-width: 600px) {
   .brand-tag { display: none; }
-  .theme-label { display: none; }
   .persona-btn {
     padding: var(--space-1) var(--space-2);
     font-size: 11px;
