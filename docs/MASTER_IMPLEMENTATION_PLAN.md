@@ -170,40 +170,40 @@ flowchart TD
 - [ ] **A08 · P0 · S** Freeze MVP exclusions: no active server databases, no live LLM API keys in client.
 
 ### Phase 1: Repository & Data Architecture
-- [ ] **B01 · P0 · S** Ensure clean git state on branch `main` and branch `v2`.
-- [ ] **B02 · P0 · M** Verify strict TypeScript configuration in `v2-astro/tsconfig.json`.
-- [ ] **B03 · P0 · S** Configure Tailwind CSS and link semantic CSS custom variables.
-- [ ] **B04 · P0 · M** Create `src/content.config.ts` with Zod schemas for projects, experience, and publications.
-- [ ] **B05 · P0 · M** Enable MDX support for rich case studies via `@astrojs/mdx`.
-- [ ] **B06 · P0 · M** Establish static routes: `/`, `/projects`, `/projects/[slug]`, `/experience`, `/about`, `/contact`, `/404`.
-- [ ] **B07 · P0 · S** Validate canonical base URLs for GitHub Pages (`/`) and custom domains.
-- [ ] **B08 · P0 · M** Implement modular layouts: `BaseLayout.astro`, `PageHead.astro`, `Header.astro`, `Footer.astro`.
+- [x] **B01 · P0 · S** Ensure clean git state on branch `main` and branch `v2`.
+- [x] **B02 · P0 · M** Verify strict TypeScript configuration in `v2-astro/tsconfig.json`.
+- [x] **B03 · P0 · S** Configure Tailwind CSS and link semantic CSS custom variables.
+- [x] **B04 · P0 · M** Create `src/content.config.ts` with Zod schemas for projects, experience, and publications.
+- [x] **B05 · P0 · M** Enable MDX support for rich case studies via `@astrojs/mdx`.
+- [x] **B06 · P0 · M** Establish static routes: `/`, `/projects`, `/projects/[slug]`, `/experience`, `/about`, `/contact`, `/404`.
+- [x] **B07 · P0 · S** Validate canonical base URLs for GitHub Pages (`/`) and custom domains.
+- [x] **B08 · P0 · M** Implement modular layouts: `BaseLayout.astro`, `PageHead.astro`, `Header.astro`, `Footer.astro`.
 
 ### Phase 2: Adaptive Light/Dark Theme System (P0 Critical)
-- [ ] **C01 · P0 · M** Finalize dual token palettes (Light vs. Dark) in `tokens.css` ensuring >= 4.5:1 text contrast.
-- [ ] **C02 · P0 · S** Bind variables to `:root`, `[data-theme='light']`, and `[data-theme='dark']`.
-- [ ] **C03 · P0 · S** Default to `System` preference via `matchMedia('(prefers-color-scheme: dark)')`.
-- [ ] **C04 · P0 · S** Implement zero-FOUC synchronous theme bootstrap script in `PageHead.astro`.
-- [ ] **C05 · P0 · M** Build `ThemeSwitch.astro` with visible one-click Sun/Moon button + secondary "Auto" device reset.
-- [ ] **C06 · P0 · S** Persist manual preference in `localStorage.setItem('atlas-theme-preference')`; remove key on Auto.
-- [ ] **C07 · P0 · S** Bind `matchMedia` listener to dynamically update UI when OS changes (only in Auto mode).
-- [ ] **C08 · P1 · S** Sync theme changes across browser tabs via `window.addEventListener('storage')`.
-- [ ] **C09 · P0 · S** Gracefully handle private browsing / disabled `localStorage` without breaking toggle.
-- [ ] **C10 · P0 · S** Sync `color-scheme` property on `<html>` to style scrollbars and native inputs properly.
-- [ ] **C13 · P0 · S** Add no-JS CSS fallback rule using `@media (prefers-color-scheme: dark)`.
+- [x] **C01 · P0 · M** Finalize dual token palettes (Light vs. Dark) in `tokens.css` ensuring >= 4.5:1 text contrast.
+- [x] **C02 · P0 · S** Bind variables to `:root`, `[data-theme='light']`, and `[data-theme='dark']`.
+- [x] **C03 · P0 · S** Default to `System` preference via `matchMedia('(prefers-color-scheme: dark)')`.
+- [x] **C04 · P0 · S** Implement zero-FOUC synchronous theme bootstrap script in `PageHead.astro` / `BaseLayout.astro`.
+- [x] **C05 · P0 · M** Build `ThemeSwitch.astro` / `Header.astro` with visible one-click Sun/Moon button + secondary "Auto" device reset.
+- [x] **C06 · P0 · S** Persist manual preference in `localStorage.setItem('atlas-theme-preference')`; remove key on Auto.
+- [x] **C07 · P0 · S** Bind `matchMedia` listener to dynamically update UI when OS changes (only in Auto mode).
+- [x] **C08 · P1 · S** Sync theme changes across browser tabs via `window.addEventListener('storage')`.
+- [x] **C09 · P0 · S** Gracefully handle private browsing / disabled `localStorage` without breaking toggle.
+- [x] **C10 · P0 · S** Sync `color-scheme` property on `<html>` to style scrollbars and native inputs properly.
+- [x] **C13 · P0 · S** Add no-JS CSS fallback rule using `@media (prefers-color-scheme: dark)`.
 
 ### Phase 3: Flagship Case Studies & Profile Content
-- [ ] **D01 · P0 · S** Polish Hero section: professional headline, verified contact links, and dual CTAs.
-- [ ] **D02 · P0 · M** Author factual About section highlighting applied R&D and agentic systems.
-- [ ] **D03 · P0 · M** Implement case study template (`src/layouts/CaseStudyLayout.astro`).
-- [ ] **D04 · P0 · L** Author **Paradox AI** case study (Contract-governed agent runtime, task-DAGs, validation).
-- [ ] **D05 · P0 · L** Author **Sanjaya.ai** case study (Privacy-first desktop agent, DOM redaction, PII safety).
-- [ ] **D06 · P0 · L** Author **CodeAgent** case study (Offline vulnerability scanning, SARIF/CWE normalization).
-- [ ] **D07 · P0 · L** Author **Engineering Knowledge RAG** case study (Hybrid retrieval, reranking, source validation).
-- [ ] **D08 · P0 · L** Author **VehicleGPT** case study (Edge computing, CAN telemetry ingestion, device budget).
-- [ ] **D09 · P0 · L** Author **Private Memory OS** case study (Human-confirmed memory, temporal provenance).
-- [ ] **D12 · P0 · S** Publish verified experience timeline and reachable PDF resume link (`/Abhishek Raut Resume 0226.pdf`).
-- [ ] **D14 · P0 · S** Verify official contact channels: `abhishek.raut@pccoepune.org`, LinkedIn, and GitHub.
+- [x] **D01 · P0 · S** Polish Hero section: professional headline, verified contact links, and dual CTAs.
+- [x] **D02 · P0 · M** Author factual About section highlighting applied R&D and agentic systems.
+- [x] **D03 · P0 · M** Implement case study template (`src/pages/projects/[id].astro`).
+- [x] **D04 · P0 · L** Author **Paradox AI** case study (Contract-governed agent runtime, task-DAGs, validation).
+- [x] **D05 · P0 · L** Author **Sanjaya.ai** case study (Privacy-first desktop agent, DOM redaction, PII safety).
+- [x] **D06 · P0 · L** Author **CodeAgent** case study (Offline vulnerability scanning, SARIF/CWE normalization).
+- [x] **D07 · P0 · L** Author **Engineering Knowledge RAG** case study (Hybrid retrieval, reranking, source validation).
+- [x] **D08 · P0 · L** Author **VehicleGPT** case study (Edge computing, CAN telemetry ingestion, device budget).
+- [x] **D09 · P0 · L** Author **Private Memory OS** case study (Human-confirmed memory, temporal provenance).
+- [x] **D12 · P0 · S** Publish verified experience timeline and reachable PDF resume link (`/Abhishek Raut Resume 0226.pdf`).
+- [x] **D14 · P0 · S** Verify official contact channels: `abhishek.raut@pccoepune.org`, LinkedIn, and GitHub.
 
 ### Phase 4: Core Responsive UI & Navigation
 - [ ] **E01 · P0 · M** Implement responsive grid and typography scale supporting 320px to 1920px viewports.
