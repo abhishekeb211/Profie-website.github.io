@@ -63,3 +63,4 @@ scanNoTransitionAll(srcDir);
 console.log('✓ F14 PASS: Zero instances of uncurated "transition: all" found across all source components.');
 
 console.log('ALL 7 AUDIT CRITERIA VERIFIED AND PASSED!');
+
