@@ -250,14 +250,40 @@ body {
 }
 .skip-link:focus { translate: 0 0; }
 
-/* ─── CIRCULAR VIEW TRANSITIONS REVEAL ─────────────────────────────────── */
-::view-transition-old(root),
+/* ─── SCROLL MARGIN FOR STICKY HEADER OFFSET ───────────────────────────── */
+:target,
+section[id],
+article[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+/* ─── ROUTE PAGE TRANSITION (DEFAULT CLIENT ROUTER CROSSFADE) ─────────── */
+::view-transition-old(root) {
+  animation: fade-out 220ms var(--ease-default) both;
+}
+
 ::view-transition-new(root) {
+  animation: fade-in 260ms var(--ease-default) both;
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ─── CIRCULAR VIEW TRANSITIONS REVEAL (THEME TOGGLE ONLY) ─────────────── */
+:root.theme-transition::view-transition-old(root),
+:root.theme-transition::view-transition-new(root) {
   animation: none;
   mix-blend-mode: normal;
 }
 
-::view-transition-new(root) {
+:root.theme-transition::view-transition-new(root) {
   animation: vt-circle-reveal var(--duration-slow) cubic-bezier(0.16, 1, 0.3, 1) both;
   z-index: 2;
 }

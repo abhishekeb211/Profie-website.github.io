@@ -59,11 +59,18 @@ const stageBadge = project.stage || project.status || 'Prototype';
     <a href={`${base}/projects/${project.id}/`} class="case-study-link">
       Read Case Study →
     </a>
-    {project.github && (
-      <a href={project.github} target="_blank" rel="noopener noreferrer" class="card-link">
-        GitHub ↗
-      </a>
-    )}
+    <div class="card-external-links">
+      {project.github && (
+        <a href={project.github} target="_blank" rel="noopener noreferrer" class="card-link" aria-label={`${project.title} GitHub repository`}>
+          GitHub ↗
+        </a>
+      )}
+      {project.link && (
+        <a href={project.link} target="_blank" rel="noopener noreferrer" class="card-link" aria-label={`${project.title} External Resource`}>
+          Resource ↗
+        </a>
+      )}
+    </div>
   </div>
 </article>
 
@@ -79,8 +86,9 @@ const stageBadge = project.stage || project.status || 'Prototype';
   transition: transform var(--duration-fast) var(--ease-default), border-color var(--duration-fast), box-shadow var(--duration-fast);
 }
 
-.project-card:hover {
-  transform: translateY(-2px);
+.project-card:hover,
+.project-card:focus-within {
+  transform: translateY(-3px);
   border-color: var(--color-primary);
   box-shadow: var(--shadow-md);
 }
@@ -186,6 +194,13 @@ const stageBadge = project.stage || project.status || 'Prototype';
   padding-top: var(--space-3);
   font-size: var(--text-xs);
   margin-top: auto;
+  gap: var(--space-3);
+}
+
+.card-external-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
 }
 
 .case-study-link {

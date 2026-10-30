@@ -198,170 +198,188 @@ const base = import.meta.env.BASE_URL;
 <script>
   import { ATLAS_NODES, ATLAS_LINKS } from '../lib/atlas-graph.ts';
 
-  const base = '/Profie-website.github.io';
-  const widget = document.getElementById('systems-atlas-widget');
-  const svg = document.getElementById('atlas-svg');
-  const nodeGroups = document.querySelectorAll<SVGGElement>('.node-group');
-  const linkGroups = document.querySelectorAll<SVGGElement>('.link-group');
-  const clusterBtns = document.querySelectorAll<HTMLButtonElement>('.cluster-btn');
-  const btnGraph = document.getElementById('btn-view-graph');
-  const btnList = document.getElementById('btn-view-list');
-  const graphWrapper = document.getElementById('graph-wrapper');
-  const listView = document.getElementById('atlas-list-view');
+  function initAtlasGraph() {
+    const base = '/Profie-website.github.io';
+    const widget = document.getElementById('systems-atlas-widget');
+    if (!widget) return;
 
-  // Inspector elements
-  const inspector = document.getElementById('inspector-card');
-  const inspBadge = document.getElementById('insp-badge');
-  const inspTitle = document.getElementById('insp-title');
-  const inspCluster = document.getElementById('insp-cluster');
-  const inspDesc = document.getElementById('insp-desc');
-  const inspDiff = document.getElementById('insp-diff');
-  const inspLinksList = document.getElementById('insp-links-list');
-  const inspCta = document.getElementById('insp-cta') as HTMLAnchorElement;
-  const inspClose = document.getElementById('insp-close');
+    const svg = document.getElementById('atlas-svg');
+    const nodeGroups = widget.querySelectorAll<SVGGElement>('.node-group');
+    const linkGroups = widget.querySelectorAll<SVGGElement>('.link-group');
+    const clusterBtns = widget.querySelectorAll<HTMLButtonElement>('.cluster-btn');
+    const btnGraph = widget.querySelector<HTMLButtonElement>('#btn-view-graph');
+    const btnList = widget.querySelector<HTMLButtonElement>('#btn-view-list');
+    const graphWrapper = widget.querySelector<HTMLElement>('#graph-wrapper');
+    const listView = widget.querySelector<HTMLElement>('#atlas-list-view');
 
-  let activeNodeId: string = 'PX01';
+    // Inspector elements
+    const inspector = widget.querySelector<HTMLElement>('#inspector-card');
+    const inspBadge = widget.querySelector<HTMLElement>('#insp-badge');
+    const inspTitle = widget.querySelector<HTMLElement>('#insp-title');
+    const inspCluster = widget.querySelector<HTMLElement>('#insp-cluster');
+    const inspDesc = widget.querySelector<HTMLElement>('#insp-desc');
+    const inspDiff = widget.querySelector<HTMLElement>('#insp-diff');
+    const inspLinksList = widget.querySelector<HTMLElement>('#insp-links-list');
+    const inspCta = widget.querySelector<HTMLAnchorElement>('#insp-cta');
+    const inspClose = widget.querySelector<HTMLElement>('#insp-close');
 
-  function showInspector(nodeId: string) {
-    const node = ATLAS_NODES.find(n => n.id === nodeId);
-    if (!node || !inspector) return;
+    let activeNodeId: string = 'PX01';
 
-    activeNodeId = nodeId;
-    if (inspBadge) inspBadge.textContent = `${node.tier} · ${node.stage}`;
-    if (inspTitle) inspTitle.textContent = node.name;
-    if (inspCluster) inspCluster.textContent = node.cluster;
-    if (inspDesc) inspDesc.textContent = node.shortDesc;
-    if (inspDiff) inspDiff.textContent = node.differentiator;
+    function showInspector(nodeId: string) {
+      const node = ATLAS_NODES.find(n => n.id === nodeId);
+      if (!node || !inspector) return;
 
-    if (inspCta) {
-      if (node.slug) {
-        inspCta.href = `${base}/projects/${node.slug}/`;
-        inspCta.textContent = 'Explore Technical Case Study →';
-        inspCta.style.display = 'inline-flex';
-      } else {
-        inspCta.href = `${base}/projects/`;
-        inspCta.textContent = 'View in Systems Catalog →';
-        inspCta.style.display = 'inline-flex';
+      activeNodeId = nodeId;
+      if (inspBadge) inspBadge.textContent = `${node.tier} · ${node.stage}`;
+      if (inspTitle) inspTitle.textContent = node.name;
+      if (inspCluster) inspCluster.textContent = node.cluster;
+      if (inspDesc) inspDesc.textContent = node.shortDesc;
+      if (inspDiff) inspDiff.textContent = node.differentiator;
+
+      if (inspCta) {
+        if (node.slug) {
+          inspCta.href = `${base}/projects/${node.slug}/`;
+          inspCta.textContent = 'Explore Technical Case Study →';
+          inspCta.style.display = 'inline-flex';
+        } else {
+          inspCta.href = `${base}/projects/`;
+          inspCta.textContent = 'View in Systems Catalog →';
+          inspCta.style.display = 'inline-flex';
+        }
       }
+
+      // Populate links
+      if (inspLinksList) {
+        inspLinksList.innerHTML = '';
+        const connected = ATLAS_LINKS.filter(l => l.source === nodeId || l.target === nodeId);
+        if (connected.length === 0) {
+          inspLinksList.innerHTML = '<li>Standalone system cluster node</li>';
+        } else {
+          connected.forEach(link => {
+            const otherId = link.source === nodeId ? link.target : link.source;
+            const otherNode = ATLAS_NODES.find(n => n.id === otherId);
+            const li = document.createElement('li');
+            li.textContent = `${otherNode?.name || otherId}: ${link.relation}`;
+            inspLinksList.appendChild(li);
+          });
+        }
+      }
+
+      inspector.classList.add('visible');
+
+      // Highlight active node and connected links in SVG
+      nodeGroups.forEach(g => {
+        const isSelf = g.dataset.nodeId === nodeId;
+        g.classList.toggle('selected', isSelf);
+      });
+
+      linkGroups.forEach(lg => {
+        const isConnected = lg.dataset.source === nodeId || lg.dataset.target === nodeId;
+        lg.classList.toggle('highlighted', isConnected);
+      });
     }
 
-    // Populate links
-    if (inspLinksList) {
-      inspLinksList.innerHTML = '';
-      const connected = ATLAS_LINKS.filter(l => l.source === nodeId || l.target === nodeId);
-      if (connected.length === 0) {
-        inspLinksList.innerHTML = '<li>Standalone system cluster node</li>';
-      } else {
-        connected.forEach(link => {
-          const otherId = link.source === nodeId ? link.target : link.source;
-          const otherNode = ATLAS_NODES.find(n => n.id === otherId);
-          const li = document.createElement('li');
-          li.textContent = `${otherNode?.name || otherId}: ${link.relation}`;
-          inspLinksList.appendChild(li);
-        });
-      }
-    }
-
-    inspector.classList.add('visible');
-
-    // Highlight active node and connected links in SVG
+    // Node Click and Keyboard Enter/Space
     nodeGroups.forEach(g => {
-      const isSelf = g.dataset.nodeId === nodeId;
-      g.classList.toggle('selected', isSelf);
+      const id = g.dataset.nodeId;
+      if (!id) return;
+
+      g.onclick = (e) => {
+        e.stopPropagation();
+        showInspector(id);
+      };
+
+      g.onkeydown = (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          showInspector(id);
+        }
+      };
+
+      g.onmouseenter = () => {
+        linkGroups.forEach(lg => {
+          const isConnected = lg.dataset.source === id || lg.dataset.target === id;
+          lg.classList.toggle('hovered', isConnected);
+        });
+      };
+
+      g.onmouseleave = () => {
+        linkGroups.forEach(lg => lg.classList.remove('hovered'));
+      };
     });
 
-    linkGroups.forEach(lg => {
-      const isConnected = lg.dataset.source === nodeId || lg.dataset.target === nodeId;
-      lg.classList.toggle('highlighted', isConnected);
+    // Close inspector
+    if (inspClose) {
+      inspClose.onclick = () => {
+        inspector?.classList.remove('visible');
+        nodeGroups.forEach(g => g.classList.remove('selected'));
+        linkGroups.forEach(lg => lg.classList.remove('highlighted'));
+      };
+    }
+
+    // Cluster Filter Buttons
+    clusterBtns.forEach(btn => {
+      btn.onclick = () => {
+        clusterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const cluster = btn.dataset.cluster;
+        nodeGroups.forEach(g => {
+          const match = cluster === 'all' || g.dataset.cluster === cluster;
+          g.style.opacity = match ? '1' : '0.15';
+          g.style.pointerEvents = match ? 'auto' : 'none';
+        });
+
+        linkGroups.forEach(lg => {
+          const s = ATLAS_NODES.find(n => n.id === lg.dataset.source);
+          const t = ATLAS_NODES.find(n => n.id === lg.dataset.target);
+          const match = cluster === 'all' || (s?.cluster === cluster || t?.cluster === cluster);
+          lg.style.opacity = match ? '1' : '0.1';
+        });
+
+        // Filter list view items as well
+        const listCards = widget.querySelectorAll<HTMLElement>('.list-card');
+        listCards.forEach(c => {
+          const match = cluster === 'all' || c.dataset.cluster === cluster;
+          c.style.display = match ? 'flex' : 'none';
+        });
+      };
     });
+
+    // Toggle View Mode (Graph vs List)
+    if (btnGraph) {
+      btnGraph.onclick = () => {
+        btnGraph.classList.add('active');
+        btnGraph.setAttribute('aria-pressed', 'true');
+        btnList?.classList.remove('active');
+        btnList?.setAttribute('aria-pressed', 'false');
+        if (graphWrapper) graphWrapper.hidden = false;
+        if (listView) listView.hidden = true;
+      };
+    }
+
+    if (btnList) {
+      btnList.onclick = () => {
+        btnList.classList.add('active');
+        btnList.setAttribute('aria-pressed', 'true');
+        btnGraph?.classList.remove('active');
+        btnGraph?.setAttribute('aria-pressed', 'false');
+        if (graphWrapper) graphWrapper.hidden = true;
+        if (listView) listView.hidden = false;
+      };
+    }
+
+    // Initialize inspector on Paradox AI
+    showInspector('PX01');
   }
 
-  // Node Click and Keyboard Enter/Space
-  nodeGroups.forEach(g => {
-    const id = g.dataset.nodeId;
-    if (!id) return;
-
-    g.addEventListener('click', (e) => {
-      e.stopPropagation();
-      showInspector(id);
-    });
-
-    g.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        showInspector(id);
-      }
-    });
-
-    g.addEventListener('mouseenter', () => {
-      linkGroups.forEach(lg => {
-        const isConnected = lg.dataset.source === id || lg.dataset.target === id;
-        lg.classList.toggle('hovered', isConnected);
-      });
-    });
-
-    g.addEventListener('mouseleave', () => {
-      linkGroups.forEach(lg => lg.classList.remove('hovered'));
-    });
-  });
-
-  // Close inspector
-  inspClose?.addEventListener('click', () => {
-    inspector?.classList.remove('visible');
-    nodeGroups.forEach(g => g.classList.remove('selected'));
-    linkGroups.forEach(lg => lg.classList.remove('highlighted'));
-  });
-
-  // Cluster Filter Buttons
-  clusterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      clusterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      const cluster = btn.dataset.cluster;
-      nodeGroups.forEach(g => {
-        const match = cluster === 'all' || g.dataset.cluster === cluster;
-        g.style.opacity = match ? '1' : '0.15';
-        g.style.pointerEvents = match ? 'auto' : 'none';
-      });
-
-      linkGroups.forEach(lg => {
-        const s = ATLAS_NODES.find(n => n.id === lg.dataset.source);
-        const t = ATLAS_NODES.find(n => n.id === lg.dataset.target);
-        const match = cluster === 'all' || (s?.cluster === cluster || t?.cluster === cluster);
-        lg.style.opacity = match ? '1' : '0.1';
-      });
-
-      // Filter list view items as well
-      const listCards = document.querySelectorAll<HTMLElement>('.list-card');
-      listCards.forEach(c => {
-        const match = cluster === 'all' || c.dataset.cluster === cluster;
-        c.style.display = match ? 'flex' : 'none';
-      });
-    });
-  });
-
-  // Toggle View Mode (Graph vs List)
-  btnGraph?.addEventListener('click', () => {
-    btnGraph.classList.add('active');
-    btnGraph.setAttribute('aria-pressed', 'true');
-    btnList?.classList.remove('active');
-    btnList?.setAttribute('aria-pressed', 'false');
-    if (graphWrapper) graphWrapper.hidden = false;
-    if (listView) listView.hidden = true;
-  });
-
-  btnList?.addEventListener('click', () => {
-    btnList.classList.add('active');
-    btnList.setAttribute('aria-pressed', 'true');
-    btnGraph?.classList.remove('active');
-    btnGraph?.setAttribute('aria-pressed', 'false');
-    if (graphWrapper) graphWrapper.hidden = true;
-    if (listView) listView.hidden = false;
-  });
-
-  // Initialize inspector on Paradox AI
-  showInspector('PX01');
+  // Register on both standard load and astro:page-load
+  document.addEventListener('astro:page-load', initAtlasGraph);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAtlasGraph);
+  } else {
+    initAtlasGraph();
+  }
 </script>
 
 <style>
@@ -404,7 +422,7 @@ const base = import.meta.env.BASE_URL;
   border-radius: var(--radius-full);
   color: var(--color-text-secondary);
   cursor: pointer;
-  transition: all var(--duration-fast);
+  transition: color var(--duration-fast), background-color var(--duration-fast), border-color var(--duration-fast), transform var(--duration-fast);
 }
 
 .cluster-btn .dot {
@@ -441,7 +459,7 @@ const base = import.meta.env.BASE_URL;
   border-radius: var(--radius-full);
   color: var(--color-text-secondary);
   cursor: pointer;
-  transition: all var(--duration-fast);
+  transition: color var(--duration-fast), background-color var(--duration-fast), border-color var(--duration-fast), transform var(--duration-fast);
 }
 
 .mode-btn.active {

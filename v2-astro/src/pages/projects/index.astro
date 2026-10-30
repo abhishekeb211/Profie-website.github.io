@@ -174,7 +174,7 @@ const domains = ['All', ...new Set(projects.map((p) => p.data.domain))];
   color: var(--color-text-secondary);
   border-radius: var(--radius-full);
   cursor: pointer;
-  transition: all var(--duration-fast);
+  transition: color var(--duration-fast), background-color var(--duration-fast), border-color var(--duration-fast), transform var(--duration-fast);
 }
 
 .filter-btn:hover {

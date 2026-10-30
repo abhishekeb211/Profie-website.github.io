@@ -36,13 +36,39 @@ export function getStoredPreference(): ThemePreference {
   return 'system';
 }
 
-/** Apply resolved theme to <html> */
+/** Synchronize all button ARIA attributes and icons */
+export function syncThemeControls() {
+  const root = document.documentElement;
+  const active = getActiveTheme();
+  const preference = root.dataset.themePreference || 'system';
+  const next: Theme = active === 'dark' ? 'light' : 'dark';
+
+  document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((btn) => {
+    btn.setAttribute('aria-label', `Switch to ${next} mode`);
+    btn.setAttribute('title', `Switch to ${next} mode (currently ${active})`);
+    const iconLight = btn.querySelector('.theme-icon-light');
+    const iconDark = btn.querySelector('.theme-icon-dark');
+    if (iconLight && iconDark) {
+      (iconLight as HTMLElement).hidden = active === 'light';
+      (iconDark as HTMLElement).hidden = active === 'dark';
+    }
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('[data-theme-auto]').forEach((btn) => {
+    const isAuto = preference === 'system';
+    btn.setAttribute('aria-pressed', String(isAuto));
+    btn.classList.toggle('active', isAuto);
+  });
+}
+
+/** Apply resolved theme to <html> and update controls synchronously */
 export function applyTheme(theme: Theme, preference: ThemePreference) {
   const root = document.documentElement;
   root.dataset.theme = theme;
   root.dataset.themePreference = preference;
   root.style.colorScheme = theme;
   updateMetaThemeColor(theme);
+  syncThemeControls();
 
   root.dispatchEvent(
     new CustomEvent('atlas:theme-applied', {
@@ -50,6 +76,8 @@ export function applyTheme(theme: Theme, preference: ThemePreference) {
     })
   );
 }
+
+let isThemeTransitioning = false;
 
 /** Set theme with circular View Transition if supported */
 export function setTheme(preference: ThemePreference, originEl?: Element | null) {
@@ -73,14 +101,38 @@ export function setTheme(preference: ThemePreference, originEl?: Element | null)
     return;
   }
 
-  if (originEl) {
-    const b = originEl.getBoundingClientRect();
-    const s = document.documentElement.style;
-    s.setProperty('--vt-x', `${b.left + b.width / 2}px`);
-    s.setProperty('--vt-y', `${b.top + b.height / 2}px`);
+  if (isThemeTransitioning) {
+    // If user clicks rapidly while transition runs, apply immediately without starting nested transition
+    applyTheme(resolved, preference);
+    return;
   }
 
-  document.startViewTransition(() => applyTheme(resolved, preference)).finished.catch(() => {});
+  const root = document.documentElement;
+  if (originEl) {
+    const b = originEl.getBoundingClientRect();
+    root.style.setProperty('--vt-x', `${b.left + b.width / 2}px`);
+    root.style.setProperty('--vt-y', `${b.top + b.height / 2}px`);
+  }
+
+  isThemeTransitioning = true;
+  root.classList.add('theme-transition');
+
+  try {
+    const vt = document.startViewTransition(() => {
+      applyTheme(resolved, preference);
+    });
+
+    vt.finished
+      .catch(() => {})
+      .finally(() => {
+        root.classList.remove('theme-transition');
+        isThemeTransitioning = false;
+      });
+  } catch {
+    root.classList.remove('theme-transition');
+    isThemeTransitioning = false;
+    applyTheme(resolved, preference);
+  }
 }
 
 /** One-click toggle between light ↔ dark (pins an explicit preference) */
@@ -95,7 +147,9 @@ export function resetToSystemTheme(originEl?: Element | null) {
   setTheme('system', originEl);
 }
 
-/** Initialize listeners and wire buttons */
+let isInitialized = false;
+
+/** Initialize listeners and wire buttons (idempotent across Astro navigation) */
 export function initTheme() {
   const root = document.documentElement;
   const query = window.matchMedia('(prefers-color-scheme: dark)');
@@ -103,33 +157,12 @@ export function initTheme() {
   // Sync state on boot
   const currentTheme = getActiveTheme();
   updateMetaThemeColor(currentTheme);
+  syncThemeControls();
 
-  // Sync button labels and state
-  const syncControls = () => {
-    const active = getActiveTheme();
-    const preference = root.dataset.themePreference || 'system';
-    const next: Theme = active === 'dark' ? 'light' : 'dark';
+  if (isInitialized) return;
+  isInitialized = true;
 
-    document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((btn) => {
-      btn.setAttribute('aria-label', `Switch to ${next} mode`);
-      btn.setAttribute('title', `Switch to ${next} mode (currently ${active})`);
-      const iconLight = btn.querySelector('.theme-icon-light');
-      const iconDark = btn.querySelector('.theme-icon-dark');
-      if (iconLight && iconDark) {
-        (iconLight as HTMLElement).hidden = active === 'light';
-        (iconDark as HTMLElement).hidden = active === 'dark';
-      }
-    });
-
-    document.querySelectorAll<HTMLButtonElement>('[data-theme-auto]').forEach((btn) => {
-      const isAuto = preference === 'system';
-      btn.setAttribute('aria-pressed', String(isAuto));
-      btn.classList.toggle('active', isAuto);
-    });
-  };
-
-  root.addEventListener('atlas:theme-applied', syncControls);
-  syncControls();
+  root.addEventListener('atlas:theme-applied', () => syncThemeControls());
 
   // Listen for external atlas:theme-selection events
   window.addEventListener('atlas:theme-selection', ((event: CustomEvent<ThemePreference>) => {
@@ -139,7 +172,7 @@ export function initTheme() {
     }
   }) as EventListener);
 
-  // Wire quick toggle clicks
+  // Wire quick toggle clicks with delegation
   document.addEventListener('click', (e) => {
     const toggleBtn = (e.target as Element).closest<HTMLButtonElement>('[data-theme-toggle]');
     if (toggleBtn) {

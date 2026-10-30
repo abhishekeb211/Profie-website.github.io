@@ -1,27 +1,36 @@
 /*
  * motion.css — Declarative transitions, reveals, and card hover effects
+ * Fail-open progressive enhancement for accessibility and zero-JS resilience
  */
 
-/* Scroll Reveal Initial States */
+/* Scroll Reveal Initial States — Default to fully visible for fail-open resilience */
 [data-reveal] {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity var(--duration-slow) var(--ease-out),
-              transform var(--duration-slow) var(--ease-out);
-}
-
-[data-reveal].revealed {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
-/* Stagger Delays */
-[data-reveal-delay="1"] { transition-delay: 80ms; }
-[data-reveal-delay="2"] { transition-delay: 160ms; }
-[data-reveal-delay="3"] { transition-delay: 240ms; }
-[data-reveal-delay="4"] { transition-delay: 320ms; }
+/* Progressive enhancement: Only hide elements if JavaScript is active and supported */
+@media (scripting: enabled) {
+  html:not(.no-js) [data-reveal]:not(.revealed) {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity var(--duration-slow) var(--ease-out),
+                transform var(--duration-slow) var(--ease-out);
+  }
 
-/* ─── CARD HOVER & BORDER ILLUMINATION ─────────────────────────────────── */
+  html:not(.no-js) [data-reveal].revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stagger Delays (capped at 240ms) */
+[data-reveal-delay="1"] { transition-delay: 60ms; }
+[data-reveal-delay="2"] { transition-delay: 120ms; }
+[data-reveal-delay="3"] { transition-delay: 180ms; }
+[data-reveal-delay="4"] { transition-delay: 240ms; }
+
+/* ─── CARD HOVER, FOCUS-WITHIN & BORDER ILLUMINATION ─────────────────────── */
 .interactive-card {
   transition: transform var(--duration-fast) var(--ease-out),
               box-shadow var(--duration-fast) var(--ease-out),
@@ -30,14 +39,18 @@
 }
 
 /* Light Theme: 4px hover lift with soft shadow */
-:root[data-theme="light"] .interactive-card:hover {
+:root[data-theme="light"] .interactive-card:hover,
+:root[data-theme="light"] .interactive-card:focus-within {
   transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
   border-color: var(--accent-blue);
 }
 
-/* Pro Hacker Theme: Border illumination with crimson/green edge accent */
-:root[data-theme="hacker"] .interactive-card:hover {
+/* Dark Theme: Border illumination with subtle edge accent */
+:root[data-theme="dark"] .interactive-card:hover,
+:root[data-theme="dark"] .interactive-card:focus-within,
+:root[data-theme="hacker"] .interactive-card:hover,
+:root[data-theme="hacker"] .interactive-card:focus-within {
   transform: translateY(-2px);
   border-color: var(--color-primary);
   box-shadow: 0 0 16px rgb(239 68 68 / 0.18);
@@ -68,24 +81,28 @@
   border: 1px solid rgb(217 119 6 / 0.2);
 }
 
+:root[data-theme="dark"] .badge-blue,
 :root[data-theme="hacker"] .badge-blue {
   background: rgb(56 189 248 / 0.1);
   color: var(--accent-blue);
   border-color: rgb(56 189 248 / 0.3);
 }
 
+:root[data-theme="dark"] .badge-teal,
 :root[data-theme="hacker"] .badge-teal {
   background: rgb(20 83 45 / 0.4);
   color: var(--color-success);
   border-color: var(--color-success);
 }
 
+:root[data-theme="dark"] .badge-violet,
 :root[data-theme="hacker"] .badge-violet {
   background: rgb(168 85 247 / 0.12);
   color: var(--accent-violet);
   border-color: rgb(168 85 247 / 0.3);
 }
 
+:root[data-theme="dark"] .badge-amber,
 :root[data-theme="hacker"] .badge-amber {
   background: rgb(239 68 68 / 0.12);
   color: var(--color-primary);
@@ -106,4 +123,20 @@
 
 :root[data-theme="light"] #ambient-canvas {
   display: none;
+}
+
+/* ─── PREFERS-REDUCED-MOTION OVERRIDES ─────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .interactive-card,
+  .project-card,
+  .btn,
+  .metric-card {
+    transition: none !important;
+    transform: none !important;
+  }
 }

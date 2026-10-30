@@ -6,6 +6,8 @@
 //   persona: 'architect' | 'professor'
 //   ogImage: OG image path (optional)
 
+import { ClientRouter } from 'astro:transitions';
+
 interface Props {
   title: string;
   description: string;
@@ -24,6 +26,9 @@ const defaultOgImage = ogImage ?? `${base}/images/og-${persona}.png`;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light dark" />
+
+  <!-- Client-side navigation & route transitions -->
+  <ClientRouter />
 
   <!-- No-flash parser-blocking theme bootstrap — loaded before CSS -->
   <script is:inline>
@@ -127,14 +132,31 @@ const defaultOgImage = ogImage ?? `${base}/images/og-${persona}.png`;
 
   <slot name="footer" />
 
-  <!-- Theme + motion controllers -->
+  <!-- Theme + motion controllers with ClientRouter lifecycle management -->
   <script>
-    import { initTheme } from '../scripts/theme.ts';
-    import { initScrollReveals, initCountUps, initAmbientCanvas } from '../scripts/reveals.js';
-    initTheme();
-    initScrollReveals();
-    initCountUps();
-    initAmbientCanvas();
+    import { initTheme, syncThemeControls } from '../scripts/theme.ts';
+    import { initScrollReveals, initCountUps, initAmbientCanvas, cleanupMotion } from '../scripts/reveals.js';
+
+    function setupPage() {
+      initTheme();
+      syncThemeControls();
+      initScrollReveals();
+      initCountUps();
+      initAmbientCanvas();
+    }
+
+    // Initial setup on boot
+    setupPage();
+
+    // Re-initialize interactive effects when navigating via ClientRouter
+    document.addEventListener('astro:page-load', () => {
+      setupPage();
+    });
+
+    // Clean up observers and rAF loops before DOM swap
+    document.addEventListener('astro:before-swap', () => {
+      cleanupMotion();
+    });
   </script>
 </body>
 </html>

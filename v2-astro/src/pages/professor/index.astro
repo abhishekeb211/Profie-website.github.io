@@ -13,52 +13,54 @@ const base = import.meta.env.BASE_URL;
 >
   <Header slot="header" activePersona="professor" />
 
-  <section class="section hero-section">
+  <section id="about" class="section hero-section">
     <div class="container">
-      <div class="badge-pill">
-        <span>Pune, India · PCCOE Faculty</span>
-      </div>
-      <h1 class="hero-title">{profile.identity.name}</h1>
-      <p class="hero-subtitle">Educator · Researcher · Faculty In-charge</p>
-      <p class="hero-bio">
-        Dedicated to engineering pedagogy, applied AI innovation, and competitive student mentorship. Faculty In-charge of the PCCOE Coding Club and the Institute-Level Motorsports Club.
-      </p>
+      <div class="hero-content" data-reveal>
+        <div class="badge-pill">
+          <span>Pune, India · PCCOE Faculty</span>
+        </div>
+        <h1 class="hero-title">{profile.identity.name}</h1>
+        <p class="hero-subtitle">Educator · Researcher · Faculty In-charge</p>
+        <p class="hero-bio">
+          Dedicated to engineering pedagogy, applied AI innovation, and competitive student mentorship. Faculty In-charge of the PCCOE Coding Club and the Institute-Level Motorsports Club.
+        </p>
 
-      <div class="metrics-row">
-        <div class="metric-card">
-          <span class="metric-value">500+</span>
-          <span class="metric-label">Students Mentored</span>
-        </div>
-        <div class="metric-card">
-          <span class="metric-value">2</span>
-          <span class="metric-label">Clubs Led</span>
-        </div>
-        <div class="metric-card">
-          <span class="metric-value">3+</span>
-          <span class="metric-label">Core Courses Taught</span>
+        <div class="metrics-row" data-reveal data-reveal-delay="2">
+          <div class="metric-card">
+            <span class="metric-value" data-count-target="500" data-count-suffix="+">500+</span>
+            <span class="metric-label">Students Mentored</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-value" data-count-target="2" data-count-suffix="">2</span>
+            <span class="metric-label">Clubs Led</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-value" data-count-target="3" data-count-suffix="+">3+</span>
+            <span class="metric-label">Core Courses Taught</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Courses & Pedagogy -->
-  <section class="section section-courses">
+  <section id="teaching" class="section section-courses">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header" data-reveal>
         <span class="section-tag">Teaching & Academics</span>
         <h2 class="section-title">Courses & Practical Labs</h2>
       </div>
 
       <div class="grid-cards">
-        <div class="card">
+        <div class="card" data-reveal data-reveal-delay="1">
           <h3>Theory of Computation (TOC)</h3>
           <p>Automata theory, formal grammars, computability, Turing machines, and complexity fundamentals.</p>
         </div>
-        <div class="card">
+        <div class="card" data-reveal data-reveal-delay="2">
           <h3>Data Exploration & Analytics Lab</h3>
           <p>Statistical reasoning, exploratory data pipelines, hypothesis testing, and exploratory visual analysis.</p>
         </div>
-        <div class="card">
+        <div class="card" data-reveal data-reveal-delay="3">
           <h3>Full Stack Development Lab</h3>
           <p>Modern frontend systems, REST/GraphQL APIs, distributed persistence, and cloud container deployment.</p>
         </div>
@@ -67,15 +69,15 @@ const base = import.meta.env.BASE_URL;
   </section>
 
   <!-- Student Clubs & Mentorship -->
-  <section class="section section-clubs">
+  <section id="leadership" class="section section-clubs">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header" data-reveal>
         <span class="section-tag">Leadership</span>
         <h2 class="section-title">Institutional Leadership & Student Clubs</h2>
       </div>
 
       <div class="clubs-list">
-        <div class="card">
+        <div class="card" data-reveal data-reveal-delay="1">
           <div class="card-head">
             <h3>PCCOE Coding Club</h3>
             <span class="badge">Faculty In-charge</span>
@@ -85,7 +87,7 @@ const base = import.meta.env.BASE_URL;
           </p>
         </div>
 
-        <div class="card">
+        <div class="card" data-reveal data-reveal-delay="2">
           <div class="card-head">
             <h3>Institute-Level Motorsports Club</h3>
             <span class="badge">Faculty In-charge</span>
@@ -99,23 +101,23 @@ const base = import.meta.env.BASE_URL;
   </section>
 
   <!-- Research Supervision -->
-  <section class="section section-research">
+  <section id="research" class="section section-research">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header" data-reveal>
         <span class="section-tag">Research & Inquiry</span>
         <h2 class="section-title">Active Investigation Tracks</h2>
       </div>
 
       <div class="grid-cards">
-        <div class="card">
+        <div class="card" data-reveal data-reveal-delay="1">
           <h3>Agentic Code Correction</h3>
           <p>Investigating autonomous reasoning systems for static vulnerability discovery and AST-guided auto-remediation.</p>
         </div>
-        <div class="card">
+        <div class="card" data-reveal data-reveal-delay="2">
           <h3>Cross-Modal Fact Verification</h3>
           <p>Multimodal transformers and graph-augmented verification for trustworthiness assessment in public data feeds.</p>
         </div>
-        <div class="card">
+        <div class="card" data-reveal data-reveal-delay="3">
           <h3>Edge Model Optimization</h3>
           <p>Quantization and air-gapped inference efficiency for resource-constrained client devices and pods.</p>
         </div>
@@ -126,7 +128,7 @@ const base = import.meta.env.BASE_URL;
   <!-- Contact & Collaboration -->
   <section id="contact" class="section section-contact">
     <div class="container">
-      <div class="card" style="text-align: center; padding: var(--space-12);">
+      <div class="card" data-reveal style="text-align: center; padding: var(--space-12);">
         <span class="badge" style="margin-bottom: var(--space-2); display: inline-block;">Academic Inquiries & Research</span>
         <h2 style="font-size: var(--text-2xl); margin: var(--space-2) 0; color: var(--color-text);">Faculty Office & Collaboration</h2>
         <p style="color: var(--color-text-secondary); margin-bottom: var(--space-6); max-width: 600px; margin-left: auto; margin-right: auto;">

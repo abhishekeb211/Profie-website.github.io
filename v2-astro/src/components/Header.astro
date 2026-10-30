@@ -9,21 +9,44 @@ const base = import.meta.env.BASE_URL;
 const architectHref = `${base}/`;
 const profHref = `${base}/professor/`;
 const resumeHref = `${base}/Abhishek%20Raut%20Resume%200226.pdf`;
+
+// Determine whether we are directly on the persona root page or a deep route
+const currentPath = Astro.url.pathname;
+const isArchitectHome = currentPath === `${base}/` || currentPath === base || currentPath === '/';
+const isProfessorHome = currentPath.endsWith('/professor/') || currentPath.endsWith('/professor');
+
+const homePrefix = activePersona === 'professor'
+  ? (isProfessorHome ? '' : profHref)
+  : (isArchitectHome ? '' : architectHref);
+
+const navItems = activePersona === 'professor'
+  ? [
+      { label: 'About', href: `${homePrefix}#about` },
+      { label: 'Teaching', href: `${homePrefix}#teaching` },
+      { label: 'Leadership', href: `${homePrefix}#leadership` },
+      { label: 'Research', href: `${homePrefix}#research` },
+      { label: 'Contact', href: `${homePrefix}#contact` },
+    ]
+  : [
+      { label: 'About', href: `${homePrefix}#about` },
+      { label: 'Atlas', href: `${homePrefix}#atlas-graph` },
+      { label: 'Projects', href: `${homePrefix}#projects` },
+      { label: 'Experience', href: `${homePrefix}#experience` },
+      { label: 'Contact', href: `${homePrefix}#contact` },
+    ];
 ---
 <header class="site-header">
   <div class="header-inner">
     <a href={activePersona === 'architect' ? architectHref : profHref} class="brand-link" aria-label="Abhishek S. Raut - Home">
       <span class="brand-name">Abhishek S. Raut</span>
-      <span class="brand-tag">AI Research Engineer</span>
+      <span class="brand-tag">{activePersona === 'professor' ? 'Educator & Faculty' : 'AI Research Engineer'}</span>
     </a>
 
     <!-- Desktop Navigation -->
     <nav class="nav-links" aria-label="Primary navigation">
-      <a href="#about" class="nav-item">About</a>
-      <a href="#projects" class="nav-item">Projects</a>
-      <a href="#experience" class="nav-item">Experience</a>
-      {activePersona === 'professor' && <a href="#teaching" class="nav-item">Teaching</a>}
-      <a href="#contact" class="nav-item">Contact</a>
+      {navItems.map(item => (
+        <a href={item.href} class="nav-item">{item.label}</a>
+      ))}
     </nav>
 
     <!-- Controls: Persona Switch + Theme Controls + Resume + Mobile Hamburger -->
@@ -92,11 +115,9 @@ const resumeHref = `${base}/Abhishek%20Raut%20Resume%200226.pdf`;
   <!-- Mobile Drawer -->
   <div id="mobile-drawer" class="mobile-drawer" hidden>
     <nav class="mobile-nav" aria-label="Mobile navigation">
-      <a href="#about" class="mobile-nav-item">About</a>
-      <a href="#projects" class="mobile-nav-item">Projects</a>
-      <a href="#experience" class="mobile-nav-item">Experience</a>
-      {activePersona === 'professor' && <a href="#teaching" class="mobile-nav-item">Teaching</a>}
-      <a href="#contact" class="mobile-nav-item">Contact</a>
+      {navItems.map(item => (
+        <a href={item.href} class="mobile-nav-item">{item.label}</a>
+      ))}
       <a href={resumeHref} target="_blank" rel="noopener noreferrer" class="mobile-nav-item mobile-resume">
         View Resume ↗
       </a>
@@ -105,23 +126,44 @@ const resumeHref = `${base}/Abhishek%20Raut%20Resume%200226.pdf`;
 </header>
 
 <script>
-  const toggleBtn = document.getElementById('mobile-menu-toggle');
-  const drawer = document.getElementById('mobile-drawer');
+  function setupMobileMenu() {
+    const toggleBtn = document.getElementById('mobile-menu-toggle');
+    const drawer = document.getElementById('mobile-drawer');
 
-  if (toggleBtn && drawer) {
-    toggleBtn.addEventListener('click', () => {
+    if (!toggleBtn || !drawer) return;
+
+    const closeDrawer = () => {
+      toggleBtn.setAttribute('aria-expanded', 'false');
+      drawer.hidden = true;
+    };
+
+    toggleBtn.onclick = (e) => {
+      e.stopPropagation();
       const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
       toggleBtn.setAttribute('aria-expanded', String(!isExpanded));
       drawer.hidden = isExpanded;
+    };
+
+    drawer.querySelectorAll('a').forEach(link => {
+      link.onclick = () => {
+        closeDrawer();
+      };
     });
 
-    // Close drawer when clicking any link inside
-    drawer.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        toggleBtn.setAttribute('aria-expanded', 'false');
-        drawer.hidden = true;
-      });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !drawer.hidden) {
+        closeDrawer();
+        toggleBtn.focus();
+      }
     });
+  }
+
+  // Support both classic load and Astro ClientRouter page-load
+  document.addEventListener('astro:page-load', setupMobileMenu);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupMobileMenu);
+  } else {
+    setupMobileMenu();
   }
 </script>
 
@@ -315,7 +357,7 @@ const resumeHref = `${base}/Abhishek%20Raut%20Resume%200226.pdf`;
   height: 2px;
   background: var(--color-text);
   border-radius: 1px;
-  transition: all var(--duration-fast) var(--ease-default);
+  transition: transform var(--duration-fast) var(--ease-default), opacity var(--duration-fast) var(--ease-default), background-color var(--duration-fast) var(--ease-default);
 }
 
 /* Mobile Drawer */
