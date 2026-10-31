@@ -27,6 +27,9 @@ const defaultOgImage = ogImage ?? `${base}/images/og-${persona}.png`;
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light dark" />
 
+  <!-- Security Hardening CSP Meta Tag -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; font-src 'self' data:; object-src 'none'; base-uri 'self';" />
+
   <!-- Client-side navigation & route transitions -->
   <ClientRouter />
 
@@ -119,6 +122,21 @@ const defaultOgImage = ogImage ?? `${base}/images/og-${persona}.png`;
 
   <!-- Sitemap -->
   <link rel="sitemap" href={`${base}/sitemap-index.xml`} />
+  <!-- Self-destruct and cache purge for any legacy service workers -->
+  <script is:inline>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(regs => {
+        for (const reg of regs) {
+          reg.unregister();
+        }
+      });
+      caches?.keys?.().then(keys => {
+        keys.forEach(k => {
+          if (k.startsWith('abhishek-raut-v')) caches.delete(k);
+        });
+      });
+    }
+  </script>
 </head>
 <body>
   <!-- Skip navigation -->

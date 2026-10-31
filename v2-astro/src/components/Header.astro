@@ -1,5 +1,7 @@
 ---
 // Header.astro — Sticky responsive header supporting persona switch, theme toggle, mobile drawer, and resume link
+import CommandPalette from './CommandPalette.astro';
+
 interface Props {
   activePersona: 'architect' | 'professor';
 }
@@ -8,7 +10,7 @@ const { activePersona } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const architectHref = `${base}/`;
 const profHref = `${base}/professor/`;
-const resumeHref = `${base}/Abhishek%20Raut%20Resume%200226.pdf`;
+const resumeHref = `${base}/resume.pdf`;
 
 // Determine whether we are directly on the persona root page or a deep route
 const currentPath = Astro.url.pathname;
@@ -68,6 +70,9 @@ const navItems = activePersona === 'professor'
           Professor
         </a>
       </div>
+
+      <!-- Command Palette Terminal Trigger -->
+      <CommandPalette />
 
       <!-- Theme Actions: One-click Light/Dark Toggle + Device Auto Reset -->
       <div class="theme-actions" role="group" aria-label="Appearance controls">

@@ -1,15 +1,15 @@
 ---
 /**
- * Hero3DScene.astro — Cinematic 3D Interactive Hero
- * Hybrid 3D Architecture: Three.js + TypeScript + Progressive Enhancement
+ * Hero3DScene.astro — Meaningful 3D Agent Reasoning Directed Graph (Three.js)
+ * Visualizes the 4-stage Agentic Reasoning Loop:
+ *   [PERCEIVE] -> [PLAN] -> [EXECUTE] -> [VERIFY]
  *
  * Capabilities:
- * - Interactive 3D Holographic Core (Icosahedron wireframe lattice + inner pulsing nucleus + orbital rings)
- * - Dynamic data stream particles circulating in concentric polar orbits
- * - Smooth pointer/gyroscope parallax tracking with damping
- * - Full Light/Dark theme color palette integration (Theme-aware ambient/point lights)
- * - Performance-first: Capped DPR (max 2.0), 60fps requestAnimationFrame with automatic pause when offscreen, in background tab, or under prefers-reduced-motion
- * - Zero-JS / WebGL disabled graceful fallback
+ * - 4 interactive 3D nodes with live glowing state pulses
+ * - Curved spline execution pipelines with orbiting data packets
+ * - Dynamic theme color lerping (Light Blueprint vs Dark Cyber-Intelligence)
+ * - Interactive pointer tracking & damping
+ * - Performance guardrails: Capped DPR (max 2.0), pause offscreen/hidden, reduced-motion fallback, WebGL context loss handling
  */
 interface Props {
   className?: string;
@@ -22,10 +22,16 @@ const { className = '' } = Astro.props;
   <!-- Interactive WebGL Canvas Container -->
   <div class="canvas-mount" id="hero-3d-canvas-mount" aria-hidden="true"></div>
 
-  <!-- Accessible overlay badge indicating real-time 3D telemetry -->
+  <!-- Telemetry Overlay Badge -->
   <div class="telemetry-badge" id="telemetry-badge">
     <span class="live-dot"></span>
-    <span class="telemetry-text">Agentic 3D Core · WebGL Active</span>
+    <span class="telemetry-text">Agent Loop: PERCEIVE ➔ PLAN ➔ EXECUTE ➔ VERIFY</span>
+  </div>
+
+  <!-- Interactive Node Detail Tooltip -->
+  <div class="node-tooltip" id="node-tooltip" hidden>
+    <div class="node-tooltip-title" id="node-tooltip-title">Agent State</div>
+    <div class="node-tooltip-desc" id="node-tooltip-desc">State description</div>
   </div>
 </div>
 
@@ -35,6 +41,9 @@ const { className = '' } = Astro.props;
   function initHero3D() {
     const mount = document.getElementById('hero-3d-canvas-mount');
     const wrapper = document.getElementById('hero-3d-scene-wrapper');
+    const tooltip = document.getElementById('node-tooltip');
+    const tooltipTitle = document.getElementById('node-tooltip-title');
+    const tooltipDesc = document.getElementById('node-tooltip-desc');
     if (!mount || !wrapper) return;
 
     // Check prefers-reduced-motion
@@ -49,29 +58,26 @@ const { className = '' } = Astro.props;
       mount.removeChild(mount.firstChild);
     }
 
-    // Determine current theme colors
     const isDark = () => document.documentElement.dataset.theme === 'dark' || document.documentElement.dataset.theme === 'hacker';
 
     const getColors = () => {
       if (isDark()) {
         return {
-          core: 0xef4444,        // Red/Crimson signature
-          lattice: 0x38bdf8,     // Cyan/Sky blue
-          ringOuter: 0x22c55e,   // Emerald green
-          ringInner: 0xa855f7,   // Violet
-          particles: 0x38bdf8,   // Cyan
-          bgLight: 0x080d0b,
+          nodeDefault: 0x38bdf8,   // Cyan
+          nodeActive: 0xef4444,    // Crimson
+          curve: 0x1e3a8a,         // Deep navy
+          packet: 0x22c55e,        // Terminal green
+          lattice: 0x1e293b,
           pointLight: 0x38bdf8,
           pointLight2: 0xef4444
         };
       } else {
         return {
-          core: 0x2563eb,        // Royal blue
-          lattice: 0x0f766e,     // Teal
-          ringOuter: 0x7c3aed,   // Violet
-          ringInner: 0xd97706,   // Amber
-          particles: 0x2563eb,   // Royal blue
-          bgLight: 0xffffff,
+          nodeDefault: 0x2563eb,   // Royal blue
+          nodeActive: 0x7c3aed,    // Violet
+          curve: 0xcbd5e1,         // Slate light
+          packet: 0x0f766e,        // Teal
+          lattice: 0xe2e8f0,
           pointLight: 0x2563eb,
           pointLight2: 0x7c3aed
         };
@@ -83,7 +89,7 @@ const { className = '' } = Astro.props;
     // Scene, Camera, Renderer
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, mount.clientWidth / mount.clientHeight, 0.1, 100);
-    camera.position.z = 7.5;
+    camera.position.set(0, 0, 8.5);
 
     let renderer: THREE.WebGLRenderer;
     try {
@@ -102,99 +108,95 @@ const { className = '' } = Astro.props;
     renderer.setSize(mount.clientWidth, mount.clientHeight);
     mount.appendChild(renderer.domElement);
 
-    // 1. Central Core: Inner Icosahedron
-    const coreGeo = new THREE.IcosahedronGeometry(1.3, 1);
-    const coreMat = new THREE.MeshStandardMaterial({
-      color: colors.core,
-      roughness: 0.25,
-      metalness: 0.85,
-      wireframe: false,
-      transparent: true,
-      opacity: 0.88,
+    // 4 Core Agent Reasoning Loop Nodes
+    const agentNodesData = [
+      { id: 'perceive', name: '1. PERCEIVE', desc: 'Environment telemetry, multimodal feeds & DOM parsing', pos: new THREE.Vector3(-2.6, 1.4, 0) },
+      { id: 'plan', name: '2. PLAN', desc: 'Formal contract evaluation, task-DAG decomposition & checkpointing', pos: new THREE.Vector3(2.6, 1.4, 0) },
+      { id: 'execute', name: '3. EXECUTE', desc: 'Sandboxed code execution, tool broker invocation & API dispatch', pos: new THREE.Vector3(2.6, -1.4, 0) },
+      { id: 'verify', name: '4. VERIFY', desc: 'AST regression audit, safety checks & transactional commit', pos: new THREE.Vector3(-2.6, -1.4, 0) },
+    ];
+
+    const nodeMeshes: THREE.Mesh[] = [];
+    const nodeGeo = new THREE.IcosahedronGeometry(0.55, 1);
+
+    agentNodesData.forEach((nodeData, idx) => {
+      const nodeMat = new THREE.MeshStandardMaterial({
+        color: idx === 0 ? colors.nodeActive : colors.nodeDefault,
+        roughness: 0.2,
+        metalness: 0.8,
+        wireframe: false,
+      });
+      const mesh = new THREE.Mesh(nodeGeo, nodeMat);
+      mesh.position.copy(nodeData.pos);
+      mesh.userData = nodeData;
+      scene.add(mesh);
+      nodeMeshes.push(mesh);
+
+      // Node Halo Wireframe
+      const haloGeo = new THREE.DodecahedronGeometry(0.85, 0);
+      const haloMat = new THREE.MeshBasicMaterial({
+        color: colors.nodeDefault,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.35,
+      });
+      const halo = new THREE.Mesh(haloGeo, haloMat);
+      halo.position.copy(nodeData.pos);
+      scene.add(halo);
+      (mesh as any)._halo = halo;
     });
-    const coreMesh = new THREE.Mesh(coreGeo, coreMat);
-    scene.add(coreMesh);
 
-    // 2. Outer Wireframe Lattice: Dodecahedron Shell
-    const latticeGeo = new THREE.DodecahedronGeometry(2.1, 1);
-    const latticeMat = new THREE.MeshBasicMaterial({
-      color: colors.lattice,
-      wireframe: true,
+    // Spline Curves Connecting Loop (0->1->2->3->0)
+    const curvePoints = [
+      new THREE.Vector3(-2.6, 1.4, 0),
+      new THREE.Vector3(0, 2.2, 0.8),
+      new THREE.Vector3(2.6, 1.4, 0),
+      new THREE.Vector3(3.2, 0, -0.6),
+      new THREE.Vector3(2.6, -1.4, 0),
+      new THREE.Vector3(0, -2.2, 0.8),
+      new THREE.Vector3(-2.6, -1.4, 0),
+      new THREE.Vector3(-3.2, 0, -0.6),
+      new THREE.Vector3(-2.6, 1.4, 0),
+    ];
+    const curve = new THREE.CatmullRomCurve3(curvePoints, true, 'centripetal');
+    const tubeGeo = new THREE.TubeGeometry(curve, 100, 0.03, 8, true);
+    const tubeMat = new THREE.MeshBasicMaterial({
+      color: colors.curve,
       transparent: true,
-      opacity: 0.45,
+      opacity: 0.5,
     });
-    const latticeMesh = new THREE.Mesh(latticeGeo, latticeMat);
-    scene.add(latticeMesh);
+    const tubeMesh = new THREE.Mesh(tubeGeo, tubeMat);
+    scene.add(tubeMesh);
 
-    // 3. Gyroscopic Orbital Rings
-    const ringGeo1 = new THREE.TorusGeometry(2.8, 0.022, 16, 100);
-    const ringMat1 = new THREE.MeshStandardMaterial({
-      color: colors.ringOuter,
-      roughness: 0.3,
-      metalness: 0.9,
-      transparent: true,
-      opacity: 0.7,
+    // Orbiting Data Packets
+    const packetCount = 8;
+    const packetGeo = new THREE.SphereGeometry(0.09, 12, 12);
+    const packetMat = new THREE.MeshStandardMaterial({
+      color: colors.packet,
+      emissive: colors.packet,
+      emissiveIntensity: 0.8,
+      roughness: 0.2,
     });
-    const ringMesh1 = new THREE.Mesh(ringGeo1, ringMat1);
-    ringMesh1.rotation.x = Math.PI / 3;
-    scene.add(ringMesh1);
-
-    const ringGeo2 = new THREE.TorusGeometry(3.2, 0.018, 16, 100);
-    const ringMat2 = new THREE.MeshStandardMaterial({
-      color: colors.ringInner,
-      roughness: 0.3,
-      metalness: 0.9,
-      transparent: true,
-      opacity: 0.6,
-    });
-    const ringMesh2 = new THREE.Mesh(ringGeo2, ringMat2);
-    ringMesh2.rotation.y = Math.PI / 4;
-    ringMesh2.rotation.z = Math.PI / 6;
-    scene.add(ringMesh2);
-
-    // 4. Floating Neural Constellation Particles
-    const particleCount = 180;
-    const particleGeo = new THREE.BufferGeometry();
-    const positions = new Float32Array(particleCount * 3);
-    const scales = new Float32Array(particleCount);
-
-    for (let i = 0; i < particleCount; i++) {
-      const radius = 2.4 + Math.random() * 2.8;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(Math.random() * 2 - 1);
-
-      positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-      positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-      positions[i * 3 + 2] = radius * Math.cos(phi);
-      scales[i] = Math.random() * 0.08 + 0.04;
+    const packets: THREE.Mesh[] = [];
+    for (let i = 0; i < packetCount; i++) {
+      const p = new THREE.Mesh(packetGeo, packetMat);
+      scene.add(p);
+      packets.push(p);
     }
 
-    particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-    const particleMat = new THREE.PointsMaterial({
-      color: colors.particles,
-      size: 0.07,
-      transparent: true,
-      opacity: 0.75,
-      blending: THREE.AdditiveBlending,
-    });
-
-    const particles = new THREE.Points(particleGeo, particleMat);
-    scene.add(particles);
-
-    // 5. Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
+    // Ambient & Point Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
     scene.add(ambientLight);
 
-    const light1 = new THREE.PointLight(colors.pointLight, 2.5, 20);
-    light1.position.set(5, 5, 5);
+    const light1 = new THREE.PointLight(colors.pointLight, 2.8, 25);
+    light1.position.set(4, 5, 4);
     scene.add(light1);
 
-    const light2 = new THREE.PointLight(colors.pointLight2, 2.0, 20);
-    light2.position.set(-5, -4, 3);
+    const light2 = new THREE.PointLight(colors.pointLight2, 2.2, 25);
+    light2.position.set(-4, -5, 3);
     scene.add(light2);
 
-    // Pointer Parallax Interactivity
+    // Parallax tracking
     let targetMouseX = 0;
     let targetMouseY = 0;
     let currentMouseX = 0;
@@ -213,28 +215,59 @@ const { className = '' } = Astro.props;
       const rect = wrapper.getBoundingClientRect();
       const x = clientX - rect.left;
       const y = clientY - rect.top;
-      targetMouseX = (x / rect.width - 0.5) * 2;
-      targetMouseY = (y / rect.height - 0.5) * 2;
+      targetMouseX = (x / rect.width - 0.5) * 1.5;
+      targetMouseY = (y / rect.height - 0.5) * 1.5;
     };
 
     window.addEventListener('mousemove', onPointerMove, { passive: true });
     window.addEventListener('touchmove', onPointerMove, { passive: true });
 
-    // Dynamic Theme Updating
+    // Node click/hover raycasting
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2(-100, -100);
+
+    const handlePointerHover = (e: MouseEvent) => {
+      const rect = mount.getBoundingClientRect();
+      mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(nodeMeshes);
+
+      if (intersects.length > 0) {
+        const hit = intersects[0].object as THREE.Mesh;
+        const data = hit.userData;
+        if (tooltip && tooltipTitle && tooltipDesc) {
+          tooltipTitle.textContent = data.name;
+          tooltipDesc.textContent = data.desc;
+          tooltip.hidden = false;
+          tooltip.style.left = `${e.clientX - rect.left + 15}px`;
+          tooltip.style.top = `${e.clientY - rect.top + 15}px`;
+        }
+      } else if (tooltip) {
+        tooltip.hidden = true;
+      }
+    };
+    mount.addEventListener('mousemove', handlePointerHover);
+
+    // Theme changes
     const onThemeChange = () => {
       colors = getColors();
-      coreMat.color.setHex(colors.core);
-      latticeMat.color.setHex(colors.lattice);
-      ringMat1.color.setHex(colors.ringOuter);
-      ringMat2.color.setHex(colors.ringInner);
-      particleMat.color.setHex(colors.particles);
+      nodeMeshes.forEach(mesh => {
+        (mesh.material as THREE.MeshStandardMaterial).color.setHex(colors.nodeDefault);
+        if ((mesh as any)._halo) {
+          ((mesh as any)._halo.material as THREE.MeshBasicMaterial).color.setHex(colors.nodeDefault);
+        }
+      });
+      tubeMat.color.setHex(colors.curve);
+      packetMat.color.setHex(colors.packet);
+      packetMat.emissive.setHex(colors.packet);
       light1.color.setHex(colors.pointLight);
       light2.color.setHex(colors.pointLight2);
     };
-
     document.documentElement.addEventListener('atlas:theme-applied', onThemeChange);
 
-    // Lifecycle: Viewport Intersection & Visibility Handling
+    // Viewport Intersection Observer & Visibility
     let isVisible = true;
     let animId: number | null = null;
 
@@ -290,33 +323,43 @@ const { className = '' } = Astro.props;
       lastTime = time;
       clock += delta;
 
-      // Smooth pointer interpolation
-      currentMouseX += (targetMouseX - currentMouseX) * 0.05;
-      currentMouseY += (targetMouseY - currentMouseY) * 0.05;
+      // Parallax easing
+      currentMouseX += (targetMouseX - currentMouseX) * 0.06;
+      currentMouseY += (targetMouseY - currentMouseY) * 0.06;
 
-      // Rotation & Orbital dynamics
-      coreMesh.rotation.x = clock * 0.25;
-      coreMesh.rotation.y = clock * 0.35;
+      // Animate node rotations & state pulses
+      nodeMeshes.forEach((mesh, idx) => {
+        mesh.rotation.y = clock * 0.4;
+        mesh.rotation.x = clock * 0.25;
 
-      // Subtle breathing scale pulse
-      const pulse = 1 + Math.sin(clock * 1.8) * 0.06;
-      coreMesh.scale.set(pulse, pulse, pulse);
+        // Sequential active stage pulse
+        const activeStage = Math.floor((clock * 0.7) % 4);
+        const isActive = activeStage === idx;
+        const scale = isActive ? 1 + Math.sin(clock * 6) * 0.12 : 1.0;
+        mesh.scale.set(scale, scale, scale);
 
-      latticeMesh.rotation.x = -clock * 0.15;
-      latticeMesh.rotation.y = -clock * 0.22;
+        (mesh.material as THREE.MeshStandardMaterial).color.setHex(
+          isActive ? colors.nodeActive : colors.nodeDefault
+        );
 
-      ringMesh1.rotation.z = clock * 0.3;
-      ringMesh1.rotation.x = (Math.PI / 3) + currentMouseY * 0.3;
+        if ((mesh as any)._halo) {
+          const halo = (mesh as any)._halo;
+          halo.rotation.z = -clock * 0.3;
+          halo.rotation.y = -clock * 0.2;
+        }
+      });
 
-      ringMesh2.rotation.z = -clock * 0.22;
-      ringMesh2.rotation.y = (Math.PI / 4) + currentMouseX * 0.3;
+      // Move data packets along spline
+      packets.forEach((packet, idx) => {
+        const offset = idx / packetCount;
+        const t = (clock * 0.18 + offset) % 1;
+        const pos = curve.getPointAt(t);
+        packet.position.copy(pos);
+      });
 
-      particles.rotation.y = clock * 0.07;
-      particles.rotation.x = clock * 0.04;
-
-      // Dynamic Camera Parallax
-      camera.position.x = currentMouseX * 1.1;
-      camera.position.y = -currentMouseY * 1.1;
+      // Camera parallax
+      camera.position.x = currentMouseX * 1.2;
+      camera.position.y = -currentMouseY * 1.2;
       camera.lookAt(0, 0, 0);
 
       renderer.render(scene, camera);
@@ -324,33 +367,28 @@ const { className = '' } = Astro.props;
 
     animId = requestAnimationFrame(animate);
 
-    // Teardown registration on Astro ClientRouter swap
+    // Teardown
     const cleanup = () => {
       if (animId) cancelAnimationFrame(animId);
       observer.disconnect();
       window.removeEventListener('mousemove', onPointerMove);
       window.removeEventListener('touchmove', onPointerMove);
       window.removeEventListener('resize', onResize);
+      mount.removeEventListener('mousemove', handlePointerHover);
       document.removeEventListener('visibilitychange', onVisibilityChange);
       document.documentElement.removeEventListener('atlas:theme-applied', onThemeChange);
 
       renderer.dispose();
-      coreGeo.dispose();
-      coreMat.dispose();
-      latticeGeo.dispose();
-      latticeMat.dispose();
-      ringGeo1.dispose();
-      ringMat1.dispose();
-      ringGeo2.dispose();
-      ringMat2.dispose();
-      particleGeo.dispose();
-      particleMat.dispose();
+      nodeGeo.dispose();
+      tubeGeo.dispose();
+      tubeMat.dispose();
+      packetGeo.dispose();
+      packetMat.dispose();
     };
 
     document.addEventListener('astro:before-swap', cleanup, { once: true });
   }
 
-  // Register on both initial DOM load and Astro route transitions
   document.addEventListener('astro:page-load', initHero3D);
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initHero3D);
@@ -387,10 +425,6 @@ const { className = '' } = Astro.props;
   cursor: grab;
 }
 
-.canvas-mount:active {
-  cursor: grabbing;
-}
-
 .telemetry-badge {
   position: absolute;
   bottom: var(--space-4);
@@ -398,7 +432,7 @@ const { className = '' } = Astro.props;
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  padding: 4px 10px;
+  padding: 4px 12px;
   background: var(--color-surface-raised);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-full);
@@ -425,10 +459,36 @@ const { className = '' } = Astro.props;
   50% { opacity: 0.4; transform: scale(0.85); }
 }
 
+.node-tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  font-size: 11px;
+  color: var(--color-text);
+  box-shadow: var(--shadow-md);
+  z-index: 10;
+  max-width: 220px;
+}
+
+.node-tooltip-title {
+  font-weight: 700;
+  color: var(--color-primary);
+  font-family: var(--font-mono);
+}
+
+.node-tooltip-desc {
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
 @media (max-width: 768px) {
   .hero-3d-container {
     height: 360px;
   }
 }
 </style>
-
