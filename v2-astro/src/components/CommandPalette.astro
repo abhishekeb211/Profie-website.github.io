@@ -203,7 +203,7 @@ const resumeHref = `${base}/resume.pdf`;
 
     // Keyboard navigation
     window.addEventListener('keydown', (e) => {
-      // Open with Cmd+K, Ctrl+K or / (when not typing in an input)
+      // Open with Cmd+K or Ctrl+K
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
         if (modal.hidden) openModal();
@@ -211,7 +211,15 @@ const resumeHref = `${base}/resume.pdf`;
         return;
       }
 
-      if (e.key === '/' && modal.hidden && document.activeElement?.tagName !== 'INPUT' && document.activeElement?.tagName !== 'TEXTAREA') {
+      // Open with '/' only when explicitly focused outside any text field or active content
+      if (
+        e.key === '/' && 
+        modal.hidden && 
+        document.activeElement?.tagName !== 'INPUT' && 
+        document.activeElement?.tagName !== 'TEXTAREA' &&
+        !(document.activeElement as HTMLElement)?.isContentEditable
+      ) {
+        // Do not intercept if user was typing
         e.preventDefault();
         openModal();
         return;

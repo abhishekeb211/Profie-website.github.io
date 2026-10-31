@@ -81,9 +81,7 @@ const base = import.meta.env.BASE_URL;
       </div>
 
       <div class="hero-image-wrap" data-reveal data-reveal-delay="1">
-        <!-- 3D Interactive Agentic Core -->
-        <Hero3DScene />
-
+        <!-- Professional Transparent Studio Portrait with Adaptive Glow -->
         <div class="portrait-container interactive-card">
           <picture>
             <source srcset={`${base}/images/abhishek-portrait.webp`} type="image/webp" />
@@ -103,6 +101,11 @@ const base = import.meta.env.BASE_URL;
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- 3D Interactive Agentic Loop State Machine -->
+    <div class="hero-3d-stage" data-reveal data-reveal-delay="2">
+      <Hero3DScene />
     </div>
   </section>
 
@@ -391,10 +394,15 @@ const base = import.meta.env.BASE_URL;
 /* Portrait & 3D Stage */
 .hero-image-wrap {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: var(--space-6);
   width: 100%;
+}
+
+.hero-3d-stage {
+  max-width: 1200px;
+  margin: var(--space-8) auto 0 auto;
+  padding: 0 var(--space-6);
 }
 
 .portrait-container {
