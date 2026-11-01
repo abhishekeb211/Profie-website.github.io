@@ -22,10 +22,35 @@ const { className = '' } = Astro.props;
   <!-- Interactive WebGL Canvas Container -->
   <div class="canvas-mount" id="hero-3d-canvas-mount" aria-hidden="true"></div>
 
+  <!-- Named stages. Visible over the canvas, and the whole diagram when WebGL is off. -->
+  <ol class="agent-loop-legend">
+    <li class="loop-step loop-perceive">
+      <strong>PERCEIVE</strong>
+      <span>Environment telemetry and multimodal feeds</span>
+    </li>
+    <li class="loop-step loop-plan">
+      <strong>PLAN</strong>
+      <span>Contract evaluation and task-DAG checkpoints</span>
+    </li>
+    <li class="loop-step loop-verify">
+      <strong>VERIFY</strong>
+      <span>Safety checks and transactional commit</span>
+    </li>
+    <li class="loop-step loop-execute">
+      <strong>EXECUTE</strong>
+      <span>Sandboxed tools and API dispatch</span>
+    </li>
+  </ol>
+
   <!-- Telemetry Overlay Badge -->
   <div class="telemetry-badge" id="telemetry-badge">
     <span class="live-dot"></span>
     <span class="telemetry-text">Agent Loop: PERCEIVE ➔ PLAN ➔ EXECUTE ➔ VERIFY</span>
+  </div>
+
+  <!-- Screen reader accessible live narration of active stage -->
+  <div class="sr-only" aria-live="polite" id="hero-3d-aria-status">
+    Agent Loop active: Stage 1 PERCEIVE
   </div>
 
   <!-- Interactive Node Detail Tooltip -->
@@ -36,7 +61,25 @@ const { className = '' } = Astro.props;
 </div>
 
 <script>
-  import * as THREE from 'three';
+  import {
+    Scene,
+    PerspectiveCamera,
+    WebGLRenderer,
+    Vector2,
+    Vector3,
+    Mesh,
+    IcosahedronGeometry,
+    DodecahedronGeometry,
+    TubeGeometry,
+    SphereGeometry,
+    CatmullRomCurve3,
+    MeshStandardMaterial,
+    MeshBasicMaterial,
+    AmbientLight,
+    PointLight,
+    Raycaster,
+    type Material,
+  } from 'three';
 
   function initHero3D() {
     const mount = document.getElementById('hero-3d-canvas-mount');
@@ -44,6 +87,7 @@ const { className = '' } = Astro.props;
     const tooltip = document.getElementById('node-tooltip');
     const tooltipTitle = document.getElementById('node-tooltip-title');
     const tooltipDesc = document.getElementById('node-tooltip-desc');
+    const ariaStatus = document.getElementById('hero-3d-aria-status');
     if (!mount || !wrapper) return;
 
     // Check prefers-reduced-motion
@@ -58,42 +102,34 @@ const { className = '' } = Astro.props;
       mount.removeChild(mount.firstChild);
     }
 
-    const isDark = () => document.documentElement.dataset.theme === 'dark' || document.documentElement.dataset.theme === 'hacker';
-
-    const getColors = () => {
-      if (isDark()) {
-        return {
-          nodeDefault: 0x38bdf8,   // Cyan
-          nodeActive: 0xef4444,    // Crimson
-          curve: 0x1e3a8a,         // Deep navy
-          packet: 0x22c55e,        // Terminal green
-          lattice: 0x1e293b,
-          pointLight: 0x38bdf8,
-          pointLight2: 0xef4444
-        };
-      } else {
-        return {
-          nodeDefault: 0x2563eb,   // Royal blue
-          nodeActive: 0x7c3aed,    // Violet
-          curve: 0xcbd5e1,         // Slate light
-          packet: 0x0f766e,        // Teal
-          lattice: 0xe2e8f0,
-          pointLight: 0x2563eb,
-          pointLight2: 0x7c3aed
-        };
-      }
+    const cssHex = (varName: string, fallback: number) => {
+      const raw = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+      const body = raw.startsWith('#') ? raw.slice(1) : '';
+      const expanded = body.length === 3 ? body.split('').map((c) => c + c).join('') : body;
+      const parsed = expanded.length === 6 ? Number.parseInt(expanded, 16) : Number.NaN;
+      return Number.isNaN(parsed) ? fallback : parsed;
     };
+
+    const getColors = () => ({
+      nodeDefault: cssHex('--cluster-agentic', 0x2563eb),
+      nodeActive: cssHex('--cluster-security', 0xb91c1c),
+      curve: cssHex('--cluster-agentic', 0x2563eb),
+      packet: cssHex('--cluster-knowledge', 0x0f766e),
+      lattice: cssHex('--color-border', 0xe2e8f0),
+      pointLight: cssHex('--cluster-agentic', 0x2563eb),
+      pointLight2: cssHex('--cluster-memory', 0x7c3aed),
+    });
 
     let colors = getColors();
 
     // Scene, Camera, Renderer
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, mount.clientWidth / mount.clientHeight, 0.1, 100);
+    const scene = new Scene();
+    const camera = new PerspectiveCamera(45, mount.clientWidth / mount.clientHeight, 0.1, 100);
     camera.position.set(0, 0, 8.5);
 
-    let renderer: THREE.WebGLRenderer;
+    let renderer: WebGLRenderer;
     try {
-      renderer = new THREE.WebGLRenderer({
+      renderer = new WebGLRenderer({
         alpha: true,
         antialias: true,
         powerPreference: 'high-performance'
@@ -103,96 +139,126 @@ const { className = '' } = Astro.props;
       return;
     }
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
+    let isLowPower = isTouch;
+    if ('getBattery' in navigator) {
+      (navigator as any).getBattery().then((battery: any) => {
+        if (battery.level < 0.25 && !battery.charging) {
+          isLowPower = true;
+        }
+      }).catch(() => {});
+    }
+
+    const maxDpr = isTouch ? 1.5 : 2.0;
+    const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
     renderer.setPixelRatio(dpr);
     renderer.setSize(mount.clientWidth, mount.clientHeight);
     mount.appendChild(renderer.domElement);
 
+    // WebGL Context Loss & Recovery Handling
+    const handleContextLost = (e: Event) => {
+      e.preventDefault();
+      if (animId) {
+        cancelAnimationFrame(animId);
+        animId = null;
+      }
+    };
+    const handleContextRestored = () => {
+      lastTime = performance.now();
+      if (isVisible && !document.hidden && !animId) {
+        animId = requestAnimationFrame(animate);
+      }
+    };
+    renderer.domElement.addEventListener('webglcontextlost', handleContextLost, false);
+    renderer.domElement.addEventListener('webglcontextrestored', handleContextRestored, false);
+
     // 4 Core Agent Reasoning Loop Nodes
     const agentNodesData = [
-      { id: 'perceive', name: '1. PERCEIVE', desc: 'Environment telemetry, multimodal feeds & DOM parsing', pos: new THREE.Vector3(-2.6, 1.4, 0) },
-      { id: 'plan', name: '2. PLAN', desc: 'Formal contract evaluation, task-DAG decomposition & checkpointing', pos: new THREE.Vector3(2.6, 1.4, 0) },
-      { id: 'execute', name: '3. EXECUTE', desc: 'Sandboxed code execution, tool broker invocation & API dispatch', pos: new THREE.Vector3(2.6, -1.4, 0) },
-      { id: 'verify', name: '4. VERIFY', desc: 'AST regression audit, safety checks & transactional commit', pos: new THREE.Vector3(-2.6, -1.4, 0) },
+      { id: 'perceive', name: '1. PERCEIVE', desc: 'Environment telemetry, multimodal feeds & DOM parsing', pos: new Vector3(-2.6, 1.4, 0) },
+      { id: 'plan', name: '2. PLAN', desc: 'Formal contract evaluation, task-DAG decomposition & checkpointing', pos: new Vector3(2.6, 1.4, 0) },
+      { id: 'execute', name: '3. EXECUTE', desc: 'Sandboxed code execution, tool broker invocation & API dispatch', pos: new Vector3(2.6, -1.4, 0) },
+      { id: 'verify', name: '4. VERIFY', desc: 'AST regression audit, safety checks & transactional commit', pos: new Vector3(-2.6, -1.4, 0) },
     ];
 
-    const nodeMeshes: THREE.Mesh[] = [];
-    const nodeGeo = new THREE.IcosahedronGeometry(0.55, 1);
+    const nodeMeshes: Mesh[] = [];
+    const haloMeshes: Mesh[] = [];
+    const nodeGeo = new IcosahedronGeometry(0.55, 1);
+    const haloGeo = new DodecahedronGeometry(0.85, 0);
+    const haloMat = new MeshBasicMaterial({
+      color: colors.nodeDefault,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.35,
+    });
 
     agentNodesData.forEach((nodeData, idx) => {
-      const nodeMat = new THREE.MeshStandardMaterial({
+      const nodeMat = new MeshStandardMaterial({
         color: idx === 0 ? colors.nodeActive : colors.nodeDefault,
         roughness: 0.2,
         metalness: 0.8,
         wireframe: false,
       });
-      const mesh = new THREE.Mesh(nodeGeo, nodeMat);
+      const mesh = new Mesh(nodeGeo, nodeMat);
       mesh.position.copy(nodeData.pos);
       mesh.userData = nodeData;
       scene.add(mesh);
       nodeMeshes.push(mesh);
 
-      // Node Halo Wireframe
-      const haloGeo = new THREE.DodecahedronGeometry(0.85, 0);
-      const haloMat = new THREE.MeshBasicMaterial({
-        color: colors.nodeDefault,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.35,
-      });
-      const halo = new THREE.Mesh(haloGeo, haloMat);
+      // Node Halo Wireframe (Shared geometry & material)
+      const halo = new Mesh(haloGeo, haloMat);
       halo.position.copy(nodeData.pos);
       scene.add(halo);
+      haloMeshes.push(halo);
       (mesh as any)._halo = halo;
     });
 
     // Spline Curves Connecting Loop (0->1->2->3->0)
     const curvePoints = [
-      new THREE.Vector3(-2.6, 1.4, 0),
-      new THREE.Vector3(0, 2.2, 0.8),
-      new THREE.Vector3(2.6, 1.4, 0),
-      new THREE.Vector3(3.2, 0, -0.6),
-      new THREE.Vector3(2.6, -1.4, 0),
-      new THREE.Vector3(0, -2.2, 0.8),
-      new THREE.Vector3(-2.6, -1.4, 0),
-      new THREE.Vector3(-3.2, 0, -0.6),
-      new THREE.Vector3(-2.6, 1.4, 0),
+      new Vector3(-2.6, 1.4, 0),
+      new Vector3(0, 2.2, 0.8),
+      new Vector3(2.6, 1.4, 0),
+      new Vector3(3.2, 0, -0.6),
+      new Vector3(2.6, -1.4, 0),
+      new Vector3(0, -2.2, 0.8),
+      new Vector3(-2.6, -1.4, 0),
+      new Vector3(-3.2, 0, -0.6),
+      new Vector3(-2.6, 1.4, 0),
     ];
-    const curve = new THREE.CatmullRomCurve3(curvePoints, true, 'centripetal');
-    const tubeGeo = new THREE.TubeGeometry(curve, 100, 0.03, 8, true);
-    const tubeMat = new THREE.MeshBasicMaterial({
+    const curve = new CatmullRomCurve3(curvePoints, true, 'centripetal');
+    const tubeGeo = new TubeGeometry(curve, 100, 0.03, 8, true);
+    const tubeMat = new MeshBasicMaterial({
       color: colors.curve,
       transparent: true,
       opacity: 0.5,
     });
-    const tubeMesh = new THREE.Mesh(tubeGeo, tubeMat);
+    const tubeMesh = new Mesh(tubeGeo, tubeMat);
     scene.add(tubeMesh);
 
     // Orbiting Data Packets
     const packetCount = 8;
-    const packetGeo = new THREE.SphereGeometry(0.09, 12, 12);
-    const packetMat = new THREE.MeshStandardMaterial({
+    const packetGeo = new SphereGeometry(0.09, 12, 12);
+    const packetMat = new MeshStandardMaterial({
       color: colors.packet,
       emissive: colors.packet,
       emissiveIntensity: 0.8,
       roughness: 0.2,
     });
-    const packets: THREE.Mesh[] = [];
+    const packets: Mesh[] = [];
     for (let i = 0; i < packetCount; i++) {
-      const p = new THREE.Mesh(packetGeo, packetMat);
+      const p = new Mesh(packetGeo, packetMat);
       scene.add(p);
       packets.push(p);
     }
 
     // Ambient & Point Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+    const ambientLight = new AmbientLight(0xffffff, 0.7);
     scene.add(ambientLight);
 
-    const light1 = new THREE.PointLight(colors.pointLight, 2.8, 25);
+    const light1 = new PointLight(colors.pointLight, 2.8, 25);
     light1.position.set(4, 5, 4);
     scene.add(light1);
 
-    const light2 = new THREE.PointLight(colors.pointLight2, 2.2, 25);
+    const light2 = new PointLight(colors.pointLight2, 2.2, 25);
     light2.position.set(-4, -5, 3);
     scene.add(light2);
 
@@ -223,8 +289,8 @@ const { className = '' } = Astro.props;
     window.addEventListener('touchmove', onPointerMove, { passive: true });
 
     // Node click/hover raycasting
-    const raycaster = new THREE.Raycaster();
-    const mouse = new THREE.Vector2(-100, -100);
+    const raycaster = new Raycaster();
+    const mouse = new Vector2(-100, -100);
 
     const handlePointerHover = (e: MouseEvent) => {
       const rect = mount.getBoundingClientRect();
@@ -235,14 +301,16 @@ const { className = '' } = Astro.props;
       const intersects = raycaster.intersectObjects(nodeMeshes);
 
       if (intersects.length > 0) {
-        const hit = intersects[0].object as THREE.Mesh;
+        const hit = intersects[0].object as Mesh;
         const data = hit.userData;
         if (tooltip && tooltipTitle && tooltipDesc) {
           tooltipTitle.textContent = data.name;
           tooltipDesc.textContent = data.desc;
           tooltip.hidden = false;
-          tooltip.style.left = `${e.clientX - rect.left + 15}px`;
-          tooltip.style.top = `${e.clientY - rect.top + 15}px`;
+          const leftOffset = Math.min(e.clientX - rect.left + 15, rect.width - 220);
+          const topOffset = Math.min(e.clientY - rect.top + 15, rect.height - 80);
+          tooltip.style.left = `${Math.max(10, leftOffset)}px`;
+          tooltip.style.top = `${Math.max(10, topOffset)}px`;
         }
       } else if (tooltip) {
         tooltip.hidden = true;
@@ -254,10 +322,10 @@ const { className = '' } = Astro.props;
     const onThemeChange = () => {
       colors = getColors();
       nodeMeshes.forEach(mesh => {
-        (mesh.material as THREE.MeshStandardMaterial).color.setHex(colors.nodeDefault);
-        if ((mesh as any)._halo) {
-          ((mesh as any)._halo.material as THREE.MeshBasicMaterial).color.setHex(colors.nodeDefault);
-        }
+        (mesh.material as MeshStandardMaterial).color.setHex(colors.nodeDefault);
+      });
+      haloMeshes.forEach(mesh => {
+        (mesh.material as MeshBasicMaterial).color.setHex(colors.nodeDefault);
       });
       tubeMat.color.setHex(colors.curve);
       packetMat.color.setHex(colors.packet);
@@ -309,7 +377,9 @@ const { className = '' } = Astro.props;
 
     // Main Animation Loop
     let lastTime = performance.now();
+    let lastRenderTime = 0;
     let clock = 0;
+    let lastAnnouncedStage = -1;
 
     function animate(time: number) {
       if (!isVisible || document.hidden) {
@@ -319,6 +389,12 @@ const { className = '' } = Astro.props;
 
       animId = requestAnimationFrame(animate);
 
+      // Low-power 30 FPS frame throttle
+      if (isLowPower && time - lastRenderTime < 33) {
+        return;
+      }
+      lastRenderTime = time;
+
       const delta = Math.min((time - lastTime) / 1000, 0.1);
       lastTime = time;
       clock += delta;
@@ -327,26 +403,30 @@ const { className = '' } = Astro.props;
       currentMouseX += (targetMouseX - currentMouseX) * 0.06;
       currentMouseY += (targetMouseY - currentMouseY) * 0.06;
 
+      // Sequential active stage pulse
+      const activeStage = Math.floor((clock * 0.7) % 4);
+      if (activeStage !== lastAnnouncedStage && ariaStatus) {
+        lastAnnouncedStage = activeStage;
+        ariaStatus.textContent = `Agent Loop active: Stage ${activeStage + 1} ${agentNodesData[activeStage].name} - ${agentNodesData[activeStage].desc}`;
+      }
+
       // Animate node rotations & state pulses
       nodeMeshes.forEach((mesh, idx) => {
         mesh.rotation.y = clock * 0.4;
         mesh.rotation.x = clock * 0.25;
 
-        // Sequential active stage pulse
-        const activeStage = Math.floor((clock * 0.7) % 4);
         const isActive = activeStage === idx;
         const scale = isActive ? 1 + Math.sin(clock * 6) * 0.12 : 1.0;
         mesh.scale.set(scale, scale, scale);
 
-        (mesh.material as THREE.MeshStandardMaterial).color.setHex(
+        (mesh.material as MeshStandardMaterial).color.setHex(
           isActive ? colors.nodeActive : colors.nodeDefault
         );
+      });
 
-        if ((mesh as any)._halo) {
-          const halo = (mesh as any)._halo;
-          halo.rotation.z = -clock * 0.3;
-          halo.rotation.y = -clock * 0.2;
-        }
+      haloMeshes.forEach(halo => {
+        halo.rotation.z = -clock * 0.3;
+        halo.rotation.y = -clock * 0.2;
       });
 
       // Move data packets along spline
@@ -367,7 +447,7 @@ const { className = '' } = Astro.props;
 
     animId = requestAnimationFrame(animate);
 
-    // Teardown
+    // Teardown & Complete VRAM Cleanup
     const cleanup = () => {
       if (animId) cancelAnimationFrame(animId);
       observer.disconnect();
@@ -378,12 +458,22 @@ const { className = '' } = Astro.props;
       document.removeEventListener('visibilitychange', onVisibilityChange);
       document.documentElement.removeEventListener('atlas:theme-applied', onThemeChange);
 
+      renderer.domElement.removeEventListener('webglcontextlost', handleContextLost);
+      renderer.domElement.removeEventListener('webglcontextrestored', handleContextRestored);
+
+      nodeMeshes.forEach(m => {
+        (m.material as Material).dispose();
+      });
       renderer.dispose();
       nodeGeo.dispose();
+      haloGeo.dispose();
+      haloMat.dispose();
       tubeGeo.dispose();
       tubeMat.dispose();
       packetGeo.dispose();
       packetMat.dispose();
+      light1.dispose();
+      light2.dispose();
     };
 
     document.addEventListener('astro:before-swap', cleanup, { once: true });
@@ -427,8 +517,9 @@ const { className = '' } = Astro.props;
 
 .telemetry-badge {
   position: absolute;
-  bottom: var(--space-4);
-  right: var(--space-4);
+  top: var(--space-4);
+  left: 50%;
+  transform: translateX(-50%);
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
@@ -443,6 +534,84 @@ const { className = '' } = Astro.props;
   pointer-events: none;
   z-index: 2;
   box-shadow: var(--shadow-sm);
+  max-width: calc(100% - 32px);
+}
+
+.agent-loop-legend {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  margin: 0;
+  padding: var(--space-4);
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  pointer-events: none;
+}
+
+.loop-step {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-width: min(190px, 100%);
+  min-width: 0;
+  padding: 6px 10px;
+  background: color-mix(in srgb, var(--color-surface-raised) 88%, transparent);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(6px);
+}
+
+.loop-step strong {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--color-text);
+}
+
+.loop-step span {
+  font-size: 11px;
+  line-height: 1.35;
+  color: var(--color-text-secondary);
+}
+
+.loop-perceive { align-self: start; justify-self: start; }
+.loop-plan { align-self: start; justify-self: end; text-align: right; }
+.loop-verify { align-self: end; justify-self: start; }
+.loop-execute { align-self: end; justify-self: end; text-align: right; }
+
+.hero-3d-container.reduced-motion-fallback .canvas-mount,
+.hero-3d-container.webgl-unavailable .canvas-mount,
+.hero-3d-container.reduced-motion-fallback .telemetry-badge,
+.hero-3d-container.webgl-unavailable .telemetry-badge,
+.hero-3d-container.reduced-motion-fallback .node-tooltip,
+.hero-3d-container.webgl-unavailable .node-tooltip {
+  display: none;
+}
+
+.hero-3d-container.reduced-motion-fallback,
+.hero-3d-container.webgl-unavailable {
+  height: auto;
+  min-height: 280px;
+}
+
+.hero-3d-container.reduced-motion-fallback .agent-loop-legend,
+.hero-3d-container.webgl-unavailable .agent-loop-legend {
+  position: relative;
+  inset: auto;
+  gap: var(--space-3);
+  pointer-events: auto;
+}
+
+.hero-3d-container.reduced-motion-fallback .loop-step,
+.hero-3d-container.webgl-unavailable .loop-step {
+  max-width: none;
+  align-self: stretch;
+  justify-self: stretch;
+  text-align: left;
+  padding: var(--space-4);
 }
 
 .live-dot {
@@ -489,6 +658,12 @@ const { className = '' } = Astro.props;
 @media (max-width: 768px) {
   .hero-3d-container {
     height: 360px;
+  }
+  .telemetry-badge {
+    display: none;
+  }
+  .agent-loop-legend {
+    padding: var(--space-3);
   }
 }
 </style>

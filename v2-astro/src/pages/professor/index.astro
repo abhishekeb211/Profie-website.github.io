@@ -2,6 +2,7 @@
 // src/pages/professor/index.astro — Professor / Educator Persona
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
+import Icon from '../../components/Icon.astro';
 import profile from '../../data/profile.json';
 
 const base = import.meta.env.BASE_URL;
@@ -14,7 +15,7 @@ const base = import.meta.env.BASE_URL;
   <Header slot="header" activePersona="professor" />
 
   <section id="about" class="section hero-section">
-    <div class="container">
+    <div class="container hero-grid">
       <div class="hero-content" data-reveal>
         <div class="badge-pill">
           <span>Pune, India · PCCOE Faculty</span>
@@ -38,6 +39,23 @@ const base = import.meta.env.BASE_URL;
             <span class="metric-value" data-count-target="3" data-count-suffix="+">3+</span>
             <span class="metric-label">Core Courses Taught</span>
           </div>
+        </div>
+      </div>
+
+      <div class="hero-image-wrap" data-reveal data-reveal-delay="1">
+        <div class="portrait-container">
+          <picture>
+            <source srcset={`${base}/images/abhishek-portrait.webp`} type="image/webp" />
+            <img
+              src={`${base}/images/abhishek-portrait.png`}
+              alt="Abhishek S. Raut — Educator and Faculty In-charge"
+              class="portrait-img"
+              width="640"
+              height="800"
+              loading="eager"
+              decoding="async"
+            />
+          </picture>
         </div>
       </div>
     </div>
@@ -135,14 +153,17 @@ const base = import.meta.env.BASE_URL;
           For academic mentorship, club advisory, or collaborative research publications at PCCOE Pune:
         </p>
         <div style="display: flex; justify-content: center; gap: var(--space-4); flex-wrap: wrap;">
-          <a href={`mailto:${profile.identity.email}`} style="display: inline-flex; align-items: center; padding: var(--space-3) var(--space-6); font-size: var(--text-sm); font-weight: 600; border-radius: var(--radius-md); text-decoration: none; background: var(--color-primary); color: var(--color-on-primary);">
-            📧 {profile.identity.email}
+          <a href={`mailto:${profile.identity.email}`} class="contact-btn contact-btn-primary">
+            <Icon name="mail" />
+            {profile.identity.email}
           </a>
-          <a href={profile.identity.linkedin} target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; padding: var(--space-3) var(--space-6); font-size: var(--text-sm); font-weight: 600; border-radius: var(--radius-md); text-decoration: none; background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-border);">
-            💼 LinkedIn Profile ↗
+          <a href={profile.identity.linkedin} target="_blank" rel="noopener noreferrer" class="contact-btn">
+            <Icon name="linkedin" />
+            LinkedIn Profile ↗
           </a>
-          <a href={profile.identity.github} target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; padding: var(--space-3) var(--space-6); font-size: var(--text-sm); font-weight: 600; border-radius: var(--radius-md); text-decoration: none; background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-border);">
-            💻 GitHub Profile ↗
+          <a href={profile.identity.github} target="_blank" rel="noopener noreferrer" class="contact-btn">
+            <Icon name="github" />
+            GitHub Profile ↗
           </a>
         </div>
       </div>
@@ -173,6 +194,72 @@ const base = import.meta.env.BASE_URL;
 .hero-section {
   padding-top: var(--space-20);
   background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-bg) 100%);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-10);
+  align-items: center;
+}
+
+@media (min-width: 860px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  }
+}
+
+.hero-image-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.portrait-container {
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: radial-gradient(circle at 50% 35%, var(--color-surface-raised) 0%, var(--color-surface) 80%);
+  box-shadow: var(--shadow-lg);
+}
+
+:root[data-theme="dark"] .portrait-container,
+:root[data-theme="hacker"] .portrait-container {
+  background: radial-gradient(circle at 50% 30%, rgb(30 51 40 / 0.6) 0%, #080D0B 85%);
+}
+
+.portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.contact-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-align: center;
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.contact-btn-primary {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-color: var(--color-primary);
 }
 
 .badge-pill {
@@ -213,6 +300,8 @@ const base = import.meta.env.BASE_URL;
   grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
   gap: var(--space-4);
   max-width: 500px;
+  min-width: 0;
+  width: 100%;
 }
 
 .metric-card {
@@ -256,8 +345,12 @@ const base = import.meta.env.BASE_URL;
 
 .grid-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: var(--space-6);
+}
+
+.grid-cards > * {
+  min-width: 0;
 }
 
 .card {

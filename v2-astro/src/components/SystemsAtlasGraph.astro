@@ -35,12 +35,13 @@ const base = import.meta.env.BASE_URL;
     </div>
   </div>
 
-  <!-- Interactive Graphic Canvas Area -->
-  <div class="graph-canvas-wrapper" id="graph-wrapper">
+  <!-- Map and inspector sit side by side so the card never covers nodes -->
+  <div class="atlas-stage" id="graph-wrapper">
+    <div class="graph-canvas-wrapper">
     <!-- SVG Graph Layer -->
     <svg 
       id="atlas-svg" 
-      viewBox="-110 -80 220 160" 
+      viewBox="-200 -140 400 280" 
       preserveAspectRatio="xMidYMid meet" 
       role="img" 
       aria-label="Interactive Systems Atlas Architecture Graph"
@@ -48,8 +49,8 @@ const base = import.meta.env.BASE_URL;
       <defs>
         <!-- Gradients for connections -->
         <linearGradient id="link-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="var(--color-primary)" stop-opacity="0.4" />
-          <stop offset="100%" stop-color="var(--accent-teal)" stop-opacity="0.4" />
+          <stop offset="0%" stop-color="var(--cluster-agentic)" stop-opacity="0.55" />
+          <stop offset="100%" stop-color="var(--cluster-knowledge)" stop-opacity="0.55" />
         </linearGradient>
 
         <!-- Drop Shadow Filter for Nodes -->
@@ -64,11 +65,11 @@ const base = import.meta.env.BASE_URL;
 
       <!-- Grid lines for engineering visual aesthetic -->
       <g class="graph-grid-lines">
-        <circle cx="0" cy="0" r="30" class="radar-circle" />
-        <circle cx="0" cy="0" r="60" class="radar-circle" />
-        <circle cx="0" cy="0" r="90" class="radar-circle" />
-        <line x1="-100" y1="0" x2="100" y2="0" class="axis-line" />
-        <line x1="0" y1="-70" x2="0" y2="70" class="axis-line" />
+        <circle cx="0" cy="0" r="45" class="radar-circle" />
+        <circle cx="0" cy="0" r="85" class="radar-circle" />
+        <circle cx="0" cy="0" r="125" class="radar-circle" />
+        <line x1="-170" y1="0" x2="170" y2="0" class="axis-line" />
+        <line x1="0" y1="-120" x2="0" y2="120" class="axis-line" />
       </g>
 
       <!-- Links (Edges) -->
@@ -123,50 +124,53 @@ const base = import.meta.env.BASE_URL;
               <!-- Inner center pin -->
               <circle r="2.5" class="node-pin" />
 
-              <!-- Label text -->
-              <text 
-                y={r + 7} 
-                class="node-label" 
+              <!-- Short label. Full name lives in the inspector. -->
+              <text
+                y={r + 5}
+                class="node-label"
                 text-anchor="middle"
               >
-                {node.name}
+                {node.label.map((line, lineIndex) => (
+                  <tspan x="0" dy={lineIndex === 0 ? 0 : 4.3}>{line}</tspan>
+                ))}
               </text>
             </g>
           );
         })}
       </g>
     </svg>
-
-    <!-- Side Inspection HUD Panel (Appears on click/hover) -->
-    <div class="atlas-inspector-card" id="inspector-card" aria-live="polite">
-      <div class="inspector-header">
-        <span class="inspector-badge" id="insp-badge">Flagship System</span>
-        <button type="button" class="inspector-close" id="insp-close" aria-label="Close inspector">✕</button>
-      </div>
-      
-      <h3 class="inspector-title" id="insp-title">Paradox AI</h3>
-      <div class="inspector-cluster" id="insp-cluster">Agentic AI & Runtimes</div>
-      
-      <p class="inspector-desc" id="insp-desc">
-        Contract-governed agent runtime with verifiable task-DAG execution.
-      </p>
-
-      <div class="inspector-diff-box">
-        <strong>Key Differentiator:</strong>
-        <p id="insp-diff">Separates agent reasoning from persistent intent, decisions, and execution state.</p>
-      </div>
-
-      <div class="inspector-connections">
-        <strong>Architectural Links:</strong>
-        <ul id="insp-links-list"></ul>
-      </div>
-
-      <div class="inspector-footer">
-        <a href={`${base}/projects/paradox-ai/`} class="btn-inspect-action" id="insp-cta">
-          Explore Technical Case Study →
-        </a>
-      </div>
     </div>
+
+    <aside class="atlas-inspector-card" id="inspector-card" aria-live="polite">
+      <p class="inspector-prompt" id="inspector-prompt">Select a node to inspect its architecture.</p>
+      <div class="inspector-body" id="inspector-body" hidden>
+        <div class="inspector-header">
+          <span class="inspector-badge" id="insp-badge">Flagship System</span>
+          <button type="button" class="inspector-close" id="insp-close" aria-label="Close inspector">Close</button>
+        </div>
+
+        <h3 class="inspector-title" id="insp-title"></h3>
+        <div class="inspector-cluster" id="insp-cluster"></div>
+
+        <p class="inspector-desc" id="insp-desc"></p>
+
+        <div class="inspector-diff-box">
+          <strong>Key Differentiator:</strong>
+          <p id="insp-diff"></p>
+        </div>
+
+        <div class="inspector-connections">
+          <strong>Architectural Links:</strong>
+          <ul id="insp-links-list"></ul>
+        </div>
+
+        <div class="inspector-footer">
+          <a href={`${base}/projects/`} class="btn-inspect-action" id="insp-cta">
+            Explore Technical Case Study →
+          </a>
+        </div>
+      </div>
+    </aside>
   </div>
 
   <!-- Accessible 2D Fallback List View -->
@@ -214,6 +218,8 @@ const base = import.meta.env.BASE_URL;
 
     // Inspector elements
     const inspector = widget.querySelector<HTMLElement>('#inspector-card');
+    const inspectorPrompt = widget.querySelector<HTMLElement>('#inspector-prompt');
+    const inspectorBody = widget.querySelector<HTMLElement>('#inspector-body');
     const inspBadge = widget.querySelector<HTMLElement>('#insp-badge');
     const inspTitle = widget.querySelector<HTMLElement>('#insp-title');
     const inspCluster = widget.querySelector<HTMLElement>('#insp-cluster');
@@ -223,13 +229,12 @@ const base = import.meta.env.BASE_URL;
     const inspCta = widget.querySelector<HTMLAnchorElement>('#insp-cta');
     const inspClose = widget.querySelector<HTMLElement>('#insp-close');
 
-    let activeNodeId: string = 'PX01';
-
     function showInspector(nodeId: string) {
       const node = ATLAS_NODES.find(n => n.id === nodeId);
       if (!node || !inspector) return;
 
-      activeNodeId = nodeId;
+      inspectorPrompt?.setAttribute('hidden', '');
+      inspectorBody?.removeAttribute('hidden');
       if (inspBadge) inspBadge.textContent = `${node.tier} · ${node.stage}`;
       if (inspTitle) inspTitle.textContent = node.name;
       if (inspCluster) inspCluster.textContent = node.cluster;
@@ -312,6 +317,8 @@ const base = import.meta.env.BASE_URL;
     if (inspClose) {
       inspClose.onclick = () => {
         inspector?.classList.remove('visible');
+        inspectorBody?.setAttribute('hidden', '');
+        inspectorPrompt?.removeAttribute('hidden');
         nodeGroups.forEach(g => g.classList.remove('selected'));
         linkGroups.forEach(lg => lg.classList.remove('highlighted'));
       };
@@ -368,9 +375,6 @@ const base = import.meta.env.BASE_URL;
         if (listView) listView.hidden = false;
       };
     }
-
-    // Initialize inspector on Paradox AI
-    showInspector('PX01');
   }
 
   // Register on both standard load and astro:page-load
@@ -467,14 +471,23 @@ const base = import.meta.env.BASE_URL;
   color: var(--color-on-primary);
 }
 
+/* Map + docked inspector. The canvas clips the SVG only, never the card. */
+.atlas-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+  align-items: stretch;
+}
+
 /* Graph Canvas Area */
 .graph-canvas-wrapper {
   position: relative;
   width: 100%;
-  height: 520px;
+  height: 560px;
+  min-width: 0;
   background: radial-gradient(circle at 50% 50%, var(--color-surface-raised) 0%, var(--color-bg) 95%);
   border-radius: var(--radius-md);
-  margin-top: var(--space-4);
   overflow: hidden;
 }
 
@@ -488,20 +501,20 @@ const base = import.meta.env.BASE_URL;
 .radar-circle {
   fill: none;
   stroke: var(--color-border);
-  stroke-width: 0.5;
+  stroke-width: 0.8;
   stroke-dasharray: 2 2;
   opacity: 0.6;
 }
 
 .axis-line {
   stroke: var(--color-border);
-  stroke-width: 0.4;
+  stroke-width: 0.7;
   opacity: 0.4;
 }
 
 .graph-edge {
-  stroke: var(--color-border);
-  stroke-width: 1.2;
+  stroke: var(--color-border-hover);
+  stroke-width: 1.8;
   stroke-dasharray: 3 1.5;
   transition: stroke var(--duration-fast), stroke-width var(--duration-fast);
 }
@@ -549,12 +562,12 @@ const base = import.meta.env.BASE_URL;
 
 .node-label {
   font-family: var(--font-sans);
-  font-size: 4px;
+  font-size: 3.6px;
   font-weight: 700;
   fill: var(--color-text);
   paint-order: stroke;
   stroke: var(--color-bg);
-  stroke-width: 1px;
+  stroke-width: 0.35;
   stroke-linejoin: round;
   pointer-events: none;
   transition: fill var(--duration-fast);
@@ -576,38 +589,37 @@ const base = import.meta.env.BASE_URL;
 .node-group.selected .node-label {
   fill: var(--color-primary);
   font-weight: 800;
-  font-size: 4.5px;
+  font-size: 3.8px;
 }
 
-/* Inspector Card */
+/* Inspector dock — always in flow, never over the SVG */
 .atlas-inspector-card {
-  position: absolute;
-  top: var(--space-4);
-  right: var(--space-4);
-  width: 320px;
-  max-width: calc(100% - 32px);
-  max-height: calc(100% - 32px);
-  overflow-y: auto;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: var(--space-4);
-  box-shadow: var(--shadow-lg);
-  display: none;
+  box-shadow: var(--shadow-sm);
+  display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  z-index: 10;
-  backdrop-filter: blur(8px);
-  animation: fadeInRight var(--duration-fast) var(--ease-out);
+  min-height: 0;
 }
 
-.atlas-inspector-card.visible {
+.inspector-prompt {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.inspector-body {
   display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
 }
 
-@keyframes fadeInRight {
-  from { opacity: 0; transform: translateX(12px); }
-  to { opacity: 1; transform: translateX(0); }
+.inspector-body[hidden] {
+  display: none;
 }
 
 .inspector-header {
@@ -778,15 +790,12 @@ const base = import.meta.env.BASE_URL;
   text-decoration: underline;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 860px) {
+  .atlas-stage {
+    grid-template-columns: 1fr;
+  }
   .graph-canvas-wrapper {
     height: 440px;
-  }
-  .atlas-inspector-card {
-    position: static;
-    width: 100%;
-    max-width: 100%;
-    margin-top: var(--space-3);
   }
 }
 </style>

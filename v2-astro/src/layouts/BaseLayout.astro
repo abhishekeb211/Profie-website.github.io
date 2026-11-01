@@ -7,6 +7,16 @@
 //   ogImage: OG image path (optional)
 
 import { ClientRouter } from 'astro:transitions';
+import '@fontsource/inter/latin-400.css';
+import '@fontsource/inter/latin-500.css';
+import '@fontsource/inter/latin-600.css';
+import '@fontsource/inter/latin-700.css';
+import '@fontsource/inter/latin-800.css';
+import '@fontsource/jetbrains-mono/latin-400.css';
+import '@fontsource/jetbrains-mono/latin-600.css';
+import '@fontsource/jetbrains-mono/latin-700.css';
+import '../styles/tokens.css';
+import '../styles/motion.css';
 
 interface Props {
   title: string;
@@ -112,10 +122,6 @@ const defaultOgImage = ogImage ?? `${base}/images/og-${persona}.png`;
     ]
   }
   </script>
-
-  <!-- Styles -->
-  <link rel="stylesheet" href={`${base}/styles/tokens.css`} />
-  <link rel="stylesheet" href={`${base}/styles/motion.css`} />
 
   <!-- Favicons -->
   <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />

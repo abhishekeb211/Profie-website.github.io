@@ -29,16 +29,15 @@ const domains = ['All', ...new Set(projects.map((p) => p.data.domain))];
       </p>
     </header>
 
-    <!-- Interactive Architecture Graph Component -->
-    <SystemsAtlasGraph />
-
     <!-- Client-safe domain filter pills -->
+    <p class="filter-status" id="filter-status" aria-live="polite"></p>
     <div class="filter-bar" role="group" aria-label="Filter projects by domain">
       {domains.map((domain, index) => (
         <button
           type="button"
           class={`filter-btn ${index === 0 ? 'active' : ''}`}
           data-filter={domain === 'All' ? '*' : domain}
+          aria-pressed={index === 0 ? 'true' : 'false'}
         >
           {domain}
         </button>
@@ -56,7 +55,7 @@ const domains = ['All', ...new Set(projects.map((p) => p.data.domain))];
                 <span class="stage-tag">{data.stage}</span>
                 <span class="domain-tag">{data.domain}</span>
               </div>
-              <span class="verified-indicator" title="Verified against claim ledger">✅</span>
+              <span class="verified-indicator">Verified</span>
             </div>
 
             <h2 class="card-title">
@@ -94,29 +93,58 @@ const domains = ['All', ...new Set(projects.map((p) => p.data.domain))];
         );
       })}
     </div>
+
+    <p class="filter-empty" id="filter-empty" hidden>No case studies in this domain.</p>
+
+    <section class="catalog-atlas" aria-labelledby="catalog-atlas-title">
+      <h2 id="catalog-atlas-title" class="catalog-atlas-title">Systems map</h2>
+      <p class="catalog-atlas-desc">The same systems, arranged by how they depend on each other.</p>
+      <SystemsAtlasGraph />
+    </section>
   </div>
 </BaseLayout>
 
 <script>
-  // Lightweight client-side filter
-  const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
-  const cards = document.querySelectorAll<HTMLElement>('.project-card');
+  function setupProjectFilters() {
+    const grid = document.getElementById('projects-grid');
+    const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+    const cards = document.querySelectorAll<HTMLElement>('.project-card');
+    const status = document.getElementById('filter-status');
+    const empty = document.getElementById('filter-empty');
+    if (!grid || grid.dataset.filtersBound === '1' || !filterBtns.length || !status) return;
+    grid.dataset.filtersBound = '1';
 
-  filterBtns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach((b) => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      const filter = btn.dataset.filter;
+    const apply = (filter: string, label: string) => {
+      let shown = 0;
       cards.forEach((card) => {
-        if (filter === '*' || card.dataset.domain === filter) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
+        const match = filter === '*' || card.dataset.domain === filter;
+        card.hidden = !match;
+        if (match) shown += 1;
+      });
+      status.textContent = shown === 1
+        ? `Showing 1 case study${filter === '*' ? '' : ` in ${label}`}`
+        : `Showing ${shown} case studies${filter === '*' ? '' : ` in ${label}`}`;
+      if (empty) empty.hidden = shown !== 0;
+    };
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach((b) => {
+          b.classList.remove('active');
+          b.setAttribute('aria-pressed', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
+        apply(btn.dataset.filter || '*', btn.textContent?.trim() || 'this domain');
       });
     });
-  });
+
+    const active = document.querySelector<HTMLButtonElement>('.filter-btn.active');
+    apply(active?.dataset.filter || '*', active?.textContent?.trim() || 'All');
+  }
+
+  document.addEventListener('astro:page-load', setupProjectFilters);
+  setupProjectFilters();
 </script>
 
 <style>
@@ -157,15 +185,45 @@ const domains = ['All', ...new Set(projects.map((p) => p.data.domain))];
   line-height: 1.6;
 }
 
+.filter-status {
+  margin: 0 0 var(--space-3);
+  text-align: center;
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
 .filter-bar {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: var(--space-2);
-  margin-bottom: var(--space-10);
+  margin-bottom: var(--space-8);
+}
+
+.filter-empty {
+  margin: var(--space-6) 0 0;
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+
+.catalog-atlas {
+  margin-top: var(--space-16);
+}
+
+.catalog-atlas-title {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-2xl);
+  color: var(--color-text);
+}
+
+.catalog-atlas-desc {
+  margin: 0 0 var(--space-4);
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
 }
 
 .filter-btn {
+  min-height: 40px;
   padding: var(--space-2) var(--space-4);
   font-size: var(--text-xs);
   font-weight: 600;
@@ -190,8 +248,12 @@ const domains = ['All', ...new Set(projects.map((p) => p.data.domain))];
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
   gap: var(--space-6);
+}
+
+.projects-grid > * {
+  min-width: 0;
 }
 
 .project-card {
@@ -236,7 +298,15 @@ const domains = ['All', ...new Set(projects.map((p) => p.data.domain))];
 }
 
 .verified-indicator {
-  font-size: 14px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-success);
+}
+
+.project-card[hidden] {
+  display: none !important;
 }
 
 .card-title {

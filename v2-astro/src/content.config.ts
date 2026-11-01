@@ -18,6 +18,8 @@ const projects = defineCollection({
         unit: z.string().optional(),
         source: z.string(),
         verified: z.boolean().default(true),
+        benchmark_hash: z.string().optional(),
+        repro_url: z.string().optional(),
       })
     ),
     verification_date: z.string(),
