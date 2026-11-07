@@ -50,7 +50,7 @@ const base = import.meta.env.BASE_URL;
             Forensic Master Report (79p PDF) ↗
           </a>
           <a href={`${base}/projects/`} class="btn btn-secondary">
-            Explore 18 Case Studies →
+            Explore 19 Case Studies →
           </a>
           <a href="#forensic-audit" class="btn btn-ghost">
             Empirical Audit Hub ↓
@@ -304,6 +304,48 @@ const base = import.meta.env.BASE_URL;
               <span class="tier-badge tier-3">Tier 3 Production</span>
             </div>
             <p>ISRO Route Resilience (85/86 tests, satellite flood routing, angle-aware MST), Engineering Knowledge RAG-X (SQLite FTS5 BM25, 80% RAM bounded units).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3-Year Strategic Technology Roadmap (2026–2029) -->
+      <div class="roadmap-block" data-reveal data-reveal-delay="3" style="margin-top: var(--space-12);">
+        <div class="sub-header">
+          <span class="section-tag badge-amber">Strategic Horizons</span>
+          <h3 class="subsection-title">3-Year Strategic Technology Roadmap (2026–2029)</h3>
+          <p class="section-desc" style="font-size: var(--text-xs); color: var(--color-text-secondary); margin-top: var(--space-2);">
+            Phased translation of research breakthroughs into enterprise production and national public health deployments.
+          </p>
+        </div>
+        <div class="roadmap-grid">
+          <div class="roadmap-card interactive-card">
+            <span class="roadmap-phase badge-blue">2026 · Phase 1</span>
+            <h4>Foundation Hardening & Consortia Pilots</h4>
+            <ul class="roadmap-list">
+              <li><strong>SIH Swasthya:</strong> Pilot deployment across 20 Sub-Centers in Maharashtra with offline sync.</li>
+              <li><strong>Agentic Browser Defense:</strong> Open-source Host-Side Mediation Proxy as standard Anthropic MCP security plugin.</li>
+              <li><strong>MC-CTViT:</strong> Publish doctoral affective computing benchmark paper with full black-box DEAP/SEED holdout metrics.</li>
+            </ul>
+          </div>
+
+          <div class="roadmap-card interactive-card">
+            <span class="roadmap-phase badge-teal">2027 · Phase 2</span>
+            <h4>Enterprise Commercialization & Sensor Fusion</h4>
+            <ul class="roadmap-list">
+              <li><strong>VulRAG:</strong> Package into sovereign on-prem enterprise security appliance for defense contractors.</li>
+              <li><strong>ISRO Route Resilience:</strong> Integrate Sentinel-1 SAR radar fusion for cloud/flood multi-sensor recovery.</li>
+              <li><strong>TrustWise AdaptiveRag:</strong> Transition into multi-tenant enterprise intelligence platform.</li>
+            </ul>
+          </div>
+
+          <div class="roadmap-card interactive-card">
+            <span class="roadmap-phase badge-violet">2028–2029 · Phase 3</span>
+            <h4>Sovereign Autonomy & National Scale</h4>
+            <ul class="roadmap-list">
+              <li><strong>Hardware Security:</strong> Implement Hardware Enclave (Nitro/SGX) cryptographic capability tokens for agents.</li>
+              <li><strong>Public Health Scale:</strong> Connect Swasthya to national ABDM health backbone, scaling to 10,000+ frontline workers.</li>
+              <li><strong>Post-Quantum Trust:</strong> Deploy Lattice Key Encapsulation (ML-KEM) across decentralized healthcare ledgers.</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -1001,5 +1043,52 @@ const base = import.meta.env.BASE_URL;
   color: var(--color-text-secondary);
   line-height: 1.5;
   margin: 0;
+}
+
+/* Roadmap Block */
+.roadmap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-4);
+}
+
+.roadmap-card {
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.roadmap-phase {
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.roadmap-card h4 {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.roadmap-list {
+  margin: 0;
+  padding-left: var(--space-4);
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.roadmap-list strong {
+  color: var(--color-text);
 }
 </style>
