@@ -6,7 +6,7 @@ export interface SchematicItem {
   title: string;
   caption: string;
   imageUrl: string;
-  diagramType: 'C4 Container' | 'Deployment' | 'Data Model' | 'Sequence' | 'Neural Architecture';
+  diagramType: 'C4 Container' | 'Deployment' | 'Data Model' | 'Sequence' | 'Neural Architecture' | 'System Concept' | 'Conceptual Architecture';
 }
 
 export interface PipelineStep {
@@ -16,6 +16,7 @@ export interface PipelineStep {
 
 export interface ShowcaseData {
   projectId: string;
+  heroImage?: string;
   mvpIdea: {
     problemSpark: string;
     earlyPrototype: string;
@@ -40,6 +41,21 @@ const base = import.meta.env.BASE_URL;
 ---
 
 <div class="showcase-studio" id={`showcase-${data.projectId}`}>
+  <!-- Conceptual AI Architecture Hero Banner -->
+  {data.heroImage && (
+    <div class="studio-hero-banner">
+      <img
+        src={data.heroImage}
+        alt={`${data.projectId} System Architecture Concept`}
+        class="studio-hero-img"
+        loading="eager"
+      />
+      <div class="studio-hero-overlay">
+        <div class="hero-chip">Forensic AI Schematic · {data.deepArchitecture.dossierId}</div>
+      </div>
+    </div>
+  )}
+
   <!-- Studio Header -->
   <div class="studio-header">
     <div class="studio-badge-row">
@@ -993,5 +1009,56 @@ const base = import.meta.env.BASE_URL;
   max-width: 85vw;
   max-height: 75vh;
   object-fit: contain;
+}
+
+/* Studio Hero Conceptual Banner */
+.studio-hero-banner {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: var(--space-6);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-sunken);
+}
+
+@media (min-width: 768px) {
+  .studio-hero-banner {
+    height: 320px;
+  }
+}
+
+.studio-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.studio-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.05) 0%, rgba(15, 23, 42, 0.85) 100%);
+  display: flex;
+  align-items: flex-end;
+  padding: var(--space-4) var(--space-5);
+}
+
+.hero-chip {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: #38bdf8;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  padding: 4px 12px;
+  border-radius: 9999px;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 </style>

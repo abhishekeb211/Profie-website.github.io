@@ -3,17 +3,24 @@
 
 import type { ShowcaseData } from '../components/ProjectShowcaseContainer.astro';
 
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 export const SHOWCASE_REGISTRY: Record<string, ShowcaseData> = {
   'vehiclegpt': {
     projectId: 'vehiclegpt',
+    heroImage: `${base}/images/showcase/vehiclegpt-hero.png`,
     mvpIdea: {
       problemSpark: 'Cloud-dependent vehicular analytics experience fatal packet loss in remote corridors, while monolithic AI runtimes overheat and blow past the 12W automotive embedded power envelope.',
       earlyPrototype: 'Early Python script on Raspberry Pi dropped 40% of 1000Hz CAN frames during peak traffic. Evolved into a C++20 zero-copy ring buffer with SCHED_FIFO priority isolating deterministic ingestion from asynchronous quantized GGUF reasoning.',
       simulatorType: 'can-bus'
     },
     visualSchematics: [
+      {
+        title: 'Forensic System Concept & Holographic AI Schematic',
+        caption: 'Photorealistic architectural synthesis of the dual-plane automotive telemetry edge runtime and embedded NPU.',
+        imageUrl: `${base}/images/showcase/vehiclegpt-hero.png`,
+        diagramType: 'System Concept'
+      },
       {
         title: 'C4 Container Architecture: Dual-Plane Edge Decoupling',
         caption: 'Plane 0 C++ socket ingestion decoupled from Plane 1 NPU-accelerated INT4 cognitive reasoning.',
@@ -49,12 +56,19 @@ export const SHOWCASE_REGISTRY: Record<string, ShowcaseData> = {
 
   'agentic-browser-defense': {
     projectId: 'agentic-browser-defense',
+    heroImage: `${base}/images/showcase/agentic-browser-hero.png`,
     mvpIdea: {
       problemSpark: 'Autonomous browser agents with ambient tool permissions are vulnerable to indirect prompt injection on adversarial webpages, leading to rogue transactions and data exfiltration.',
       earlyPrototype: 'Early prototype evaluated client-side DOM filters, which were easily bypassed by steganographic prompts. Redesigned into a host-side L2/L3 mediation proxy enforcing default read-only containment elevated only via 8-tuple HMAC tokens.',
       simulatorType: 'hmac-token'
     },
     visualSchematics: [
+      {
+        title: 'Zero-Trust Host-Side Mediation Concept',
+        caption: 'Cybernetic mediation shield evaluating cryptographic tokens and blocking injection packets in real time.',
+        imageUrl: `${base}/images/showcase/agentic-browser-hero.png`,
+        diagramType: 'System Concept'
+      },
       {
         title: 'Host-Side Mediation Threat Model',
         caption: 'Demarcates untrusted LLM planner from protected OS and browser execution environments.',
@@ -90,12 +104,19 @@ export const SHOWCASE_REGISTRY: Record<string, ShowcaseData> = {
 
   'mc-ctvit-eeg-transformer': {
     projectId: 'mc-ctvit-eeg-transformer',
+    heroImage: `${base}/images/showcase/mc-ctvit-hero.png`,
     mvpIdea: {
       problemSpark: 'Standard monolithic transformers computing joint self-attention across 62 electrode channels and 60 time frames suffer a catastrophic O((C*T)^2) memory explosion (~1.38x10^7 operations).',
       earlyPrototype: 'Early spatial-temporal ViT exhausted GPU VRAM on batch size 8. Redesigned with four heterogeneous feature branches decoupling spatial scalp topology from temporal sub-window entropy, cutting operations to 7,444 (99.9% reduction).',
       simulatorType: 'eeg-tensor'
     },
     visualSchematics: [
+      {
+        title: 'Decoupled Cranial-Temporal Neural Synthesis',
+        caption: '3D cranium EEG electrode projections feeding multi-scale heterogeneous attention branches.',
+        imageUrl: `${base}/images/showcase/mc-ctvit-hero.png`,
+        diagramType: 'System Concept'
+      },
       {
         title: 'Quad-Branch MC-CTViT Neural Architecture',
         caption: '1D Multi-Scale CNN, Temporal Transformer, Spatial PLV Transformer, and 2D Scalp ViT.',
@@ -131,12 +152,19 @@ export const SHOWCASE_REGISTRY: Record<string, ShowcaseData> = {
 
   'vulrag-security': {
     projectId: 'vulrag-security',
+    heroImage: `${base}/images/showcase/vulrag-security-hero.png`,
     mvpIdea: {
       problemSpark: 'Proprietary enterprise software cannot be sent to public cloud LLMs for vulnerability review without catastrophic trade secret exposure.',
       earlyPrototype: 'Early CLI wrapper produced contradictory warnings from individual linters. Evolved into a normalized finding schema clustering Semgrep, Bandit, and YARA with local Ollama critique and AST patch validation.',
       simulatorType: 'vuln-scan'
     },
     visualSchematics: [
+      {
+        title: 'Sovereign Closed-Loop Security Lab Concept',
+        caption: 'Holographic Abstract Syntax Tree vulnerability scanning and automated Tree-sitter diff patch verification.',
+        imageUrl: `${base}/images/showcase/vulrag-security-hero.png`,
+        diagramType: 'System Concept'
+      },
       {
         title: 'PRISMA 2020 Systematic Literature Review Flow',
         caption: 'Rigorous 27-item methodological evaluation of local RAG vulnerability detection.',
@@ -172,12 +200,19 @@ export const SHOWCASE_REGISTRY: Record<string, ShowcaseData> = {
 
   'isro-route-resilience': {
     projectId: 'isro-route-resilience',
+    heroImage: `${base}/images/showcase/isro-satellite-hero.png`,
     mvpIdea: {
       problemSpark: 'Disaster satellite GeoTIFFs (floods, cyclones) feature dense cloud shadows and tree canopy debris that sever road continuity, blinding routing algorithms.',
       earlyPrototype: 'Early pixel segmentation generated disconnected road fragments. Built a topological gap healer applying angle-penalized Minimum Spanning Trees (MST) and Tarjan articulation point analysis.',
       simulatorType: 'gap-healer'
     },
     visualSchematics: [
+      {
+        title: 'Orbital Lidar & Disaster Routing Synthesis',
+        caption: 'Low Earth orbit satellite projecting multi-spectral lidar scanning beams through cloud cover over flooded delta terrain.',
+        imageUrl: `${base}/images/showcase/isro-satellite-hero.png`,
+        diagramType: 'System Concept'
+      },
       {
         title: 'C4 Satellite Ingestion & Segmentation Topology',
         caption: 'Tiling high-resolution GeoTIFF rasters through DeepLabV3+ with shadow augmentations.',
@@ -212,8 +247,188 @@ export const SHOWCASE_REGISTRY: Record<string, ShowcaseData> = {
     }
   },
 
+  'swasthya-health-network': {
+    projectId: 'swasthya-health-network',
+    heroImage: `${base}/images/showcase/swasthya-health-hero.png`,
+    mvpIdea: {
+      problemSpark: 'Rural Sub-Centres and ASHA workers in Maharashtra lack unified digital health records and suffer network dropouts, causing high maternal and neonatal mortality.',
+      earlyPrototype: 'Early field testing revealed paper register transcription errors. Built a cross-platform Flutter client with offline WatermelonDB sync and a 5-tier clinical referral funnel mapping 236 NHM statutory duties.',
+      simulatorType: 'generic'
+    },
+    visualSchematics: [
+      {
+        title: 'Decentralized Healthcare Intelligence Concept',
+        caption: '3D biometric digital twin, real-time vitals streams, and cryptographic medical consent ledger blocks.',
+        imageUrl: `${base}/images/showcase/swasthya-health-hero.png`,
+        diagramType: 'System Concept'
+      },
+      {
+        title: '5-Tier National Health Mission Clinical Pipeline',
+        caption: 'Hierarchical clinical escalation from Sub-Centre ASHA workers through Primary Health Centres (PHC) to District Hospitals.',
+        imageUrl: `${base}/images/architecture/08_8_c4_container_diagram.png`,
+        diagramType: 'C4 Container'
+      },
+      {
+        title: 'ABDM-Compliant Health Record Data Model',
+        caption: 'FHIR R4 resource mapping and offline-first delta synchronization schema.',
+        imageUrl: `${base}/images/architecture/10_10_data_model_er_diagram.png`,
+        diagramType: 'Data Model'
+      }
+    ],
+    deepArchitecture: {
+      pipelineSteps: [
+        { title: 'Field-Level Biometric Capture', desc: 'ASHA mobile capture with client-side validation and offline WatermelonDB storage.' },
+        { title: 'Cryptographic Delta Sync', desc: 'Conflict-free replicated data types (CRDT) merge records upon cellular reconnection.' },
+        { title: '5-Tier Clinical Triage Funnel', desc: 'Automated maternal high-risk scoring dispatches ambulances before critical onset.' },
+        { title: 'ABDM FHIR R4 Bridge', desc: 'Serializes patient encounters to Ayushman Bharat Digital Mission registry standards.' }
+      ],
+      dockerServices: ['swasthya-api-nest', 'swasthya-sync-engine', 'postgres-postgis', 'redis-cache'],
+      dossierId: 'DOS-P3-001',
+      testPassRate: 'SIH Finalist · Tested Across 20 Centers',
+      strategicHorizon: 'Expansion to 250 primary health centres with Ayushman Bharat Digital Mission integration.'
+    }
+  },
+
+  'blockchain-ehr-bcfl': {
+    projectId: 'blockchain-ehr-bcfl',
+    heroImage: `${base}/images/showcase/swasthya-health-hero.png`,
+    mvpIdea: {
+      problemSpark: 'Centralized electronic health records (EHR) risk single-point data breaches, while classical federated learning models are vulnerable to Byzantine gradient poisoning.',
+      earlyPrototype: 'Built a consortium blockchain using Solidity smart contracts on Hyperledger Fabric with IPFS encrypted payload storage and Proof-of-Cross-Validation consensus (PoCC).',
+      simulatorType: 'generic'
+    },
+    visualSchematics: [
+      {
+        title: 'Byzantine-Resilient PoCC Architecture',
+        caption: 'Decentralized federated learning pipeline rejecting poisoned client weights before ledger commit.',
+        imageUrl: `${base}/images/showcase/swasthya-health-hero.png`,
+        diagramType: 'System Concept'
+      },
+      {
+        title: 'Hyperledger Fabric Multi-Org Topology',
+        caption: 'Hospitals, diagnostic labs, and research institutions participating in private channel consortium.',
+        imageUrl: `${base}/images/architecture/09_9_deployment_diagram.png`,
+        diagramType: 'Deployment'
+      }
+    ],
+    deepArchitecture: {
+      pipelineSteps: [
+        { title: 'Local Model Training', desc: 'Hospitals train diagnostic CNNs on private patient data without raw data movement.' },
+        { title: 'Gradient Differential Privacy', desc: 'Adds Laplace noise bounded by epsilon privacy budget.' },
+        { title: 'PoCC Byzantine Validation', desc: 'Peer validator nodes evaluate validation loss on holdout sets before weight aggregation.' },
+        { title: 'Immutable Ledger Commit', desc: 'Cryptographically seals updated global model weights onto the blockchain.' }
+      ],
+      dockerServices: ['fabric-peer-0', 'fabric-orderer', 'ipfs-daemon', 'bcfl-coordinator'],
+      dossierId: 'DOS-P3-002',
+      testPassRate: '100% Solidity & Fabric Suite Pass',
+      strategicHorizon: 'Zero-Knowledge Succinct Non-Interactive Arguments of Knowledge (zk-SNARKs) for anonymous patient consent.'
+    }
+  },
+
+  'quantum-cryptography': {
+    projectId: 'quantum-cryptography',
+    heroImage: `${base}/images/showcase/quantum-crypto-hero.png`,
+    mvpIdea: {
+      problemSpark: 'Shor algorithm running on fault-tolerant quantum computers will shatter RSA-2048 and ECC-256 within minutes, leaving all legacy internet communication vulnerable.',
+      earlyPrototype: 'Implemented NIST FIPS 203 ML-KEM (Kyber) and FIPS 204 ML-DSA (Dilithium) in pure Rust with constant-time arithmetic to eliminate timing side-channel attacks.',
+      simulatorType: 'generic'
+    },
+    visualSchematics: [
+      {
+        title: 'Post-Quantum Lattice Cryptography Concept',
+        caption: 'High-dimensional Euclidean lattice structures repelling quantum cryptanalysis with Learning With Errors (LWE) hardness.',
+        imageUrl: `${base}/images/showcase/quantum-crypto-hero.png`,
+        diagramType: 'System Concept'
+      },
+      {
+        title: 'Constant-Time Polynomial Arithmetic Flow',
+        caption: 'Number Theoretic Transform (NTT) implementation eliminating secret-dependent branch latency.',
+        imageUrl: `${base}/images/architecture/08_8_c4_container_diagram.png`,
+        diagramType: 'C4 Container'
+      }
+    ],
+    deepArchitecture: {
+      pipelineSteps: [
+        { title: 'Lattice Key Generation', desc: 'Generates public and private matrix vectors over polynomial quotient rings.' },
+        { title: 'Constant-Time NTT Multiplication', desc: 'Computes polynomial multiplication in O(n log n) without memory cache leakage.' },
+        { title: 'Ciphertext Encapsulation (ML-KEM)', desc: 'Encapsulates 256-bit symmetric shared secrets under Module-LWE hardness.' },
+        { title: 'Quantum-Resistant Decapsulation', desc: 'Decapsulates shared keys with constant-time rejection of malformed vectors.' }
+      ],
+      dockerServices: ['pqc-rust-bench', 'valgrind-ct-tester', 'tls13-hybrid-proxy'],
+      dossierId: 'DOS-P2-003',
+      testPassRate: '100% NIST Known-Answer-Tests (KAT)',
+      strategicHorizon: 'Hardware acceleration using dedicated RISC-V PQC instructions for quantum-safe TLS handshakes.'
+    }
+  },
+
+  'supper-ide': {
+    projectId: 'supper-ide',
+    heroImage: `${base}/images/showcase/supper-ide-hero.png`,
+    mvpIdea: {
+      problemSpark: 'Commercial AI coding assistants route every keystroke to proprietary cloud APIs, incurring exorbitant latency and leaking proprietary enterprise IP.',
+      earlyPrototype: 'Constructed an autonomous pair-programming IDE runtime using local Ollama model routing, AST-aware diffing, and an immutable JSONL paradata checkpoint engine.',
+      simulatorType: 'generic'
+    },
+    visualSchematics: [
+      {
+        title: 'Sovereign Pair-Programming Studio Concept',
+        caption: 'Multi-agent orchestration ring, AST dependency graphs, and visual git checkpoint trees.',
+        imageUrl: `${base}/images/showcase/supper-ide-hero.png`,
+        diagramType: 'System Concept'
+      },
+      {
+        title: 'AMAWS v6.0 Agent Coordination Architecture',
+        caption: 'Planner, researcher, coder, and auditor subagent rings collaborating via IPC sockets.',
+        imageUrl: `${base}/images/architecture/08_8_c4_container_diagram.png`,
+        diagramType: 'C4 Container'
+      }
+    ],
+    deepArchitecture: {
+      pipelineSteps: [
+        { title: 'Hierarchical Task Decomposition', desc: 'Planner agent decomposes user intent into atomic, testable sub-goals.' },
+        { title: 'Context-Aware Model Routing', desc: 'Routes 80% of lightweight tasks to fast local models, reserving frontier models for synthesis.' },
+        { title: 'Tree-sitter AST Patch Generation', desc: 'Synthesizes surgical AST replacement diffs instead of re-generating entire files.' },
+        { title: 'Automated Test & Rollback Guard', desc: 'Executes test harness in sandbox; automatically rolls back upon regression.' }
+      ],
+      dockerServices: ['supper-core-daemon', 'ollama-router', 'test-sandbox-runner'],
+      dossierId: 'DOS-P4-001',
+      testPassRate: '55 / 55 Passed in 5.87s',
+      strategicHorizon: 'Enterprise deployment with zero-telemetry local air-gapped compliance certification.'
+    }
+  },
+
+  'operon-extension': {
+    projectId: 'operon-extension',
+    heroImage: `${base}/images/showcase/supper-ide-hero.png`,
+    mvpIdea: {
+      problemSpark: 'VS Code extensions for AI programming suffer UI sluggishness and fail when network connectivity drops.',
+      earlyPrototype: 'Developed an open-source VS Code extension with webview diff review, offline language server protocol (LSP) indexing, and zero-telemetry guarantees.',
+      simulatorType: 'generic'
+    },
+    visualSchematics: [
+      {
+        title: 'Operon Autonomous VS Code Architecture',
+        caption: 'Real-time diff viewer, LSP symbol navigation, and local LLM broker.',
+        imageUrl: `${base}/images/showcase/supper-ide-hero.png`,
+        diagramType: 'System Concept'
+      }
+    ],
+    deepArchitecture: {
+      pipelineSteps: [
+        { title: 'LSP Symbol Indexing', desc: 'Extracts real-time AST symbol declarations across workspace.' },
+        { title: 'Streaming Patch Application', desc: 'Renders syntax-highlighted side-by-side diffs in Webview.' },
+        { title: 'Audited Git Commit', desc: 'Commits verified modifications with cryptographic signature.' }
+      ],
+      dockerServices: ['operon-extension-builder', 'vsce-packager'],
+      dossierId: 'DOS-P4-002',
+      testPassRate: '307 / 308 (99.7%) Passed',
+      strategicHorizon: 'Publishing to Open VSX registry for sovereign developer toolchains.'
+    }
+  },
+
   'trustwise-adaptiverag': {
     projectId: 'trustwise-adaptiverag',
+    heroImage: `${base}/images/showcase/vehiclegpt-hero.png`,
     mvpIdea: {
       problemSpark: 'Standard enterprise RAG platforms allow information leakage across user queries and suffer hallucinations when keyword exactness is diluted by dense embeddings.',
       earlyPrototype: 'Early single-collection vector search frequently returned stale or contradictory paragraphs. Upgraded to tri-isolated data planes with Reciprocal Rank Fusion (BM25 + Dense) and mutual information correlation budgets.',
@@ -262,6 +477,7 @@ export function getShowcaseForProject(projectId: string): ShowcaseData {
   // Fallback generic showcase for other projects
   return {
     projectId,
+    heroImage: `${base}/images/showcase/vehiclegpt-hero.png`,
     mvpIdea: {
       problemSpark: `Addressing critical architectural limitations in ${projectId} through deterministic, verified execution.`,
       earlyPrototype: 'Iterated from an exploratory CLI prototype into a hardened production platform backed by automated testing and containerization.',

@@ -1,5 +1,7 @@
 ---
 // ProjectCard.astro — Accessible project card conforming to contrast rules and linking to deep-dive case studies
+import { getShowcaseForProject } from '../data/showcaseRegistry';
+
 interface Props {
   project: {
     id: string;
@@ -22,8 +24,26 @@ const { project } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const desc = project.tagline || project.summary || '';
 const stageBadge = project.stage || project.status || 'Prototype';
+const showcase = getShowcaseForProject(project.id);
+const heroImage = showcase?.heroImage;
 ---
 <article class="project-card">
+  {heroImage && (
+    <a href={`${base}/projects/${project.id}/`} class="card-thumb-link" tabindex="-1" aria-hidden="true">
+      <div class="card-thumb-wrap">
+        <img
+          src={heroImage}
+          alt=""
+          loading="lazy"
+          class="card-thumb-img"
+        />
+        <div class="card-thumb-overlay">
+          <span class="card-thumb-badge">System Blueprint</span>
+        </div>
+      </div>
+    </a>
+  )}
+
   <div class="card-meta">
     <span class="card-domain">{project.domain}</span>
     <span class="card-status">{stageBadge}</span>
@@ -75,6 +95,58 @@ const stageBadge = project.stage || project.status || 'Prototype';
 </article>
 
 <style>
+.card-thumb-link {
+  display: block;
+  text-decoration: none;
+  margin: calc(var(--space-6) * -1) calc(var(--space-6) * -1) var(--space-4) calc(var(--space-6) * -1);
+  border-top-left-radius: calc(var(--radius-lg) - 1px);
+  border-top-right-radius: calc(var(--radius-lg) - 1px);
+  overflow: hidden;
+}
+
+.card-thumb-wrap {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+  background: var(--color-surface-sunken);
+}
+
+.card-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform var(--duration-normal) var(--ease-default);
+}
+
+.project-card:hover .card-thumb-img {
+  transform: scale(1.05);
+}
+
+.card-thumb-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.0) 30%, rgba(15, 23, 42, 0.8) 100%);
+  display: flex;
+  align-items: flex-end;
+  padding: var(--space-2) var(--space-4);
+}
+
+.card-thumb-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #38bdf8;
+  background: rgba(15, 23, 42, 0.85);
+  padding: 2px 8px;
+  border-radius: 9999px;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
 .project-card {
   display: flex;
   flex-direction: column;
