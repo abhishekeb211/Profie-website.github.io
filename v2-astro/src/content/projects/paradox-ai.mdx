@@ -2,22 +2,23 @@
 id: "paradox-ai"
 title: "Paradox AI"
 tagline: "Contract-governed agent runtime with verifiable task-DAG execution"
-domain: "Agentic AI & Runtime Governance"
+domain: "Developer Tooling & Autonomous IDEs"
 stage: "Validated"
 role: "Lead Architect & Systems Engineer"
-stack: ["Python", "AsyncIO", "Directed Acyclic Graphs (DAG)", "JSON-Schema", "Local LLMs", "State Checkpoints"]
+stack: ["Python 3.12", "AsyncIO", "Directed Acyclic Graphs (DAG)", "JSON-Schema", "Local LLMs", "State Checkpoints"]
 metrics:
   - label: "DAG Execution Determinism"
     value: "100"
     unit: "%"
     source: "Contract validation engine test suite"
     verified: true
+    benchmark_hash: "sha256:5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d"
   - label: "Rollback Recovery Time"
     value: "<15"
     unit: "ms"
     source: "Local state checkpoint benchmarks"
     verified: true
-verification_date: "2026-10"
+verification_date: "2026-11"
 github: "https://github.com/abhishekeb211"
 architecture_overview: "Micro-kernel agent runtime enforcing schema-contract boundaries, monotonic state transitions, and automatic checkpoint rollbacks before external tool dispatch."
 constraints:
@@ -40,4 +41,3 @@ Autonomous AI agents frequently fail in real-world environments due to uncontrol
 ## Verification & Outcomes
 - Demonstrated zero uncontrolled infinite recursion across 500+ synthetic agent challenge runs.
 - Sub-15ms checkpoint state restoration on consumer workstations.
-

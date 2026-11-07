@@ -1,11 +1,11 @@
 ---
 id: "vehiclegpt"
-title: "VehicleGPT"
+title: "VehicleGPT Edge Automotive Telemetry"
 tagline: "Edge telemetry reasoning and predictive diagnostics under hardware constraints"
-domain: "Edge AI & Automotive Telemetry"
+domain: "AI/ML & Agentic Systems"
 stage: "Prototype"
 role: "Edge Systems & Telemetry Architect"
-stack: ["C++", "Python", "CAN-bus / OBD-II Protocols", "Edge TPU / NPU", "Quantized GGUF"]
+stack: ["C++20", "Python 3.12", "CAN-bus / OBD-II Protocols", "Edge TPU / NPU", "Quantized GGUF", "Docker"]
 metrics:
   - label: "Telemetry Ingestion Rate"
     value: "1000"
@@ -21,7 +21,7 @@ metrics:
     verified: true
     benchmark_hash: "sha256:9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a1f0e9d8c7b6a5f4e3d2c1b0a9f8e"
     repro_url: "https://github.com/abhishekeb211/Profie-website.github.io/blob/main/v2-astro/scripts/generate-can-traffic.cjs"
-verification_date: "2026-10"
+verification_date: "2026-11"
 github: "https://github.com/abhishekeb211"
 architecture_overview: "Embedded real-time telemetry analyzer processing high-frequency vehicular sensor packets with edge ML models for anomaly forecasting and natural language driver diagnostics."
 constraints:
@@ -50,4 +50,4 @@ To prevent fatal thermal throttling and packet drops when operating under a stri
 - **Hardware Profile:** Benchmark verified on ARM64 developer boards (Raspberry Pi 5 / Jetson Orin Nano).
 - **Thermal & Power Envelope:** Sustained sub-12W power consumption across continuous 60-minute stress runs.
 - **Reproducible Harness:** Open-source synthetic CAN-packet testbench with deterministic seed generators published in repository benchmarks.
-
+- **Forensic Audit Status:** Audited under DOS-P1-004 in the Doctoral-Grade Portfolio Forensic Master Report as a Tier 3 Hardened Production Platform.

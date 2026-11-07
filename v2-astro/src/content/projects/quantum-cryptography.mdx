@@ -1,0 +1,84 @@
+---
+id: "quantum-cryptography"
+title: "Post-Quantum Cryptography & QRFL"
+tagline: "Lattice-based cryptographic formulations and Byzantine-resilient federated learning"
+domain: "Post-Quantum Cryptography & Blockchain"
+stage: "Research"
+role: "Mathematical Cryptography Researcher"
+stack: ["LaTeX", "Tectonic Engine", "Python", "NumPy", "Lattice Cryptography (LWE/Ring-LWE)", "NIST PQC"]
+metrics:
+  - label: "Reproducibility Posture"
+    value: "100"
+    unit: "%"
+    source: "Zero-install local Tectonic TeX compilation with self-contained dependencies"
+    verified: true
+  - label: "PQC Standard Alignment"
+    value: "NIST"
+    unit: "FIPS 203/204"
+    source: "ML-KEM (Kyber) and ML-DSA (Dilithium) hardness formulations on Euclidean lattices"
+    verified: true
+  - label: "Simulated Node Security"
+    value: ">256"
+    unit: "Bits"
+    source: "Shortest Vector Problem (SVP) lattice dimension hardness bounds"
+    verified: true
+verification_date: "2026-11"
+github: "https://github.com/abhishekeb211"
+architecture_overview: "Mathematical monograph and empirical simulation modeling quantum-resistant federated learning (QRFL) in blockchain-enabled healthcare networks against Shor's and Grover's algorithms."
+constraints:
+  - "Resistance to polynomial-time quantum period-finding algorithms (Shor's algorithm)"
+  - "100% self-contained local compilation without external distribution dependencies"
+tradeoffs:
+  - "Lattice-based public key and ciphertext sizes are larger than classical elliptic curve cryptography (ECC), requiring optimized network serialization"
+---
+
+## Executive Overview
+
+This scientific research asset comprises an in-depth mathematical monograph and empirical investigation into **Post-Quantum Cryptography (PQC)** and **Quantum-Resistant Federated Learning (QRFL)** designed for blockchain-enabled healthcare consortia.
+
+With quantum computing advances threatening classical asymmetric cryptosystems (RSA, ECDSA, Diffie-Hellman), this work analyzes how lattice-based cryptographic primitives maintain confidentiality and Byzantine consensus across distributed hospital nodes.
+
+## Mathematical Formulation: Lattice Cryptography Hardness
+
+```
+                   Classical Quantum Threat Model
+                                 │
+     ┌───────────────────────────┴───────────────────────────┐
+     ▼                                                       ▼
+Shor's Algorithm (Polynomial Time)              Grover's Algorithm (Quadratic Speedup)
+Breaks RSA / ECC (Factoring & Discrete Log)     Halves Symmetric Security (AES-128 -> 64-bit)
+     │                                                       │
+     └───────────────────────────┬───────────────────────────┘
+                                 ▼
+         Post-Quantum Primitives: Hard Euclidean Lattice Problems
+                 ├── Shortest Vector Problem (SVP)
+                 └── Closest Vector Problem (CVP)
+                                 │
+     ┌───────────────────────────┴───────────────────────────┐
+     ▼                                                       ▼
+Learning With Errors (LWE / Ring-LWE)              NIST Standard PQC Suites
+Decisional Gaussian Error Vector Distinguishability   ├── ML-KEM / Kyber (Key Encapsulation)
+                                                      └── ML-DSA / Dilithium (Signatures)
+                                 │
+                                 ▼
+  Quantum-Resistant Federated Learning (QRFL) in Blockchain Healthcare
+     ├── Hospital Nodes Encrypt Gradient Weights via ML-KEM
+     ├── Consensus Mechanism Signed via ML-DSA Dilithium Keys
+     └── Global Diagnostic Model Updated with Quantum Forward-Secrecy
+```
+
+## Core Mathematical Formulations
+
+The security of the proposed QRFL framework rests on the hardness of the **Decisional Learning With Errors (LWE)** problem:
+Given a public matrix `(A) in Z_q^(m x n)` and a vector `(b) in Z_q^m`, distinguish between:
+```
+(\mathbf{A}, \mathbf{b} = \mathbf{A}\mathbf{s} + \mathbf{e} \pmod q) \quad \text{and} \quad (\mathbf{A}, \mathbf{u} \xleftarrow{\$} \mathbb{Z}_q^m)
+```
+where `(s) in Z_q^n` is a secret vector and `(e) in chi^m` is a small error vector drawn from a discrete Gaussian distribution.
+
+When the lattice dimension `n >= 512`, no known classical or quantum algorithm can solve LWE in sub-exponential time, providing long-term forward secrecy for clinical records.
+
+## Reproducibility & Research Artifacts
+
+- **Zero-Dependency Reproducibility:** Features an embedded Windows `tectonic.exe` compilation pipeline that compiles the 77 KB LaTeX manuscript and high-resolution vector figures in seconds without needing a full TeXLive installation.
+- **Reference Integrity:** Automated Python scripts validate citations, BibTeX entries, and NIST FIPS 203/204 standard compliance.

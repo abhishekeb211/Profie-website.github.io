@@ -29,6 +29,25 @@ const domains = ['All', ...new Set(projects.map((p) => p.data.domain))];
       </p>
     </header>
 
+    <!-- Forensic Audit Highlights Banner -->
+    <div class="projects-audit-banner" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(30, 41, 59, 0.2) 100%); border: 1px solid var(--color-primary); border-radius: var(--radius-lg); padding: var(--space-6); margin-bottom: var(--space-8); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-4);">
+      <div>
+        <div class="badge-pill" style="margin-bottom: var(--space-2);">
+          <span class="status-indicator"></span>
+          <span>Forensic Audit Verified // 708 / 712 Live Passing Tests (99.4%)</span>
+        </div>
+        <h2 style="font-size: var(--text-lg); font-weight: 700; color: var(--color-text); margin: var(--space-1) 0;">
+          Comprehensive Portfolio Forensic Master Report
+        </h2>
+        <p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin: 0; max-width: 680px;">
+          Exhaustive multi-project audit across 70 repositories (86,727 files, 59.4 GB). 20 flagship systems audited across 6 engineering pillars with 99.44% automated test pass rate.
+        </p>
+      </div>
+      <a href={`${base}/COMPREHENSIVE_PORTFOLIO_FORENSIC_MASTER_REPORT.pdf`} target="_blank" rel="noopener noreferrer" style="background: var(--color-primary); color: var(--color-on-primary); border: 1px solid var(--color-primary); text-decoration: none; padding: var(--space-2) var(--space-4); border-radius: var(--radius-full); font-weight: 600; font-size: var(--text-xs); white-space: nowrap; display: inline-block;">
+        Download Master Report (79p PDF) ↗
+      </a>
+    </div>
+
     <!-- Client-safe domain filter pills -->
     <p class="filter-status" id="filter-status" aria-live="polite"></p>
     <div class="filter-bar" role="group" aria-label="Filter projects by domain">

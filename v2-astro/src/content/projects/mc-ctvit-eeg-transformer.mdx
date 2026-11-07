@@ -1,0 +1,95 @@
+---
+id: "mc-ctvit-eeg-transformer"
+title: "MC-CTViT EEG Emotion Classifier"
+tagline: "Compute-efficient quad-branch deep learning framework for multi-channel EEG emotion classification"
+domain: "Affective Computing & Neural Architectures"
+stage: "Validated"
+role: "Lead Deep Learning Researcher & Architect"
+stack: ["PyTorch", "Vision Transformers (ViT)", "MNE-Python", "Differential Entropy", "Phase Locking Value", "Explainable AI"]
+metrics:
+  - label: "Attention Compute Reduction"
+    value: "99.9"
+    unit: "%"
+    source: "Decoupled spatio-temporal attention complexity analysis vs monolithic joint tensor"
+    verified: true
+  - label: "Automated Test Pass Rate"
+    value: "16/16"
+    unit: "Pass"
+    source: "Live pytest suite covering dataset loaders and forward/backward passes in 3.29s"
+    verified: true
+  - label: "Holdout Benchmarks"
+    value: "3"
+    unit: "Corpora"
+    source: "Evaluated across DEAP (32ch), SEED (62ch), and MAHNOB-HCI (32ch)"
+    verified: true
+verification_date: "2026-11"
+github: "https://github.com/abhishekeb211"
+architecture_overview: "Doctoral-grade deep learning architecture featuring four heterogeneous feature branches (Multi-Scale 1D CNN, Temporal Transformer, Spatial Transformer with PLV, and Topographic Scalp ViT) fused via native token length cross-attention."
+constraints:
+  - "Strict black-box subject 70/20/10 holdout split without inter-fold data leakage"
+  - "Preservation of non-Euclidean 2D scalp topology for Vision Transformer branch"
+tradeoffs:
+  - "Decoupled spatio-temporal attention avoids joint sequence quadratic explosion O((C*T)^2) while preserving fine-grained temporal millisecond dynamics"
+---
+
+## Executive Summary & Research Contribution
+
+The **Multi-Cross CNN-Transformer-ViT (MC-CTViT)** platform is an empirical affective computing framework designed to classify human emotional states from multi-channel Electroencephalogram (EEG) biosignals. It evaluates affective dynamics across three international benchmark corpora:
+- **DEAP:** 32-channel preprocessed EEG recorded during music video stimulation.
+- **SEED:** 62-channel 3-session clinical EEG during film clip exposure.
+- **MAHNOB-HCI:** 32-channel variable-length multimodal affective trials.
+
+Unlike conventional monolithic deep networks that flatten multi-channel biosignals into an undifferentiated token sequence, MC-CTViT captures the heterogeneous physical characteristics of brain activity through four specialized architectural branches.
+
+## Architectural Quad-Branch Mechanics
+
+```
+                       Raw Multi-Channel EEG (B, C, F, T)
+                                       │
+     ┌──────────────────┬──────────────┴─────────────┬─────────────────┐
+     ▼                  ▼                            ▼                 ▼
+Multi-Scale 1D CNN   Temporal Transformer    Spatial Transformer   2D Scalp Energy
+(Receptive Fields    (Long-Range Attention   (+ Phase-Locking      Topographic Map
+  k = 3, 5, 7)        over DE Sub-windows)     Value Matrices)            │
+     │                  │                            │             Vision Transformer
+     │                  │                            │             (4x4 Patch Embed)
+     └──────────────────┼────────────────────────────┼─────────────────┘
+                        ▼                            ▼
+                 Multi-Cross Attention Fusion Layer (Native Sequence Lengths)
+                                       │
+                     Multitask Classification Heads
+                        ├── Valence (High / Low / 3-Class)
+                        └── Arousal (High / Low / Quadrants)
+```
+
+### 1. Multi-Scale 1D CNN Branch
+Parallel convolution kernels with GELU activations capture transient micro-oscillations, sleep spindles, and sharp potentials across receptive field windows (`k in (3, 5, 7)`).
+
+### 2. Temporal Transformer Branch
+Models long-range temporal dependencies across sub-window Differential Entropy (DE) frames extracted across standard physiological bands (`delta, theta, alpha, beta, gamma`).
+
+### 3. Spatial Transformer & Phase Locking Value (PLV)
+Interprets electrode channels as discrete spatial tokens projected into latent dimension `d_(model)`, enriched with Phase Locking Value (PLV) functional connectivity matrices:
+```
+\text{PLV}_{ij} = \frac{1}{N} \left| \sum_{n=1}^N \exp(i(\theta_{i,n} - \theta_{j,n})) \right|
+```
+
+### 4. Vision Transformer on Topographic Scalp Projections
+Azimuthal equidistant projection maps 3D electrode positions onto a 2D interpolated cranial energy plane (`32 x 32`), tokenized into `4 x 4` patches. This enables self-attention over hemispheric frontal alpha asymmetry without spatial distortion.
+
+## 99.9% Attention Computational Reduction
+
+In monolithic transformers, self-attention operates over joint sequence length `N = C x T`. For SEED (`C=62, T=60`), `N=3,720`, yielding `~= 1.38 x 10^7` attention operations per head. 
+
+MC-CTViT decouples temporal (`T=60`) from spatial (`C=62`) self-attention, reducing computational complexity to:
+```
+\mathcal{O}(C^2 \cdot d + T^2 \cdot d) \approx \mathcal{O}((62^2 + 60^2) \cdot d) = \mathcal{O}(7,444 \cdot d)
+```
+
+This achieves a **theoretical compute reduction exceeding 99.9%** in attention calculation, allowing training and low-latency inference on standard desktop GPU hardware.
+
+## Empirical Verification & Audit Results
+
+- **Unit Test Suite:** 16 / 16 automated tests passed in 3.29 seconds covering data loaders, feature extractors, model passes, and gradient propagation.
+- **Anti-Leakage Gate:** Automated test assertions verify zero subject overlap across train, validation, and test splits.
+- **Explainability:** Integrated Grad-CAM and attention rollout engines produce electrode and frequency saliency heatmaps for neurophysiological verification.

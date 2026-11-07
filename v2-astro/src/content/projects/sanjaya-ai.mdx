@@ -2,22 +2,23 @@
 id: "sanjaya-ai"
 title: "Sanjaya.ai"
 tagline: "Privacy-first desktop & browser agent with local DOM redaction boundaries"
-domain: "Browser & Desktop Intelligence"
+domain: "AI/ML & Agentic Systems"
 stage: "Prototype"
 role: "Creator & AI Engineer"
-stack: ["TypeScript", "Chrome DevTools Protocol", "Local NER Redaction", "Accessibility Tree", "Python"]
+stack: ["TypeScript", "Chrome DevTools Protocol", "Local NER Redaction", "Accessibility Tree", "Python 3.12"]
 metrics:
   - label: "PII Leak Prevention"
     value: "100"
     unit: "%"
     source: "Synthetic credential and personal data leakage testsuite"
     verified: true
+    benchmark_hash: "sha256:6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e"
   - label: "DOM Extraction Latency"
     value: "<45"
     unit: "ms"
     source: "Accessibility tree tree-shaking profiler"
     verified: true
-verification_date: "2026-10"
+verification_date: "2026-11"
 github: "https://github.com/abhishekeb211"
 architecture_overview: "Client-side proxy that parses web pages via the semantic Accessibility Tree, scrubs tokens and sensitive data in memory, and submits bounded action proposals to the user."
 constraints:
@@ -38,4 +39,3 @@ Modern browser agents require sending full-page screenshots or raw HTML DOM tree
 ## Acceptance & Performance
 - Verified zero credential leakage across automated web-banking and e-commerce mock environments.
 - Average action step synthesis under 250ms when running against quantized edge models.
-

@@ -1,0 +1,77 @@
+---
+id: "operon-extension"
+title: "Operon-ext Platform"
+tagline: "Open VSX-compliant IDE extension with native visual diff review and FastAPI agent runtime"
+domain: "Developer Infrastructure & IDEs"
+stage: "Validated"
+role: "Lead Developer & Architect"
+stack: ["TypeScript", "VS Code Extension API", "Python 3.12", "FastAPI", "Pydantic", "Docker"]
+metrics:
+  - label: "Automated Test Pass Rate"
+    value: "307/308"
+    unit: "Pass"
+    source: "Comprehensive CLI and extension integration test harness (99.7% pass rate)"
+    verified: true
+  - label: "Visual Review Guarantee"
+    value: "100"
+    unit: "%"
+    source: "Native side-by-side vscode.diff staging area before disk mutation"
+    verified: true
+  - label: "Multi-Provider Gateway"
+    value: "3"
+    unit: "Tiers"
+    source: "Unified bridge supporting local Ollama, Gemini Flash, and OpenRouter"
+    verified: true
+verification_date: "2026-11"
+github: "https://github.com/abhishekeb211"
+architecture_overview: "Dual-tier developer platform combining an Open VSX-compliant TypeScript IDE extension with a high-throughput Python FastAPI backend for visual code diff reviews and atomic multi-file patching."
+constraints:
+  - "Zero uncontrolled code modification without interactive visual developer approval"
+  - "Support for both local air-gapped LLMs (Ollama) and cloud frontier models"
+tradeoffs:
+  - "Requiring user visual approval prevents runaway agent regressions at the cost of requiring user interaction for commits"
+---
+
+## Executive Overview
+
+**Operon-ext** is a dual-tier developer platform comprising an Open VSX-compliant TypeScript extension for VS Code / Cursor and a high-performance Python FastAPI backend service (`operon`). 
+
+It automates code planning, multi-file atomic patching, visual diff review, and regression testing directly within the developer's primary coding environment.
+
+## Dual-Tier System Architecture
+
+```
+                 Developer in VS Code / Cursor Editor
+                                   │
+              Operon TypeScript Extension Host (Open VSX)
+                                   │
+      ┌────────────────────────────┴────────────────────────────┐
+      ▼                                                         ▼
+Webview Sidebar & Task Planner                      Native Visual Diff Staging
+(Prompts, Plan Tree, Context)                       (vscode.diff Red/Green Review)
+      │                                                         ▲
+      └────────────────────────────┬────────────────────────────┘
+                                   │ (HTTP / WebSocket IPC)
+                                   ▼
+                   Operon FastAPI Backend Service (:8000)
+                                   │
+      ┌────────────────────────────┴────────────────────────────┐
+      ▼                                                         ▼
+Multi-Model LLM Gateway                         Automated Execution Engine
+├── Local Ollama (Air-Gapped)                   ├── Task Decomposition
+├── Google Gemini Flash                         ├── Atomic Multi-File Patcher
+└── OpenRouter Frontier Models                  └── Pytest Test Runner
+```
+
+## The Visual Diff Approval Contract
+
+To eliminate developer anxiety over automated AI code assistants corrupting working repositories, Operon-ext enforces a **strict visual approval gate**:
+1. All generated file changes are held in an in-memory staging area.
+2. The extension summons VS Code's native `vscode.diff` API, rendering an interactive side-by-side color-coded comparison.
+3. Disk files are modified only after an explicit click on the extension's "Approve & Commit" control.
+4. If tests fail, the developer can request iterative auto-remediation with a single click.
+
+## Empirical Verification
+
+- **307 / 308 Passing Automated Tests:** Exhaustive integration suite (`cli_test.py`) verifying extension communication, diff generation, and test runners (99.7% pass rate).
+- **Containerized Deployment:** Docker Compose orchestration (`compose.real.yaml`) enabling zero-install enterprise setup.

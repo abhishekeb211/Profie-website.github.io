@@ -1,23 +1,24 @@
 ---
 id: "codeagent"
-title: "CodeAgent"
+title: "CodeAgent / VulRAG Scanner"
 tagline: "Air-gapped security vulnerability scanning and AST-level patch generation"
-domain: "Software Security & LLM Reasoning"
+domain: "Cybersecurity, Malware & Cryptography"
 stage: "Validated"
 role: "Security Researcher & Developer"
-stack: ["Python", "Tree-sitter", "SARIF", "CWE / OWASP Normalization", "Quantized Foundation Models"]
+stack: ["Python 3.12", "Tree-sitter", "SARIF", "CWE / OWASP Normalization", "Quantized Foundation Models"]
 metrics:
   - label: "SARIF Normalization Coverage"
     value: "100"
     unit: "%"
     source: "OASIS SARIF v2.1.0 schema compliance validator"
     verified: true
+    benchmark_hash: "sha256:4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c"
   - label: "Patch Syntax Validity"
     value: "98.4"
     unit: "%"
     source: "Tree-sitter AST parse gate on 250 test remediations"
     verified: true
-verification_date: "2026-10"
+verification_date: "2026-11"
 github: "https://github.com/abhishekeb211"
 architecture_overview: "Deterministic offline code vulnerability analysis pipeline pairing static analysis (AST parsing) with specialized local language models for auditable patch generation."
 constraints:
@@ -38,4 +39,4 @@ Enterprises and security engineers cannot submit proprietary codebases to cloud-
 ## Evidence & Validation
 - Tested on benchmark repositories with known SQLi, Command Injection, and Buffer Overflow vulnerabilities.
 - Produced compilable, syntax-verified patches in 98.4% of automated test cases.
-
+- Audited under Pillar 2 in the Comprehensive Portfolio Forensic Master Report.

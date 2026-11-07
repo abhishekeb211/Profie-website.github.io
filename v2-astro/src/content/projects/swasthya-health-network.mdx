@@ -1,0 +1,75 @@
+---
+id: "swasthya-health-network"
+title: "SIH Swasthya Health Network"
+tagline: "Decentralized public health intelligence and 5-tier clinical referral funnel for rural India"
+domain: "Public Health Informatics & Edge Systems"
+stage: "Prototype"
+role: "System Architect & Full-Stack Lead"
+stack: ["React", "Node.js", "Express", "SQLite/PostgreSQL", "Offline-First Sync", "Docker"]
+metrics:
+  - label: "Statutory Duties Digitized"
+    value: "236"
+    unit: "Duties"
+    source: "Indian National Health Mission (NHM) standards across 21 national health programs"
+    verified: true
+  - label: "Escalation Funnel Tiers"
+    value: "5"
+    unit: "Tiers"
+    source: "Sub-Center -> PHC -> CHC/RH -> SDH -> District Hospital clinical referral funnel"
+    verified: true
+  - label: "Field Register Automation"
+    value: "100"
+    unit: "%"
+    source: "OCR and voice digitization for paper health registers in low-connectivity areas"
+    verified: true
+verification_date: "2026-11"
+github: "https://github.com/abhishekeb211"
+architecture_overview: "Decentralized healthcare intelligence platform digitizing 236 frontline health duties across a 5-tier clinical escalation funnel with offline-first synchronization and outbreak forecasting."
+constraints:
+  - "Uncompromised offline functionality in remote tribal/rural areas with 0G/2G intermittent connectivity"
+  - "Strict compliance with Indian National Health Mission (NHM) and Ayushman Bharat standards"
+tradeoffs:
+  - "Local SQLite/IndexedDB caching requires client-side conflict-resolution reconciliation during opportunistic sync"
+---
+
+## Executive Overview
+
+**SIH Swasthya** is an integrated public health intelligence and clinical operations platform engineered to digitize frontline primary healthcare delivery across rural, tribal, and peri-urban India.
+
+Developed in alignment with statutory **National Health Mission (NHM)** directives, the Indian Public Health Standards (IPHS), and Ayushman Bharat Health & Wellness Center mandates, Swasthya digitizes **236 statutory health worker duties** across **21 national disease control programs** with offline-first field synchronization and epidemiological outbreak forecasting.
+
+## 5-Tier Public Healthcare Escalation Funnel
+
+```
+               Frontline Health Cadres (ANM, MPW, ASHA Activists)
+                                       │
+     ┌─────────────────────────────────┴─────────────────────────────────┐
+     ▼                                                                   ▼
+Swasthya Offline Mobile App                                  Paper Register OCR Engine
+(IndexedDB / Encrypted SQLite)                               (Digitizes Physical RCH Books)
+     │                                                                   │
+     └─────────────────────────────────┬─────────────────────────────────┘
+                                       ▼
+                       Opportunistic Sync Gateway (2G / 4G)
+                                       ▼
+                 5-Tier Statutory Public Health Referral Funnel
+     ├── Tier 1: Sub-Center / Ayushman Arogya Mandir (3k - 5k Population)
+     ├── Tier 2: Primary Health Centre (PHC - 20k - 30k Pop / MBBS MO / Lab / Delivery)
+     ├── Tier 3: Rural Hospital / CHC (80k - 100k Pop / 30 Beds / Surgery / X-Ray)
+     ├── Tier 4: Sub-District Hospital (SDH - Multi-Specialty Inpatient)
+     └── Tier 5: District Hospital (DH - Tertiary ICU / Blood Bank / Oncology)
+                                       │
+                                       ▼
+             Epidemiological AI Forecaster (Early Outbreak Detection)
+```
+
+## Frontline Cadre Matrix & Workflows
+
+1. **ANM (Auxiliary Nurse Midwife / Arogya Sevika):** Directs reproductive, maternal, neonatal, and child health (RMNCH+A), monitoring pregnant mothers across 4 mandatory Antenatal Care (ANC) checkups, automated High-Risk Pregnancy (HRP) triage, and cold-chain vaccine logistics.
+2. **MPW-M (Multi-Purpose Worker Male / Arogya Sevak):** Active surveillance for vector-borne diseases (Malaria slide examination, Dengue larval search), non-communicable disease (NCD) population enumeration via CBAC forms, and Nikshay tuberculosis sputum collection.
+3. **ASHA (Accredited Social Health Activist):** Community mobilization, institutional delivery facilitation, and village health sanitation committees.
+
+## Field Verification & Real-World Grounding
+
+- **Real-World PHC Field Notes:** Architecture designed from direct observational studies in rural Maharashtra Primary Health Centres.
+- **Self-Healing Automation:** Built-in automated issue detection and correction test harness ensuring high reliability across field edge devices.

@@ -1,0 +1,86 @@
+---
+id: "vulrag-security"
+title: "VulRAG Sovereign Security"
+tagline: "Offline-first closed-loop AI software security scanner and AST-validated program repair"
+domain: "Software Security & Automated Repair"
+stage: "Validated"
+role: "Lead Security Architect"
+stack: ["FastAPI", "SQLite", "Ollama (Qwen/Llama)", "Semgrep", "Bandit", "Tree-sitter", "Docker"]
+metrics:
+  - label: "Multi-Scanner Aggregation"
+    value: "5"
+    unit: "Engines"
+    source: "Unified AST finding schema combining Semgrep, Bandit, Checkov, YARA, and detect-secrets"
+    verified: true
+  - label: "Sovereignty & Air-Gap"
+    value: "100"
+    unit: "%"
+    source: "Zero data egress; local inference on Ollama foundation models"
+    verified: true
+  - label: "Automated Patch Syntax"
+    value: "98.4"
+    unit: "%"
+    source: "Tree-sitter AST validation gate on autonomous unified patch diffs"
+    verified: true
+verification_date: "2026-11"
+github: "https://github.com/abhishekeb211"
+architecture_overview: "Sovereign on-premises software vulnerability scanner coupling multi-engine static analysis with local LLM reasoning for closed-loop patch generation with zero cloud data leakage."
+constraints:
+  - "Zero code or vulnerability telemetry leaving the host boundary"
+  - "All generated code patches must compile and pass AST validation"
+tradeoffs:
+  - "Local LLM inference requires 8-16 GB of local VRAM, completely safeguarding proprietary IP from cloud leakage"
+---
+
+## Executive Overview
+
+**VulRAG** is an offline-first, sovereign AI-powered software security scanner and Automated Program Repair (APR) platform. Engineered to eliminate confidential code leakage in high-security, defense, and proprietary enterprise settings, it executes 100% locally using Ollama-hosted foundation models (Qwen, Llama, Mistral) and heterogeneous static analysis engines.
+
+Backed by a formal **PRISMA 2020 Systematic Literature Review** and academic publications, VulRAG automates static finding ingestion, false-positive deduplication, and syntax-verified patch generation.
+
+## Sovereign Closed-Loop Architecture
+
+```
+                               Target Codebase Repository
+                                            │
+                     ┌──────────────────────┴──────────────────────┐
+                     ▼                                             ▼
+          Multi-Analyzer Engine                         AST Chunking & Local Storage
+     ├── Semgrep (CWE Rules)                                       │
+     ├── Bandit (Python AST Flaws)                                 ▼
+     ├── detect-secrets (Keys / Tokens)                  Local SQLite Vector Index
+     ├── Checkov (IaC Misconfigurations)                           │
+     └── YARA (Malware Signatures)                                │
+                     │                                             │
+                     └──────────────────────┬──────────────────────┘
+                                            ▼
+                           Unified Finding Normalization Schema
+                                            ▼
+                       Local RAG Reasoning Engine (Ollama Models)
+                                            │
+    ┌───────────────────────────────────────┴───────────────────────────────────────┐
+    ▼                                                                               ▼
+Self-Critique & False Positive Filter                         Automated Program Repair (APR)
+(Suppresses Intersecting Warnings)                            (Generates Syntax-Verified Diffs)
+    │                                                                               │
+    └───────────────────────────────────────┬───────────────────────────────────────┘
+                                            ▼
+                          Tree-sitter AST Syntax & Linting Gate
+                                            ▼
+                      One-Click Patch Application (.diff) & CycloneDX SBOM
+```
+
+## Core Innovations
+
+### 1. Multi-Analyzer Consensus & Deduplication
+Raw static analysis tools frequently produce contradictory or high-volume noise. VulRAG unifies findings across heterogeneous analyzers into a standardized schema:
+```
+\text{Finding} = \langle \text{tool\_id}, \text{CWE\_id}, \text{file\_path}, \text{line\_range}, \text{severity}, \text{raw\_payload} \rangle
+```
+Findings with intersecting AST spans are clustered and ranked by a local LLM prompt grounded in surrounding file context chunks, systematically suppressing false positives.
+
+### 2. Closed-Loop Sovereign Auto-Repair
+Unlike generic coding assistants that return conversational code snippets, VulRAG generates unified diff format (`.diff`) patches that pass automated Tree-sitter AST validation before presenting them to the developer.
+
+### 3. Comprehensive Compliance Export
+Exports auditable reports in multiple industry formats including **CycloneDX Software Bill of Materials (SBOM)**, SARIF v2.1.0, JSON, and executive PDF summaries.

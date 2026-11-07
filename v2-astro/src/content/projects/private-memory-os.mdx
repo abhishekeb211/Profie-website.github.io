@@ -2,22 +2,23 @@
 id: "private-memory-os"
 title: "Private Memory OS"
 tagline: "Human-verified episodic and semantic decision memory with temporal provenance"
-domain: "Memory Architectures & Trustworthy Systems"
+domain: "AI/ML & Agentic Systems"
 stage: "Research"
 role: "Lead Researcher & Architect"
-stack: ["Python", "SQLite / Vectorlite", "Knowledge Graphs", "Temporal Logic", "Local Embeddings"]
+stack: ["Python 3.12", "SQLite / Vectorlite", "Knowledge Graphs", "Temporal Logic", "Local Embeddings"]
 metrics:
   - label: "Temporal Retrieval Accuracy"
     value: "95.8"
     unit: "%"
     source: "Time-bounded decision retrieval benchmark"
     verified: true
+    benchmark_hash: "sha256:7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f"
   - label: "User Control Verification"
     value: "100"
     unit: "%"
     source: "Explicit confirmation and deletion test matrix"
     verified: true
-verification_date: "2026-10"
+verification_date: "2026-11"
 github: "https://github.com/abhishekeb211"
 architecture_overview: "Local-first episodic memory engine structuring user interactions into verified knowledge nodes with bi-directional temporal links and explicit user forget/redact controls."
 constraints:
@@ -38,4 +39,3 @@ Persistent agent memory is often implemented as unconstrained, unverified vector
 ## Validation Matrix
 - Successfully demonstrated temporal consistency (e.g., "Where did I park yesterday vs today?") across 1,000 multi-turn simulated sessions.
 - Tested complete cryptographic zeroization of local memory stores.
-

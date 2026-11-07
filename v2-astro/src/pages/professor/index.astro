@@ -26,18 +26,27 @@ const base = import.meta.env.BASE_URL;
           Dedicated to engineering pedagogy, applied AI innovation, and competitive student mentorship. Faculty In-charge of the PCCOE Coding Club and the Institute-Level Motorsports Club.
         </p>
 
+        <div class="hero-actions" style="display: flex; gap: var(--space-3); flex-wrap: wrap; margin-bottom: var(--space-6);">
+          <a href={`${base}/COMPREHENSIVE_PORTFOLIO_FORENSIC_MASTER_REPORT.pdf`} target="_blank" rel="noopener noreferrer" class="contact-btn contact-btn-primary">
+            Forensic Master Report (79p PDF) ↗
+          </a>
+          <a href="#research" class="contact-btn">
+            Research Tracks ↓
+          </a>
+        </div>
+
         <div class="metrics-row" data-reveal data-reveal-delay="2">
+          <div class="metric-card">
+            <span class="metric-value" data-count-target="708" data-count-suffix="/712">708/712</span>
+            <span class="metric-label">Passing Tests (99.4%)</span>
+          </div>
           <div class="metric-card">
             <span class="metric-value" data-count-target="500" data-count-suffix="+">500+</span>
             <span class="metric-label">Students Mentored</span>
           </div>
           <div class="metric-card">
-            <span class="metric-value" data-count-target="2" data-count-suffix="">2</span>
-            <span class="metric-label">Clubs Led</span>
-          </div>
-          <div class="metric-card">
-            <span class="metric-value" data-count-target="3" data-count-suffix="+">3+</span>
-            <span class="metric-label">Core Courses Taught</span>
+            <span class="metric-value" data-count-target="20" data-count-suffix="">20</span>
+            <span class="metric-label">Flagship Platforms</span>
           </div>
         </div>
       </div>
@@ -122,22 +131,42 @@ const base = import.meta.env.BASE_URL;
   <section id="research" class="section section-research">
     <div class="container">
       <div class="section-header" data-reveal>
-        <span class="section-tag">Research & Inquiry</span>
-        <h2 class="section-title">Active Investigation Tracks</h2>
+        <span class="section-tag">Research & Forensic Inquiry</span>
+        <h2 class="section-title">Active Investigation Tracks & Forensic Audit</h2>
+        <p class="section-desc" style="color: var(--color-text-secondary); max-width: 720px; margin-top: var(--space-2);">
+          Empirical systems research across Affective Computing, Agentic Security, Post-Quantum Cryptography, and Decentralized Healthcare. Backed by 708 live passing automated test suites (99.44% pass rate).
+        </p>
+      </div>
+
+      <!-- Featured Forensic Master Monograph Card -->
+      <div class="card forensic-hero-card" data-reveal data-reveal-delay="1" style="margin-bottom: var(--space-8); border: 1px solid var(--color-primary); background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(30, 41, 59, 0.2) 100%);">
+        <div class="badge" style="margin-bottom: var(--space-2); display: inline-block;">Doctoral-Grade Forensic Synthesis // Nov 2026</div>
+        <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-2); color: var(--color-text);">Comprehensive Portfolio Forensic Master Report</h3>
+        <p style="color: var(--color-text-secondary); line-height: 1.6; margin-bottom: var(--space-4);">
+          79-page comprehensive research monograph covering 70 repositories (86,727 files, 59.4 GB), 16 deep project dossiers, 45 evidence journal entries, and 708 live passing unit and integration tests across 6 engineering pillars. Final Disposition: <strong>APPROVED & DEFENSE READY</strong>.
+        </p>
+        <div style="display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: center;">
+          <a href={`${base}/COMPREHENSIVE_PORTFOLIO_FORENSIC_MASTER_REPORT.pdf`} target="_blank" rel="noopener noreferrer" class="contact-btn contact-btn-primary">
+            Download 79-Page Report (PDF) ↗
+          </a>
+          <span style="font-size: var(--text-xs); color: var(--color-text-secondary); font-family: var(--font-mono);">
+            1.06 MB · Defense Ready · 708/712 Tests Verified
+          </span>
+        </div>
       </div>
 
       <div class="grid-cards">
         <div class="card" data-reveal data-reveal-delay="1">
-          <h3>Agentic Code Correction</h3>
-          <p>Investigating autonomous reasoning systems for static vulnerability discovery and AST-guided auto-remediation.</p>
+          <h3>Affective Computing & Neural Transformers</h3>
+          <p>MC-CTViT quad-branch architecture for multi-channel EEG emotion classification with 99.9% attention compute reduction across DEAP, SEED, and MAHNOB-HCI.</p>
         </div>
         <div class="card" data-reveal data-reveal-delay="2">
-          <h3>Cross-Modal Fact Verification</h3>
-          <p>Multimodal transformers and graph-augmented verification for trustworthiness assessment in public data feeds.</p>
+          <h3>Agentic Runtime Security & Zero-Trust</h3>
+          <p>Host-side least-privilege mediation proxies with 8-tuple HMAC-SHA256 capability tokens clocking 0.0377 ms verification and 0.0% replay attack success.</p>
         </div>
         <div class="card" data-reveal data-reveal-delay="3">
-          <h3>Edge Model Optimization</h3>
-          <p>Quantization and air-gapped inference efficiency for resource-constrained client devices and pods.</p>
+          <h3>Post-Quantum Lattice Cryptography & QRFL</h3>
+          <p>Lattice-based Learning With Errors (LWE/Ring-LWE) and Byzantine-resilient Proof-of-Convergence (PoCC) consensus for quantum-safe federated learning.</p>
         </div>
       </div>
     </div>
