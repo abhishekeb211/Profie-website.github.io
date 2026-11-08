@@ -1,0 +1,681 @@
+---
+// src/components/CapabilityConstellation.astro — Living Interactive Capability Constellation
+// Interconnects AI & Systems Engineering competencies via reactive SVG graph topology.
+// Hovering any capability illuminates connected filaments, associated technologies, and architectural differentiators.
+
+interface NodeData {
+  id: string;
+  name: string;
+  category: 'core' | 'security' | 'edge' | 'reasoning' | 'math';
+  x: number; // percentage in SVG coordinate space (0-1000, 0-480)
+  y: number;
+  connections: string[];
+  techStack: string[];
+  description: string;
+  empiricalProof: string;
+}
+
+const nodes: NodeData[] = [
+  {
+    id: 'agentic',
+    name: 'Agentic AI & Orchestration',
+    category: 'core',
+    x: 480,
+    y: 90,
+    connections: ['local-llm', 'rag', 'security', 'mlops'],
+    techStack: ['LangGraph', 'Local ReAct', 'Tool-Use Gating', 'Tree-sitter AST', 'Multi-Agent Consensus'],
+    description: 'Deterministic autonomous loops with AST-based closed-loop repair and formal policy gating.',
+    empiricalProof: 'DOS-P4-001 (55/55 Passing Tests // 5.87s execution)'
+  },
+  {
+    id: 'local-llm',
+    name: 'Local & Sovereign LLMs',
+    category: 'reasoning',
+    x: 230,
+    y: 190,
+    connections: ['agentic', 'rag', 'edge', 'security'],
+    techStack: ['Ollama', 'Llama-3.2-3B', 'vLLM', 'GGUF Quantization', 'Apple Metal / ONNX'],
+    description: 'Zero-cloud egress inference engines running strictly on local hardware with sub-100ms first-token latency.',
+    empiricalProof: '80% Zero-Egress Routing in Supper-IDE'
+  },
+  {
+    id: 'rag',
+    name: 'Neural RAG & Hybrid Retrieval',
+    category: 'reasoning',
+    x: 730,
+    y: 180,
+    connections: ['agentic', 'local-llm', 'topological', 'security'],
+    techStack: ['ChromaDB', 'FAISS', 'BM25 Hybrid', 'BGE Embeddings', 'Rerank Cross-Encoders'],
+    description: 'Context-augmented generation with deterministic AST chunking and cryptographic provenance tracing.',
+    empiricalProof: '195/197 Pass Rate in TrustWise AdaptiveRag'
+  },
+  {
+    id: 'security',
+    name: 'Zero-Trust AI & Runtime Gating',
+    category: 'security',
+    x: 350,
+    y: 330,
+    connections: ['agentic', 'local-llm', 'rag', 'pqc', 'mlops'],
+    techStack: ['HMAC-SHA256', '8-Tuple Tokens', 'OPA Policies', 'Firecracker MicroVMs', 'Host-Side Proxies'],
+    description: 'L2/L3 host-side mediation proxy preventing model poisoning, unauthorized tool mutation, and session hijacking.',
+    empiricalProof: '0.0377 ms Latency // 0.0% Replay Attack'
+  },
+  {
+    id: 'topological',
+    name: 'Topological & Scalp Attention',
+    category: 'math',
+    x: 820,
+    y: 340,
+    connections: ['rag', 'edge'],
+    techStack: ['MC-CTViT', 'Quad-Branch EEG', 'Graph DSU / MST', 'PyTorch 2.5', 'Spectral Clustering'],
+    description: 'Decoupled spatial-temporal attention algorithms reducing quadratic complexity by up to 99.95%.',
+    empiricalProof: '7,444 FLOPs vs 1.38M Ops (DOS-P1-001)'
+  },
+  {
+    id: 'edge',
+    name: 'Edge C++20 & Telemetry',
+    category: 'edge',
+    x: 140,
+    y: 360,
+    connections: ['local-llm', 'topological', 'security'],
+    techStack: ['C++20', 'SCHED_FIFO', 'SocketCAN', 'Lock-Free Ring Buffers', 'Edge TPU'],
+    description: 'Dual-plane deterministic edge ingestion with sub-millisecond real-time OS ring buffers and zero frame drops.',
+    empiricalProof: '106,934 fps Zero-Drop CAN Ingestion'
+  },
+  {
+    id: 'pqc',
+    name: 'Post-Quantum Cryptography & BCFL',
+    category: 'security',
+    x: 480,
+    y: 430,
+    connections: ['security', 'mlops'],
+    techStack: ['NIST PQC ML-KEM', 'Lattice LWE', 'Lipschitz Continuity', 'Proof-of-Convergence', 'Solidity'],
+    description: 'Decentralized federated learning with Byzantine-resilient consensus mathematically rejecting poisoned weights.',
+    empiricalProof: 'DOS-P3-002 (Solidity Pass & Gradient Proof)'
+  },
+  {
+    id: 'mlops',
+    name: 'Automated Audit & Verification',
+    category: 'core',
+    x: 630,
+    y: 370,
+    connections: ['agentic', 'security', 'pqc'],
+    techStack: ['Automated Test Harness', 'SARIF Aggregation', 'Benchmarking CI', 'Traceability Logs'],
+    description: 'Continuous empirical verification across 70 repositories enforcing 100% reproducible test artifacts.',
+    empiricalProof: '708 / 712 Passing Tests (99.44%)'
+  }
+];
+
+// Helper to compute unique undirected edges
+const edges: { source: NodeData; target: NodeData; id: string }[] = [];
+const seenEdges = new Set<string>();
+
+nodes.forEach((src) => {
+  src.connections.forEach((targetId) => {
+    const tgt = nodes.find((n) => n.id === targetId);
+    if (!tgt) return;
+    const edgeKey = [src.id, tgt.id].sort().join('--');
+    if (!seenEdges.has(edgeKey)) {
+      seenEdges.add(edgeKey);
+      edges.push({ source: src, target: tgt, id: edgeKey });
+    }
+  });
+});
+---
+
+<div class="constellation-wrapper interactive-card" data-constellation-root>
+  <div class="constellation-header">
+    <div class="constellation-title-group">
+      <span class="section-tag badge-cyan">Living Skill Topology</span>
+      <h3 class="constellation-heading">Interactive Capability Constellation</h3>
+      <p class="constellation-sub">
+        Hover or tap any competency node to inspect topological couplings, neural dataflow paths, and empirical proofs.
+      </p>
+    </div>
+    <div class="constellation-status-badge">
+      <span class="status-indicator"></span>
+      <span class="status-text" id="constellation-live-status">Topology: All 8 Nodes Active (14 Filaments)</span>
+    </div>
+  </div>
+
+  <div class="constellation-canvas-box">
+    <svg viewBox="0 0 960 490" class="constellation-svg" id="constellation-svg" aria-label="AI Engineering Capability Constellation Graph">
+      <defs>
+        <!-- Gradients for filaments -->
+        <linearGradient id="edgeGradCyan" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.6" />
+          <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.6" />
+        </linearGradient>
+        <linearGradient id="edgeGradActive" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#22d3ee" />
+          <stop offset="50%" stop-color="#10b981" />
+          <stop offset="100%" stop-color="#38bdf8" />
+        </linearGradient>
+        <!-- Filter glow for active node -->
+        <filter id="nodeGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+
+      <!-- Filament Edges -->
+      <g class="edges-group">
+        {edges.map((e) => (
+          <line
+            x1={e.source.x}
+            y1={e.source.y}
+            x2={e.target.x}
+            y2={e.target.y}
+            class="constellation-edge"
+            data-edge={e.id}
+            data-source={e.source.id}
+            data-target={e.target.id}
+          />
+        ))}
+      </g>
+
+      <!-- Constellation Nodes -->
+      <g class="nodes-group">
+        {nodes.map((node) => (
+          <g
+            class={`constellation-node-group category-${node.category}`}
+            data-node-id={node.id}
+            data-connections={node.connections.join(',')}
+            tabindex="0"
+            role="button"
+            aria-label={`${node.name}: ${node.description}`}
+          >
+            <!-- Outer halo ring -->
+            <circle
+              cx={node.x}
+              y={node.y}
+              r="26"
+              class="node-halo"
+            />
+            <!-- Secondary pulse ring -->
+            <circle
+              cx={node.x}
+              y={node.y}
+              r="17"
+              class="node-pulse-ring"
+            />
+            <!-- Center core circle -->
+            <circle
+              cx={node.x}
+              y={node.y}
+              r="10"
+              class="node-core"
+            />
+            <!-- Node label -->
+            <text
+              x={node.x}
+              y={node.y > 400 ? node.y - 30 : node.y + 34}
+              text-anchor="middle"
+              class="node-text-label"
+            >
+              {node.name}
+            </text>
+          </g>
+        ))}
+      </g>
+    </svg>
+  </div>
+
+  <!-- Real-Time Telemetry Inspector Card -->
+  <div class="constellation-inspector" id="constellation-inspector">
+    <div class="inspector-header">
+      <div class="inspector-badge badge-blue" id="inspector-badge">Selected Competency</div>
+      <h4 class="inspector-name" id="inspector-title">Agentic AI & Orchestration</h4>
+      <span class="inspector-proof" id="inspector-proof">DOS-P4-001 (55/55 Passing Tests // 5.87s execution)</span>
+    </div>
+    <p class="inspector-desc" id="inspector-desc">
+      Deterministic autonomous loops with AST-based closed-loop repair and formal policy gating.
+    </p>
+    <div class="inspector-stack" id="inspector-stack">
+      <span class="stack-tag">LangGraph</span>
+      <span class="stack-tag">Local ReAct</span>
+      <span class="stack-tag">Tool-Use Gating</span>
+      <span class="stack-tag">Tree-sitter AST</span>
+      <span class="stack-tag">Multi-Agent Consensus</span>
+    </div>
+  </div>
+
+  <!-- Screen Reader Semantic Accessible List -->
+  <div class="sr-only">
+    <h4>All Engineering Capabilities & Validations</h4>
+    <ul>
+      {nodes.map((n) => (
+        <li>
+          <strong>{n.name}</strong> ({n.category}): {n.description}
+          Tech: {n.techStack.join(', ')}. Proof: {n.empiricalProof}.
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+<script>
+  function initConstellation() {
+    const root = document.querySelector('[data-constellation-root]');
+    if (!root) return;
+
+    const nodeGroups = root.querySelectorAll('.constellation-node-group');
+    const edges = root.querySelectorAll('.constellation-edge');
+    const statusText = root.querySelector('#constellation-live-status');
+    const inspectorTitle = root.querySelector('#inspector-title');
+    const inspectorDesc = root.querySelector('#inspector-desc');
+    const inspectorProof = root.querySelector('#inspector-proof');
+    const inspectorStack = root.querySelector('#inspector-stack');
+    const inspectorBadge = root.querySelector('#inspector-badge');
+
+    // Data store from JSON embedded in attributes
+    nodeGroups.forEach((node) => {
+      const nodeId = node.getAttribute('data-node-id');
+      const connStr = node.getAttribute('data-connections') || '';
+      const connectedIds = connStr.split(',').filter(Boolean);
+
+      const activate = () => {
+        // Highlight active node
+        nodeGroups.forEach((n) => {
+          const id = n.getAttribute('data-node-id');
+          if (id === nodeId) {
+            n.classList.add('is-active');
+            n.classList.remove('is-dimmed');
+          } else if (connectedIds.includes(id || '')) {
+            n.classList.add('is-neighbor');
+            n.classList.remove('is-dimmed');
+          } else {
+            n.classList.add('is-dimmed');
+            n.classList.remove('is-active', 'is-neighbor');
+          }
+        });
+
+        // Highlight incident edges
+        edges.forEach((edge) => {
+          const src = edge.getAttribute('data-source');
+          const tgt = edge.getAttribute('data-target');
+          if (src === nodeId || tgt === nodeId) {
+            edge.classList.add('is-active-edge');
+            edge.classList.remove('is-dimmed-edge');
+          } else {
+            edge.classList.add('is-dimmed-edge');
+            edge.classList.remove('is-active-edge');
+          }
+        });
+
+        // Update inspector
+        const label = node.querySelector('.node-text-label')?.textContent?.trim() || nodeId;
+        if (statusText) statusText.textContent = `Connected to ${connectedIds.length} Core Systems`;
+        if (inspectorTitle) inspectorTitle.textContent = label;
+
+        // Fetch details from SR list or attributes
+        const descMap: Record<string, { desc: string; proof: string; stack: string[]; category: string }> = {
+          'agentic': {
+            desc: 'Deterministic autonomous loops with AST-based closed-loop repair and formal policy gating.',
+            proof: 'DOS-P4-001 (55/55 Tests Pass // 5.87s)',
+            stack: ['LangGraph', 'Local ReAct', 'Tool-Use Gating', 'Tree-sitter AST', 'Multi-Agent'],
+            category: 'Pillar 1: Agentic Core'
+          },
+          'local-llm': {
+            desc: 'Zero-cloud egress inference engines running strictly on local hardware with sub-100ms first-token latency.',
+            proof: '80% Zero-Egress Routing in Supper-IDE',
+            stack: ['Ollama', 'Llama-3.2-3B', 'vLLM', 'GGUF Quantization', 'Apple Metal / ONNX'],
+            category: 'Pillar 1: Sovereign Models'
+          },
+          'rag': {
+            desc: 'Context-augmented generation with deterministic AST chunking and cryptographic provenance tracing.',
+            proof: '195/197 Pass Rate in TrustWise AdaptiveRag',
+            stack: ['ChromaDB', 'FAISS', 'BM25 Hybrid', 'BGE Embeddings', 'Rerank Cross-Encoders'],
+            category: 'Pillar 1: Retrieval'
+          },
+          'security': {
+            desc: 'Host-side L2/L3 mediation proxy preventing model poisoning, unauthorized tool mutation, and session hijacking.',
+            proof: '0.0377 ms Latency // 0.0% Replay Attack',
+            stack: ['HMAC-SHA256', '8-Tuple Tokens', 'OPA Policies', 'Firecracker MicroVMs', 'Host Proxy'],
+            category: 'Pillar 2: Zero-Trust'
+          },
+          'topological': {
+            desc: 'Decoupled spatial-temporal attention algorithms reducing quadratic complexity by up to 99.95%.',
+            proof: '7,444 FLOPs vs 1.38M Ops (DOS-P1-001)',
+            stack: ['MC-CTViT', 'Quad-Branch EEG', 'Graph DSU / MST', 'PyTorch 2.5', 'Spectral Geometry'],
+            category: 'Pillar 1: Theoretical AI'
+          },
+          'edge': {
+            desc: 'Dual-plane deterministic edge ingestion with sub-millisecond real-time OS ring buffers and zero frame drops.',
+            proof: '106,934 fps Zero-Drop CAN Ingestion',
+            stack: ['C++20', 'SCHED_FIFO', 'SocketCAN', 'Lock-Free Ring Buffers', 'Edge TPU'],
+            category: 'Pillar 1/6: Edge Systems'
+          },
+          'pqc': {
+            desc: 'Decentralized federated learning with Byzantine-resilient consensus mathematically rejecting poisoned weights.',
+            proof: 'DOS-P3-002 (Solidity Pass & Gradient Proof)',
+            stack: ['NIST PQC ML-KEM', 'Lattice LWE', 'Lipschitz Continuity', 'Proof-of-Convergence', 'Solidity'],
+            category: 'Pillar 2/3: Lattice & BCFL'
+          },
+          'mlops': {
+            desc: 'Continuous empirical verification across 70 repositories enforcing 100% reproducible test artifacts.',
+            proof: '708 / 712 Passing Tests (99.44%)',
+            stack: ['Automated Test Harness', 'SARIF Aggregation', 'Benchmarking CI', 'Traceability Logs'],
+            category: 'Pillar 5: Forensics & QA'
+          }
+        };
+
+        const item = descMap[nodeId || ''];
+        if (item) {
+          if (inspectorDesc) inspectorDesc.textContent = item.desc;
+          if (inspectorProof) inspectorProof.textContent = item.proof;
+          if (inspectorBadge) inspectorBadge.textContent = item.category;
+          if (inspectorStack) {
+            inspectorStack.innerHTML = item.stack.map(s => `<span class="stack-tag">${s}</span>`).join('');
+          }
+        }
+      };
+
+      const reset = () => {
+        nodeGroups.forEach((n) => n.classList.remove('is-active', 'is-neighbor', 'is-dimmed'));
+        edges.forEach((e) => e.classList.remove('is-active-edge', 'is-dimmed-edge'));
+        if (statusText) statusText.textContent = 'Topology: All 8 Nodes Active (14 Filaments)';
+      };
+
+      node.addEventListener('mouseenter', activate);
+      node.addEventListener('focus', activate);
+      node.addEventListener('mouseleave', reset);
+      node.addEventListener('blur', reset);
+    });
+  }
+
+  // Execute on load and Astro page transition
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initConstellation);
+  } else {
+    initConstellation();
+  }
+  document.addEventListener('astro:page-load', initConstellation);
+</script>
+
+<style>
+  .constellation-wrapper {
+    background: var(--color-surface, #0f172a);
+    border: 1px solid var(--color-border, #1e293b);
+    border-radius: var(--radius-lg, 0.75rem);
+    padding: var(--space-6, 1.5rem);
+    position: relative;
+    overflow: hidden;
+    margin-top: var(--space-8, 2rem);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  }
+
+  .constellation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: var(--space-4, 1rem);
+    border-bottom: 1px solid var(--color-border, #1e293b);
+    padding-bottom: var(--space-4, 1rem);
+  }
+
+  .constellation-heading {
+    font-size: var(--text-xl, 1.25rem);
+    font-weight: 700;
+    color: var(--color-text, #f8fafc);
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .constellation-sub {
+    font-size: var(--text-xs, 0.75rem);
+    color: var(--color-text-secondary, #94a3b8);
+    max-width: 620px;
+    margin: 0;
+  }
+
+  .constellation-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-full, 9999px);
+    background: rgba(6, 182, 212, 0.1);
+    border: 1px solid rgba(6, 182, 212, 0.25);
+    font-family: var(--font-mono, monospace);
+    font-size: 0.7rem;
+    color: #22d3ee;
+  }
+
+  .constellation-status-badge .status-indicator {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #06b6d4;
+    box-shadow: 0 0 6px #06b6d4;
+    animation: status-ping 2s infinite ease-in-out;
+  }
+
+  @keyframes status-ping {
+    0%, 100% { opacity: 0.5; transform: scale(0.9); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+
+  .constellation-canvas-box {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 960 / 490;
+    background: radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.8) 0%, rgba(2, 6, 23, 0.95) 100%);
+    border-radius: var(--radius-md, 0.5rem);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+  }
+
+  .constellation-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    user-select: none;
+  }
+
+  /* Filaments / Edges */
+  .constellation-edge {
+    stroke: rgba(56, 189, 248, 0.2);
+    stroke-width: 1.5;
+    stroke-dasharray: 4 3;
+    transition: stroke 0.25s ease, stroke-width 0.25s ease, opacity 0.25s ease;
+  }
+
+  .constellation-edge.is-active-edge {
+    stroke: #22d3ee;
+    stroke-width: 3;
+    stroke-dasharray: none;
+    filter: drop-shadow(0 0 4px #06b6d4);
+    opacity: 1;
+    animation: edge-flow 2s infinite linear;
+  }
+
+  .constellation-edge.is-dimmed-edge {
+    opacity: 0.15;
+    stroke-width: 1;
+  }
+
+  /* Node Groups */
+  .constellation-node-group {
+    cursor: pointer;
+    outline: none;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+  }
+
+  .node-halo {
+    fill: rgba(59, 130, 246, 0.05);
+    stroke: rgba(59, 130, 246, 0.2);
+    stroke-width: 1;
+    transition: stroke 0.2s ease, fill 0.2s ease, r 0.25s ease;
+  }
+
+  .node-pulse-ring {
+    fill: none;
+    stroke: rgba(6, 182, 212, 0.4);
+    stroke-width: 1.5;
+    transition: stroke 0.2s ease, r 0.25s ease;
+  }
+
+  .node-core {
+    fill: #0284c7;
+    stroke: #38bdf8;
+    stroke-width: 2;
+    transition: fill 0.2s ease, stroke 0.2s ease, r 0.25s ease, filter 0.25s ease;
+  }
+
+  .node-text-label {
+    fill: #e2e8f0;
+    font-size: 11.5px;
+    font-family: var(--font-sans, system-ui, sans-serif);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    pointer-events: none;
+    transition: fill 0.2s ease, font-weight 0.2s ease;
+  }
+
+  /* Interactive States */
+  .constellation-node-group:hover .node-core,
+  .constellation-node-group.is-active .node-core {
+    fill: #22d3ee;
+    stroke: #ffffff;
+    r: 13;
+    filter: drop-shadow(0 0 8px #22d3ee);
+  }
+
+  .constellation-node-group:hover .node-halo,
+  .constellation-node-group.is-active .node-halo {
+    fill: rgba(34, 211, 238, 0.2);
+    stroke: #22d3ee;
+    r: 32;
+  }
+
+  .constellation-node-group:hover .node-pulse-ring,
+  .constellation-node-group.is-active .node-pulse-ring {
+    stroke: #ffffff;
+    stroke-width: 2.5;
+    r: 20;
+    animation: node-pulse-anim 1.5s infinite ease-out;
+  }
+
+  .constellation-node-group:hover .node-text-label,
+  .constellation-node-group.is-active .node-text-label {
+    fill: #38bdf8;
+    font-weight: 800;
+    filter: drop-shadow(0 0 4px rgba(6, 182, 212, 0.6));
+  }
+
+  .constellation-node-group.is-neighbor .node-core {
+    fill: #059669;
+    stroke: #34d399;
+    r: 11;
+  }
+
+  .constellation-node-group.is-neighbor .node-halo {
+    stroke: #10b981;
+    fill: rgba(16, 185, 129, 0.15);
+  }
+
+  .constellation-node-group.is-neighbor .node-text-label {
+    fill: #a7f3d0;
+  }
+
+  .constellation-node-group.is-dimmed {
+    opacity: 0.3;
+  }
+
+  @keyframes node-pulse-anim {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.4); opacity: 0; }
+  }
+
+  /* Real-Time Telemetry Inspector Card */
+  .constellation-inspector {
+    margin-top: var(--space-4, 1rem);
+    background: rgba(15, 23, 42, 0.65);
+    border: 1px solid var(--color-border, #1e293b);
+    border-radius: var(--radius-md, 0.5rem);
+    padding: var(--space-4, 1rem);
+    backdrop-filter: blur(8px);
+    transition: border-color 0.25s ease, background-color 0.25s ease;
+  }
+
+  .inspector-header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .inspector-badge {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.65rem;
+    padding: 0.15rem 0.45rem;
+    border-radius: var(--radius-sm, 0.25rem);
+    font-weight: 700;
+  }
+
+  .inspector-name {
+    font-size: var(--text-base, 1rem);
+    font-weight: 700;
+    color: var(--color-text, #f1f5f9);
+    margin: 0;
+  }
+
+  .inspector-proof {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.7rem;
+    color: #34d399;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-sm, 0.25rem);
+    margin-left: auto;
+  }
+
+  .inspector-desc {
+    font-size: var(--text-xs, 0.75rem);
+    color: var(--color-text-secondary, #cbd5e1);
+    margin: 0 0 0.6rem 0;
+    line-height: 1.4;
+  }
+
+  .inspector-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .stack-tag {
+    font-size: 0.65rem;
+    font-family: var(--font-mono, monospace);
+    padding: 0.15rem 0.4rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-sm, 0.25rem);
+    color: var(--color-text-secondary, #94a3b8);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  @media (max-width: 640px) {
+    .inspector-proof {
+      margin-left: 0;
+    }
+  }
+</style>

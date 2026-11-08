@@ -1,0 +1,194 @@
+---
+// src/components/ScrollArchitectureLine.astro
+// Scroll-driven architecture pipeline line acting as the visual backbone:
+// HERO -> ● RESEARCH -> ● BUILD -> ● VERIFY -> ● DEPLOY -> ● TEACH -> ● IMPACT
+
+interface StageNode {
+  id: string;
+  label: string;
+  targetId: string;
+}
+
+const stages: StageNode[] = [
+  { id: 'stage-hero', label: 'INPUT', targetId: 'about' },
+  { id: 'stage-cockpit', label: 'SIMULATE', targetId: 'cockpit' },
+  { id: 'stage-atlas', label: 'TOPOLOGY', targetId: 'atlas-graph' },
+  { id: 'stage-audit', label: 'VERIFY', targetId: 'forensic-audit' },
+  { id: 'stage-projects', label: 'SYSTEMS', targetId: 'projects' },
+  { id: 'stage-experience', label: 'PEDAGOGY', targetId: 'experience' },
+  { id: 'stage-contact', label: 'IMPACT', targetId: 'contact' },
+];
+---
+
+<nav class="scroll-pipeline-nav" aria-label="System Pipeline Scroll Navigation" id="scroll-pipeline-spine">
+  <div class="spine-track">
+    <div class="spine-progress-bar" id="spine-progress"></div>
+  </div>
+
+  <div class="spine-nodes-col">
+    {stages.map((stg) => (
+      <a href={`#${stg.targetId}`} class="spine-node-link" data-target={stg.targetId} aria-label={`Scroll to ${stg.label} section`}>
+        <span class="spine-node-dot"></span>
+        <span class="spine-node-label">{stg.label}</span>
+      </a>
+    ))}
+  </div>
+</nav>
+
+<script>
+  function setupScrollSpine() {
+    const spine = document.getElementById('scroll-pipeline-spine');
+    const progressBar = document.getElementById('spine-progress');
+    if (!spine || !progressBar) return;
+
+    const links = spine.querySelectorAll<HTMLAnchorElement>('.spine-node-link');
+
+    // Scroll progress fill
+    const updateProgress = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = scrollHeight > 0 ? Math.min(Math.max(scrollTop / scrollHeight, 0), 1) : 0;
+      progressBar.style.height = `${(progress * 100).toFixed(1)}%`;
+    };
+
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+
+    // IntersectionObserver to activate current node
+    const targets = Array.from(links).map(l => {
+      const id = l.getAttribute('data-target');
+      return id ? document.getElementById(id) : null;
+    }).filter(Boolean) as HTMLElement[];
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          links.forEach(l => {
+            if (l.getAttribute('data-target') === id) {
+              l.classList.add('active');
+            } else {
+              l.classList.remove('active');
+            }
+          });
+        }
+      });
+    }, { threshold: 0.25 });
+
+    targets.forEach(t => observer.observe(t));
+
+    document.addEventListener('astro:before-swap', () => {
+      window.removeEventListener('scroll', updateProgress);
+      observer.disconnect();
+    }, { once: true });
+  }
+
+  setupScrollSpine();
+  document.addEventListener('astro:page-load', setupScrollSpine);
+</script>
+
+<style>
+.scroll-pipeline-nav {
+  position: fixed;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 90;
+  display: none;
+  align-items: center;
+}
+
+@media (min-width: 1200px) {
+  .scroll-pipeline-nav {
+    display: flex;
+  }
+}
+
+.spine-track {
+  position: absolute;
+  left: 6px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: rgba(56, 189, 248, 0.15);
+  border-radius: var(--radius-full);
+}
+
+.spine-progress-bar {
+  width: 100%;
+  height: 0%;
+  background: linear-gradient(180deg, #38bdf8 0%, #22c55e 100%);
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+  transition: height 100ms linear;
+}
+
+.spine-nodes-col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+  z-index: 2;
+}
+
+.spine-node-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.spine-node-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  border: 2px solid #334155;
+  transition: transform var(--duration-fast) var(--ease-default),
+              border-color var(--duration-fast) var(--ease-default),
+              background-color var(--duration-fast) var(--ease-default),
+              box-shadow var(--duration-fast) var(--ease-default);
+}
+
+.spine-node-link:hover .spine-node-dot,
+.spine-node-link.active .spine-node-dot {
+  border-color: #38bdf8;
+  background: #0f172a;
+  transform: scale(1.25);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
+}
+
+.spine-node-link.active .spine-node-dot {
+  border-color: #22c55e;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
+}
+
+.spine-node-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.08em;
+  opacity: 0;
+  transform: translateX(-4px);
+  pointer-events: none;
+  transition: opacity var(--duration-fast) var(--ease-default),
+              transform var(--duration-fast) var(--ease-default),
+              color var(--duration-fast) var(--ease-default);
+  background: rgba(15, 23, 42, 0.9);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+.spine-node-link:hover .spine-node-label,
+.spine-node-link.active .spine-node-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.spine-node-link.active .spine-node-label {
+  color: #38bdf8;
+}
+</style>

@@ -1,0 +1,500 @@
+---
+// src/components/AnimatedProjectSVG.astro
+// Five custom animated architecture SVGs replacing generic static photos
+// Visual language: DATA -> AGENTS -> REASONING -> VERIFICATION -> IMPACT
+
+interface Props {
+  variant: 'codeagent' | 'samanvay' | 'swasthya' | 'zerotrust' | 'cli-terminal';
+  title?: string;
+}
+
+const { variant, title = 'System Architecture Diagram' } = Astro.props;
+---
+
+<div class={`arch-svg-container arch-${variant}`} aria-label={title}>
+  {variant === 'codeagent' && (
+    <svg viewBox="0 0 340 180" class="arch-svg" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <linearGradient id="ca-laser-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="transparent" />
+          <stop offset="50%" stop-color="#38bdf8" />
+          <stop offset="100%" stop-color="transparent" />
+        </linearGradient>
+        <filter id="ca-glow">
+          <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+
+      <!-- Connection Lines -->
+      <path d="M 50 90 L 105 90" class="wire wire-active" />
+      <path d="M 105 90 L 165 90" class="wire wire-active" />
+      <path d="M 165 90 L 225 90" class="wire wire-active" />
+      <path d="M 225 90 L 285 90" class="wire wire-verified" />
+
+      <!-- Nodes -->
+      <!-- 01: Source Code -->
+      <g class="arch-node node-code" transform="translate(50, 90)">
+        <rect x="-24" y="-18" width="48" height="36" rx="6" class="node-box" />
+        <text y="-2" class="node-label">SOURCE</text>
+        <text y="10" class="node-sub">CODE</text>
+        <circle cx="0" cy="0" r="2" class="node-pin" />
+      </g>
+
+      <!-- 02: SAST Scan / CWE -->
+      <g class="arch-node node-scan" transform="translate(105, 90)">
+        <rect x="-24" y="-18" width="48" height="36" rx="6" class="node-box node-box-amber" />
+        <text y="-2" class="node-label">SCAN</text>
+        <text y="10" class="node-sub">CWE-89</text>
+        <line x1="-20" y1="0" x2="20" y2="0" class="laser-beam" />
+      </g>
+
+      <!-- 03: Local LLM Reasoning -->
+      <g class="arch-node node-llm" transform="translate(165, 90)">
+        <rect x="-26" y="-18" width="52" height="36" rx="6" class="node-box node-box-cyan" />
+        <text y="-2" class="node-label">LOCAL LLM</text>
+        <text y="10" class="node-sub">QWEN 7B</text>
+        <circle cx="0" cy="0" r="14" class="llm-pulse-ring" />
+      </g>
+
+      <!-- 04: Patch Diff -->
+      <g class="arch-node node-patch" transform="translate(225, 90)">
+        <rect x="-24" y="-18" width="48" height="36" rx="6" class="node-box" />
+        <text y="-2" class="node-label">PATCH</text>
+        <text y="10" class="node-sub">DIFF</text>
+      </g>
+
+      <!-- 05: Tree-sitter AST Verify -->
+      <g class="arch-node node-verify" transform="translate(285, 90)">
+        <rect x="-24" y="-18" width="48" height="36" rx="6" class="node-box node-box-green" />
+        <text y="-2" class="node-label text-green">VERIFY</text>
+        <text y="10" class="node-sub text-green">PASSED ✓</text>
+        <circle cx="0" cy="0" r="18" class="verify-ripple" />
+      </g>
+
+      <!-- Traveling Data Packet -->
+      <circle r="3.5" class="packet packet-ca">
+        <animateMotion path="M 50 90 L 105 90 L 165 90 L 225 90 L 285 90" dur="2.4s" repeatCount="indefinite" />
+      </circle>
+
+      <!-- Top Title Tag -->
+      <text x="170" y="24" text-anchor="middle" class="svg-title-tag">SOVEREIGN CLOSED-LOOP AUTO-REPAIR</text>
+      <text x="170" y="165" text-anchor="middle" class="svg-sub-tag">0 Cloud Egress · Local AST Patch Validation</text>
+    </svg>
+  )}
+
+  {variant === 'samanvay' && (
+    <svg viewBox="0 0 340 180" class="arch-svg" preserveAspectRatio="xMidYMid meet">
+      <!-- Waveform Input -->
+      <g class="voice-wave" transform="translate(20, 90)">
+        <path d="M 0 0 Q 8 -16, 16 0 T 32 0 T 48 0 T 64 0" class="sine-path" />
+        <text x="32" y="24" text-anchor="middle" class="node-sub">VOICE AUDIO</text>
+      </g>
+
+      <!-- Wires to Local Edge AI -->
+      <path d="M 84 90 L 130 90" class="wire wire-active" />
+
+      <!-- Local Edge AI Center Hub -->
+      <g class="arch-node node-hub" transform="translate(155, 90)">
+        <rect x="-28" y="-22" width="56" height="44" rx="8" class="node-box node-box-cyan" />
+        <text y="-4" class="node-label">LOCAL AI</text>
+        <text y="8" class="node-sub">EDGE CORE</text>
+        <circle cx="0" cy="0" r="22" class="hub-pulse" />
+      </g>
+
+      <!-- Branching Wires -->
+      <path d="M 183 90 C 210 90, 210 45, 235 45" class="wire wire-active" />
+      <path d="M 183 90 L 235 90" class="wire wire-active" />
+      <path d="M 183 90 C 210 90, 210 135, 235 135" class="wire wire-active" />
+
+      <!-- Branch Nodes: STT, LLM, TTS -->
+      <g class="arch-node" transform="translate(265, 45)">
+        <rect x="-28" y="-14" width="56" height="28" rx="5" class="node-box" />
+        <text y="4" class="node-sub">WHISPER STT</text>
+      </g>
+      <g class="arch-node" transform="translate(265, 90)">
+        <rect x="-28" y="-14" width="56" height="28" rx="5" class="node-box node-box-purple" />
+        <text y="4" class="node-sub">LLaMA 3 INT4</text>
+      </g>
+      <g class="arch-node" transform="translate(265, 135)">
+        <rect x="-28" y="-14" width="56" height="28" rx="5" class="node-box" />
+        <text y="4" class="node-sub">PIPER TTS</text>
+      </g>
+
+      <!-- Packets -->
+      <circle r="3" class="packet packet-cyan">
+        <animateMotion path="M 183 90 C 210 90, 210 45, 235 45" dur="1.8s" repeatCount="indefinite" />
+      </circle>
+      <circle r="3" class="packet packet-cyan">
+        <animateMotion path="M 183 90 L 235 90" dur="1.8s" begin="0.3s" repeatCount="indefinite" />
+      </circle>
+      <circle r="3" class="packet packet-cyan">
+        <animateMotion path="M 183 90 C 210 90, 210 135, 235 135" dur="1.8s" begin="0.6s" repeatCount="indefinite" />
+      </circle>
+
+      <text x="170" y="22" text-anchor="middle" class="svg-title-tag">SAMANVAY-7 NEURAL AUDIO PIPELINE</text>
+      <text x="170" y="168" text-anchor="middle" class="svg-sub-tag">Local Edge Audio Synthesis · 100% On-Device Privacy</text>
+    </svg>
+  )}
+
+  {variant === 'swasthya' && (
+    <svg viewBox="0 0 340 180" class="arch-svg" preserveAspectRatio="xMidYMid meet">
+      <!-- 3 Inbound Peripheral Nodes (Rural Clinics) -->
+      <g class="arch-node" transform="translate(45, 45)">
+        <circle r="14" class="node-box" />
+        <text y="3" class="node-sub">ASHA</text>
+      </g>
+      <g class="arch-node" transform="translate(45, 90)">
+        <circle r="14" class="node-box" />
+        <text y="3" class="node-sub">PHC</text>
+      </g>
+      <g class="arch-node" transform="translate(45, 135)">
+        <circle r="14" class="node-box" />
+        <text y="3" class="node-sub">CLINIC</text>
+      </g>
+
+      <!-- Funnel Wires -->
+      <path d="M 59 45 C 100 45, 100 90, 135 90" class="wire wire-active" />
+      <path d="M 59 90 L 135 90" class="wire wire-active" />
+      <path d="M 59 135 C 100 135, 100 90, 135 90" class="wire wire-active" />
+
+      <!-- Central AI Triage Engine -->
+      <g class="arch-node" transform="translate(165, 90)">
+        <rect x="-30" y="-22" width="60" height="44" rx="8" class="node-box node-box-green" />
+        <text y="-4" class="node-label">AI TRIAGE</text>
+        <text y="8" class="node-sub">5-TIER NHM</text>
+        <circle cx="0" cy="0" r="24" class="verify-ripple" />
+      </g>
+
+      <!-- Outbound Escalation -->
+      <path d="M 195 90 L 240 90" class="wire wire-verified" />
+
+      <!-- District Hospital -->
+      <g class="arch-node" transform="translate(275, 90)">
+        <rect x="-32" y="-20" width="64" height="40" rx="6" class="node-box node-box-cyan" />
+        <text y="-3" class="node-label">DISTRICT</text>
+        <text y="9" class="node-sub">HOSPITAL</text>
+      </g>
+
+      <!-- Packets moving in from periphery -->
+      <circle r="3" class="packet packet-green">
+        <animateMotion path="M 59 45 C 100 45, 100 90, 135 90" dur="2s" repeatCount="indefinite" />
+      </circle>
+      <circle r="3" class="packet packet-green">
+        <animateMotion path="M 59 90 L 135 90" dur="2s" begin="0.4s" repeatCount="indefinite" />
+      </circle>
+      <circle r="3" class="packet packet-green">
+        <animateMotion path="M 59 135 C 100 135, 100 90, 135 90" dur="2s" begin="0.8s" repeatCount="indefinite" />
+      </circle>
+
+      <text x="170" y="22" text-anchor="middle" class="svg-title-tag">SWASTHYA 5-TIER CLINICAL REFERRAL FUNNEL</text>
+      <text x="170" y="168" text-anchor="middle" class="svg-sub-tag">Offline-First Delta Sync · Ayushman Bharat FHIR R4</text>
+    </svg>
+  )}
+
+  {variant === 'zerotrust' && (
+    <svg viewBox="0 0 340 180" class="arch-svg" preserveAspectRatio="xMidYMid meet">
+      <!-- Input Feed -->
+      <g class="arch-node" transform="translate(45, 65)">
+        <rect x="-24" y="-12" width="48" height="24" rx="4" class="node-box" />
+        <text y="4" class="node-sub">WEB DOM</text>
+      </g>
+      <g class="arch-node" transform="translate(45, 115)">
+        <rect x="-24" y="-12" width="48" height="24" rx="4" class="node-box node-box-amber" />
+        <text y="4" class="node-sub">MUTATION ✗</text>
+      </g>
+
+      <!-- Inbound lines -->
+      <path d="M 69 65 L 125 65" class="wire wire-active" />
+      <path d="M 69 115 L 115 115" class="wire wire-danger" />
+
+      <!-- L2 Containment Shield (Dashed perimeter) -->
+      <rect x="120" y="35" width="105" height="110" rx="10" class="shield-border" />
+      <text x="172" y="52" text-anchor="middle" class="shield-title">L2 HOST PROXY</text>
+
+      <!-- 8-Tuple HMAC Token Gate -->
+      <g class="arch-node" transform="translate(172, 90)">
+        <circle r="20" class="node-box node-box-cyan" />
+        <text y="-2" class="node-label">HMAC</text>
+        <text y="8" class="node-sub">0.037ms</text>
+      </g>
+
+      <!-- Deflected Red Vector (Quarantine) -->
+      <path d="M 115 115 L 125 135" class="wire wire-danger" />
+      <circle cx="128" cy="138" r="4" fill="#ef4444" />
+
+      <!-- Verified Outbound Line -->
+      <path d="M 192 90 L 255 90" class="wire wire-verified" />
+
+      <!-- Paradata Hash Ratchet -->
+      <g class="arch-node" transform="translate(285, 90)">
+        <rect x="-30" y="-20" width="60" height="40" rx="6" class="node-box node-box-green" />
+        <text y="-2" class="node-label text-green">PARADATA</text>
+        <text y="10" class="node-sub text-green">LEDGER ✓</text>
+      </g>
+
+      <!-- Active Packet -->
+      <circle r="3.5" class="packet packet-cyan">
+        <animateMotion path="M 69 65 L 172 65 L 172 90 L 285 90" dur="2.2s" repeatCount="indefinite" />
+      </circle>
+
+      <text x="170" y="22" text-anchor="middle" class="svg-title-tag">ZERO-TRUST HOST-SIDE MEDIATION</text>
+      <text x="170" y="168" text-anchor="middle" class="svg-sub-tag">0.0% Replay Attack · Cryptographic Lattice Containment</text>
+    </svg>
+  )}
+
+  {variant === 'cli-terminal' && (
+    <div class="cli-mock-terminal">
+      <div class="cli-header">
+        <span class="cli-dot dot-r"></span>
+        <span class="cli-dot dot-y"></span>
+        <span class="cli-dot dot-g"></span>
+        <span class="cli-title">codeagent scan --offline --local</span>
+      </div>
+      <div class="cli-body">
+        <div class="cli-row"><span class="prompt">$</span> codeagent scan ./repo --ast-depth=max</div>
+        <div class="cli-row cli-scan-anim"><span class="badge-scan">[SCAN]</span> 100% AST parsed (1,482 nodes) · <span class="text-amber">CWE-89 SQLi</span> flagged</div>
+        <div class="cli-row cli-llm-anim"><span class="badge-llm">[LLM]</span>  Synthesizing parameter lattice diff patch...</div>
+        <div class="cli-row cli-pass-anim"><span class="badge-pass">[PASS]</span> Tree-sitter verified · 0 regressions · <span class="text-green">Patch committed ✓</span></div>
+      </div>
+    </div>
+  )}
+</div>
+
+<style>
+.arch-svg-container {
+  width: 100%;
+  height: 100%;
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #090e17;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  position: relative;
+}
+
+.arch-svg {
+  width: 100%;
+  height: 100%;
+  max-height: 200px;
+}
+
+/* Wires */
+.wire {
+  fill: none;
+  stroke: #1e293b;
+  stroke-width: 2;
+}
+
+.wire-active {
+  stroke: #334155;
+  stroke-dasharray: 4 3;
+  animation: wire-dash 1.5s linear infinite;
+}
+
+.wire-verified {
+  stroke: #22c55e;
+  stroke-width: 2.5;
+}
+
+.wire-danger {
+  stroke: #ef4444;
+  stroke-width: 2;
+  stroke-dasharray: 3 3;
+}
+
+@keyframes wire-dash {
+  to { stroke-dashoffset: -14; }
+}
+
+/* Nodes */
+.node-box {
+  fill: #0f172a;
+  stroke: #334155;
+  stroke-width: 1.5;
+  transition: stroke var(--duration-fast) var(--ease-default),
+              fill var(--duration-fast) var(--ease-default);
+}
+
+.node-box-cyan {
+  stroke: #38bdf8;
+  fill: rgba(56, 189, 248, 0.12);
+}
+
+.node-box-green {
+  stroke: #22c55e;
+  fill: rgba(34, 197, 94, 0.12);
+}
+
+.node-box-amber {
+  stroke: #f59e0b;
+  fill: rgba(245, 158, 11, 0.12);
+}
+
+.node-box-purple {
+  stroke: #a855f7;
+  fill: rgba(168, 85, 247, 0.12);
+}
+
+.node-label {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 700;
+  fill: #f8fafc;
+  text-anchor: middle;
+}
+
+.node-sub {
+  font-family: var(--font-mono);
+  font-size: 7px;
+  font-weight: 600;
+  fill: #94a3b8;
+  text-anchor: middle;
+}
+
+.text-green { fill: #22c55e; }
+.text-amber { color: #f59e0b; }
+
+/* SVG Titles */
+.svg-title-tag {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  fill: #38bdf8;
+}
+
+.svg-sub-tag {
+  font-family: var(--font-mono);
+  font-size: 7.5px;
+  font-weight: 500;
+  fill: #64748b;
+}
+
+/* Packets */
+.packet {
+  fill: #38bdf8;
+  filter: drop-shadow(0 0 6px #38bdf8);
+}
+
+.packet-green {
+  fill: #22c55e;
+  filter: drop-shadow(0 0 6px #22c55e);
+}
+
+/* Shield */
+.shield-border {
+  fill: rgba(15, 23, 42, 0.85);
+  stroke: rgba(56, 189, 248, 0.4);
+  stroke-dasharray: 4 3;
+}
+
+.shield-title {
+  font-family: var(--font-mono);
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  fill: #38bdf8;
+}
+
+/* Ripples */
+.verify-ripple {
+  fill: none;
+  stroke: #22c55e;
+  stroke-width: 1.5;
+  animation: pulse-ring 2.8s infinite ease-out;
+}
+
+.llm-pulse-ring {
+  fill: none;
+  stroke: #38bdf8;
+  stroke-width: 1.5;
+  animation: pulse-ring 2.2s infinite ease-out;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.85); opacity: 0.9; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* Sine Waveform for SAMANVAY-7 */
+.sine-path {
+  fill: none;
+  stroke: #38bdf8;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  animation: sine-flow 3s linear infinite;
+}
+
+@keyframes sine-flow {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -100; }
+}
+
+/* Laser beam for CodeAgent */
+.laser-beam {
+  stroke: url(#ca-laser-grad);
+  stroke-width: 2;
+  animation: laser-sweep 2s ease-in-out infinite alternate;
+}
+
+@keyframes laser-sweep {
+  0% { transform: translateX(-6px); }
+  100% { transform: translateX(6px); }
+}
+
+/* CLI Terminal Mock */
+.cli-mock-terminal {
+  width: 100%;
+  height: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: #090e17;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cli-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #1e293b;
+  margin-bottom: 8px;
+}
+
+.cli-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.dot-r { background: #ef4444; }
+.dot-y { background: #f59e0b; }
+.dot-g { background: #22c55e; }
+
+.cli-title {
+  color: #64748b;
+  font-size: 10px;
+  margin-left: 6px;
+}
+
+.cli-body {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: #cbd5e1;
+  line-height: 1.4;
+}
+
+.prompt { color: #38bdf8; font-weight: 700; }
+.badge-scan { color: #38bdf8; font-weight: 700; }
+.badge-llm { color: #c084fc; font-weight: 700; }
+.badge-pass { color: #22c55e; font-weight: 700; }
+</style>

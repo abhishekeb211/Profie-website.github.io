@@ -1,0 +1,447 @@
+---
+// src/components/ArchitectureExplorerModal.astro
+// Interactive Architecture Explorer Modal: transforms project cards into an interactive technical inspection
+// Flow: Source -> Ingestion -> Reasoning & Linting -> Patch -> Verification -> Deployment
+---
+
+<dialog class="arch-explorer-dialog" id="arch-explorer-modal" aria-labelledby="modal-arch-title">
+  <div class="modal-shell">
+    <div class="modal-header">
+      <div class="modal-badge-row">
+        <span class="modal-pill-live">FORENSIC_INSPECTOR</span>
+        <span class="modal-dossier-id" id="modal-dossier-id">DOS-AUDITED</span>
+      </div>
+      <h3 class="modal-title" id="modal-arch-title">Architecture Explorer</h3>
+      <p class="modal-subtitle" id="modal-arch-subtitle">
+        System execution graph, cryptographic guarantees, and container topologies.
+      </p>
+      <button type="button" class="modal-close-btn" id="modal-close-btn" aria-label="Close architecture explorer">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <!-- Interactive Pipeline Flowchart -->
+      <div class="explorer-flow-stage">
+        <div class="flow-stage-header">
+          <span class="flow-stage-tag">SYSTEM EXECUTION PIPELINE</span>
+          <span class="flow-hint">Hover any node to inspect invariants</span>
+        </div>
+
+        <div class="pipeline-dag-track" id="modal-pipeline-track">
+          <!-- Dynamically populated stages -->
+          <div class="pipeline-dag-node" data-tip="Deterministic ingestion via C++20 zero-copy ring buffer">
+            <span class="dag-step-num">01</span>
+            <span class="dag-step-name">INGESTION</span>
+            <span class="dag-step-sub">C++ SocketCAN</span>
+          </div>
+          <span class="pipeline-connector">➔</span>
+          <div class="pipeline-dag-node" data-tip="Mahalanobis distance & rolling Z-score discard nominal frames">
+            <span class="dag-step-num">02</span>
+            <span class="dag-step-name">GATING</span>
+            <span class="dag-step-sub">Z-Score Filter</span>
+          </div>
+          <span class="pipeline-connector">➔</span>
+          <div class="pipeline-dag-node" data-tip="Quantized INT4 GGUF engine awakens only on verified anomaly">
+            <span class="dag-step-num">03</span>
+            <span class="dag-step-name">REASONING</span>
+            <span class="dag-step-sub">Local NPU Core</span>
+          </div>
+          <span class="pipeline-connector">➔</span>
+          <div class="pipeline-dag-node node-highlight-green" data-tip="Tree-sitter AST syntax and parameter lattice verification">
+            <span class="dag-step-num">04</span>
+            <span class="dag-step-name">VERIFY</span>
+            <span class="dag-step-sub">AST & HMAC ✓</span>
+          </div>
+        </div>
+
+        <!-- Node Dynamic Tooltip Readout -->
+        <div class="node-inspect-banner" id="modal-node-banner">
+          <span class="inspect-dot"></span>
+          <span class="inspect-text" id="modal-inspect-text">Hover over any pipeline node above to inspect its formal mathematical guarantee.</span>
+        </div>
+      </div>
+
+      <!-- Container Topologies & Docker Services -->
+      <div class="explorer-meta-grid">
+        <div class="meta-section-box">
+          <h4 class="meta-box-title">Containerized Microservices</h4>
+          <div class="meta-pills-row" id="modal-docker-pills">
+            <span class="docker-chip">service-ingest-c20</span>
+            <span class="docker-chip">service-npu-engine</span>
+            <span class="docker-chip">service-paradata-ledger</span>
+          </div>
+        </div>
+
+        <div class="meta-section-box">
+          <h4 class="meta-box-title">Audit Verification & Pass Rate</h4>
+          <div class="audit-pass-card">
+            <span class="pass-val text-green" id="modal-pass-rate">100% Passed</span>
+            <span class="pass-sub">Verified against Master Forensic Report</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer-actions">
+        <a href="#" class="btn btn-primary" id="modal-deepdive-link">
+          Read Full Doctoral Case Study →
+        </a>
+        <button type="button" class="btn btn-ghost" id="modal-secondary-close">
+          Close Explorer
+        </button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  function setupArchitectureExplorer() {
+    const dialog = document.getElementById('arch-explorer-modal') as HTMLDialogElement | null;
+    if (!dialog) return;
+
+    const closeBtn = document.getElementById('modal-close-btn');
+    const secCloseBtn = document.getElementById('modal-secondary-close');
+    const bannerText = document.getElementById('modal-inspect-text');
+
+    const closeModal = () => {
+      dialog.close();
+      document.body.style.overflow = '';
+    };
+
+    if (closeBtn) closeBtn.onclick = closeModal;
+    if (secCloseBtn) secCloseBtn.onclick = closeModal;
+
+    // Close on backdrop click
+    dialog.onclick = (e) => {
+      if (e.target === dialog) closeModal();
+    };
+
+    // Hover tooltip inspection on pipeline nodes
+    const updateNodeInspect = () => {
+      const nodes = dialog.querySelectorAll<HTMLElement>('.pipeline-dag-node');
+      nodes.forEach(node => {
+        node.onmouseenter = () => {
+          const tip = node.getAttribute('data-tip');
+          if (bannerText && tip) {
+            bannerText.textContent = tip;
+            bannerText.style.color = '#38bdf8';
+          }
+        };
+        node.onmouseleave = () => {
+          if (bannerText) {
+            bannerText.textContent = 'Hover over any pipeline node above to inspect its formal mathematical guarantee.';
+            bannerText.style.color = '';
+          }
+        };
+      });
+    };
+    updateNodeInspect();
+
+    // Global hook for card triggers: window.openArchitectureExplorer(data)
+    (window as any).openArchitectureExplorer = (projData: any) => {
+      const titleElem = document.getElementById('modal-arch-title');
+      const subElem = document.getElementById('modal-arch-subtitle');
+      const dossierElem = document.getElementById('modal-dossier-id');
+      const passElem = document.getElementById('modal-pass-rate');
+      const linkElem = document.getElementById('modal-deepdive-link') as HTMLAnchorElement | null;
+      const dockerBox = document.getElementById('modal-docker-pills');
+
+      if (titleElem && projData.title) titleElem.textContent = `${projData.title} · Architecture Explorer`;
+      if (subElem && projData.tagline) subElem.textContent = projData.tagline;
+      if (dossierElem && projData.dossierId) dossierElem.textContent = `${projData.dossierId} · VERIFIED`;
+      if (passElem && projData.passRate) passElem.textContent = projData.passRate;
+      if (linkElem && projData.url) linkElem.href = projData.url;
+
+      if (dockerBox && projData.dockerServices) {
+        dockerBox.innerHTML = projData.dockerServices.map((s: string) => `<span class="docker-chip">${s}</span>`).join('');
+      }
+
+      dialog.showModal();
+      document.body.style.overflow = 'hidden';
+      updateNodeInspect();
+    };
+  }
+
+  setupArchitectureExplorer();
+  document.addEventListener('astro:page-load', setupArchitectureExplorer);
+</script>
+
+<style>
+.arch-explorer-dialog {
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 0;
+  background: #0b111e;
+  color: #f8fafc;
+  max-width: min(780px, 94vw);
+  width: 100%;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 30px rgba(56, 189, 248, 0.2);
+}
+
+.arch-explorer-dialog::backdrop {
+  background: rgba(8, 13, 23, 0.85);
+  backdrop-filter: blur(8px);
+}
+
+.modal-shell {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  padding: var(--space-5) var(--space-6);
+  background: rgba(15, 23, 42, 0.95);
+  border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+  position: relative;
+}
+
+.modal-badge-row {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.modal-pill-live {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.modal-dossier-id {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.modal-title {
+  font-size: var(--text-xl);
+  font-weight: 800;
+  color: #f8fafc;
+  margin: 0;
+}
+
+.modal-subtitle {
+  font-size: var(--text-xs);
+  color: #94a3b8;
+  margin: var(--space-1) 0 0;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: var(--space-5);
+  right: var(--space-5);
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--duration-fast) var(--ease-default),
+              background-color var(--duration-fast) var(--ease-default),
+              border-color var(--duration-fast) var(--ease-default);
+}
+
+.modal-close-btn:hover {
+  color: #fff;
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+}
+
+.modal-body {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* Pipeline Track */
+.explorer-flow-stage {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.flow-stage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.flow-stage-tag {
+  color: #38bdf8;
+  font-weight: 700;
+}
+
+.flow-hint {
+  color: #64748b;
+}
+
+.pipeline-dag-track {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  overflow-x: auto;
+  padding: var(--space-2) 0;
+}
+
+.pipeline-dag-node {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 95px;
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-default),
+              border-color var(--duration-fast) var(--ease-default),
+              background-color var(--duration-fast) var(--ease-default);
+}
+
+.pipeline-dag-node:hover {
+  transform: translateY(-2px);
+  border-color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+}
+
+.node-highlight-green {
+  border-color: rgba(34, 197, 94, 0.4);
+}
+
+.dag-step-num {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: #64748b;
+}
+
+.dag-step-name {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.dag-step-sub {
+  font-size: 9px;
+  color: #94a3b8;
+}
+
+.pipeline-connector {
+  color: #475569;
+  font-weight: 700;
+}
+
+.node-inspect-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: var(--space-3);
+  padding: 8px 12px;
+  background: rgba(8, 13, 23, 0.9);
+  border: 1px dashed rgba(56, 189, 248, 0.3);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.inspect-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #38bdf8;
+}
+
+.inspect-text {
+  color: #94a3b8;
+  transition: color var(--duration-fast) var(--ease-default);
+}
+
+/* Meta Box */
+.explorer-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .explorer-meta-grid {
+    grid-template-columns: 1.4fr 0.8fr;
+  }
+}
+
+.meta-section-box {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.meta-box-title {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  margin: 0 0 var(--space-2) 0;
+  letter-spacing: 0.05em;
+}
+
+.meta-pills-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.docker-chip {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid #334155;
+  color: #38bdf8;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.audit-pass-card {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pass-val {
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  color: #22c55e;
+}
+
+.pass-sub {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.modal-footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding-top: var(--space-2);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+</style>

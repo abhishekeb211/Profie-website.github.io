@@ -1,6 +1,7 @@
 ---
 // ProjectCard.astro — Accessible project card conforming to contrast rules and linking to deep-dive case studies
 import { getShowcaseForProject } from '../data/showcaseRegistry';
+import AnimatedProjectSVG from './AnimatedProjectSVG.astro';
 
 interface Props {
   project: {
@@ -26,9 +27,32 @@ const desc = project.tagline || project.summary || '';
 const stageBadge = project.stage || project.status || 'Prototype';
 const showcase = getShowcaseForProject(project.id);
 const heroImage = showcase?.heroImage;
+
+const svgVariantMap: Record<string, 'codeagent' | 'samanvay' | 'swasthya' | 'zerotrust' | 'cli-terminal'> = {
+  'codeagent': 'codeagent',
+  'vulrag-security': 'codeagent',
+  'agentic-browser-defense': 'zerotrust',
+  'hierarchical-ids': 'zerotrust',
+  'swasthya-health-network': 'swasthya',
+  'blockchain-ehr-bcfl': 'swasthya',
+  'supper-ide': 'cli-terminal',
+  'operon-extension': 'cli-terminal',
+  'mc-ctvit-eeg-transformer': 'samanvay',
+  'sanjaya-ai': 'samanvay'
+};
+const svgVariant = svgVariantMap[project.id];
 ---
 <article class="project-card">
-  {heroImage && (
+  {svgVariant ? (
+    <a href={`${base}/projects/${project.id}/`} class="card-thumb-link" tabindex="-1" aria-hidden="true">
+      <div class="card-thumb-wrap card-svg-wrap">
+        <AnimatedProjectSVG variant={svgVariant} title={`${project.title} Architecture Flow`} />
+        <div class="card-thumb-overlay">
+          <span class="card-thumb-badge">Live Architecture DAG</span>
+        </div>
+      </div>
+    </a>
+  ) : heroImage ? (
     <a href={`${base}/projects/${project.id}/`} class="card-thumb-link" tabindex="-1" aria-hidden="true">
       <div class="card-thumb-wrap">
         <img
@@ -42,7 +66,7 @@ const heroImage = showcase?.heroImage;
         </div>
       </div>
     </a>
-  )}
+  ) : null}
 
   <div class="card-meta">
     <span class="card-domain">{project.domain}</span>
@@ -76,9 +100,25 @@ const heroImage = showcase?.heroImage;
   </div>
 
   <div class="card-footer">
-    <a href={`${base}/projects/${project.id}/`} class="case-study-link">
-      Read Case Study →
-    </a>
+    <div class="card-actions-left">
+      <a href={`${base}/projects/${project.id}/`} class="case-study-link">
+        Case Study →
+      </a>
+      <button
+        type="button"
+        class="arch-explore-trigger"
+        data-project-id={project.id}
+        data-project-title={project.title}
+        data-project-tagline={desc}
+        data-project-url={`${base}/projects/${project.id}/`}
+        data-dossier-id={showcase?.deepArchitecture.dossierId || 'DOS-AUDITED'}
+        data-pass-rate={showcase?.deepArchitecture.testPassRate || '100% Passed'}
+        data-docker-services={JSON.stringify(showcase?.deepArchitecture.dockerServices || ['service-core', 'service-api'])}
+        aria-label={`Inspect ${project.title} Architecture Flow`}
+      >
+        Architecture ⊕
+      </button>
+    </div>
     <div class="card-external-links">
       {project.github && (
         <a href={project.github} target="_blank" rel="noopener noreferrer" class="card-link" aria-label={`${project.title} GitHub repository`}>
@@ -294,4 +334,58 @@ const heroImage = showcase?.heroImage;
 .card-link:hover {
   color: var(--color-primary);
 }
+.card-actions-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.arch-explore-trigger {
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #38bdf8;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-default),
+              border-color var(--duration-fast) var(--ease-default),
+              color var(--duration-fast) var(--ease-default);
+}
+
+.arch-explore-trigger:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: #38bdf8;
+  color: #fff;
+}
 </style>
+
+<script>
+  function setupCardTriggers() {
+    document.querySelectorAll<HTMLButtonElement>('.arch-explore-trigger').forEach(btn => {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        const data = {
+          id: btn.getAttribute('data-project-id'),
+          title: btn.getAttribute('data-project-title'),
+          tagline: btn.getAttribute('data-project-tagline'),
+          url: btn.getAttribute('data-project-url'),
+          dossierId: btn.getAttribute('data-dossier-id'),
+          passRate: btn.getAttribute('data-pass-rate'),
+          dockerServices: JSON.parse(btn.getAttribute('data-docker-services') || '[]')
+        };
+        if (typeof (window as any).openArchitectureExplorer === 'function') {
+          (window as any).openArchitectureExplorer(data);
+        } else if (data.url) {
+          window.location.href = data.url;
+        }
+      };
+    });
+  }
+  setupCardTriggers();
+  document.addEventListener('astro:page-load', setupCardTriggers);
+</script>

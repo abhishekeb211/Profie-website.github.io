@@ -1,0 +1,457 @@
+---
+// src/components/TelemetryMetrics.astro — Living Telemetry Impact Metrics
+// Replaces generic counter cards with rich visual telemetry:
+// 1. Circular SVG progress ring (99.44% Test Pass)
+// 2. 8 discrete glowing status diodes (20 Flagship Systems)
+// 3. Mini SVG sparkline histogram (70 Audited Repositories)
+// 4. 16-cell segmented activity bar (500+ Students Mentored)
+
+interface Props {
+  variant?: 'hero' | 'dense' | 'professor';
+  class?: string;
+}
+
+const { variant = 'hero', class: className = '' } = Astro.props;
+---
+
+<div class={`telemetry-container telemetry-variant-${variant} ${className}`} data-telemetry-root>
+  <!-- Telemetry Metric 1: Automated Verification Test Ring -->
+  <div class="telemetry-card interactive-card" data-metric="tests">
+    <div class="telemetry-header">
+      <div class="telemetry-tag badge-blue">
+        <span class="telemetry-pulse-dot"></span>
+        <span class="telemetry-tag-label">VERIFY 99.4%</span>
+      </div>
+      <div class="telemetry-graphic ring-graphic" aria-hidden="true">
+        <svg viewBox="0 0 44 44" class="progress-ring-svg">
+          <circle class="ring-bg" cx="22" cy="22" r="18" />
+          <circle 
+            class="ring-fill" 
+            cx="22" 
+            cy="22" 
+            r="18" 
+            stroke-dasharray="113.1" 
+            stroke-dashoffset="0.63" 
+          />
+        </svg>
+        <span class="ring-center-icon">✓</span>
+      </div>
+    </div>
+    <div class="telemetry-body">
+      <div class="telemetry-val-row">
+        <span class="telemetry-num" data-count-target="708" data-count-suffix="/712">708/712</span>
+      </div>
+      <span class="telemetry-lbl">Passing Live Tests</span>
+      <span class="telemetry-sub">99.44% zero-flakiness audit</span>
+    </div>
+  </div>
+
+  <!-- Telemetry Metric 2: Flagship Systems Discrete Diodes -->
+  <div class="telemetry-card interactive-card" data-metric="systems">
+    <div class="telemetry-header">
+      <div class="telemetry-tag badge-teal">
+        <span class="telemetry-pulse-dot"></span>
+        <span class="telemetry-tag-label">ARCH TIER-3</span>
+      </div>
+      <div class="telemetry-graphic diode-graphic" aria-hidden="true" title="8 Active Engineering Pipelines">
+        <span class="diode active diode-1"></span>
+        <span class="diode active diode-2"></span>
+        <span class="diode active diode-3"></span>
+        <span class="diode active diode-4"></span>
+        <span class="diode active diode-5"></span>
+        <span class="diode active diode-6"></span>
+        <span class="diode active diode-7"></span>
+        <span class="diode active diode-8"></span>
+      </div>
+    </div>
+    <div class="telemetry-body">
+      <div class="telemetry-val-row">
+        <span class="telemetry-num" data-count-target="20" data-count-suffix="">20</span>
+        <span class="telemetry-unit">Systems</span>
+      </div>
+      <span class="telemetry-lbl">Flagship Architectures</span>
+      <span class="telemetry-sub">Agentic, PQC, Edge, Clinical</span>
+    </div>
+  </div>
+
+  <!-- Telemetry Metric 3: Audited Repositories Sparkline Histogram -->
+  <div class="telemetry-card interactive-card" data-metric="repos">
+    <div class="telemetry-header">
+      <div class="telemetry-tag badge-violet">
+        <span class="telemetry-pulse-dot"></span>
+        <span class="telemetry-tag-label">59.4 GB AUDIT</span>
+      </div>
+      <div class="telemetry-graphic sparkline-graphic" aria-hidden="true">
+        <svg viewBox="0 0 64 24" class="sparkline-svg" preserveAspectRatio="none">
+          <line x1="4" y1="20" x2="4" y2="12" class="spark-bar b1" />
+          <line x1="11" y1="20" x2="11" y2="8" class="spark-bar b2" />
+          <line x1="18" y1="20" x2="18" y2="14" class="spark-bar b3" />
+          <line x1="25" y1="20" x2="25" y2="6" class="spark-bar b4" />
+          <line x1="32" y1="20" x2="32" y2="10" class="spark-bar b5" />
+          <line x1="39" y1="20" x2="39" y2="4" class="spark-bar b6" />
+          <line x1="46" y1="20" x2="46" y2="11" class="spark-bar b7" />
+          <line x1="53" y1="20" x2="53" y2="3" class="spark-bar b8" />
+          <line x1="60" y1="20" x2="60" y2="2" class="spark-bar b9" />
+        </svg>
+      </div>
+    </div>
+    <div class="telemetry-body">
+      <div class="telemetry-val-row">
+        <span class="telemetry-num" data-count-target="70" data-count-suffix="">70</span>
+        <span class="telemetry-unit">Repos</span>
+      </div>
+      <span class="telemetry-lbl">Audited Repositories</span>
+      <span class="telemetry-sub">86,727 files · Forensic catalog</span>
+    </div>
+  </div>
+
+  <!-- Telemetry Metric 4: Mentored Engineers Segmented Activity Grid -->
+  <div class="telemetry-card interactive-card" data-metric="mentorship">
+    <div class="telemetry-header">
+      <div class="telemetry-tag badge-amber">
+        <span class="telemetry-pulse-dot"></span>
+        <span class="telemetry-tag-label">IMPACT</span>
+      </div>
+      <div class="telemetry-graphic grid-graphic" aria-hidden="true" title="500+ Mentorship Pipeline">
+        <div class="heat-grid">
+          <span class="heat-cell lvl-2"></span>
+          <span class="heat-cell lvl-3"></span>
+          <span class="heat-cell lvl-4"></span>
+          <span class="heat-cell lvl-1"></span>
+          <span class="heat-cell lvl-3"></span>
+          <span class="heat-cell lvl-4"></span>
+          <span class="heat-cell lvl-2"></span>
+          <span class="heat-cell lvl-4"></span>
+          <span class="heat-cell lvl-4"></span>
+          <span class="heat-cell lvl-3"></span>
+          <span class="heat-cell lvl-4"></span>
+          <span class="heat-cell lvl-2"></span>
+          <span class="heat-cell lvl-1"></span>
+          <span class="heat-cell lvl-4"></span>
+          <span class="heat-cell lvl-3"></span>
+          <span class="heat-cell lvl-4"></span>
+        </div>
+      </div>
+    </div>
+    <div class="telemetry-body">
+      <div class="telemetry-val-row">
+        <span class="telemetry-num" data-count-target="500" data-count-suffix="+">500+</span>
+        <span class="telemetry-unit">Students</span>
+      </div>
+      <span class="telemetry-lbl">Engineers Mentored</span>
+      <span class="telemetry-sub">Coding & Motorsports Clubs</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .telemetry-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3, 0.75rem);
+    margin-top: var(--space-4, 1rem);
+    width: 100%;
+  }
+
+  @media (min-width: 640px) {
+    .telemetry-container {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .telemetry-card {
+    background: var(--color-surface, #111827);
+    border: 1px solid var(--color-border, #1f2937);
+    border-radius: var(--radius-md, 0.5rem);
+    padding: var(--space-3, 0.75rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 120px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.25s ease,
+                background-color 0.25s ease,
+                box-shadow 0.25s ease;
+  }
+
+  .telemetry-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: transparent;
+    transition: background-color 0.25s ease;
+  }
+
+  .telemetry-card[data-metric="tests"]:hover::before {
+    background: #3b82f6;
+  }
+  .telemetry-card[data-metric="systems"]:hover::before {
+    background: #14b8a6;
+  }
+  .telemetry-card[data-metric="repos"]:hover::before {
+    background: #a855f7;
+  }
+  .telemetry-card[data-metric="mentorship"]:hover::before {
+    background: #f59e0b;
+  }
+
+  .telemetry-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-border-hover, #374151);
+    box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Header & Badges */
+  .telemetry-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: var(--space-2, 0.5rem);
+  }
+
+  .telemetry-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: var(--radius-sm, 0.25rem);
+    font-family: var(--font-mono, monospace);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  .badge-blue {
+    background: rgba(59, 130, 246, 0.12);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.25);
+  }
+
+  .badge-teal {
+    background: rgba(20, 184, 166, 0.12);
+    color: #2dd4bf;
+    border: 1px solid rgba(20, 184, 166, 0.25);
+  }
+
+  .badge-violet {
+    background: rgba(168, 85, 247, 0.12);
+    color: #c084fc;
+    border: 1px solid rgba(168, 85, 247, 0.25);
+  }
+
+  .badge-amber {
+    background: rgba(245, 158, 11, 0.12);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.25);
+  }
+
+  .telemetry-pulse-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: telemetry-pulse 2s infinite ease-in-out;
+  }
+
+  @keyframes telemetry-pulse {
+    0%, 100% { opacity: 0.4; transform: scale(0.9); }
+    50% { opacity: 1; transform: scale(1.15); }
+  }
+
+  /* Mini Graphics */
+  .telemetry-graphic {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 1. Progress Ring */
+  .ring-graphic {
+    position: relative;
+    width: 32px;
+    height: 32px;
+  }
+
+  .progress-ring-svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+
+  .ring-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.1);
+    stroke-width: 3.5;
+  }
+
+  .ring-fill {
+    fill: none;
+    stroke: #10b981;
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s ease-out;
+    filter: drop-shadow(0 0 3px rgba(16, 185, 129, 0.5));
+  }
+
+  .ring-center-icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #10b981;
+  }
+
+  /* 2. Diode array */
+  .diode-graphic {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .diode {
+    width: 4px;
+    height: 14px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.15);
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .diode.active {
+    background: #14b8a6;
+    box-shadow: 0 0 5px rgba(20, 184, 166, 0.6);
+  }
+
+  .diode-1 { animation: diode-wave 3s infinite 0.1s; }
+  .diode-2 { animation: diode-wave 3s infinite 0.2s; }
+  .diode-3 { animation: diode-wave 3s infinite 0.3s; }
+  .diode-4 { animation: diode-wave 3s infinite 0.4s; }
+  .diode-5 { animation: diode-wave 3s infinite 0.5s; }
+  .diode-6 { animation: diode-wave 3s infinite 0.6s; }
+  .diode-7 { animation: diode-wave 3s infinite 0.7s; }
+  .diode-8 { animation: diode-wave 3s infinite 0.8s; }
+
+  @keyframes diode-wave {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; filter: brightness(1.3); }
+  }
+
+  /* 3. Sparkline Histogram */
+  .sparkline-graphic {
+    width: 48px;
+    height: 22px;
+  }
+
+  .sparkline-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .spark-bar {
+    stroke: #a855f7;
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    transition: stroke-height 0.3s ease;
+  }
+
+  .b1 { stroke: rgba(168, 85, 247, 0.4); }
+  .b2 { stroke: rgba(168, 85, 247, 0.6); }
+  .b3 { stroke: rgba(168, 85, 247, 0.5); }
+  .b4 { stroke: rgba(168, 85, 247, 0.8); }
+  .b5 { stroke: rgba(168, 85, 247, 0.6); }
+  .b6 { stroke: rgba(168, 85, 247, 0.9); }
+  .b7 { stroke: rgba(168, 85, 247, 0.7); }
+  .b8 { stroke: #c084fc; filter: drop-shadow(0 0 2px rgba(168, 85, 247, 0.7)); }
+  .b9 { stroke: #c084fc; filter: drop-shadow(0 0 3px rgba(168, 85, 247, 0.9)); }
+
+  /* 4. Heat Grid */
+  .grid-graphic {
+    width: 38px;
+    height: 20px;
+  }
+
+  .heat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 2px;
+    width: 100%;
+    height: 100%;
+  }
+
+  .heat-cell {
+    border-radius: 1px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .lvl-1 { background: rgba(245, 158, 11, 0.25); }
+  .lvl-2 { background: rgba(245, 158, 11, 0.45); }
+  .lvl-3 { background: rgba(245, 158, 11, 0.7); }
+  .lvl-4 { 
+    background: #f59e0b; 
+    box-shadow: 0 0 3px rgba(245, 158, 11, 0.5); 
+  }
+
+  /* Body & Typography */
+  .telemetry-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .telemetry-val-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+  }
+
+  .telemetry-num {
+    font-size: var(--text-lg, 1.25rem);
+    font-weight: 800;
+    font-family: var(--font-mono, monospace);
+    color: var(--color-text, #f9fafb);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .telemetry-unit {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--color-text-secondary, #9ca3af);
+  }
+
+  .telemetry-lbl {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-text, #e5e7eb);
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .telemetry-sub {
+    font-size: 0.65rem;
+    color: var(--color-text-tertiary, #6b7280);
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .telemetry-pulse-dot,
+    .diode-1, .diode-2, .diode-3, .diode-4,
+    .diode-5, .diode-6, .diode-7, .diode-8 {
+      animation: none;
+    }
+  }
+</style>

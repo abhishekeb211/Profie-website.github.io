@@ -1,0 +1,644 @@
+---
+// src/components/ResearchKnowledgeGraph.astro — Living R&D Knowledge Graph
+// Clustered dual-tree SVG taxonomy of Abhishek's research ecosystem:
+// 1. Trustworthy AI & Gated Security (CodeAgent, QGuard, ZeroTrust, PQC, SAST AST)
+// 2. Sovereign Local & Multimodal Edge AI (SAMANVAY-7, MC-CTViT, VehicleGPT, Disaster DSU)
+// Interactive nodes link directly to project case studies and architectural dossiers.
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+interface ResearchNode {
+  id: string;
+  name: string;
+  code: string;
+  cluster: 'trust' | 'local';
+  x: number;
+  y: number;
+  type: 'hub' | 'subhub' | 'leaf';
+  projectSlug?: string;
+  metrics: string;
+  citation: string;
+}
+
+const researchNodes: ResearchNode[] = [
+  // Cluster 1: Trustworthy & Governed AI (Left Branch)
+  {
+    id: 'trust-hub',
+    name: 'Trustworthy AI & Formal Governance',
+    code: 'HUB-01',
+    cluster: 'trust',
+    x: 240,
+    y: 60,
+    type: 'hub',
+    metrics: '708/712 Passing Tests (99.44%)',
+    citation: 'Comprehensive Portfolio Forensic Master Report'
+  },
+  {
+    id: 'node-codeagent',
+    name: 'CodeAgent / VulRAG',
+    code: 'APR-AST',
+    cluster: 'trust',
+    x: 100,
+    y: 170,
+    type: 'leaf',
+    projectSlug: 'vulrag-security',
+    metrics: 'Multi-Analyzer AST Repair // Zero Cloud Leak',
+    citation: 'DOS-P2-001 (PRISMA SLR & Semgrep Consensus)'
+  },
+  {
+    id: 'node-zerotrust',
+    name: 'Agentic Browser Defense',
+    code: 'L2-PROXY',
+    cluster: 'trust',
+    x: 240,
+    y: 180,
+    type: 'leaf',
+    projectSlug: 'agentic-browser-defense',
+    metrics: '0.0377 ms Latency // 0.0% Replay Attack',
+    citation: 'DOS-P1-003 (8-Tuple HMAC-SHA256 Token Gating)'
+  },
+  {
+    id: 'node-pqc',
+    name: 'QGuard / BCFL-PoCC',
+    cluster: 'trust',
+    x: 380,
+    y: 170,
+    type: 'leaf',
+    projectSlug: 'blockchain-ehr-bcfl',
+    metrics: 'Lipschitz Gradient Bound // Byzantine Safe',
+    citation: 'DOS-P3-002 (Solidity Pass & Smart Contract Attestation)'
+  },
+  {
+    id: 'trust-converge',
+    name: 'Formal AI Security Core',
+    code: 'CORE-VERIFY',
+    cluster: 'trust',
+    x: 240,
+    y: 300,
+    type: 'subhub',
+    metrics: '45 Evidence Journal Entries // 100% Traceability',
+    citation: 'Audit Dossier Master Journal'
+  },
+
+  // Cluster 2: Sovereign Local & Multimodal Edge AI (Right Branch)
+  {
+    id: 'local-hub',
+    name: 'Sovereign Local & Multimodal Edge',
+    code: 'HUB-02',
+    cluster: 'local',
+    x: 720,
+    y: 60,
+    type: 'hub',
+    metrics: 'Sub-12W Compute // Zero-Egress Boundary',
+    citation: 'Edge AI Systems Architecture Registry'
+  },
+  {
+    id: 'node-samanvay',
+    name: 'SAMANVAY-7 / Swasthya AI',
+    code: 'SLM-LOCAL',
+    cluster: 'local',
+    x: 580,
+    y: 170,
+    type: 'leaf',
+    projectSlug: 'swasthya-health-network',
+    metrics: '100% Local Inference // Edge STT/LLM/TTS',
+    citation: 'DOS-P1-002 (Zero-Cloud Clinical Protocol)'
+  },
+  {
+    id: 'node-mc-ctvit',
+    name: 'MC-CTViT Scalp Transformer',
+    code: 'EEG-ATTN',
+    cluster: 'local',
+    x: 680,
+    y: 200,
+    type: 'leaf',
+    projectSlug: 'mc-ctvit-eeg-transformer',
+    metrics: '99.95% Attention FLOP Reduction',
+    citation: 'DOS-P1-001 (DEAP/SEED Multi-Channel Quad-Branch)'
+  },
+  {
+    id: 'node-vehiclegpt',
+    name: 'VehicleGPT Edge Telemetry',
+    code: 'C++20-RT',
+    cluster: 'local',
+    x: 780,
+    y: 160,
+    type: 'leaf',
+    projectSlug: 'vehiclegpt',
+    metrics: '106,934 fps Ingest // 0.00% Drops under 12W',
+    citation: 'DOS-P1-004 (Dual-Plane Decoupling)'
+  },
+  {
+    id: 'node-isro',
+    name: 'Disaster DSU Routing',
+    code: 'GEO-DSU',
+    cluster: 'local',
+    x: 880,
+    y: 190,
+    type: 'leaf',
+    projectSlug: 'isro-route-resilience',
+    metrics: '100% Graph Continuity // -38.4% Evacuation',
+    citation: 'DOS-P6-001 (ISRO Disaster Management)'
+  },
+  {
+    id: 'local-converge',
+    name: 'Privacy & Real-Time Edge Runtime',
+    code: 'EDGE-RUNTIME',
+    cluster: 'local',
+    x: 720,
+    y: 300,
+    type: 'subhub',
+    metrics: 'Hardware In-the-Loop Verified',
+    citation: 'MicroVM / RTOS Execution Environment'
+  }
+];
+
+// Structural Filaments connecting hubs to leaves to convergence points
+const treeConnections: [string, string][] = [
+  // Left Tree (Trust)
+  ['trust-hub', 'node-codeagent'],
+  ['trust-hub', 'node-zerotrust'],
+  ['trust-hub', 'node-pqc'],
+  ['node-codeagent', 'trust-converge'],
+  ['node-zerotrust', 'trust-converge'],
+  ['node-pqc', 'trust-converge'],
+
+  // Right Tree (Local/Edge)
+  ['local-hub', 'node-samanvay'],
+  ['local-hub', 'node-mc-ctvit'],
+  ['local-hub', 'node-vehiclegpt'],
+  ['local-hub', 'node-isro'],
+  ['node-samanvay', 'local-converge'],
+  ['node-mc-ctvit', 'local-converge'],
+  ['node-vehiclegpt', 'local-converge'],
+  ['node-isro', 'local-converge'],
+
+  // Cross-Cluster Federated Bridge
+  ['trust-converge', 'local-converge']
+];
+
+const connectionPairs = treeConnections.map(([sId, tId]) => {
+  const s = researchNodes.find((n) => n.id === sId)!;
+  const t = researchNodes.find((n) => n.id === tId)!;
+  return { s, t, id: `${sId}--${tId}` };
+});
+---
+
+<div class="research-graph-container interactive-card" data-research-graph>
+  <div class="research-graph-header">
+    <div class="header-text-block">
+      <span class="section-tag badge-violet">Ecosystem R&D Taxonomy</span>
+      <h3 class="graph-heading">Research Knowledge Graph & Investigation Streams</h3>
+      <p class="graph-desc">
+        Clustered dual-tree topology connecting Abhishek's published systems, security paradigms, and edge architectures. Select any node to reveal citation telemetry or navigate to its formal case study.
+      </p>
+    </div>
+    <div class="cluster-legends">
+      <span class="legend-pill legend-trust">
+        <span class="legend-dot"></span> Trustworthy & Governed AI
+      </span>
+      <span class="legend-pill legend-local">
+        <span class="legend-dot"></span> Sovereign Local & Edge AI
+      </span>
+    </div>
+  </div>
+
+  <div class="graph-svg-wrapper">
+    <svg viewBox="0 0 980 370" class="research-svg" aria-label="Research Knowledge Graph Visualizing Trustworthy AI and Edge Systems">
+      <defs>
+        <!-- Gradients -->
+        <linearGradient id="trustLineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.7" />
+          <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.7" />
+        </linearGradient>
+        <linearGradient id="localLineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#14b8a6" stop-opacity="0.7" />
+          <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.7" />
+        </linearGradient>
+        <linearGradient id="bridgeLineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#8b5cf6" />
+          <stop offset="50%" stop-color="#ec4899" />
+          <stop offset="100%" stop-color="#14b8a6" />
+        </linearGradient>
+      </defs>
+
+      <!-- Connection Lines -->
+      <g class="graph-lines">
+        {connectionPairs.map((conn) => {
+          const isBridge = conn.id.includes('converge');
+          return (
+            <line
+              x1={conn.s.x}
+              y1={conn.s.y}
+              x2={conn.t.x}
+              y2={conn.t.y}
+              class={`tree-line ${isBridge ? 'bridge-line' : conn.s.cluster === 'trust' ? 'trust-line' : 'local-line'}`}
+              data-connection={conn.id}
+              data-source={conn.s.id}
+              data-target={conn.t.id}
+            />
+          );
+        })}
+      </g>
+
+      <!-- Graph Nodes -->
+      <g class="graph-nodes">
+        {researchNodes.map((n) => (
+          <g
+            class={`research-node-item node-${n.type} cluster-${n.cluster}`}
+            data-node-id={n.id}
+            data-href={n.projectSlug ? `${base}/projects/${n.projectSlug}/` : undefined}
+            data-metrics={n.metrics}
+            data-citation={n.citation}
+            data-name={n.name}
+            tabindex="0"
+            role="button"
+            aria-label={`${n.name} (${n.code}): ${n.metrics}`}
+          >
+            <!-- Outer Ring -->
+            <circle
+              cx={n.x}
+              y={n.y}
+              r={n.type === 'hub' ? 24 : n.type === 'subhub' ? 18 : 14}
+              class="r-outer-ring"
+            />
+            <!-- Inner Solid Node -->
+            <circle
+              cx={n.x}
+              y={n.y}
+              r={n.type === 'hub' ? 14 : n.type === 'subhub' ? 10 : 8}
+              class="r-inner-core"
+            />
+
+            <!-- Node Code Pill -->
+            <text
+              x={n.x}
+              y={n.y + 4}
+              text-anchor="middle"
+              class="r-node-code"
+            >
+              {n.type === 'hub' ? '★' : n.type === 'subhub' ? '▼' : '●'}
+            </text>
+
+            <!-- Node Label Text -->
+            <text
+              x={n.x}
+              y={n.type === 'hub' ? n.y - 32 : n.type === 'subhub' ? n.y + 32 : n.y + 26}
+              text-anchor="middle"
+              class="r-node-label"
+            >
+              {n.name}
+            </text>
+          </g>
+        ))}
+      </g>
+    </svg>
+  </div>
+
+  <!-- Interactive Telemetry Footer Bar -->
+  <div class="research-node-inspector" id="research-inspector">
+    <div class="inspector-col-left">
+      <div class="inspector-badge-row">
+        <span class="badge-tag" id="r-inspector-cluster">Trustworthy AI Stream</span>
+        <span class="badge-sub" id="r-inspector-status">Empirical Dossier Citation</span>
+      </div>
+      <h4 class="inspector-title" id="r-inspector-name">Agentic Browser Defense</h4>
+      <p class="inspector-proof-text" id="r-inspector-proof">
+        0.0377 ms Latency // 0.0% Replay Attack (DOS-P1-003)
+      </p>
+    </div>
+    <div class="inspector-col-right" id="r-inspector-action-wrap">
+      <a href={`${base}/projects/agentic-browser-defense/`} class="btn btn-secondary btn-sm" id="r-inspector-link">
+        Open Case Study →
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initResearchGraph() {
+    const root = document.querySelector('[data-research-graph]');
+    if (!root) return;
+
+    const nodes = root.querySelectorAll('.research-node-item');
+    const lines = root.querySelectorAll('.tree-line');
+    const clusterBadge = root.querySelector('#r-inspector-cluster');
+    const nameEl = root.querySelector('#r-inspector-name');
+    const proofEl = root.querySelector('#r-inspector-proof');
+    const linkEl = root.querySelector('#r-inspector-link') as HTMLAnchorElement | null;
+    const actionWrap = root.querySelector('#r-inspector-action-wrap');
+
+    nodes.forEach((node) => {
+      const nodeId = node.getAttribute('data-node-id');
+      const href = node.getAttribute('data-href');
+      const name = node.getAttribute('data-name');
+      const metrics = node.getAttribute('data-metrics');
+      const citation = node.getAttribute('data-citation');
+      const isTrust = node.classList.contains('cluster-trust');
+
+      const selectNode = () => {
+        // Highlight active node
+        nodes.forEach((n) => n.classList.remove('is-active'));
+        node.classList.add('is-active');
+
+        // Highlight connected lines
+        lines.forEach((l) => {
+          const src = l.getAttribute('data-source');
+          const tgt = l.getAttribute('data-target');
+          if (src === nodeId || tgt === nodeId) {
+            l.classList.add('is-active-line');
+          } else {
+            l.classList.remove('is-active-line');
+          }
+        });
+
+        // Update inspector
+        if (clusterBadge) {
+          clusterBadge.textContent = isTrust ? 'Trustworthy & Governed AI' : 'Sovereign Local & Edge AI';
+          clusterBadge.className = `badge-tag ${isTrust ? 'badge-blue' : 'badge-teal'}`;
+        }
+        if (nameEl) nameEl.textContent = name || '';
+        if (proofEl) proofEl.textContent = `${metrics || ''} // ${citation || ''}`;
+
+        if (linkEl && actionWrap) {
+          if (href) {
+            linkEl.href = href;
+            linkEl.style.display = 'inline-flex';
+          } else {
+            linkEl.style.display = 'none';
+          }
+        }
+      };
+
+      node.addEventListener('mouseenter', selectNode);
+      node.addEventListener('focus', selectNode);
+
+      node.addEventListener('click', () => {
+        selectNode();
+        if (href) {
+          window.location.href = href;
+        }
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initResearchGraph);
+  } else {
+    initResearchGraph();
+  }
+  document.addEventListener('astro:page-load', initResearchGraph);
+</script>
+
+<style>
+  .research-graph-container {
+    background: var(--color-surface, #0f172a);
+    border: 1px solid var(--color-border, #1e293b);
+    border-radius: var(--radius-lg, 0.75rem);
+    padding: var(--space-6, 1.5rem);
+    position: relative;
+    overflow: hidden;
+    margin-top: var(--space-6, 1.5rem);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
+  }
+
+  .research-graph-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: var(--space-4, 1rem);
+    border-bottom: 1px solid var(--color-border, #1e293b);
+    padding-bottom: var(--space-4, 1rem);
+  }
+
+  .graph-heading {
+    font-size: var(--text-xl, 1.25rem);
+    font-weight: 700;
+    color: var(--color-text, #f8fafc);
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .graph-desc {
+    font-size: var(--text-xs, 0.75rem);
+    color: var(--color-text-secondary, #94a3b8);
+    max-width: 680px;
+    margin: 0;
+  }
+
+  .cluster-legends {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .legend-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--radius-full, 9999px);
+    font-size: 0.7rem;
+    font-weight: 600;
+    font-family: var(--font-mono, monospace);
+  }
+
+  .legend-trust {
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.25);
+    color: #60a5fa;
+  }
+  .legend-trust .legend-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #3b82f6;
+    box-shadow: 0 0 6px #3b82f6;
+  }
+
+  .legend-local {
+    background: rgba(20, 184, 166, 0.1);
+    border: 1px solid rgba(20, 184, 166, 0.25);
+    color: #2dd4bf;
+  }
+  .legend-local .legend-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #14b8a6;
+    box-shadow: 0 0 6px #14b8a6;
+  }
+
+  .graph-svg-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 980 / 370;
+    background: radial-gradient(circle at 50% 30%, rgba(15, 23, 42, 0.7) 0%, rgba(2, 6, 23, 0.95) 100%);
+    border-radius: var(--radius-md, 0.5rem);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+  }
+
+  .research-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    user-select: none;
+  }
+
+  /* Tree Lines */
+  .tree-line {
+    stroke-width: 1.5;
+    transition: stroke 0.25s ease, stroke-width 0.25s ease, opacity 0.25s ease;
+  }
+
+  .trust-line {
+    stroke: rgba(96, 165, 250, 0.25);
+    stroke-dasharray: 4 3;
+  }
+
+  .local-line {
+    stroke: rgba(45, 212, 191, 0.25);
+    stroke-dasharray: 4 3;
+  }
+
+  .bridge-line {
+    stroke: url(#bridgeLineGrad);
+    stroke-width: 2;
+    stroke-dasharray: 6 4;
+    animation: bridge-dash 4s infinite linear;
+  }
+
+  @keyframes bridge-dash {
+    to { stroke-dashoffset: -40; }
+  }
+
+  .tree-line.is-active-line {
+    stroke-width: 3;
+    stroke: #38bdf8;
+    filter: drop-shadow(0 0 4px #0284c7);
+    stroke-dasharray: none;
+    opacity: 1;
+  }
+
+  /* Node Items */
+  .research-node-item {
+    cursor: pointer;
+    outline: none;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .r-outer-ring {
+    fill: rgba(255, 255, 255, 0.03);
+    stroke-width: 1.5;
+    transition: fill 0.2s ease, stroke 0.2s ease, r 0.25s ease;
+  }
+
+  .cluster-trust .r-outer-ring { stroke: rgba(59, 130, 246, 0.4); }
+  .cluster-local .r-outer-ring { stroke: rgba(20, 184, 166, 0.4); }
+
+  .r-inner-core {
+    transition: fill 0.2s ease, stroke 0.2s ease, r 0.25s ease, filter 0.25s ease;
+  }
+
+  .cluster-trust .r-inner-core { fill: #1e3a8a; stroke: #3b82f6; stroke-width: 2; }
+  .cluster-local .r-inner-core { fill: #134e4a; stroke: #14b8a6; stroke-width: 2; }
+
+  .r-node-code {
+    fill: #e2e8f0;
+    font-size: 8px;
+    font-family: var(--font-mono, monospace);
+    pointer-events: none;
+  }
+
+  .r-node-label {
+    fill: #cbd5e1;
+    font-size: 11px;
+    font-family: var(--font-sans, system-ui, sans-serif);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    pointer-events: none;
+    transition: fill 0.2s ease, font-weight 0.2s ease;
+  }
+
+  /* Hover and Active Node */
+  .research-node-item:hover .r-inner-core,
+  .research-node-item.is-active .r-inner-core {
+    fill: #ffffff;
+    stroke: #38bdf8;
+    filter: drop-shadow(0 0 8px #38bdf8);
+    r: 12;
+  }
+
+  .research-node-item:hover .r-outer-ring,
+  .research-node-item.is-active .r-outer-ring {
+    fill: rgba(56, 189, 248, 0.2);
+    stroke: #38bdf8;
+    stroke-width: 2.5;
+    r: 26;
+  }
+
+  .research-node-item:hover .r-node-label,
+  .research-node-item.is-active .r-node-label {
+    fill: #38bdf8;
+    font-weight: 700;
+    filter: drop-shadow(0 0 3px rgba(6, 182, 212, 0.6));
+  }
+
+  /* Real-time Telemetry Bar */
+  .research-node-inspector {
+    margin-top: var(--space-4, 1rem);
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid var(--color-border, #1e293b);
+    border-radius: var(--radius-md, 0.5rem);
+    padding: var(--space-4, 1rem);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    backdrop-filter: blur(8px);
+  }
+
+  .inspector-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .badge-tag {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.15rem 0.45rem;
+    border-radius: var(--radius-sm, 0.25rem);
+  }
+
+  .badge-sub {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.65rem;
+    color: var(--color-text-secondary, #94a3b8);
+  }
+
+  .inspector-title {
+    font-size: var(--text-base, 1rem);
+    font-weight: 700;
+    color: var(--color-text, #f8fafc);
+    margin: 0;
+  }
+
+  .inspector-proof-text {
+    font-size: var(--text-xs, 0.75rem);
+    color: #34d399;
+    font-family: var(--font-mono, monospace);
+    margin: 0.2rem 0 0 0;
+  }
+
+  .btn-sm {
+    padding: var(--space-2, 0.5rem) var(--space-4, 1rem);
+    font-size: var(--text-xs, 0.75rem);
+  }
+</style>

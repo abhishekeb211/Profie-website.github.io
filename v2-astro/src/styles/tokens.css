@@ -316,6 +316,15 @@ article[id] {
   to   { clip-path: circle(150vmax at var(--vt-x, 85%) var(--vt-y, 25px)); }
 }
 
+/* ─── SHARED-ELEMENT PERSONA VIEW TRANSITIONS ─────────────────────────── */
+.portrait-container {
+  view-transition-name: hero-portrait;
+}
+
+.persona-btn.active {
+  view-transition-name: persona-active-pill;
+}
+
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(*),
   ::view-transition-old(*),
