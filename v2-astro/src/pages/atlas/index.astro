@@ -1,0 +1,269 @@
+---
+// src/pages/atlas/index.astro — Dedicated Systems Atlas Constellation Route
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import SystemsAtlasGraph from '../../components/SystemsAtlasGraph.astro';
+import Icon from '../../components/Icon.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout
+  title="Systems Atlas Constellation — R&D Dependency Graph | Abhishek S. Raut"
+  description="Interactive knowledge graph mapping dependencies, memory middleware, and runtime security governance across Abhishek's 19 production and research systems."
+  persona="architect"
+>
+  <Header slot="header" activePersona="architect" />
+
+  <main class="atlas-main-page">
+    <div class="container-wide">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+        <a href={`${base}/`}>Home</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">Systems Atlas</span>
+      </nav>
+
+      <!-- Atlas Header -->
+      <div class="atlas-header" data-reveal>
+        <div class="badge-pill">
+          <span class="status-indicator"></span>
+          <span>Interactive Architecture Topology // 19 Connected Systems</span>
+        </div>
+        <h1 class="page-title">Systems Atlas Constellation</h1>
+        <p class="page-subtitle">
+          Interactive knowledge topology mapping dependencies, memory middleware, and runtime security governance across all R&D streams. Click or tap any node to inspect system differentiators, hardware constraints, and direct verification dossiers.
+        </p>
+      </div>
+
+      <!-- Main Interactive Systems Atlas Canvas -->
+      <section class="atlas-stage-wrap" data-reveal data-reveal-delay="1">
+        <SystemsAtlasGraph />
+      </section>
+
+      <!-- Atlas Cluster Overview Cards (Mobile & Accessible Breakdown) -->
+      <section class="cluster-summary-section" data-reveal data-reveal-delay="2">
+        <h3 class="cluster-summary-heading">Ecosystem Cluster Taxonomy</h3>
+        <div class="cluster-cards-grid">
+          <div class="cluster-card interactive-card">
+            <span class="cluster-badge badge-blue">Agentic Core</span>
+            <h4>Autonomous Orchestration & AST Repair</h4>
+            <p>CodeAgent, VulRAG, Supper-IDE, Operon-ext. Closed-loop tree-sitter AST validation and deterministic tool gating.</p>
+            <a href={`${base}/projects/`} class="cluster-link">View Systems →</a>
+          </div>
+
+          <div class="cluster-card interactive-card">
+            <span class="cluster-badge badge-teal">Security & Zero-Trust</span>
+            <h4>Runtime Mediation & MicroVMs</h4>
+            <p>Agentic Browser Defense, Hierarchical IDS, Post-Quantum Lattice (QGuard). 8-tuple HMAC tokens and sub-10µs gating.</p>
+            <a href={`${base}/projects/agentic-browser-defense/`} class="cluster-link">Inspect Proxy →</a>
+          </div>
+
+          <div class="cluster-card interactive-card">
+            <span class="cluster-badge badge-violet">Theoretical & Neural</span>
+            <h4>Decoupled Scalp Attention & RAG</h4>
+            <p>MC-CTViT EEG Transformer, TrustWise AdaptiveRag. Quad-branch spatial-temporal decoupling reducing FLOPs by 99.95%.</p>
+            <a href={`${base}/projects/mc-ctvit-eeg-transformer/`} class="cluster-link">Read Proof →</a>
+          </div>
+
+          <div class="cluster-card interactive-card">
+            <span class="cluster-badge badge-amber">Edge & Embedded</span>
+            <h4>Deterministic RTOS & Space Geodesy</h4>
+            <p>VehicleGPT C++20 SCHED_FIFO, ISRO Disaster Routing. Sub-millisecond ring buffers and angle-aware DSU gap healing.</p>
+            <a href={`${base}/projects/vehiclegpt/`} class="cluster-link">View Telemetry →</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer slot="footer" class="site-footer">
+    <div class="container-wide footer-content">
+      <p>© {new Date().getFullYear()} Abhishek S. Raut · Systems & AI Engineering</p>
+      <div class="footer-links">
+        <a href="#top">Top ↑</a>
+      </div>
+    </div>
+  </footer>
+</BaseLayout>
+
+<style>
+  .atlas-main-page {
+    padding: var(--space-6) 0 var(--space-16);
+    min-height: calc(100vh - 80px);
+  }
+
+  .breadcrumb-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-4);
+  }
+
+  .breadcrumb-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .breadcrumb-nav a:hover {
+    color: var(--color-primary);
+  }
+
+  .atlas-header {
+    margin-bottom: var(--space-6);
+  }
+
+  .badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-3);
+  }
+
+  .status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    box-shadow: 0 0 6px var(--color-primary);
+  }
+
+  .page-title {
+    font-size: var(--text-4xl);
+    font-weight: 800;
+    color: var(--color-text);
+    margin: 0 0 var(--space-2) 0;
+    letter-spacing: -0.02em;
+  }
+
+  .page-subtitle {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    max-width: 860px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .atlas-stage-wrap {
+    margin-bottom: var(--space-8);
+  }
+
+  /* Cluster Summary Cards */
+  .cluster-summary-section {
+    margin-top: var(--space-10);
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-8);
+  }
+
+  .cluster-summary-heading {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--space-4);
+  }
+
+  .cluster-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-4);
+  }
+
+  .cluster-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .cluster-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-primary);
+  }
+
+  .cluster-badge {
+    align-self: flex-start;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+  }
+
+  .cluster-card h4 {
+    font-size: var(--text-sm);
+    color: var(--color-text);
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .cluster-card p {
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    margin: 0 0 var(--space-2) 0;
+  }
+
+  .cluster-link {
+    color: var(--color-primary);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-decoration: none;
+    margin-top: auto;
+  }
+
+  .badge-blue {
+    background: rgba(59, 130, 246, 0.12);
+    color: #3b82f6;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+  }
+
+  .badge-teal {
+    background: rgba(20, 184, 166, 0.12);
+    color: #14b8a6;
+    border: 1px solid rgba(20, 184, 166, 0.3);
+  }
+
+  .badge-violet {
+    background: rgba(168, 85, 247, 0.12);
+    color: #a855f7;
+    border: 1px solid rgba(168, 85, 247, 0.3);
+  }
+
+  .badge-amber {
+    background: rgba(245, 158, 11, 0.12);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+  }
+
+  .site-footer {
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-6) 0;
+    background: var(--color-surface);
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+  }
+
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-links a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+</style>

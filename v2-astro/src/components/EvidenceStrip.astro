@@ -1,0 +1,160 @@
+---
+// src/components/EvidenceStrip.astro — Slim High-Credibility Evidence Strip
+// Positioned directly below the hero to ground Abhishek's authority in verified numbers.
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<aside id="forensic-audit" class={`evidence-strip-container ${className}`} aria-label="Verified Engineering Impact Summary">
+  <div class="evidence-strip interactive-card">
+    <a href={`${base}/evidence/`} class="strip-item" title="Inspect 708/712 automated passing checks in the Evidence Hub">
+      <div class="item-head">
+        <span class="status-dot dot-green"></span>
+        <span class="strip-val" data-count-target="708" data-count-suffix="/712">708/712</span>
+      </div>
+      <span class="strip-lbl">Passing Live Checks</span>
+      <span class="strip-badge">99.44% VERIFIED</span>
+    </a>
+
+    <div class="strip-divider" aria-hidden="true"></div>
+
+    <a href={`${base}/projects/`} class="strip-item" title="Explore 20 production and research systems">
+      <div class="item-head">
+        <span class="status-dot dot-cyan"></span>
+        <span class="strip-val" data-count-target="20" data-count-suffix="">20</span>
+      </div>
+      <span class="strip-lbl">Flagship Architectures</span>
+      <span class="strip-badge">TIER-3 SYSTEMS</span>
+    </a>
+
+    <div class="strip-divider" aria-hidden="true"></div>
+
+    <a href={`${base}/evidence/`} class="strip-item" title="Inspect 70 audited repositories in the Evidence Hub">
+      <div class="item-head">
+        <span class="status-dot dot-purple"></span>
+        <span class="strip-val" data-count-target="70" data-count-suffix="">70</span>
+      </div>
+      <span class="strip-lbl">Repositories Audited</span>
+      <span class="strip-badge">86k FILES · 59.4 GB</span>
+    </a>
+
+    <div class="strip-divider" aria-hidden="true"></div>
+
+    <a href={`${base}/about/`} class="strip-item" title="Read about student mentorship and leadership">
+      <div class="item-head">
+        <span class="status-dot dot-amber"></span>
+        <span class="strip-val" data-count-target="500" data-count-suffix="+">500+</span>
+      </div>
+      <span class="strip-lbl">Engineers Mentored</span>
+      <span class="strip-badge">PCCOE CODING CLUB</span>
+    </a>
+  </div>
+</aside>
+
+<style>
+  .evidence-strip-container {
+    width: 100%;
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+
+  .evidence-strip {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3) var(--space-4);
+    box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.4);
+  }
+
+  @media (min-width: 768px) {
+    .evidence-strip {
+      grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr;
+      align-items: center;
+      padding: var(--space-3) var(--space-6);
+      gap: var(--space-4);
+    }
+  }
+
+  .strip-divider {
+    display: none;
+    background: var(--color-border);
+    height: 36px;
+    width: 1px;
+  }
+
+  @media (min-width: 768px) {
+    .strip-divider {
+      display: block;
+    }
+  }
+
+  .strip-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    text-decoration: none;
+    padding: var(--space-2);
+    border-radius: var(--radius-sm);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .strip-item:hover {
+    background: rgba(56, 189, 248, 0.05);
+    transform: translateY(-1px);
+  }
+
+  .item-head {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .dot-green { background: #22c55e; box-shadow: 0 0 6px #22c55e; }
+  .dot-cyan { background: #38bdf8; box-shadow: 0 0 6px #38bdf8; }
+  .dot-purple { background: #a855f7; box-shadow: 0 0 6px #a855f7; }
+  .dot-amber { background: #f59e0b; box-shadow: 0 0 6px #f59e0b; }
+
+  .strip-val {
+    font-family: var(--font-mono);
+    font-size: var(--text-lg);
+    font-weight: 800;
+    color: var(--color-text);
+    line-height: 1.1;
+  }
+
+  .strip-lbl {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .strip-badge {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.05em;
+  }
+
+  .strip-item:hover .strip-val {
+    color: var(--color-primary);
+  }
+</style>

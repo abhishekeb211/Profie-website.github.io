@@ -1,0 +1,470 @@
+---
+// src/pages/about/index.astro — Biography, Career Journey & Resume
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Icon from '../../components/Icon.astro';
+import profile from '../../data/profile.json';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const resumeHref = `${base}/resume.pdf`;
+---
+
+<BaseLayout
+  title="About Abhishek S. Raut — AI Research Engineer & Systems Architect"
+  description="Biography, engineering philosophy, institutional leadership at PCCOE Pune, and career trajectory of Abhishek S. Raut."
+  persona="architect"
+>
+  <Header slot="header" activePersona="architect" />
+
+  <main class="about-main-page">
+    <div class="container-content">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+        <a href={`${base}/`}>Home</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">About</span>
+      </nav>
+
+      <!-- Biography Header -->
+      <header class="about-header" data-reveal>
+        <div class="badge-pill">
+          <span class="status-indicator"></span>
+          <span>Pune, India · PCCOE Faculty & Researcher</span>
+        </div>
+        <h1 class="page-title">{profile.identity.name}</h1>
+        <p class="role-subtitle">AI Research Engineer · Systems Architect · Faculty In-charge</p>
+
+        <div class="header-action-row">
+          <a href={resumeHref} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            Download Resume (PDF) ↗
+          </a>
+          <a href={`${base}/evidence/`} class="btn btn-secondary">
+            Review Engineering Evidence →
+          </a>
+        </div>
+      </header>
+
+      <!-- Biography Narrative -->
+      <section class="bio-section" data-reveal data-reveal-delay="1">
+        <h2>Engineering Philosophy & Background</h2>
+        <div class="bio-body">
+          <p>
+            I am an <strong>AI Research Engineer</strong> and systems architect based in Pune, India, serving as faculty and researcher at Pimpri Chinchwad College of Engineering (PCCOE Pune). My engineering investigations focus on bridging the gap between theoretical foundation models and deterministic, reliable production software.
+          </p>
+          <p>
+            Modern AI systems often suffer from unpredictable regressions, opaque prompt injection vectors, and fragile cloud dependencies. My work focuses on <strong>sovereign edge intelligence</strong>: building autonomous closed-loop program repair (CodeAgent/VulRAG), host-side zero-trust mediation proxies (Agentic Browser Defense), and hardware-in-the-loop real-time telemetry ingestion (VehicleGPT C++20).
+          </p>
+          <p>
+            Across 70 audited repositories (86,727 files, 59.4 GB), every novel architecture I design is supported by reproducible empirical evidence: 708 automated test passes (99.44% pass rate), formal complexity derivations (e.g., MC-CTViT reducing EEG attention FLOPs by 99.95%), and open-source verification harnesses.
+          </p>
+        </div>
+      </section>
+
+      <!-- Leadership & Institutional Impact -->
+      <section class="leadership-section" data-reveal data-reveal-delay="2">
+        <h2>Institutional Leadership & Community Mentorship</h2>
+        <div class="leadership-cards">
+          <div class="lead-card interactive-card">
+            <div class="lead-header">
+              <h3>Faculty In-charge · PCCOE Coding Club</h3>
+              <span class="lead-badge badge-teal">500+ Engineers</span>
+            </div>
+            <p>
+              Directing technical mentorship, algorithm training, hackathon strategy, and open-source contributions for over 500 active student developers. Students have placed in national competitions including Smart India Hackathon and competitive programming circuits.
+            </p>
+          </div>
+
+          <div class="lead-card interactive-card">
+            <div class="lead-header">
+              <h3>Faculty In-charge · Institute Motorsports Club</h3>
+              <span class="lead-badge badge-amber">Avionics & Telemetry</span>
+            </div>
+            <p>
+              Advising student automotive engineers on deterministic telemetry data acquisition (CAN bus protocol), sensor logging pipelines, and race strategy analytics for competitive electric and combustion vehicles.
+            </p>
+          </div>
+
+          <div class="lead-card interactive-card">
+            <div class="lead-header">
+              <h3>Academic Pedagogy & Labs</h3>
+              <span class="lead-badge badge-blue">Theory & Practice</span>
+            </div>
+            <p>
+              Lecturing in Theory of Computation (TOC), formal grammars, Turing machines, Data Exploration & Analytics, and Full Stack Distributed Engineering at PCCOE Pune.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Career Progression Timeline -->
+      <section class="timeline-section" data-reveal data-reveal-delay="2">
+        <h2>Career Milestones</h2>
+        <div class="about-timeline">
+          <div class="timeline-item">
+            <div class="item-year">2023–Present</div>
+            <div class="item-content">
+              <h4>AI Research Engineer & Innovation Lead</h4>
+              <span class="item-org">PCCOE Pune</span>
+              <p>Directing multi-agent closed-loop repair research, sovereign local LLMs, and real-time vehicular telematics.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="item-year">2022–Present</div>
+            <div class="item-content">
+              <h4>Faculty In-charge</h4>
+              <span class="item-org">PCCOE Coding Club</span>
+              <p>Mentoring 500+ student developers across algorithm optimization, hackathon systems, and AI platforms.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="item-year">2021–Present</div>
+            <div class="item-content">
+              <h4>Faculty In-charge</h4>
+              <span class="item-org">Institute-Level Motorsports Club</span>
+              <p>Advising high-speed sensor acquisition, CAN network telemetry, and electronic vehicle control.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact & Connect Block -->
+      <section class="contact-section" data-reveal data-reveal-delay="3">
+        <div class="contact-box interactive-card">
+          <span class="section-tag badge-cyan">Connect</span>
+          <h2>Direct Collaboration & Inquiries</h2>
+          <p>Open for applied AI research partnerships, systems architecture consultations, and institutional mentorship.</p>
+          <div class="contact-links">
+            <a href={`mailto:${profile.identity.email}`} class="btn btn-primary">
+              <Icon name="mail" />
+              {profile.identity.email}
+            </a>
+            <a href={profile.identity.linkedin} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+              <Icon name="linkedin" />
+              LinkedIn Profile ↗
+            </a>
+            <a href={profile.identity.github} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+              <Icon name="github" />
+              GitHub Profile ↗
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer slot="footer" class="site-footer">
+    <div class="container-content footer-content">
+      <p>© {new Date().getFullYear()} Abhishek S. Raut · Systems & AI Engineering</p>
+      <div class="footer-links">
+        <a href="#top">Top ↑</a>
+      </div>
+    </div>
+  </footer>
+</BaseLayout>
+
+<style>
+  .about-main-page {
+    padding: var(--space-6) 0 var(--space-16);
+    min-height: calc(100vh - 80px);
+  }
+
+  .breadcrumb-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-4);
+  }
+
+  .breadcrumb-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .breadcrumb-nav a:hover {
+    color: var(--color-primary);
+  }
+
+  .about-header {
+    margin-bottom: var(--space-8);
+  }
+
+  .badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-3);
+  }
+
+  .status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-success);
+    box-shadow: 0 0 6px var(--color-success);
+  }
+
+  .page-title {
+    font-size: var(--text-4xl);
+    font-weight: 800;
+    color: var(--color-text);
+    margin: 0 0 var(--space-1) 0;
+    letter-spacing: -0.02em;
+  }
+
+  .role-subtitle {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-4) 0;
+  }
+
+  .header-action-row {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  /* Bio Section */
+  .bio-section {
+    margin-bottom: var(--space-8);
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-6);
+  }
+
+  .bio-section h2, .leadership-section h2, .timeline-section h2 {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 var(--space-4) 0;
+  }
+
+  .bio-body p {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin: 0 0 var(--space-4) 0;
+  }
+
+  .bio-body strong {
+    color: var(--color-text);
+  }
+
+  /* Leadership Cards */
+  .leadership-section {
+    margin-bottom: var(--space-8);
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-6);
+  }
+
+  .leadership-cards {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .lead-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .lead-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .lead-header h3 {
+    font-size: var(--text-base);
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .lead-badge {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+  }
+
+  .lead-card p {
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Timeline */
+  .timeline-section {
+    margin-bottom: var(--space-8);
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-6);
+  }
+
+  .about-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: var(--space-4);
+    align-items: baseline;
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .item-year {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    color: var(--color-primary);
+  }
+
+  .item-content h4 {
+    font-size: var(--text-sm);
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .item-org {
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    display: inline-block;
+    margin-bottom: var(--space-1);
+  }
+
+  .item-content p {
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Contact Section */
+  .contact-section {
+    margin-top: var(--space-8);
+  }
+
+  .contact-box {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8) var(--space-6);
+    text-align: center;
+  }
+
+  .contact-box h2 {
+    font-size: var(--text-2xl);
+    color: var(--color-text);
+    margin: var(--space-2) 0;
+  }
+
+  .contact-box p {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-5) 0;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-5);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: var(--text-xs);
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .btn-primary {
+    background: var(--color-primary);
+    color: var(--color-on-primary, #ffffff);
+    border: 1px solid transparent;
+  }
+
+  .btn-primary:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    background: var(--color-surface);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .badge-cyan {
+    background: rgba(56, 189, 248, 0.12);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+  }
+  .badge-blue {
+    background: rgba(59, 130, 246, 0.12);
+    color: #3b82f6;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+  }
+  .badge-teal {
+    background: rgba(20, 184, 166, 0.12);
+    color: #14b8a6;
+    border: 1px solid rgba(20, 184, 166, 0.3);
+  }
+  .badge-amber {
+    background: rgba(245, 158, 11, 0.12);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+  }
+
+  .site-footer {
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-6) 0;
+    background: var(--color-surface);
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+  }
+
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-links a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+</style>

@@ -1,0 +1,833 @@
+---
+// src/pages/evidence/index.astro — Engineering Evidence & Verification Hub
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Icon from '../../components/Icon.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout
+  title="Engineering Evidence & Verification Hub | Abhishek S. Raut"
+  description="Empirical validation across 70 repositories (86,727 files, 59.4 GB): 708 live passing tests, 45 traceability entries, quantitative advantage matrix, and 79-page Master Forensic Report."
+  persona="architect"
+>
+  <Header slot="header" activePersona="architect" />
+
+  <main class="evidence-main-page">
+    <div class="container">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+        <a href={`${base}/`}>Home</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">Engineering Evidence</span>
+      </nav>
+
+      <!-- Evidence Header -->
+      <div class="evidence-header" data-reveal>
+        <div class="badge-pill">
+          <span class="status-indicator"></span>
+          <span>Formal Verification & Reproducibility // 70 Repositories</span>
+        </div>
+        <h1 class="page-title">Engineering Evidence & Verification Hub</h1>
+        <p class="page-subtitle">
+          Empirical validation across 70 repositories (86,727 files, 59.4 GB). Every architectural claim is verified through reproducible automated test suites, physical hardware benchmarks, formal journal entries, and cryptographic hashes.
+        </p>
+
+        <!-- Evidence Taxonomy Explainer -->
+        <div class="taxonomy-bar">
+          <span class="taxonomy-item"><span class="badge-verified">VERIFIED</span> Automated reproducible test pass</span>
+          <span class="taxonomy-item"><span class="badge-measured">MEASURED</span> Hardware benchmark</span>
+          <span class="taxonomy-item"><span class="badge-published">PUBLISHED</span> Peer-reviewed record</span>
+          <span class="taxonomy-item"><span class="badge-deployed">DEPLOYED</span> Running production platform</span>
+        </div>
+      </div>
+
+      <!-- Headline Metric Cards -->
+      <div class="headline-metric-grid" data-reveal data-reveal-delay="1">
+        <div class="stat-card interactive-card">
+          <div class="stat-badge badge-blue">AUTOMATED VERIFICATION</div>
+          <div class="stat-val" data-count-target="708" data-count-suffix="/712">708 / 712</div>
+          <div class="stat-lbl">99.44% Automated Test Pass Rate</div>
+          <span class="stat-proof-tag">CI Test Harness Verified</span>
+        </div>
+
+        <div class="stat-card interactive-card">
+          <div class="stat-badge badge-violet">ECOSYSTEM FOOTPRINT</div>
+          <div class="stat-val">70 Repos</div>
+          <div class="stat-lbl">86,727 Files · 59.4 GB Audited</div>
+          <span class="stat-proof-tag">Physical Disk Forensic Catalog</span>
+        </div>
+
+        <div class="stat-card interactive-card">
+          <div class="stat-badge badge-teal">TRACEABILITY MAPPED</div>
+          <div class="stat-val">45 Entries</div>
+          <div class="stat-lbl">100% Traceability Audit Journal</div>
+          <span class="stat-proof-tag">Audit Journal Integrity</span>
+        </div>
+
+        <div class="stat-card interactive-card">
+          <div class="stat-badge badge-amber">REPRODUCIBILITY HASHES</div>
+          <div class="stat-val">16 Dossiers</div>
+          <div class="stat-lbl">Cryptographic SHA-256 Hashes</div>
+          <span class="stat-proof-tag">SHA-256 Immutable Proofs</span>
+        </div>
+      </div>
+
+      <!-- Master Forensic Report PDF Download Banner -->
+      <div class="download-banner interactive-card" data-reveal data-reveal-delay="2">
+        <div class="banner-content">
+          <div class="badge-pill">
+            <span class="status-indicator"></span>
+            <span>Master Forensic Artifact // 79-Page Comprehensive Monograph</span>
+          </div>
+          <h2 class="banner-title">Comprehensive Portfolio Forensic Master Report</h2>
+          <p class="banner-desc">
+            Exhaustive multi-project deep forensics, feature extractions, four-axis advantage deductions, live empirical test verifications across 20 flagship systems, and 3-year strategic technology horizons (2026–2029).
+          </p>
+          <div class="meta-row">
+            <span class="meta-tag">79 Pages</span>
+            <span class="meta-tag">1.06 MB PDF</span>
+            <span class="meta-tag">Nov 7, 2026</span>
+            <span class="meta-tag">APPROVED & VERIFIED</span>
+          </div>
+        </div>
+        <div class="banner-action">
+          <a href={`${base}/COMPREHENSIVE_PORTFOLIO_FORENSIC_MASTER_REPORT.pdf`} target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-large">
+            Download Master Report (PDF) ↗
+          </a>
+        </div>
+      </div>
+
+      <!-- Quantitative Advantage Matrix Table -->
+      <section class="matrix-section" data-reveal data-reveal-delay="2">
+        <div class="section-title-wrap">
+          <span class="section-tag badge-cyan">Comparative Benchmarks</span>
+          <h2 class="subsection-title">Quantitative Advantage Matrix</h2>
+          <p class="section-desc">
+            Empirically measured improvements of Abhishek's architectures over classical baseline approaches across all 6 engineering pillars.
+          </p>
+        </div>
+
+        <div class="matrix-table-wrap">
+          <table class="benchmark-table">
+            <thead>
+              <tr>
+                <th>Architectural Dimension</th>
+                <th>Standard Industry Baseline</th>
+                <th>Abhishek's Novel System Architecture</th>
+                <th>Empirically Measured Advantage</th>
+                <th>Verification Dossier</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Attention Memory Scaling</strong></td>
+                <td>Joint spatial-temporal attention O((C·T)²)</td>
+                <td><span class="text-cyan">MC-CTViT Decoupled Quad-Branch Attention</span></td>
+                <td><span class="metric-pill badge-green">99.95% FLOP Reduction (7,444 vs 1.38M ops)</span></td>
+                <td><code>DOS-P1-001 (16/16 Pass)</code></td>
+              </tr>
+              <tr>
+                <td><strong>Agent Security & Mediation</strong></td>
+                <td>Client-side DOM regex & cloud LLM inspect</td>
+                <td><span class="text-cyan">Host-Side L2/L3 Proxy + 8-Tuple HMAC Tokens</span></td>
+                <td><span class="metric-pill badge-green">0.0377 ms Latency // 0.0% Replay Attack</span></td>
+                <td><code>DOS-P1-003 (6/6 Pass)</code></td>
+              </tr>
+              <tr>
+                <td><strong>Edge Vehicular Telemetry</strong></td>
+                <td>Monolithic Python OS thread (~40% frame drop)</td>
+                <td><span class="text-cyan">Dual-Plane Decoupling (C++20 SCHED_FIFO + NPU)</span></td>
+                <td><span class="metric-pill badge-green">106,934 fps // 0.00% Drops under 12W</span></td>
+                <td><code>DOS-P1-004 (100% Pass)</code></td>
+              </tr>
+              <tr>
+                <td><strong>Geospatial Disaster Routing</strong></td>
+                <td>Pixel raster segmentation (fragmented roads)</td>
+                <td><span class="text-cyan">Angle-Aware DSU/MST Graph Gap Healer</span></td>
+                <td><span class="metric-pill badge-green">100% Graph Continuity // -38.4% Evac Time</span></td>
+                <td><code>DOS-P6-001 (85/86 Pass)</code></td>
+              </tr>
+              <tr>
+                <td><strong>Decentralized Model Aggregation</strong></td>
+                <td>Standard FedAvg (vulnerable to weight poisoning)</td>
+                <td><span class="text-cyan">Proof-of-Cross-Validation (PoCC) Consensus</span></td>
+                <td><span class="metric-pill badge-green">Lipschitz Gradient Bounds Reject Poison</span></td>
+                <td><code>DOS-P3-002 (Solidity Pass)</code></td>
+              </tr>
+              <tr>
+                <td><strong>Autonomous Developer Pairing</strong></td>
+                <td>100% Proprietary cloud API streaming</td>
+                <td><span class="text-cyan">Supper-IDE AMAWS v6.0 Local Model Router</span></td>
+                <td><span class="metric-pill badge-green">80% Local Zero-Egress // 5.87s Test Run</span></td>
+                <td><code>DOS-P4-001 (55/55 Pass)</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Six Grand Theoretical Breakthroughs -->
+      <section class="innovations-section" data-reveal data-reveal-delay="3">
+        <div class="section-title-wrap">
+          <span class="section-tag badge-blue">Theoretical Invariants</span>
+          <h2 class="subsection-title">Six Grand Architectural Breakthroughs</h2>
+        </div>
+
+        <div class="innovations-grid">
+          <div class="innovation-card interactive-card">
+            <span class="innovation-num">01</span>
+            <h4>MC-CTViT Decoupled Attention</h4>
+            <span class="pillar-tag badge-blue">Pillar 1: AI/ML</span>
+            <p>Decouples spatial scalp topology from temporal dynamics, reducing attention memory complexity by 99.95% over joint quadratic tensors.</p>
+            <a href={`${base}/projects/mc-ctvit-eeg-transformer/`} class="innovation-link">Read Dossier →</a>
+          </div>
+
+          <div class="innovation-card interactive-card">
+            <span class="innovation-num">02</span>
+            <h4>Host-Side L2/L3 Mediation Proxy</h4>
+            <span class="pillar-tag badge-teal">Pillar 1: Security</span>
+            <p>Out-of-band mediation proxy with 8-tuple HMAC-SHA256 capability tokens clocking sub-0.05ms gating and zero replay vulnerability.</p>
+            <a href={`${base}/projects/agentic-browser-defense/`} class="innovation-link">Read Dossier →</a>
+          </div>
+
+          <div class="innovation-card interactive-card">
+            <span class="innovation-num">03</span>
+            <h4>Dual-Plane Edge Vehicular Telemetry</h4>
+            <span class="pillar-tag badge-violet">Pillar 1: Edge RTOS</span>
+            <p>Decouples deterministic C++20 SCHED_FIFO sensor ingestion from asynchronous NPU reasoning, clocking 106,934 fps under 12W.</p>
+            <a href={`${base}/projects/vehiclegpt/`} class="innovation-link">Read Dossier →</a>
+          </div>
+
+          <div class="innovation-card interactive-card">
+            <span class="innovation-num">04</span>
+            <h4>Angle-Aware Topological Gap Healer</h4>
+            <span class="pillar-tag badge-amber">Pillar 6: Space Geodesy</span>
+            <p>Post-disaster road graph repair via angular-constrained Minimum Spanning Trees and DSU, ensuring 100% evacuation route continuity.</p>
+            <a href={`${base}/projects/isro-route-resilience/`} class="innovation-link">Read Dossier →</a>
+          </div>
+
+          <div class="innovation-card interactive-card">
+            <span class="innovation-num">05</span>
+            <h4>Sovereign Closed-Loop Program Repair</h4>
+            <span class="pillar-tag badge-blue">Pillar 2: Cybersecurity</span>
+            <p>Multi-analyzer static consensus (Semgrep, Bandit, YARA) with local Ollama models and Tree-sitter AST validation for zero-cloud remediation.</p>
+            <a href={`${base}/projects/vulrag-security/`} class="innovation-link">Read Dossier →</a>
+          </div>
+
+          <div class="innovation-card interactive-card">
+            <span class="innovation-num">06</span>
+            <h4>Byzantine-Resilient PoCC Consensus</h4>
+            <span class="pillar-tag badge-teal">Pillar 3: Healthcare</span>
+            <p>Enforces Lipschitz continuity bounds on gradient updates in decentralized healthcare federated learning, mathematically rejecting poisoned weights.</p>
+            <a href={`${base}/projects/blockchain-ehr-bcfl/`} class="innovation-link">Read Dossier →</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Six Audited Engineering Pillars Registry -->
+      <section class="pillars-section" data-reveal data-reveal-delay="3">
+        <div class="section-title-wrap">
+          <span class="section-tag badge-violet">Ecosystem Footprint</span>
+          <h2 class="subsection-title">Six Audited Engineering Pillars</h2>
+        </div>
+
+        <div class="pillars-grid">
+          <div class="pillar-card interactive-card">
+            <div class="pillar-header">
+              <span class="pillar-tag badge-blue">Pillar 1</span>
+              <h4>AI/ML & Agentic Systems</h4>
+              <span class="tier-badge">Tier 3 Production</span>
+            </div>
+            <p>MC-CTViT EEG Transformer (16/16 tests), TrustWise AdaptiveRag (195/197 tests), Agentic Browser Defense (6/6 tests), VehicleGPT Edge.</p>
+          </div>
+
+          <div class="pillar-card interactive-card">
+            <div class="pillar-header">
+              <span class="pillar-tag badge-teal">Pillar 2</span>
+              <h4>Cybersecurity & Cryptography</h4>
+              <span class="tier-badge">Tier 3 Production</span>
+            </div>
+            <p>VulRAG Local Security (multi-engine APR, PRISMA SLR), Hierarchical IDS (44/44 tests), Post-Quantum Lattice Cryptography (NIST PQC).</p>
+          </div>
+
+          <div class="pillar-card interactive-card">
+            <div class="pillar-header">
+              <span class="pillar-tag badge-violet">Pillar 3</span>
+              <h4>Healthcare & Decentralized Identity</h4>
+              <span class="tier-badge">Tier 3 Platform</span>
+            </div>
+            <p>SIH Swasthya (236 statutory NHM duties, 5-tier clinical referral funnel), Blockchain-EHR & BCFL-PoCC (Solidity, IPFS).</p>
+          </div>
+
+          <div class="pillar-card interactive-card">
+            <div class="pillar-header">
+              <span class="pillar-tag badge-amber">Pillar 4</span>
+              <h4>Developer Tooling & Autonomous IDEs</h4>
+              <span class="tier-badge">Tier 3 Production</span>
+            </div>
+            <p>Supper-IDE AMAWS v6.0 (55/55 tests in 5.87s, 80% low-cost model routing), Operon-ext (307/308 tests, Open VSX extension).</p>
+          </div>
+
+          <div class="pillar-card interactive-card">
+            <div class="pillar-header">
+              <span class="pillar-tag badge-blue">Pillar 5</span>
+              <h4>Enterprise Web & Scalable Platforms</h4>
+              <span class="tier-badge">Tier 3 Production</span>
+            </div>
+            <p>Abhishek Website (Astro v2 Islands, WebGL 3D canvas, offline PWA), Flipkart ML Anomaly Engine, Greencycle Circular Economy.</p>
+          </div>
+
+          <div class="pillar-card interactive-card">
+            <div class="pillar-header">
+              <span class="pillar-tag badge-teal">Pillar 6</span>
+              <h4>Scientific Computing & Space R&D</h4>
+              <span class="tier-badge">Tier 3 Research</span>
+            </div>
+            <p>ISRO Disaster Routing Resilience (Angle-Aware DSU/MST, 85/86 tests), VEGAPilot UAV Avionics & Telemetry (100% Pass).</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer slot="footer" class="site-footer">
+    <div class="container footer-content">
+      <p>© {new Date().getFullYear()} Abhishek S. Raut · Systems & AI Engineering</p>
+      <div class="footer-links">
+        <a href="#top">Top ↑</a>
+      </div>
+    </div>
+  </footer>
+</BaseLayout>
+
+<style>
+  .evidence-main-page {
+    padding: var(--space-6) 0 var(--space-16);
+    min-height: calc(100vh - 80px);
+  }
+
+  .breadcrumb-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-4);
+  }
+
+  .breadcrumb-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .breadcrumb-nav a:hover {
+    color: var(--color-primary);
+  }
+
+  .evidence-header {
+    margin-bottom: var(--space-6);
+  }
+
+  .badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-3);
+  }
+
+  .status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-success);
+    box-shadow: 0 0 6px var(--color-success);
+  }
+
+  .page-title {
+    font-size: var(--text-4xl);
+    font-weight: 800;
+    color: var(--color-text);
+    margin: 0 0 var(--space-2) 0;
+    letter-spacing: -0.02em;
+  }
+
+  .page-subtitle {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    max-width: 860px;
+    line-height: 1.6;
+    margin: 0 0 var(--space-4) 0;
+  }
+
+  .taxonomy-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+  }
+
+  .taxonomy-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .badge-verified {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: var(--radius-sm);
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+  }
+
+  .badge-measured {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: var(--radius-sm);
+    background: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+  }
+
+  .badge-published {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: var(--radius-sm);
+    background: rgba(168, 85, 247, 0.15);
+    color: #a855f7;
+    border: 1px solid rgba(168, 85, 247, 0.3);
+  }
+
+  .badge-deployed {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: var(--radius-sm);
+    background: rgba(20, 184, 166, 0.15);
+    color: #14b8a6;
+    border: 1px solid rgba(20, 184, 166, 0.3);
+  }
+
+  /* Metric Cards */
+  .headline-metric-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+  }
+
+  .stat-card {
+    padding: var(--space-4);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-primary);
+  }
+
+  .stat-badge {
+    align-self: flex-start;
+    font-size: 10px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+  }
+
+  .stat-val {
+    font-size: var(--text-2xl);
+    font-weight: 800;
+    font-family: var(--font-mono);
+    color: var(--color-text);
+    margin-top: 0.25rem;
+  }
+
+  .stat-lbl {
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    line-height: 1.4;
+  }
+
+  .stat-proof-tag {
+    font-size: 10px;
+    color: #22c55e;
+    font-family: var(--font-mono);
+    margin-top: auto;
+  }
+
+  /* Download Banner */
+  .download-banner {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(30, 41, 59, 0.2) 100%);
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    margin-bottom: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  @media (min-width: 860px) {
+    .download-banner {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  .banner-content {
+    max-width: 820px;
+  }
+
+  .banner-title {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-text);
+    margin: var(--space-2) 0;
+  }
+
+  .banner-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--space-3);
+  }
+
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .meta-tag {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-secondary);
+    font-family: var(--font-mono);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .btn-primary {
+    background: var(--color-primary);
+    color: var(--color-on-primary, #ffffff);
+    border: 1px solid transparent;
+  }
+
+  .btn-primary:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+  }
+
+  /* Matrix Table */
+  .matrix-section {
+    margin-bottom: var(--space-8);
+  }
+
+  .section-title-wrap {
+    margin-bottom: var(--space-4);
+  }
+
+  .section-tag {
+    display: inline-block;
+    font-size: var(--text-xs);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-2);
+  }
+
+  .subsection-title {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 var(--space-1) 0;
+  }
+
+  .section-desc {
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    max-width: 820px;
+    margin: 0;
+  }
+
+  .matrix-table-wrap {
+    overflow-x: auto;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    margin-top: var(--space-3);
+  }
+
+  .benchmark-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: var(--text-xs);
+  }
+
+  .benchmark-table th {
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-surface-sunken);
+    color: var(--color-text);
+    border-bottom: 2px solid var(--color-border);
+    white-space: nowrap;
+    font-weight: 700;
+  }
+
+  .benchmark-table td {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+
+  .benchmark-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .benchmark-table tr:hover td {
+    background: rgba(56, 189, 248, 0.03);
+  }
+
+  .metric-pill {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+  }
+
+  .badge-green {
+    background: rgba(34, 197, 94, 0.12);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+  }
+
+  .badge-cyan {
+    background: rgba(56, 189, 248, 0.12);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+  }
+
+  .badge-blue {
+    background: rgba(59, 130, 246, 0.12);
+    color: #3b82f6;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+  }
+
+  .badge-teal {
+    background: rgba(20, 184, 166, 0.12);
+    color: #14b8a6;
+    border: 1px solid rgba(20, 184, 166, 0.3);
+  }
+
+  .badge-violet {
+    background: rgba(168, 85, 247, 0.12);
+    color: #a855f7;
+    border: 1px solid rgba(168, 85, 247, 0.3);
+  }
+
+  .badge-amber {
+    background: rgba(245, 158, 11, 0.12);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+  }
+
+  .text-cyan { color: #38bdf8; }
+
+  /* Innovations Grid */
+  .innovations-section {
+    margin-bottom: var(--space-8);
+  }
+
+  .innovations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-3);
+  }
+
+  .innovation-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .innovation-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-primary);
+  }
+
+  .innovation-num {
+    font-family: var(--font-mono);
+    font-size: var(--text-lg);
+    font-weight: 800;
+    color: var(--color-primary);
+  }
+
+  .innovation-card h4 {
+    font-size: var(--text-base);
+    color: var(--color-text);
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .pillar-tag {
+    align-self: flex-start;
+    font-size: 10px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: var(--radius-sm);
+  }
+
+  .innovation-card p {
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    margin: 0 0 var(--space-2) 0;
+  }
+
+  .innovation-link {
+    color: var(--color-primary);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-decoration: none;
+    margin-top: auto;
+  }
+
+  /* Pillars Grid */
+  .pillars-section {
+    margin-bottom: var(--space-8);
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-3);
+  }
+
+  .pillar-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .pillar-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-primary);
+  }
+
+  .pillar-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .pillar-header h4 {
+    font-size: var(--text-sm);
+    color: var(--color-text);
+    margin: 0;
+    flex: 1;
+    font-weight: 700;
+  }
+
+  .tier-badge {
+    font-size: 10px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--color-success);
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+  }
+
+  .pillar-card p {
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .site-footer {
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-6) 0;
+    background: var(--color-surface);
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+  }
+
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-links a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+</style>

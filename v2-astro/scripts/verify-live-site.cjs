@@ -15,6 +15,10 @@ console.log('====================================================');
 
 const routes = [
   '/',
+  '/lab/',
+  '/atlas/',
+  '/evidence/',
+  '/about/',
   '/professor/',
   '/projects/',
   '/projects/mc-ctvit-eeg-transformer/',
@@ -127,11 +131,32 @@ async function runTests(targetHost) {
   console.log('\n--- GATE 3: Auditing Key Content & Architectural Assertions ---');
   const homeRes = await fetchUrl(`${targetHost}/`);
   assert(homeRes.bodyText.includes('id="forensic-audit"'), 'FAIL: Home page missing #forensic-audit section');
-  assert(homeRes.bodyText.includes('708 / 712'), 'FAIL: Home page missing 708/712 passing test metric');
-  assert(homeRes.bodyText.includes('MC-CTViT Decoupled Attention'), 'FAIL: Innovation 1 missing on home page');
-  assert(homeRes.bodyText.includes('Host-Side L2/L3 Mediation Proxy'), 'FAIL: Innovation 2 missing on home page');
-  assert(homeRes.bodyText.includes('COMPREHENSIVE_PORTFOLIO_FORENSIC_MASTER_REPORT.pdf'), 'FAIL: Home page missing PDF download link');
-  console.log('  ✓ Verified: Home page contains complete Forensic Audit Hub & Grand Innovations.');
+  assert(homeRes.bodyText.includes('708'), 'FAIL: Home page missing 708 passing test metric');
+  assert(homeRes.bodyText.includes('AI Engineering Lab'), 'FAIL: Home page missing AI Engineering Lab teaser');
+  assert(homeRes.bodyText.includes('Systems Atlas'), 'FAIL: Home page missing Systems Atlas teaser');
+  console.log('  ✓ Verified: Home page contains streamlined hero, evidence strip, top flagships, and ecosystem teasers.');
+
+  const evidenceRes = await fetchUrl(`${targetHost}/evidence/`);
+  assert(evidenceRes.bodyText.includes('708 / 712'), 'FAIL: Evidence page missing 708/712 passing test metric');
+  assert(evidenceRes.bodyText.includes('MC-CTViT Decoupled Attention'), 'FAIL: Innovation 1 missing on evidence page');
+  assert(evidenceRes.bodyText.includes('Host-Side L2/L3 Mediation Proxy'), 'FAIL: Innovation 2 missing on evidence page');
+  assert(evidenceRes.bodyText.includes('COMPREHENSIVE_PORTFOLIO_FORENSIC_MASTER_REPORT.pdf'), 'FAIL: Evidence page missing PDF download link');
+  console.log('  ✓ Verified: Dedicated Evidence Hub contains full 708-check matrix, Grand Innovations, and Master Forensic Report.');
+
+  const labRes = await fetchUrl(`${targetHost}/lab/`);
+  assert(labRes.bodyText.includes('AI Engineering Lab'), 'FAIL: Lab page missing title');
+  assert(labRes.bodyText.includes('What is Empirically Measured'), 'FAIL: Lab page missing methodology disclosure');
+  console.log('  ✓ Verified: Dedicated Lab route renders interactive micro-simulators and transparency disclosures.');
+
+  const atlasRes = await fetchUrl(`${targetHost}/atlas/`);
+  assert(atlasRes.bodyText.includes('Systems Atlas Constellation'), 'FAIL: Atlas page missing title');
+  assert(atlasRes.bodyText.includes('Ecosystem Cluster Taxonomy'), 'FAIL: Atlas page missing cluster taxonomy');
+  console.log('  ✓ Verified: Dedicated Atlas route renders multi-system dependency graph and cluster taxonomy.');
+
+  const aboutRes = await fetchUrl(`${targetHost}/about/`);
+  assert(aboutRes.bodyText.includes('Biography'), 'FAIL: About page missing Biography');
+  assert(aboutRes.bodyText.includes('Engineering Philosophy'), 'FAIL: About page missing Engineering Philosophy');
+  console.log('  ✓ Verified: Dedicated About route renders biography, engineering principles, and leadership timeline.');
 
   const profRes = await fetchUrl(`${targetHost}/professor/`);
   ['about', 'teaching', 'leadership', 'research', 'contact'].forEach(id => {
