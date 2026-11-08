@@ -618,21 +618,23 @@ const base = import.meta.env.BASE_URL;
 
 <style>
 .container {
-  max-width: 1200px;
+  width: 100%;
+  max-width: min(96vw, 1720px);
   margin: 0 auto;
-  padding: 0 var(--space-6);
+  padding: 0 var(--space-4);
   position: relative;
   z-index: 2;
 }
 
 .section {
-  padding: var(--space-16) 0;
+  padding: var(--space-8) 0;
   position: relative;
 }
 
 /* Hero */
 .hero-section {
-  padding-top: var(--space-20);
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-8);
   background: var(--hero-bg-gradient);
   overflow: hidden;
 }
@@ -640,7 +642,7 @@ const base = import.meta.env.BASE_URL;
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-10);
+  gap: var(--space-6);
   align-items: center;
 }
 
@@ -794,9 +796,10 @@ const base = import.meta.env.BASE_URL;
 }
 
 .hero-3d-stage {
-  max-width: 1200px;
-  margin: var(--space-8) auto 0 auto;
-  padding: 0 var(--space-6);
+  width: 100%;
+  max-width: min(96vw, 1720px);
+  margin: var(--space-4) auto 0 auto;
+  padding: 0 var(--space-4);
 }
 
 .portrait-container {
@@ -862,7 +865,7 @@ const base = import.meta.env.BASE_URL;
 
 /* Sections */
 .section-header {
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-5);
 }
 
 .section-tag {
@@ -886,13 +889,13 @@ const base = import.meta.env.BASE_URL;
 .section-desc {
   font-size: var(--text-sm);
   color: var(--color-text-secondary);
-  max-width: 600px;
+  max-width: 900px;
 }
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-  gap: var(--space-6);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: var(--space-5);
 }
 
 .projects-grid > * {
@@ -1021,7 +1024,7 @@ const base = import.meta.env.BASE_URL;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  padding: var(--space-12);
+  padding: var(--space-8) var(--space-6);
   text-align: center;
 }
 
@@ -1073,12 +1076,12 @@ const base = import.meta.env.BASE_URL;
 .audit-headline-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: var(--space-4);
-  margin-bottom: var(--space-8);
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
 }
 
 .audit-stat-card {
-  padding: var(--space-5);
+  padding: var(--space-4);
   background: var(--color-surface-raised);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
@@ -1115,11 +1118,11 @@ const base = import.meta.env.BASE_URL;
   background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(30, 41, 59, 0.2) 100%);
   border: 1px solid var(--color-primary);
   border-radius: var(--radius-lg);
-  padding: var(--space-8);
-  margin-bottom: var(--space-12);
+  padding: var(--space-5);
+  margin-bottom: var(--space-6);
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
+  gap: var(--space-4);
   align-items: flex-start;
   justify-content: space-between;
 }
@@ -1132,7 +1135,7 @@ const base = import.meta.env.BASE_URL;
 }
 
 .audit-banner-content {
-  max-width: 740px;
+  max-width: 840px;
 }
 
 .audit-banner-title {
@@ -1174,11 +1177,11 @@ const base = import.meta.env.BASE_URL;
 
 /* Innovations Block */
 .innovations-block {
-  margin-bottom: var(--space-12);
+  margin-bottom: var(--space-6);
 }
 
 .sub-header {
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-4);
 }
 
 .subsection-title {
@@ -1387,14 +1390,14 @@ const base = import.meta.env.BASE_URL;
 
 /* ─── COCKPIT SECTION ─────────────────────────────────────────────────── */
 .section-cockpit {
-  padding: var(--space-12) 0;
+  padding: var(--space-8) 0;
   background: var(--color-bg);
 }
 
 /* ─── QUANTITATIVE ADVANTAGE MATRIX TABLE ──────────────────────────────── */
 .benchmark-matrix-block {
-  margin-top: var(--space-12);
-  margin-bottom: var(--space-12);
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-6);
 }
 
 .matrix-table-wrap {

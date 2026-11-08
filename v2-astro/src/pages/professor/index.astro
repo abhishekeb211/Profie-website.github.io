@@ -207,24 +207,26 @@ const base = import.meta.env.BASE_URL;
 
 <style>
 .container {
-  max-width: 1200px;
+  width: 100%;
+  max-width: min(96vw, 1720px);
   margin: 0 auto;
-  padding: 0 var(--space-6);
+  padding: 0 var(--space-4);
 }
 
 .section {
-  padding: var(--space-16) 0;
+  padding: var(--space-8) 0;
 }
 
 .hero-section {
-  padding-top: var(--space-20);
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-8);
   background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-bg) 100%);
 }
 
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-10);
+  gap: var(--space-6);
   align-items: center;
 }
 
