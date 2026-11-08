@@ -125,6 +125,28 @@
   display: none;
 }
 
+/* ─── CYBERNETIC AI GLOW & NEON TRANSITIONS ────────────────────────────── */
+.cyber-card {
+  position: relative;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  transition: transform var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+  overflow: hidden;
+}
+
+.cyber-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(56, 189, 248, 0.6);
+  box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 189, 248, 0.25);
+}
+
+.cyber-glow-neon {
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
+}
+
 /* ─── PREFERS-REDUCED-MOTION OVERRIDES ─────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   [data-reveal] {

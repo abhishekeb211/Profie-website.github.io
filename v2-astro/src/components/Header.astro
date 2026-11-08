@@ -33,6 +33,7 @@ const navItems = activePersona === 'professor'
     ]
   : [
       { label: 'About', href: `${homePrefix}#about`, current: false },
+      { label: 'Cockpit', href: `${homePrefix}#cockpit`, current: false },
       { label: 'Atlas', href: `${homePrefix}#atlas-graph`, current: false },
       { label: 'Forensic Audit', href: `${homePrefix}#forensic-audit`, current: false },
       { label: 'Projects', href: `${base}/projects/`, current: onProjects },
@@ -43,6 +44,7 @@ const navItems = activePersona === 'professor'
 <header class="site-header">
   <div class="header-inner">
     <a href={activePersona === 'architect' ? architectHref : profHref} class="brand-link" aria-label="Abhishek S. Raut - Home">
+      <span class="brand-beacon" aria-hidden="true"></span>
       <span class="brand-name">Abhishek S. Raut</span>
       <span class="brand-tag">{activePersona === 'professor' ? 'Educator & Faculty' : 'AI Research Engineer'}</span>
     </a>
@@ -226,6 +228,24 @@ const navItems = activePersona === 'professor'
   text-decoration: none;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+.brand-beacon {
+  position: absolute;
+  top: 7px;
+  left: -12px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  animation: beacon-pulse 2s infinite ease-in-out;
+}
+
+@keyframes beacon-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.8); }
 }
 
 .brand-name {

@@ -1,0 +1,228 @@
+---
+// src/components/NeuralHUDTicker.astro
+// High-tech live telemetry and AI Systems Engineering Operations Ticker
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<div class="hud-ticker-wrap" aria-label="AI Systems Live Telemetry Ticker">
+  <div class="hud-ticker-label">
+    <span class="hud-beacon"></span>
+    <span class="hud-label-text">SYS_TELEMETRY</span>
+  </div>
+
+  <div class="hud-ticker-viewport">
+    <div class="hud-ticker-track">
+      <div class="hud-item">
+        <span class="hud-key">HOST_MEDIATION:</span>
+        <span class="hud-val hud-val-cyan">0.0377 ms LATENCY (L2/L3 PROXY)</span>
+      </div>
+      <span class="hud-sep">·</span>
+      <div class="hud-item">
+        <span class="hud-key">ATTN_COMPLEXITY:</span>
+        <span class="hud-val hud-val-green">O(C² + T²) [-99.9% FLOPs DECOUPLED]</span>
+      </div>
+      <span class="hud-sep">·</span>
+      <div class="hud-item">
+        <span class="hud-key">EDGE_POWER:</span>
+        <span class="hud-val hud-val-purple">12W ENVELOPE (ARM64 / RISC-V JETSON)</span>
+      </div>
+      <span class="hud-sep">·</span>
+      <div class="hud-item">
+        <span class="hud-key">CAN_INGESTION:</span>
+        <span class="hud-val hud-val-cyan">106,934 FRAMES/SEC (ZERO-COPY C++20)</span>
+      </div>
+      <span class="hud-sep">·</span>
+      <div class="hud-item">
+        <span class="hud-key">BYZANTINE_DEFENSE:</span>
+        <span class="hud-val hud-val-green">LIPSCHITZ BOUNDS (PoCC CONSENSUS)</span>
+      </div>
+      <span class="hud-sep">·</span>
+      <div class="hud-item">
+        <span class="hud-key">DISASTER_ROUTING:</span>
+        <span class="hud-val hud-val-purple">ANGLE-AWARE DSU/MST GAP HEALING</span>
+      </div>
+      <span class="hud-sep">·</span>
+      <div class="hud-item">
+        <span class="hud-key">QUANTUM_LATTICE:</span>
+        <span class="hud-val hud-val-cyan">NIST FIPS 203 ML-KEM (MODULE-LWE)</span>
+      </div>
+      <span class="hud-sep">·</span>
+      <div class="hud-item">
+        <span class="hud-key">FORENSIC_AUDIT:</span>
+        <span class="hud-val hud-val-green">708 / 712 TESTS PASSED (99.44%)</span>
+      </div>
+      <span class="hud-sep">·</span>
+
+      <!-- Duplicate stream for seamless continuous animation loop -->
+      <div class="hud-item">
+        <span class="hud-key">HOST_MEDIATION:</span>
+        <span class="hud-val hud-val-cyan">0.0377 ms LATENCY (L2/L3 PROXY)</span>
+      </div>
+      <span class="hud-sep">·</span>
+      <div class="hud-item">
+        <span class="hud-key">ATTN_COMPLEXITY:</span>
+        <span class="hud-val hud-val-green">O(C² + T²) [-99.9% FLOPs DECOUPLED]</span>
+      </div>
+      <span class="hud-sep">·</span>
+      <div class="hud-item">
+        <span class="hud-key">EDGE_POWER:</span>
+        <span class="hud-val hud-val-purple">12W ENVELOPE (ARM64 / RISC-V JETSON)</span>
+      </div>
+      <span class="hud-sep">·</span>
+      <div class="hud-item">
+        <span class="hud-key">CAN_INGESTION:</span>
+        <span class="hud-val hud-val-cyan">106,934 FRAMES/SEC (ZERO-COPY C++20)</span>
+      </div>
+      <span class="hud-sep">·</span>
+      <div class="hud-item">
+        <span class="hud-key">BYZANTINE_DEFENSE:</span>
+        <span class="hud-val hud-val-green">LIPSCHITZ BOUNDS (PoCC CONSENSUS)</span>
+      </div>
+      <span class="hud-sep">·</span>
+      <div class="hud-item">
+        <span class="hud-key">DISASTER_ROUTING:</span>
+        <span class="hud-val hud-val-purple">ANGLE-AWARE DSU/MST GAP HEALING</span>
+      </div>
+      <span class="hud-sep">·</span>
+      <div class="hud-item">
+        <span class="hud-key">QUANTUM_LATTICE:</span>
+        <span class="hud-val hud-val-cyan">NIST FIPS 203 ML-KEM (MODULE-LWE)</span>
+      </div>
+      <span class="hud-sep">·</span>
+      <div class="hud-item">
+        <span class="hud-key">FORENSIC_AUDIT:</span>
+        <span class="hud-val hud-val-green">708 / 712 TESTS PASSED (99.44%)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hud-live-tag">
+    <span class="hud-tag-text">LIVE_AUDIT</span>
+  </div>
+</div>
+
+<style>
+.hud-ticker-wrap {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: rgba(10, 15, 29, 0.95);
+  border-top: 1px solid rgba(56, 189, 248, 0.2);
+  border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  overflow: hidden;
+  position: relative;
+  z-index: 20;
+  backdrop-filter: blur(8px);
+}
+
+.hud-ticker-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: rgba(15, 23, 42, 0.95);
+  border-right: 1px solid rgba(56, 189, 248, 0.25);
+  white-space: nowrap;
+  font-weight: 700;
+  color: #38bdf8;
+  letter-spacing: 0.08em;
+  flex-shrink: 0;
+}
+
+.hud-beacon {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  animation: hud-beacon-pulse 1.8s infinite ease-in-out;
+}
+
+@keyframes hud-beacon-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.hud-ticker-viewport {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+}
+
+.hud-ticker-track {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  white-space: nowrap;
+  animation: hud-scroll-loop 48s linear infinite;
+  will-change: transform;
+}
+
+.hud-ticker-wrap:hover .hud-ticker-track {
+  animation-play-state: paused;
+}
+
+@keyframes hud-scroll-loop {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.hud-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.hud-key {
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.hud-val {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.hud-val-cyan {
+  color: #38bdf8;
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+}
+
+.hud-val-green {
+  color: #4ade80;
+  text-shadow: 0 0 10px rgba(74, 222, 128, 0.4);
+}
+
+.hud-val-purple {
+  color: #c084fc;
+  text-shadow: 0 0 10px rgba(192, 132, 252, 0.4);
+}
+
+.hud-sep {
+  color: #475569;
+  font-weight: 800;
+}
+
+.hud-live-tag {
+  padding: 8px 14px;
+  background: rgba(15, 23, 42, 0.95);
+  border-left: 1px solid rgba(56, 189, 248, 0.25);
+  color: #22c55e;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  flex-shrink: 0;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .hud-live-tag {
+    display: block;
+  }
+}
+</style>

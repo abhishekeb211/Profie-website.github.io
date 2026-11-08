@@ -5,6 +5,8 @@ import Header from '../components/Header.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import SystemsAtlasGraph from '../components/SystemsAtlasGraph.astro';
 import Hero3DScene from '../components/Hero3DScene.astro';
+import NeuralHUDTicker from '../components/NeuralHUDTicker.astro';
+import NeuralWorkstationCockpit from '../components/NeuralWorkstationCockpit.astro';
 import Icon from '../components/Icon.astro';
 import profile from '../data/profile.json';
 import { getCollection } from 'astro:content';
@@ -19,6 +21,9 @@ const base = import.meta.env.BASE_URL;
   persona="architect"
 >
   <Header slot="header" activePersona="architect" />
+
+  <!-- High-Tech Live Telemetry Ticker -->
+  <NeuralHUDTicker />
 
   <!-- Hero Section -->
   <section id="about" class="section hero-section">
@@ -107,6 +112,23 @@ const base = import.meta.env.BASE_URL;
     <!-- 3D Interactive Agentic Loop State Machine -->
     <div class="hero-3d-stage" data-reveal data-reveal-delay="2">
       <Hero3DScene />
+    </div>
+  </section>
+
+  <!-- Interactive AI Systems Engineering Cockpit Section -->
+  <section id="cockpit" class="section section-cockpit">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="section-tag badge-teal">Live Architectural Micro-Simulators</span>
+        <h2 class="section-title">Interactive AI Engineering Cockpit</h2>
+        <p class="section-desc">
+          Test and verify Abhishek's core architectural innovations live in the browser: evaluate deterministic CAN ring buffers, simulate 8-tuple HMAC capability token gating, calculate quad-branch EEG tensor reductions, and run topological satellite gap healing.
+        </p>
+      </div>
+
+      <div data-reveal data-reveal-delay="1">
+        <NeuralWorkstationCockpit />
+      </div>
     </div>
   </section>
 
@@ -289,6 +311,75 @@ const base = import.meta.env.BASE_URL;
             </div>
             <p>Enforces Lipschitz continuity bounds on gradient updates in decentralized healthcare federated learning, mathematically rejecting poisoned weights before block commit.</p>
           </div>
+        </div>
+      </div>
+
+      <!-- Quantitative Advantage Matrix -->
+      <div class="benchmark-matrix-block" data-reveal data-reveal-delay="2">
+        <div class="sub-header">
+          <span class="section-tag badge-cyan">Quantitative Advantage Matrix</span>
+          <h3 class="subsection-title">Empirical Performance vs. Classical Baselines</h3>
+          <p class="section-desc" style="font-size: var(--text-xs); color: var(--color-text-secondary); margin-top: var(--space-2);">
+            Direct comparative measurements extracted from the 79-page Comprehensive Forensic Master Report across all 6 engineering pillars.
+          </p>
+        </div>
+
+        <div class="matrix-table-wrap">
+          <table class="benchmark-table">
+            <thead>
+              <tr>
+                <th>Architectural Dimension</th>
+                <th>Standard Industry Baseline</th>
+                <th>Abhishek's Novel System Architecture</th>
+                <th>Empirically Measured Advantage</th>
+                <th>Verification Dossier</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Attention Memory Scaling</strong></td>
+                <td>Joint spatial-temporal attention O((C·T)²)</td>
+                <td><span class="text-cyan">MC-CTViT Decoupled Quad-Branch Attention</span></td>
+                <td><span class="metric-pill badge-green">99.95% FLOP Reduction (7,444 vs 1.38M ops)</span></td>
+                <td><code>DOS-P1-001 (16/16 Pass)</code></td>
+              </tr>
+              <tr>
+                <td><strong>Agent Security & Mediation</strong></td>
+                <td>Client-side DOM regex & cloud LLM inspect</td>
+                <td><span class="text-cyan">Host-Side L2/L3 Proxy + 8-Tuple HMAC Tokens</span></td>
+                <td><span class="metric-pill badge-green">0.0377 ms Latency // 0.0% Replay Attack</span></td>
+                <td><code>DOS-P1-003 (6/6 Pass)</code></td>
+              </tr>
+              <tr>
+                <td><strong>Edge Vehicular Telemetry</strong></td>
+                <td>Monolithic Python OS thread (~40% frame drop)</td>
+                <td><span class="text-cyan">Dual-Plane Decoupling (C++20 SCHED_FIFO + NPU)</span></td>
+                <td><span class="metric-pill badge-green">106,934 fps // 0.00% Drops under 12W</span></td>
+                <td><code>DOS-P1-004 (100% Pass)</code></td>
+              </tr>
+              <tr>
+                <td><strong>Geospatial Disaster Routing</strong></td>
+                <td>Pixel raster segmentation (fragmented roads)</td>
+                <td><span class="text-cyan">Angle-Aware DSU/MST Graph Gap Healer</span></td>
+                <td><span class="metric-pill badge-green">100% Graph Continuity // -38.4% Evac Time</span></td>
+                <td><code>DOS-P6-001 (85/86 Pass)</code></td>
+              </tr>
+              <tr>
+                <td><strong>Decentralized Model Aggregation</strong></td>
+                <td>Standard FedAvg (vulnerable to weight poisoning)</td>
+                <td><span class="text-cyan">Proof-of-Cross-Validation (PoCC) Consensus</span></td>
+                <td><span class="metric-pill badge-green">Lipschitz Gradient Bounds Reject Poison</span></td>
+                <td><code>DOS-P3-002 (Solidity Pass)</code></td>
+              </tr>
+              <tr>
+                <td><strong>Autonomous Developer Pairing</strong></td>
+                <td>100% Proprietary cloud API streaming</td>
+                <td><span class="text-cyan">Supper-IDE AMAWS v6.0 Local Model Router</span></td>
+                <td><span class="metric-pill badge-green">80% Local Zero-Egress // 5.87s Test Run</span></td>
+                <td><code>DOS-P4-001 (55/55 Pass)</code></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -1194,5 +1285,79 @@ const base = import.meta.env.BASE_URL;
 
 .roadmap-list strong {
   color: var(--color-text);
+}
+
+/* ─── COCKPIT SECTION ─────────────────────────────────────────────────── */
+.section-cockpit {
+  padding: var(--space-12) 0;
+  background: var(--color-bg);
+}
+
+/* ─── QUANTITATIVE ADVANTAGE MATRIX TABLE ──────────────────────────────── */
+.benchmark-matrix-block {
+  margin-top: var(--space-12);
+  margin-bottom: var(--space-12);
+}
+
+.matrix-table-wrap {
+  overflow-x: auto;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  margin-top: var(--space-4);
+}
+
+.benchmark-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: var(--text-xs);
+}
+
+.benchmark-table th {
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-sunken);
+  color: var(--color-text);
+  font-weight: 700;
+  border-bottom: 2px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.benchmark-table td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.benchmark-table tr:last-child td {
+  border-bottom: none;
+}
+
+.benchmark-table tr:hover td {
+  background: rgba(56, 189, 248, 0.03);
+}
+
+.metric-pill {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+.badge-green {
+  background: rgba(34, 197, 94, 0.12);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.badge-cyan {
+  background: rgba(56, 189, 248, 0.12);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
 }
 </style>
