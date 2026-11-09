@@ -21,7 +21,7 @@ This doc ties the [recommended order of work](README.md#-deployment-github-pages
 ### Applied
 
 - **LCP (Largest Contentful Paint)**  
-  - Preload hero image: `<link rel="preload" as="image" href="images/Me%20Suit%20with%20white%20bg1.png" type="image/png">`.  
+  - Preload hero image: `<link rel="preload" as="image" href="images/hero-abhishek-transparent.png" type="image/png">`.  
   - Hero `<img>` has `fetchpriority="high"`, `width="400"` and `height="400"` to avoid layout shift and help prioritization.
 - **CLS (Cumulative Layout Shift)**  
   - Hero: `.hero-image-container` uses `aspect-ratio: 1` and `.hero-main-img` has explicit dimensions + `object-fit: cover` so space is reserved before the image loads.

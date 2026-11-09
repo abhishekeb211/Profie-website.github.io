@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
     initTabs();
     initOrbitChips();
+    initPrismaticTerminal();
 
     if (!shouldReduceMotion) {
         initTiltEffects();
@@ -1284,6 +1285,119 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { threshold: 0.1 });
         tables.forEach(t => tableObserver.observe(t));
     }());
+
+    // --- PRISMATIC DEVELOPER TERMINAL INTERACTION ---
+    function initPrismaticTerminal() {
+        const terminalBody = document.getElementById('terminal-body');
+        const actionBtns = document.querySelectorAll('.term-action-btn');
+        if (!terminalBody || !actionBtns.length) return;
+
+        let isStreaming = false;
+
+        const defaultLogs = [
+            '<div class="terminal-line"><span class="t-prompt">$</span> <span class="t-cmd">abhishek.init_orchestrator</span>(<span class="t-param">models</span>=[<span class="t-str">"Llama-3.2"</span>, <span class="t-str">"DeepSeek-R1"</span>, <span class="t-str">"Claude-3.5"</span>])</div>',
+            '<div class="terminal-line t-info">[SYSTEM] Prismatic Multi-Agent Mesh initialized across 5 nodes</div>',
+            '<div class="terminal-line t-success">[SYNAPSE] Consensus achieved: Swasthya AI decentralized audit passed (99.8%)</div>',
+            '<div class="terminal-line t-cyan">[BENCHMARK] Inference speed: 84 tokens/sec on vLLM + CUDA 12.4</div>',
+            '<div class="terminal-line t-amber">[AGENT_SYNC] SAMANVAY-7 multi-agent triage stream active (latency: 18ms)</div>',
+            '<div class="terminal-line t-stream" id="terminal-stream-line"><span class="t-prompt">&gt;</span> <span class="t-cursor">_</span></div>'
+        ];
+
+        const commands = {
+            samanvay: [
+                { text: '$ python -m samanvay.triage --offline --privacy-pod', type: 'cmd' },
+                { text: '[INIT] Loading local Llama-3.2 3B Instruct weights (quantized 4-bit GGUF)...', type: 'info' },
+                { text: '[PRIVACY] Air-gapped container: 0 outbound connections, zero biometric data retained.', type: 'cyan' },
+                { text: '[AUDIO] Real-time VAD voice synthesis active (streaming latency: 12ms).', type: 'amber' },
+                { text: '[READY] Anonymous therapy companion active. Listening to user...', type: 'success' }
+            ],
+            consensus: [
+                { text: '$ ./coding-agent-cli audit --agents=5 --zero-trust', type: 'cmd' },
+                { text: '[DISPATCH] 5 autonomous subagents inspecting repository AST & dependency graph...', type: 'info' },
+                { text: '[AGENT-1] Security gate verification: PASS (OWASP Top 10 validated)', type: 'cyan' },
+                { text: '[AGENT-2] Memory leak analysis: 0 leaks, 712 tests passing (99.4%)', type: 'success' },
+                { text: '[AGENT-3] SARIF report normalized. Zero-Trust verification signature signed.', type: 'magenta' },
+                { text: '[CONSENSUS] 100% agreement reached: Multi-agent consensus validated.', type: 'success' }
+            ],
+            benchmark: [
+                { text: '$ vllm benchmark --model Llama-3.2-11B --tensor-parallel 2', type: 'cmd' },
+                { text: '[CUDA] CUDA 12.4 initialized on dual GPU cluster (H100 NVLink)', type: 'info' },
+                { text: '[THROUGHPUT] Prefill: 1,480 tokens/sec | Decode: 94.2 tokens/sec', type: 'cyan' },
+                { text: '[TTFT] Time to first token: 13.6ms | P99 latency: 19.8ms', type: 'amber' },
+                { text: '[STATUS] Benchmark complete: Top 1% inference efficiency achieved.', type: 'success' }
+            ]
+        };
+
+        function printLog(entry, onComplete) {
+            const streamLine = document.getElementById('terminal-stream-line');
+            const line = document.createElement('div');
+            line.className = 'terminal-line';
+
+            if (entry.type === 'cmd') {
+                line.innerHTML = `<span class="t-prompt">$</span> <span class="t-cmd">${escapeHtml(entry.text.replace('$ ', ''))}</span>`;
+            } else if (entry.type === 'success') {
+                line.className += ' t-success';
+                line.textContent = entry.text;
+            } else if (entry.type === 'cyan') {
+                line.className += ' t-cyan';
+                line.textContent = entry.text;
+            } else if (entry.type === 'amber') {
+                line.className += ' t-amber';
+                line.textContent = entry.text;
+            } else if (entry.type === 'magenta') {
+                line.className += ' t-magenta';
+                line.textContent = entry.text;
+            } else {
+                line.className += ' t-info';
+                line.textContent = entry.text;
+            }
+
+            if (streamLine && streamLine.parentNode === terminalBody) {
+                terminalBody.insertBefore(line, streamLine);
+            } else {
+                terminalBody.appendChild(line);
+            }
+
+            terminalBody.scrollTop = terminalBody.scrollHeight;
+            if (onComplete) setTimeout(onComplete, 160);
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        actionBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (isStreaming) return;
+                const cmd = btn.getAttribute('data-cmd');
+
+                if (cmd === 'clear') {
+                    terminalBody.innerHTML = defaultLogs.join('');
+                    return;
+                }
+
+                const script = commands[cmd];
+                if (!script) return;
+
+                isStreaming = true;
+                btn.style.opacity = '0.5';
+
+                let idx = 0;
+                function step() {
+                    if (idx < script.length) {
+                        printLog(script[idx], () => {
+                            idx++;
+                            step();
+                        });
+                    } else {
+                        isStreaming = false;
+                        btn.style.opacity = '1';
+                    }
+                }
+                step();
+            });
+        });
+    }
 
 });
 

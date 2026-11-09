@@ -3,11 +3,28 @@
    ============================================================ */
 
 :root {
-    /* Unified Brand Palette (AI Architect) */
-    --accent: #22d3ee;
-    --accent2: #14b8a6;
-    --glow: rgba(56, 189, 248, 0.35);
-    --grad: linear-gradient(135deg, #22d3ee 0%, #14b8a6 100%);
+    /* Unified Brand Palette (AI Architect - Prismatic Base) */
+    --accent: #38bdf8;
+    --accent2: #a855f7;
+    --glow: rgba(168, 85, 247, 0.4);
+    --grad: linear-gradient(135deg, #f43f5e 0%, #a855f7 28%, #38bdf8 62%, #10b981 100%);
+
+    /* Prismatic Quantum Spectrum Gradients */
+    --grad-prismatic: linear-gradient(135deg, #f43f5e 0%, #a855f7 28%, #38bdf8 62%, #10b981 100%);
+    --grad-prismatic-rev: linear-gradient(135deg, #10b981 0%, #38bdf8 38%, #a855f7 72%, #f43f5e 100%);
+    --border-prismatic: linear-gradient(135deg, rgba(244, 63, 94, 0.55) 0%, rgba(168, 85, 247, 0.55) 35%, rgba(56, 189, 248, 0.55) 70%, rgba(16, 185, 129, 0.55) 100%);
+    --border-prismatic-soft: linear-gradient(135deg, rgba(244, 63, 94, 0.25) 0%, rgba(168, 85, 247, 0.25) 35%, rgba(56, 189, 248, 0.25) 70%, rgba(16, 185, 129, 0.25) 100%);
+    --prismatic-glow: 0 0 32px rgba(168, 85, 247, 0.35);
+
+    /* Color-Coded Tech Ecosystem */
+    --tech-pytorch: #ff6f00;
+    --tech-langgraph: #8b5cf6;
+    --tech-docker: #0ea5e9;
+    --tech-vllm: #10b981;
+    --tech-cuda: #f59e0b;
+    --tech-llama: #f43f5e;
+    --tech-python: #3b82f6;
+    --tech-fastapi: #059669;
 
     /* Premium Professor Palette (Emerald/Teal) */
     --prof-accent: #2dd4bf;
@@ -47,18 +64,23 @@ body.light-theme {
     --bg3: #F1F5F9;
     --card: #FFFFFF;
     --card-border: rgba(15, 23, 42, 0.08);
+    --card-border-prismatic: var(--border-prismatic-soft);
     --text: #0F172A;
-    --text-muted: #475569;
+    --text-muted: #334155;
     --text-dim: #64748B;
-    --header-bg: rgba(255, 255, 255, 0.7);
-    --header-border: rgba(255, 255, 255, 0.3);
-    --particle-color: rgba(15, 23, 42, 0.1);
-    --overlay-bg: rgba(0, 0, 0, 0.35);
-    --card-shadow-hover: 0 20px 50px rgba(15, 23, 42, 0.15);
-    --surface-elev: rgba(255, 255, 255, 0.86);
-    --surface-strong: rgba(248, 250, 252, 0.92);
-    --particle-tint: 20, 184, 166;
-    --noise-opacity: 0.1;
+    --header-bg: rgba(255, 255, 255, 0.85);
+    --header-border: rgba(15, 23, 42, 0.08);
+    --terminal-bg: #090d16;
+    --terminal-surface: #0f172a;
+    --terminal-text: #f8fafc;
+    --terminal-border: var(--border-prismatic);
+    --particle-color: rgba(15, 23, 42, 0.08);
+    --overlay-bg: rgba(0, 0, 0, 0.4);
+    --card-shadow-hover: 0 20px 50px rgba(15, 23, 42, 0.12);
+    --surface-elev: rgba(255, 255, 255, 0.92);
+    --surface-strong: rgba(248, 250, 252, 0.95);
+    --particle-tint: 56, 189, 248;
+    --noise-opacity: 0.06;
     --scanline-opacity: 0;
 }
 
@@ -68,18 +90,23 @@ body.dark-theme {
     --bg3: #162235;
     --card: #101a2b;
     --card-border: rgba(148, 163, 184, 0.24);
+    --card-border-prismatic: var(--border-prismatic);
     --text: #e5edf8;
     --text-muted: #9db0c7;
     --text-dim: #6f839c;
-    --header-bg: rgba(15, 23, 42, 0.7);
+    --header-bg: rgba(15, 23, 42, 0.78);
     --header-border: rgba(148, 163, 184, 0.2);
+    --terminal-bg: #040812;
+    --terminal-surface: #0a101f;
+    --terminal-text: #f1f5f9;
+    --terminal-border: var(--border-prismatic);
     --particle-color: rgba(255, 255, 255, 0.15);
-    --overlay-bg: rgba(15, 23, 42, 0.5);
-    --card-shadow-hover: 0 18px 40px rgba(2, 8, 23, 0.55);
+    --overlay-bg: rgba(6, 11, 21, 0.65);
+    --card-shadow-hover: 0 18px 40px rgba(2, 8, 23, 0.65);
     --surface-elev: rgba(9, 16, 30, 0.84);
     --surface-strong: rgba(16, 26, 43, 0.9);
-    --particle-tint: 34, 211, 238;
-    --noise-opacity: 0.2;
+    --particle-tint: 168, 85, 247;
+    --noise-opacity: 0.18;
     --scanline-opacity: 0;
 }
 
@@ -170,4 +197,39 @@ body[data-persona="prof"] {
 
 body.hacker-theme[data-persona="prof"] {
     --particle-tint: 232, 23, 61;
+}
+
+/* ============================================================
+   PRISMATIC QUANTUM SPECTRUM ANIMATIONS & UTILITIES
+   ============================================================ */
+
+@keyframes prismaticShimmer {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes prismaticRingSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes pulseGlow {
+    0%, 100% { opacity: 0.55; transform: scale(0.98); }
+    50% { opacity: 0.85; transform: scale(1.02); }
+}
+
+.grad-prismatic {
+    background: var(--grad-prismatic);
+    background-size: 240% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: prismaticShimmer 7s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .grad-prismatic {
+        animation: none;
+        background-size: 100% auto;
+    }
 }

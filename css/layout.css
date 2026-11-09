@@ -336,6 +336,48 @@
     z-index: 1;
 }
 
+/* Prismatic Split Command Center Grid */
+.hero-prismatic-grid {
+    display: grid;
+    grid-template-columns: 1.08fr 1fr;
+    gap: 48px;
+    align-items: center;
+    max-width: 1240px;
+    width: 100%;
+}
+
+.hero-profile-col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.hero-profile-col .hero-visual {
+    margin-bottom: 2px;
+}
+
+.hero-profile-col .hero-image-container {
+    max-width: 320px;
+    margin: 0 auto 10px;
+}
+
+.hero-terminal-col {
+    width: 100%;
+    position: relative;
+    z-index: 2;
+}
+
+@media (max-width: 960px) {
+    .hero-prismatic-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+    }
+
+    .hero-profile-col .hero-image-container {
+        max-width: 280px;
+    }
+}
+
 .hero-visual {
     flex: 1;
     position: relative;
