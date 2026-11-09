@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!tabBtns.length || !tabPanes.length) return;
 
         // T2-F: inject sliding indicator element
-        const switcher = document.querySelector('.tab-switcher.bottom-dock');
+        const switcher = document.querySelector('.tab-switcher');
         let indicator = null;
         if (switcher) {
             indicator = document.createElement('div');

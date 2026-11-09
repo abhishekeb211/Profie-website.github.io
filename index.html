@@ -110,6 +110,10 @@
                 <span class="bar"></span>
                 <span class="bar"></span>
             </button>
+            <div class="tab-switcher header-tab-switcher" role="tablist" aria-label="Persona">
+                <button class="tab-btn active" type="button" role="tab" aria-selected="true" aria-controls="ai-pane" id="tab-ai" data-target="ai">AI Architect</button>
+                <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="prof-pane" id="tab-prof" data-target="prof">Professor</button>
+            </div>
             <div class="theme-switcher">
                 <button id="theme-switcher-trigger" class="theme-switcher-trigger" type="button"
                     aria-expanded="false" aria-haspopup="true"
@@ -132,12 +136,6 @@
 
     <main id="main">
 
-        <!-- TAB SWITCHER -->
-        <div class="tab-switcher bottom-dock fade-up" role="tablist" aria-label="Persona">
-            <button class="tab-btn active" type="button" role="tab" aria-selected="true" aria-controls="ai-pane" id="tab-ai" data-target="ai">AI Architect</button>
-            <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="prof-pane" id="tab-prof" data-target="prof">Professor</button>
-        </div>
-
         <div id="ai-pane" class="tab-pane active fade-in" role="tabpanel" aria-labelledby="tab-ai" aria-hidden="false">
             <!-- AI ENGINEER TAB PANE -->
 
@@ -152,11 +150,11 @@
                         <!-- 1. HEADLINE & INTRO (LEFT) -->
                         <div class="hero-text-col fade-up">
                             <h1 class="hero-quantum-title">
-                                Architecting<br>
-                                <span class="title-grad">Autonomous</span><br>
-                                <span class="title-grad">Multi-Agent</span><br>
-                                <span class="title-grad">Systems &amp;</span><br>
-                                <span class="title-grad">Scalable AI</span>
+                                <span class="q-cyan">Architecting</span><br>
+                                <span class="q-blue">Autonomous</span><br>
+                                <span class="q-coral">Multi-Agent</span><br>
+                                <span class="q-purple">Systems &amp;</span><br>
+                                <span class="q-mint">Scalable AI</span>
                             </h1>
                             <p class="hero-quantum-sub">
                                 Abhishek S. Raut // AI Systems Architect &amp; PCCOE Lead is pioneering autonomous multi-agent orchestration, zero-trust cybersecurity, and high-performance deep learning inference.
@@ -170,6 +168,8 @@
                         <!-- 2. ABHISHEK'S PORTRAIT (CENTER - PROPERLY SIZED AND ALIGNED) -->
                         <div class="hero-portrait-stage fade-up" style="transition-delay:0.1s">
                             <div class="portrait-chromatic-aura"></div>
+                            <div class="portrait-lens-flare"></div>
+                            <div class="portrait-lens-flare-left"></div>
                             <picture>
                                 <source srcset="images/hero-abhishek-transparent.png" type="image/png">
                                 <img src="images/hero-abhishek-transparent.png" alt="Abhishek S. Raut - AI Systems Architect" class="portrait-quantum-img" width="460" height="520" fetchpriority="high">

@@ -1439,6 +1439,42 @@ body.light-theme .nav-links a.nav-item-contact { color: #059669; }
     animation: prismaticShimmer 8s linear infinite alternate;
 }
 
+/* Distinct Iridescent Line Gradients matching target mockup */
+.hero-quantum-title .q-cyan {
+    background: linear-gradient(135deg, #a5f3fc 0%, #38bdf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.hero-quantum-title .q-blue {
+    background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 60%, #6366f1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.hero-quantum-title .q-coral {
+    background: linear-gradient(135deg, #fda4af 0%, #fb7185 40%, #f43f5e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.hero-quantum-title .q-purple {
+    background: linear-gradient(135deg, #e9d5ff 0%, #c084fc 40%, #a855f7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.hero-quantum-title .q-mint {
+    background: linear-gradient(135deg, #a7f3d0 0%, #34d399 45%, #10b981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
 body.light-theme .hero-quantum-title .title-grad {
     background: linear-gradient(135deg, #0284c7 0%, #7c3aed 45%, #db2777 80%, #ea580c 100%);
     -webkit-background-clip: text;
@@ -1566,6 +1602,46 @@ body.light-theme .portrait-chromatic-aura {
     filter: blur(30px);
 }
 
+/* Prismatic Lens Flare Rings on Portrait */
+.portrait-lens-flare {
+    position: absolute;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    border: 2px solid rgba(245, 158, 11, 0.75);
+    box-shadow: 0 0 24px rgba(245, 158, 11, 0.65), inset 0 0 16px rgba(245, 158, 11, 0.35);
+    right: 14%;
+    top: 52%;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0.85;
+}
+
+.portrait-lens-flare::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -45px;
+    right: -45px;
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.85), transparent);
+    transform: translateY(-50%) rotate(-22deg);
+}
+
+.portrait-lens-flare-left {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(6, 182, 212, 0.7);
+    box-shadow: 0 0 18px rgba(6, 182, 212, 0.55);
+    left: 10%;
+    top: 36%;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0.8;
+}
+
 .portrait-quantum-img {
     position: relative;
     z-index: 2;
@@ -1573,7 +1649,7 @@ body.light-theme .portrait-chromatic-aura {
     height: 480px;
     max-width: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.45));
+    filter: drop-shadow(0 0 20px rgba(236, 72, 153, 0.28)) drop-shadow(0 0 35px rgba(6, 182, 212, 0.25)) drop-shadow(0 16px 32px rgba(0, 0, 0, 0.55));
     transition: transform 0.4s ease;
 }
 
