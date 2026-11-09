@@ -17,7 +17,7 @@ const isValidTheme = (val: unknown): val is Theme => val === 'light' || val === 
 /** Update theme-color meta tag */
 export function updateMetaThemeColor(theme: Theme) {
   document.querySelector('meta[name="theme-color"]')
-    ?.setAttribute('content', theme === 'dark' ? '#080D0B' : '#FFFFFF');
+    ?.setAttribute('content', theme === 'dark' ? '#090D16' : '#FFFFFF');
 }
 
 /** Get resolved active theme */

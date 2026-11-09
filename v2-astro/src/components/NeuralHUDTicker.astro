@@ -127,6 +127,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   backdrop-filter: blur(8px);
 }
 
+:root[data-theme="light"] .hud-ticker-wrap {
+  background: rgba(255, 255, 255, 0.96);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
 @media (max-width: 768px) {
   .hud-ticker-wrap {
     display: none;
@@ -145,6 +151,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   color: #38bdf8;
   letter-spacing: 0.08em;
   flex-shrink: 0;
+}
+
+:root[data-theme="light"] .hud-ticker-label {
+  background: var(--color-surface-sunken);
+  border-right: 1px solid var(--color-border);
+  color: var(--color-primary);
 }
 
 .hud-beacon {
@@ -200,6 +212,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   font-weight: 600;
 }
 
+:root[data-theme="light"] .hud-key {
+  color: var(--color-text-secondary);
+}
+
 .hud-val {
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -210,9 +226,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
 }
 
+:root[data-theme="light"] .hud-val-cyan {
+  color: #0284c7;
+  text-shadow: none;
+}
+
 .hud-val-green {
   color: #4ade80;
   text-shadow: 0 0 10px rgba(74, 222, 128, 0.4);
+}
+
+:root[data-theme="light"] .hud-val-green {
+  color: #059669;
+  text-shadow: none;
 }
 
 .hud-val-purple {
@@ -220,9 +246,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   text-shadow: 0 0 10px rgba(192, 132, 252, 0.4);
 }
 
+:root[data-theme="light"] .hud-val-purple {
+  color: #7c3aed;
+  text-shadow: none;
+}
+
 .hud-sep {
   color: #475569;
   font-weight: 800;
+}
+
+:root[data-theme="light"] .hud-sep {
+  color: var(--color-border);
 }
 
 .hud-live-tag {
@@ -234,6 +269,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   letter-spacing: 0.08em;
   flex-shrink: 0;
   display: none;
+}
+
+:root[data-theme="light"] .hud-live-tag {
+  background: var(--color-surface-sunken);
+  border-left: 1px solid var(--color-border);
+  color: #059669;
 }
 
 @media (min-width: 860px) {
