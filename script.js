@@ -987,10 +987,17 @@ document.addEventListener('DOMContentLoaded', () => {
         let outlineY = window.innerHeight / 2;
 
         window.addEventListener('mousemove', (e) => {
+            if (!document.body.classList.contains('has-cursor')) {
+                document.body.classList.add('has-cursor');
+            }
             cursorX = e.clientX;
             cursorY = e.clientY;
             cursorDot.style.left = `${cursorX}px`;
             cursorDot.style.top = `${cursorY}px`;
+        });
+
+        document.addEventListener('mouseleave', () => {
+            document.body.classList.remove('has-cursor');
         });
 
         function animateCursor() {

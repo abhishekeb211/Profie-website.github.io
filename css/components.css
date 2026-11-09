@@ -1481,6 +1481,36 @@ body.light-theme .hero-quantum-title .title-grad {
     -webkit-text-fill-color: transparent;
 }
 
+body.light-theme .hero-quantum-title .q-cyan {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.light-theme .hero-quantum-title .q-blue {
+    background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.light-theme .hero-quantum-title .q-coral {
+    background: linear-gradient(135deg, #e11d48 0%, #db2777 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.light-theme .hero-quantum-title .q-purple {
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.light-theme .hero-quantum-title .q-mint {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 .hero-quantum-sub {
     font-size: 0.95rem;
     line-height: 1.6;
@@ -1598,48 +1628,33 @@ body.light-theme .hero-portrait-stage::after {
 }
 
 body.light-theme .portrait-chromatic-aura {
-    opacity: 0.35;
-    filter: blur(30px);
+    opacity: 0.65;
+    filter: blur(48px);
+    background: radial-gradient(circle at 25% 40%, rgba(244, 114, 182, 0.4) 0%, transparent 60%),
+                radial-gradient(circle at 75% 45%, rgba(56, 189, 248, 0.45) 0%, transparent 60%),
+                radial-gradient(circle at 50% 15%, rgba(192, 132, 252, 0.35) 0%, transparent 55%),
+                radial-gradient(circle at 50% 80%, rgba(251, 146, 60, 0.3) 0%, transparent 60%);
 }
 
-/* Prismatic Lens Flare Rings on Portrait */
-.portrait-lens-flare {
+/* Atmospheric Anamorphic Light Beam behind the Portrait */
+.portrait-light-beam {
     position: absolute;
-    width: 68px;
-    height: 68px;
-    border-radius: 50%;
-    border: 2px solid rgba(245, 158, 11, 0.75);
-    box-shadow: 0 0 24px rgba(245, 158, 11, 0.65), inset 0 0 16px rgba(245, 158, 11, 0.35);
-    right: 14%;
-    top: 52%;
-    z-index: 3;
+    top: 30%;
+    left: -20%;
+    right: -20%;
+    height: 120px;
+    background: linear-gradient(110deg, transparent 20%, rgba(56, 189, 248, 0.22) 42%, rgba(236, 72, 153, 0.26) 50%, rgba(245, 158, 11, 0.2) 58%, transparent 80%);
+    filter: blur(24px);
+    transform: rotate(-16deg);
+    z-index: 1;
     pointer-events: none;
     opacity: 0.85;
 }
 
-.portrait-lens-flare::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: -45px;
-    right: -45px;
-    height: 1.5px;
-    background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.85), transparent);
-    transform: translateY(-50%) rotate(-22deg);
-}
-
-.portrait-lens-flare-left {
-    position: absolute;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    border: 1.5px solid rgba(6, 182, 212, 0.7);
-    box-shadow: 0 0 18px rgba(6, 182, 212, 0.55);
-    left: 10%;
-    top: 36%;
-    z-index: 3;
-    pointer-events: none;
-    opacity: 0.8;
+body.light-theme .portrait-light-beam {
+    opacity: 0.55;
+    filter: blur(28px);
+    background: linear-gradient(110deg, transparent 15%, rgba(56, 189, 248, 0.28) 40%, rgba(244, 114, 182, 0.32) 50%, rgba(251, 146, 60, 0.22) 60%, transparent 85%);
 }
 
 .portrait-quantum-img {
@@ -1649,8 +1664,11 @@ body.light-theme .portrait-chromatic-aura {
     height: 480px;
     max-width: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 0 20px rgba(236, 72, 153, 0.28)) drop-shadow(0 0 35px rgba(6, 182, 212, 0.25)) drop-shadow(0 16px 32px rgba(0, 0, 0, 0.55));
-    transition: transform 0.4s ease;
+    /* Softly and seamlessly fade out bottom of torso so portrait submerges into the theme background */
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 58%, rgba(0, 0, 0, 0.7) 74%, rgba(0, 0, 0, 0.25) 88%, transparent 98%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 58%, rgba(0, 0, 0, 0.7) 74%, rgba(0, 0, 0, 0.25) 88%, transparent 98%);
+    filter: drop-shadow(0 0 22px rgba(236, 72, 153, 0.25)) drop-shadow(0 0 40px rgba(6, 182, 212, 0.22)) drop-shadow(0 16px 32px rgba(0, 0, 0, 0.5));
+    transition: transform 0.4s ease, filter 0.4s ease;
 }
 
 .hero-portrait-stage:hover .portrait-quantum-img {
@@ -1658,7 +1676,9 @@ body.light-theme .portrait-chromatic-aura {
 }
 
 body.light-theme .portrait-quantum-img {
-    filter: drop-shadow(0 14px 28px rgba(15, 23, 42, 0.16));
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 58%, rgba(0, 0, 0, 0.65) 74%, rgba(0, 0, 0, 0.2) 88%, transparent 98%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 58%, rgba(0, 0, 0, 0.65) 74%, rgba(0, 0, 0, 0.2) 88%, transparent 98%);
+    filter: drop-shadow(0 0 25px rgba(56, 189, 248, 0.35)) drop-shadow(0 0 45px rgba(244, 114, 182, 0.25)) drop-shadow(0 14px 28px rgba(15, 23, 42, 0.12));
 }
 
 /* 3. RIGHT CODE CONSOLE & NEURAL TOPOLOGY */
@@ -1686,6 +1706,16 @@ body.light-theme .portrait-quantum-img {
     mask-composite: exclude;
     pointer-events: none;
     z-index: 3;
+}
+
+body.light-theme .quantum-code-console {
+    background: #090e1a;
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.16), 0 0 40px rgba(56, 189, 248, 0.22);
+}
+
+body.light-theme .quantum-code-console::before {
+    background: linear-gradient(135deg, #f43f5e 0%, #8b5cf6 35%, #0ea5e9 70%, #10b981 100%);
+    opacity: 0.9;
 }
 
 .console-top-bar {
@@ -1754,9 +1784,16 @@ body.light-theme .portrait-quantum-img {
     font-size: 0.78rem;
     line-height: 1.6;
     color: #e2e8f0;
-    border-right: 1px solid rgba(148, 163, 184, 0.1);
-    overflow-y: auto;
-    max-height: 290px;
+    border-right: 1px solid rgba(148, 163, 184, 0.12);
+    overflow: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.console-stream-pane::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
 }
 
 .console-meta-header {
@@ -1884,6 +1921,26 @@ body.light-theme .benchmark-card {
     background: #ffffff;
     border: 1px solid rgba(15, 23, 42, 0.08);
     box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+}
+
+body.light-theme .bcard-title {
+    color: #0f172a;
+}
+
+body.light-theme .bcard-sub {
+    color: #475569;
+}
+
+body.light-theme .gauge-bg {
+    stroke: rgba(226, 232, 240, 0.9);
+}
+
+body.light-theme .gauge-value {
+    color: #0f172a;
+}
+
+body.light-theme .bcard-status {
+    color: #475569;
 }
 
 .benchmark-card:hover {

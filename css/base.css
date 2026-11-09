@@ -615,8 +615,9 @@ body::after {
     pointer-events: none;
     z-index: 99999;
     transform: translate(-50%, -50%);
-    transition: transform 0.1s ease, background 0.2s ease, width 0.2s ease, height 0.2s ease;
+    transition: transform 0.1s ease, background 0.2s ease, width 0.2s ease, height 0.2s ease, opacity 0.25s ease;
     box-shadow: 0 0 8px color-mix(in srgb, var(--glow) 80%, transparent);
+    opacity: 0;
 }
 
 .cursor-outline {
@@ -628,7 +629,13 @@ body::after {
     pointer-events: none;
     z-index: 99998;
     transform: translate(-50%, -50%);
-    transition: border-color 0.25s ease, width 0.25s ease, height 0.25s ease;
+    transition: border-color 0.25s ease, width 0.25s ease, height 0.25s ease, opacity 0.25s ease;
+    opacity: 0;
+}
+
+body.has-cursor .cursor-dot,
+body.has-cursor .cursor-outline {
+    opacity: 1;
 }
 
 .cursor-dot.hovered {
