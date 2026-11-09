@@ -1397,6 +1397,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 step();
             });
         });
+
+        // Launch Interactive Terminal CTA
+        const launchBtn = document.getElementById('btn-interactive-term');
+        if (launchBtn) {
+            launchBtn.addEventListener('click', () => {
+                const consoleElem = document.querySelector('.quantum-code-console');
+                if (consoleElem) {
+                    consoleElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    consoleElem.style.transition = 'box-shadow 0.4s ease';
+                    consoleElem.style.boxShadow = '0 0 50px rgba(56, 189, 248, 0.6)';
+                    setTimeout(() => {
+                        consoleElem.style.boxShadow = '';
+                    }, 1500);
+                }
+                const firstAction = document.querySelector('.term-action-btn[data-cmd="samanvay"]');
+                if (firstAction && !isStreaming) {
+                    setTimeout(() => firstAction.click(), 400);
+                }
+            });
+        }
     }
 
 });

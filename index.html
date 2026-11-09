@@ -81,15 +81,28 @@
     <div class="scroll-progress-bar"></div>
     <div class="hacker-scanline"></div>
 
+    <!-- TOP SYSTEM STATUS BAR (As in website-uiux-terminal-prismatic-spectrum.jpg) -->
+    <div class="system-status-bar" role="status" aria-label="System status telemetry">
+        <div class="system-status-inner">
+            <span class="status-indicator"><span class="status-pulse-dot"></span> ALL SYSTEMS OPERATIONAL</span>
+            <span class="status-divider">|</span>
+            <span class="status-item">KERNEL: v4.19-AGENT</span>
+            <span class="status-divider">|</span>
+            <span class="status-item">LATENCY: 5ms</span>
+            <span class="status-divider">|</span>
+            <span class="status-item">PUNE, INDIA</span>
+        </div>
+    </div>
+
     <!-- HEADER -->
     <header id="header">
-        <div class="logo">ABHISHEK RAUT</div>
+        <div class="logo">Abhishek S. Raut <span class="logo-sub" style="font-size:0.75rem;opacity:0.65;font-weight:400;margin-left:6px">// AI Systems Architect &amp; PCCOE Lead</span></div>
         <nav id="nav-links" class="nav-links" aria-label="Primary navigation">
-            <a href="#about" class="active" data-ai="#about" data-prof="#hero-prof">About</a>
-            <a href="#projects" data-ai="#projects" data-prof="#teaching-prof">Work</a>
-            <a href="#experience" data-ai="#experience" data-prof="#club-prof">Journey</a>
-            <a href="#research" data-ai="#research" data-prof="#expertise-prof">Impact</a>
-            <a href="#contact" data-ai="#contact" data-prof="#contact">Connect</a>
+            <a href="#about" class="nav-item-home active" data-ai="#about" data-prof="#hero-prof">HOME()</a>
+            <a href="#swarms-benchmarks" class="nav-item-swarms" data-ai="#swarms-benchmarks" data-prof="#teaching-prof">SWARMS()</a>
+            <a href="#expertise" class="nav-item-expertise" data-ai="#expertise" data-prof="#expertise-prof">EXPERTISE()</a>
+            <a href="#projects" class="nav-item-projects" data-ai="#projects" data-prof="#club-prof">PROJECTS()</a>
+            <a href="#contact" class="nav-item-contact" data-ai="#contact" data-prof="#contact">CONTACT()</a>
         </nav>
         <div class="header-actions">
             <button type="button" id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Toggle mobile menu">
@@ -128,72 +141,186 @@
         <div id="ai-pane" class="tab-pane active fade-in" role="tabpanel" aria-labelledby="tab-ai" aria-hidden="false">
             <!-- AI ENGINEER TAB PANE -->
 
-            <!-- HERO AI -->
-            <section id="about" class="hero ai-hero">
+            <!-- HERO AI (PRISMATIC QUANTUM SPECTRUM STAGE) -->
+            <section id="about" class="hero ai-hero hero-prismatic-stage">
                 <div class="hero-orb hero-orb-1"></div>
                 <div class="hero-orb hero-orb-2"></div>
-                <div class="hero-inner hero-prismatic-grid">
-                    <div class="hero-profile-col fade-up">
-                        <div class="hero-visual">
-                            <div class="hero-image-container hero-transparent-container">
-                                <div class="hero-halo-prismatic"></div>
-                                <picture>
-                                    <source srcset="images/hero-abhishek-transparent.png" type="image/png">
-                                    <img src="images/hero-abhishek-transparent.png" alt="Abhishek S. Raut - AI Architect" class="hero-main-img hero-transparent-img" width="400" height="400" fetchpriority="high">
-                                </picture>
+                
+                <div class="hero-inner-stage">
+                    <!-- 3-COLUMN HERO ROW: TEXT | CENTER PORTRAIT | CODE CONSOLE -->
+                    <div class="hero-quantum-row">
+                        <!-- 1. HEADLINE & INTRO (LEFT) -->
+                        <div class="hero-text-col fade-up">
+                            <h1 class="hero-quantum-title">
+                                Architecting<br>
+                                <span class="title-grad">Autonomous</span><br>
+                                <span class="title-grad">Multi-Agent</span><br>
+                                <span class="title-grad">Systems &amp;</span><br>
+                                <span class="title-grad">Scalable AI</span>
+                            </h1>
+                            <p class="hero-quantum-sub">
+                                Abhishek S. Raut // AI Systems Architect &amp; PCCOE Lead is pioneering autonomous multi-agent orchestration, zero-trust cybersecurity, and high-performance deep learning inference.
+                            </p>
+                            <div class="hero-quantum-ctas">
+                                <a href="#swarms-benchmarks" class="btn-quantum-pill pill-swarms">Explore Agent Swarms</a>
+                                <button type="button" class="btn-quantum-pill pill-terminal" id="btn-interactive-term">Launch Interactive Terminal</button>
                             </div>
                         </div>
-                        <div class="hero-content">
-                            <div class="hero-tag">
-                                <span class="dot"></span>
-                                AI Engineer | Agentic AI, GenAI, Reinforcement Learning
-                            </div>
-                            <h1 class="hero-name" data-text="Hi, I'm Abhishek">Hi, I'm <span class="grad grad-prismatic">Abhishek</span></h1>
-                            <div class="hero-roles">
-                                <span class="hero-role-chip tech-badge tech-llama">Agentic AI Engineer</span>
-                                <span class="hero-role-chip tech-badge tech-pytorch">PyTorch &amp; GenAI</span>
-                                <span class="hero-role-chip tech-badge tech-docker">DevSecOps &amp; Cloud</span>
-                            </div>
-                            <p class="hero-desc">
-                                Building production-grade autonomous multi-agent AI systems, high-throughput LLM inference, and verifiable zero-trust architectures.
-                            </p>
-                            <div class="hero-ctas">
-                                <a href="COMPREHENSIVE_PORTFOLIO_FORENSIC_MASTER_REPORT.pdf" target="_blank" rel="noopener noreferrer" class="btn-primary">Forensic Master Report (79p PDF) ↗</a>
-                                <a href="#projects" class="btn-secondary">View Audited Projects</a>
-                                <a href="#contact" class="btn-secondary">Get in Touch</a>
+
+                        <!-- 2. ABHISHEK'S PORTRAIT (CENTER - PROPERLY SIZED AND ALIGNED) -->
+                        <div class="hero-portrait-stage fade-up" style="transition-delay:0.1s">
+                            <div class="portrait-chromatic-aura"></div>
+                            <picture>
+                                <source srcset="images/hero-abhishek-transparent.png" type="image/png">
+                                <img src="images/hero-abhishek-transparent.png" alt="Abhishek S. Raut - AI Systems Architect" class="portrait-quantum-img" width="460" height="520" fetchpriority="high">
+                            </picture>
+                        </div>
+
+                        <!-- 3. CODE CONSOLE & NEURAL TOPOLOGY (RIGHT) -->
+                        <div class="hero-console-col fade-up" style="transition-delay:0.2s">
+                            <div class="quantum-code-console">
+                                <div class="console-top-bar">
+                                    <div class="console-controls">
+                                        <span class="console-dot dot-red" title="Close"></span>
+                                        <span class="console-dot dot-yellow" title="Minimize"></span>
+                                        <span class="console-dot dot-green" title="Expand"></span>
+                                    </div>
+                                    <div class="console-tabs">
+                                        <span class="console-tab active">Code Console <span class="tab-close">×</span></span>
+                                        <span class="console-tab-add">+</span>
+                                    </div>
+                                </div>
+                                <div class="console-split-body">
+                                    <!-- Left Console Stream Pane -->
+                                    <div class="console-stream-pane" id="terminal-body" aria-live="polite">
+                                        <div class="console-meta-header">Live streaming execution logs...</div>
+                                        <div class="c-line"><span class="c-prompt">$</span> <span class="c-cmd">agentic-mesh --init --subagents=7</span></div>
+                                        <div class="c-line c-green">[QUANTUM_MESH] [ONLINE] Agents initialized</div>
+                                        <div class="c-line c-cyan"><span class="c-time">[17:08:485]</span> Live execution agents: ap-edeate-agent-processed</div>
+                                        <div class="c-line c-cyan"><span class="c-time">[17:08:485]</span> Live execution agents: Agent-1 consensus verified</div>
+                                        <div class="c-line c-cyan"><span class="c-time">[17:08:485]</span> Live execution agents: Agent-2 neural topology online</div>
+                                        <div class="c-line c-green"><span class="c-time">[17:08:485]</span> Live execution agents: Neural interaction deployed successfully</div>
+                                        <div class="c-line c-stream-active" id="terminal-stream-line"><span class="c-prompt">$</span> <span class="c-cursor">_</span></div>
+                                    </div>
+                                    <!-- Right Real-Time Neural Topology Pane -->
+                                    <div class="console-topology-pane">
+                                        <div class="topology-title">Real-time neural topology</div>
+                                        <div class="topology-graph-container">
+                                            <svg class="topology-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                                                <!-- Synaptic Connection Lines -->
+                                                <line x1="100" y1="25" x2="165" y2="65" class="synapse-line syn-red-orange" />
+                                                <line x1="165" y1="65" x2="175" y2="135" class="synapse-line syn-orange-yellow" />
+                                                <line x1="175" y1="135" x2="100" y2="180" class="synapse-line syn-yellow-green" />
+                                                <line x1="100" y1="180" x2="25" y2="135" class="synapse-line syn-green-cyan" />
+                                                <line x1="25" y1="135" x2="35" y2="65" class="synapse-line syn-cyan-blue" />
+                                                <line x1="35" y1="65" x2="100" y2="25" class="synapse-line syn-blue-violet" />
+                                                <!-- Cross Synapses -->
+                                                <line x1="100" y1="25" x2="100" y2="100" class="synapse-line syn-cross" />
+                                                <line x1="100" y1="100" x2="175" y2="135" class="synapse-line syn-cross" />
+                                                <line x1="100" y1="100" x2="25" y2="135" class="synapse-line syn-cross" />
+                                                <line x1="100" y1="100" x2="100" y2="180" class="synapse-line syn-cross" />
+                                                <line x1="35" y1="65" x2="165" y2="65" class="synapse-line syn-cross" />
+                                                <line x1="25" y1="135" x2="175" y2="135" class="synapse-line syn-cross" />
+                                                
+                                                <!-- Nodes (Colored Glow) -->
+                                                <circle cx="100" cy="25" r="7" class="t-node node-red" />
+                                                <circle cx="165" cy="65" r="7" class="t-node node-orange" />
+                                                <circle cx="175" cy="135" r="7" class="t-node node-yellow" />
+                                                <circle cx="100" cy="180" r="7" class="t-node node-green" />
+                                                <circle cx="25" cy="135" r="7" class="t-node node-cyan" />
+                                                <circle cx="35" cy="65" r="7" class="t-node node-blue" />
+                                                <circle cx="100" cy="100" r="8" class="t-node node-violet" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Quick action buttons -->
+                                <div class="console-footer-bar">
+                                    <span class="cf-label">Action Pills:</span>
+                                    <div class="cf-actions">
+                                        <button type="button" class="term-action-btn" data-cmd="samanvay">--run-samanvay</button>
+                                        <button type="button" class="term-action-btn" data-cmd="consensus">--audit-agents</button>
+                                        <button type="button" class="term-action-btn" data-cmd="benchmark">--benchmark-vllm</button>
+                                        <button type="button" class="term-action-btn" data-cmd="clear">--reset</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="hero-terminal-col fade-up" style="transition-delay:0.12s">
-                        <div class="prismatic-terminal-container">
-                            <div class="terminal-header">
-                                <div class="terminal-dots">
-                                    <span class="terminal-dot dot-red" title="Close"></span>
-                                    <span class="terminal-dot dot-yellow" title="Minimize"></span>
-                                    <span class="terminal-dot dot-green" title="Expand"></span>
+                    <!-- 4. BENCHMARK SHOWCASE CARDS (As in website-uiux-terminal-prismatic-spectrum.jpg) -->
+                    <div class="hero-benchmark-row fade-up" id="swarms-benchmarks" style="transition-delay:0.25s">
+                        <!-- Card 1: SAMANVAY-7 Agent Swarm -->
+                        <div class="benchmark-card card-samanvay">
+                            <div class="bcard-top">
+                                <div class="bcard-info">
+                                    <h3 class="bcard-title">SAMANVAY-7 Agent Swarm</h3>
+                                    <p class="bcard-sub">Real-time benchmark metrics for streaming consensus and mental health triage.</p>
                                 </div>
-                                <div class="terminal-title">abhishek@quantum-core: ~/agentic-mesh</div>
-                                <div class="terminal-badge">
-                                    <span class="badge-pulse-dot"></span>
-                                    <span class="badge-text">CLUSTER: 5 ONLINE</span>
+                                <div class="bcard-gauges">
+                                    <div class="gauge-item">
+                                        <svg class="gauge-svg" viewBox="0 0 100 60">
+                                            <path class="gauge-bg" d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke-width="8" />
+                                            <path class="gauge-fill gauge-fill-pink" d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke-width="8" stroke-dasharray="125" stroke-dashoffset="25" />
+                                        </svg>
+                                        <div class="gauge-value">320</div>
+                                        <div class="gauge-unit">Tokens/sec</div>
+                                    </div>
+                                    <div class="gauge-item">
+                                        <svg class="gauge-svg" viewBox="0 0 100 60">
+                                            <path class="gauge-bg" d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke-width="8" />
+                                            <path class="gauge-fill gauge-fill-cyan" d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke-width="8" stroke-dasharray="125" stroke-dashoffset="5" />
+                                        </svg>
+                                        <div class="gauge-value">99.4%</div>
+                                        <div class="gauge-unit">Accuracy</div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="terminal-body" id="terminal-body" aria-live="polite">
-                                <div class="terminal-line"><span class="t-prompt">$</span> <span class="t-cmd">abhishek.init_orchestrator</span>(<span class="t-param">models</span>=[<span class="t-str">"Llama-3.2"</span>, <span class="t-str">"DeepSeek-R1"</span>, <span class="t-str">"Claude-3.5"</span>])</div>
-                                <div class="terminal-line t-info">[SYSTEM] Prismatic Multi-Agent Mesh initialized across 5 nodes</div>
-                                <div class="terminal-line t-success">[SYNAPSE] Consensus achieved: Swasthya AI decentralized audit passed (99.8%)</div>
-                                <div class="terminal-line t-cyan">[BENCHMARK] Inference speed: 84 tokens/sec on vLLM + CUDA 12.4</div>
-                                <div class="terminal-line t-amber">[AGENT_SYNC] SAMANVAY-7 multi-agent triage stream active (latency: 18ms)</div>
-                                <div class="terminal-line t-stream" id="terminal-stream-line"><span class="t-prompt">&gt;</span> <span class="t-cursor">_</span></div>
+                            <div class="bcard-bottom">
+                                <div class="bcard-status">Accuracy <strong>99.4%</strong></div>
+                                <div class="bcard-badges">
+                                    <span class="tech-badge tech-pytorch">PyTorch</span>
+                                    <span class="tech-badge tech-docker">Docker</span>
+                                    <span class="tech-badge tech-cuda">CUDA</span>
+                                    <span class="tech-badge tech-langgraph">LangGraph</span>
+                                    <span class="tech-badge tech-vllm">vLLM</span>
+                                </div>
                             </div>
-                            <div class="terminal-footer">
-                                <span class="terminal-action-label">Quick Commands:</span>
-                                <div class="terminal-actions">
-                                    <button type="button" class="term-action-btn" data-cmd="samanvay">--run-samanvay</button>
-                                    <button type="button" class="term-action-btn" data-cmd="consensus">--audit-agents</button>
-                                    <button type="button" class="term-action-btn" data-cmd="benchmark">--benchmark-vllm</button>
-                                    <button type="button" class="term-action-btn" data-cmd="clear">--reset</button>
+                        </div>
+
+                        <!-- Card 2: Coding Agent CLI -->
+                        <div class="benchmark-card card-coding-agent">
+                            <div class="bcard-top">
+                                <div class="bcard-info">
+                                    <h3 class="bcard-title">Coding Agent CLI</h3>
+                                    <p class="bcard-sub">Real-time benchmark metrics for autonomous code patching and multi-agent consensus.</p>
+                                </div>
+                                <div class="bcard-gauges">
+                                    <div class="gauge-item">
+                                        <svg class="gauge-svg" viewBox="0 0 100 60">
+                                            <path class="gauge-bg" d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke-width="8" />
+                                            <path class="gauge-fill gauge-fill-amber" d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke-width="8" stroke-dasharray="125" stroke-dashoffset="35" />
+                                        </svg>
+                                        <div class="gauge-value">98</div>
+                                        <div class="gauge-unit">Tokens/sec</div>
+                                    </div>
+                                    <div class="gauge-item">
+                                        <svg class="gauge-svg" viewBox="0 0 100 60">
+                                            <path class="gauge-bg" d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke-width="8" />
+                                            <path class="gauge-fill gauge-fill-cyan" d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke-width="8" stroke-dasharray="125" stroke-dashoffset="5" />
+                                        </svg>
+                                        <div class="gauge-value">99.4%</div>
+                                        <div class="gauge-unit">Accuracy</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bcard-bottom">
+                                <div class="bcard-status">Accuracy <strong>99.4%</strong></div>
+                                <div class="bcard-badges">
+                                    <span class="tech-badge tech-pytorch">PyTorch</span>
+                                    <span class="tech-badge tech-docker">Docker</span>
+                                    <span class="tech-badge tech-langgraph">LangGraph</span>
+                                    <span class="tech-badge tech-vllm">vLLM</span>
                                 </div>
                             </div>
                         </div>
