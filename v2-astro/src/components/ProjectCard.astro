@@ -47,7 +47,7 @@ const svgVariantMap: Record<string, 'codeagent' | 'samanvay' | 'swasthya' | 'zer
 };
 const svgVariant = svgVariantMap[project.id];
 ---
-<article class="project-card">
+<article class="project-card" data-domain={identity.domainKey || 'systems'} style={`--card-accent: ${identity.domainColor || 'var(--color-primary)'};`}>
   {svgVariant ? (
     <a href={`${base}/projects/${project.id}/`} class="card-thumb-link" tabindex="-1" aria-hidden="true">
       <div class="card-thumb-wrap card-svg-wrap">
@@ -190,21 +190,24 @@ const svgVariant = svgVariantMap[project.id];
 }
 
 .project-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
+  border-top: 3px solid var(--card-accent, var(--color-primary));
   border-radius: var(--radius-lg);
   padding: var(--space-6);
   height: 100%;
   transition: transform var(--duration-fast) var(--ease-default), border-color var(--duration-fast), box-shadow var(--duration-fast);
+  overflow: hidden;
 }
 
 .project-card:hover,
 .project-card:focus-within {
-  transform: translateY(-3px);
-  border-color: var(--color-primary);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+  border-color: var(--card-accent, var(--color-primary));
+  box-shadow: 0 14px 28px -4px color-mix(in srgb, var(--card-accent, var(--color-primary)) 22%, transparent), 0 0 16px color-mix(in srgb, var(--card-accent, var(--color-primary)) 12%, transparent);
 }
 
 .card-meta {
@@ -216,10 +219,11 @@ const svgVariant = svgVariantMap[project.id];
 }
 
 .card-domain {
-  color: var(--color-primary);
-  font-weight: 600;
+  color: var(--card-accent, var(--color-primary));
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
+  font-size: 11px;
 }
 
 .card-status {
@@ -236,10 +240,10 @@ const svgVariant = svgVariantMap[project.id];
   font-family: var(--font-mono);
   font-size: 10px;
   font-weight: 700;
-  color: #10b981;
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  padding: 2px 7px;
+  color: var(--card-accent, #10b981);
+  background: color-mix(in srgb, var(--card-accent, #10b981) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--card-accent, #10b981) 35%, transparent);
+  padding: 2px 8px;
   border-radius: var(--radius-sm);
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -259,13 +263,13 @@ const svgVariant = svgVariantMap[project.id];
 }
 
 .card-title a:hover {
-  color: var(--color-primary);
+  color: var(--card-accent, var(--color-primary));
 }
 
 .card-tech-sub {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--color-primary);
+  color: var(--card-accent, var(--color-primary));
   opacity: 0.88;
   margin: 0 0 var(--space-3) 0;
   line-height: 1.4;
@@ -302,7 +306,7 @@ const svgVariant = svgVariantMap[project.id];
 }
 
 .metric-val {
-  color: var(--color-primary);
+  color: var(--card-accent, var(--color-primary));
   font-weight: 800;
   font-family: var(--font-mono);
 }
@@ -311,10 +315,9 @@ const svgVariant = svgVariantMap[project.id];
   color: var(--color-text-secondary);
   font-weight: 500;
 }
-}
 
 .outcome-label {
-  color: var(--color-primary);
+  color: var(--card-accent, var(--color-primary));
 }
 
 .card-tags {
@@ -351,7 +354,7 @@ const svgVariant = svgVariantMap[project.id];
 }
 
 .case-study-link {
-  color: var(--color-primary);
+  color: var(--card-accent, var(--color-primary));
   text-decoration: none;
   font-weight: 700;
 }

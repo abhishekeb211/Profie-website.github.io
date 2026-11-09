@@ -1,47 +1,84 @@
 /*
  * tokens.css — Single source of truth for all design tokens
- * Atlas v2.2 Adaptive Architecture
+ * Atlas v2.3 Prismatic Professionalism Architecture
  *
- * Theme A: Professional Light (Royal Blue #2563EB, Teal #0F766E, Violet #7C3AED, Amber #D97706)
- * Theme B: Dark / Cyber-Intelligence (Canvas #080D0B, Terminal Green #22C55E, Crimson #EF4444, Blue #38BDF8)
+ * Theme A: Executive Pearl (Crisp daylight pearl #F8FAFC, Royal Blue #2563EB, 6-Domain Harmonized Spectrum)
+ * Theme B: Obsidian Midnight (Deep Space Navy #090D16, Radiant Quantum Cyan #38BDF8, Prismatic Aurora Accents)
  */
 
-/* ─── THEME A: PROFESSIONAL LIGHT (DEFAULT) ─────────────────────────────────── */
+/* ─── THEME A: EXECUTIVE PEARL (LIGHT MODE) ─────────────────────────────────── */
 :root,
 :root[data-theme="light"] {
   color-scheme: light;
 
-  /* Primary Action: Royal Blue */
+  /* Primary Action: Royal Cobalt Blue */
   --color-primary:        #2563EB;
   --color-primary-hover:  #1D4ED8;
   --color-on-primary:     #FFFFFF;
 
   /* 4 Characteristic Accent Families */
   --accent-blue:          #2563EB;   /* Primary Actions & Core Focus */
-  --accent-teal:          #0F766E;   /* Technology, Systems, Outcomes */
+  --accent-teal:          #0D9488;   /* Technology, Systems, Outcomes */
   --accent-violet:        #7C3AED;   /* Research, AI Architecture, Innovation */
   --accent-amber:         #D97706;   /* Decorative highlights */
   --accent-amber-text:    #92400E;   /* High-contrast text rating (>4.5:1) */
 
-  /* Atlas clusters — identity stays distinct from primary actions */
-  --cluster-agentic:      #2563EB;
-  --cluster-security:     #B91C1C;
-  --cluster-memory:       #7C3AED;
-  --cluster-knowledge:    #0F766E;
-  --cluster-edge:         #D97706;
-  --cluster-quantum:      #0369A1;
+  /* 6 Semantic Domain Families (Harmonized Jewel Tones) */
+  --domain-security:        #E11D48;   /* Ruby Crimson */
+  --domain-security-glow:   rgba(225, 29, 72, 0.15);
+  --domain-security-tint:   #FFF1F2;
+  --domain-security-border: #FECDD3;
+  --domain-security-text:   #9F1239;
 
-  /* Surfaces */
-  --color-bg:             #FFFFFF;
-  --color-surface:        #F8FAFC;
+  --domain-health:          #059669;   /* Emerald Mint */
+  --domain-health-glow:     rgba(5, 150, 105, 0.15);
+  --domain-health-tint:     #ECFDF5;
+  --domain-health-border:   #A7F3D0;
+  --domain-health-text:     #065F46;
+
+  --domain-mobility:        #D97706;   /* Solar Amber */
+  --domain-mobility-glow:   rgba(217, 119, 6, 0.15);
+  --domain-mobility-tint:   #FFFBEB;
+  --domain-mobility-border: #FDE68A;
+  --domain-mobility-text:   #92400E;
+
+  --domain-edu:             #7C3AED;   /* Royal Violet */
+  --domain-edu-glow:        rgba(124, 58, 237, 0.15);
+  --domain-edu-tint:        #F5F3FF;
+  --domain-edu-border:      #DDD6FE;
+  --domain-edu-text:        #5B21B6;
+
+  --domain-agentic:         #0284C7;   /* Quantum Cyan */
+  --domain-agentic-glow:    rgba(2, 132, 199, 0.15);
+  --domain-agentic-tint:    #F0F9FF;
+  --domain-agentic-border:  #BAE6FD;
+  --domain-agentic-text:    #0369A1;
+
+  --domain-systems:         #2563EB;   /* Electric Cobalt */
+  --domain-systems-glow:    rgba(37, 99, 235, 0.15);
+  --domain-systems-tint:    #EFF6FF;
+  --domain-systems-border:  #BFDBFE;
+  --domain-systems-text:    #1E40AF;
+
+  /* Atlas clusters — identity stays distinct from primary actions */
+  --cluster-agentic:      #0284C7;
+  --cluster-security:     #E11D48;
+  --cluster-memory:       #7C3AED;
+  --cluster-knowledge:    #059669;
+  --cluster-edge:         #D97706;
+  --cluster-quantum:      #2563EB;
+
+  /* Surfaces: Executive Pearl */
+  --color-bg:             #F8FAFC;
+  --color-surface:        #FFFFFF;
   --color-surface-raised: #FFFFFF;
   --color-surface-sunken: #EEF2F6;
   --color-border:         #E2E8F0;
-  --color-border-hover:   #CBD5E1;
+  --color-border-hover:   #94A3B8;
   --color-border-focus:   #2563EB;
 
   --color-research:       #7C3AED;
-  --color-knowledge:      #0F766E;
+  --color-knowledge:      #059669;
 
   /* Text & Foreground */
   --color-text:           #0F172A;
@@ -49,10 +86,10 @@
   --color-text-disabled:  #94A3B8;
 
   /* Semantic Feedback */
-  --color-success:        #16A34A;
+  --color-success:        #059669;
   --color-warning:        #D97706;
-  --color-error:          #DC2626;
-  --color-info:           #0F766E;
+  --color-error:          #E11D48;
+  --color-info:           #0284C7;
 
   /* Focus Indicator */
   --focus-ring:           #2563EB;
@@ -62,6 +99,7 @@
   --shadow-sm:   0 1px 3px 0 rgb(15 23 42 / 0.06);
   --shadow-md:   0 4px 6px -1px rgb(15 23 42 / 0.08), 0 2px 4px -2px rgb(15 23 42 / 0.04);
   --shadow-lg:   0 12px 20px -3px rgb(15 23 42 / 0.08), 0 4px 6px -4px rgb(15 23 42 / 0.04);
+  --shadow-prismatic: 0 16px 32px -4px rgba(37, 99, 235, 0.12), 0 4px 12px -2px rgba(124, 58, 237, 0.08);
 
   /* Radii */
   --radius-sm:   6px;
@@ -113,9 +151,10 @@
   --z-toast:   300;
   --z-nav:     400;
 
-  /* Hero Canvas FX */
-  --hero-bg-gradient: radial-gradient(circle at 85% 15%, rgb(124 58 237 / 0.08) 0%, rgb(37 99 235 / 0.06) 45%, transparent 70%);
-  --grid-pattern: none;
+  /* Hero Canvas FX: Luminous Executive Ambient */
+  --hero-bg-gradient: radial-gradient(circle at 80% 20%, rgba(37, 99, 235, 0.08) 0%, rgba(124, 58, 237, 0.06) 40%, rgba(2, 132, 199, 0.04) 65%, transparent 80%);
+  --grid-pattern: linear-gradient(to right, rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+                  linear-gradient(to bottom, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
 }
 
 /* ─── FALLBACK FOR NO-JS USERS WITH OS DARK SCHEME ───────────────────────── */
@@ -127,111 +166,186 @@
     --color-on-primary:     #082F49;
 
     --accent-blue:          #38BDF8;
-    --accent-teal:          #14532D;
+    --accent-teal:          #14B8A6;
     --accent-violet:        #A855F7;
-    --accent-amber:         #EF4444;
-    --accent-amber-text:    #EF4444;
+    --accent-amber:         #F59E0B;
+    --accent-amber-text:    #FCD34D;
 
-    --cluster-agentic:      #38BDF8;
-    --cluster-security:     #EF4444;
+    --domain-security:        #F43F5E;
+    --domain-security-glow:   rgba(244, 63, 94, 0.24);
+    --domain-security-tint:   rgba(244, 63, 94, 0.12);
+    --domain-security-border: rgba(244, 63, 94, 0.35);
+    --domain-security-text:   #FDA4AF;
+
+    --domain-health:          #10B981;
+    --domain-health-glow:     rgba(16, 185, 129, 0.24);
+    --domain-health-tint:     rgba(16, 185, 129, 0.12);
+    --domain-health-border:   rgba(16, 185, 129, 0.35);
+    --domain-health-text:     #6EE7B7;
+
+    --domain-mobility:        #F59E0B;
+    --domain-mobility-glow:   rgba(245, 158, 11, 0.24);
+    --domain-mobility-tint:   rgba(245, 158, 11, 0.12);
+    --domain-mobility-border: rgba(245, 158, 11, 0.35);
+    --domain-mobility-text:   #FCD34D;
+
+    --domain-edu:             #A855F7;
+    --domain-edu-glow:        rgba(168, 85, 247, 0.24);
+    --domain-edu-tint:        rgba(168, 85, 247, 0.12);
+    --domain-edu-border:      rgba(168, 85, 247, 0.35);
+    --domain-edu-text:        #D8B4FE;
+
+    --domain-agentic:         #06B6D4;
+    --domain-agentic-glow:    rgba(6, 182, 212, 0.24);
+    --domain-agentic-tint:    rgba(6, 182, 212, 0.12);
+    --domain-agentic-border:  rgba(6, 182, 212, 0.35);
+    --domain-agentic-text:    #67E8F9;
+
+    --domain-systems:         #3B82F6;
+    --domain-systems-glow:    rgba(59, 130, 246, 0.24);
+    --domain-systems-tint:    rgba(59, 130, 246, 0.12);
+    --domain-systems-border:  rgba(59, 130, 246, 0.35);
+    --domain-systems-text:    #93C5FD;
+
+    --cluster-agentic:      #06B6D4;
+    --cluster-security:     #F43F5E;
     --cluster-memory:       #C084FC;
-    --cluster-knowledge:    #2DD4BF;
-    --cluster-edge:         #FBBF24;
-    --cluster-quantum:      #818CF8;
+    --cluster-knowledge:    #10B981;
+    --cluster-edge:         #F59E0B;
+    --cluster-quantum:      #38BDF8;
 
-    --color-bg:             #080D0B;
-    --color-surface:        #101915;
-    --color-surface-raised: #16241E;
-    --color-surface-sunken: #050807;
-    --color-border:         #1E3328;
-    --color-border-hover:   #22C55E;
-    --color-border-focus:   #22C55E;
+    --color-bg:             #090D16;
+    --color-surface:        #0F172A;
+    --color-surface-raised: #1E293B;
+    --color-surface-sunken: #050811;
+    --color-border:         #334155;
+    --color-border-hover:   #64748B;
+    --color-border-focus:   #38BDF8;
 
     --color-research:       #A855F7;
-    --color-knowledge:      #2DD4BF;
+    --color-knowledge:      #10B981;
 
-    --color-text:           #F2F7F4;
-    --color-text-secondary: #A5B9AD;
-    --color-text-disabled:  #4B6355;
+    --color-text:           #F8FAFC;
+    --color-text-secondary: #94A3B8;
+    --color-text-disabled:  #475569;
 
-    --color-success:        #22C55E;
+    --color-success:        #10B981;
     --color-warning:        #F59E0B;
-    --color-error:          #EF4444;
-    --color-info:           #22C55E;
+    --color-error:          #F43F5E;
+    --color-info:           #38BDF8;
 
-    --focus-ring:           #22C55E;
+    --focus-ring:           #38BDF8;
 
-    --shadow-sm:   0 1px 3px 0 rgb(0 0 0 / 0.6);
-    --shadow-md:   0 4px 6px -1px rgb(0 0 0 / 0.7), 0 0 10px rgb(34 197 94 / 0.08);
-    --shadow-lg:   0 12px 20px -3px rgb(0 0 0 / 0.8), 0 0 20px rgb(239 68 68 / 0.12);
+    --shadow-sm:   0 1px 3px 0 rgb(0 0 0 / 0.5);
+    --shadow-md:   0 4px 10px -2px rgb(0 0 0 / 0.6), 0 0 16px rgba(56, 189, 248, 0.08);
+    --shadow-lg:   0 14px 28px -4px rgb(0 0 0 / 0.7), 0 0 24px rgba(168, 85, 247, 0.12);
+    --shadow-prismatic: 0 16px 36px -4px rgba(56, 189, 248, 0.20), 0 0 28px rgba(168, 85, 247, 0.16);
 
-    --hero-bg-gradient: radial-gradient(circle at 80% 20%, rgb(239 68 68 / 0.08) 0%, rgb(20 83 45 / 0.12) 50%, transparent 75%);
-    --grid-pattern: linear-gradient(to right, rgb(34 197 94 / 0.04) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgb(34 197 94 / 0.04) 1px, transparent 1px);
+    --hero-bg-gradient: radial-gradient(circle at 80% 20%, rgba(56, 189, 248, 0.14) 0%, rgba(168, 85, 247, 0.12) 35%, rgba(244, 63, 94, 0.08) 65%, transparent 80%);
+    --grid-pattern: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   }
 }
 
-/* ─── THEME B: DARK / CYBER-INTELLIGENCE ─────────────────────────────────── */
+/* ─── THEME B: OBSIDIAN MIDNIGHT (CYBER DEEP-TECH) ─────────────────────────── */
 :root[data-theme="dark"],
 :root[data-theme="hacker"] {
   color-scheme: dark;
 
-  /* Primary actions stay cyan so they are not mistaken for errors */
+  /* Primary action: Radiant Quantum Cyan */
   --color-primary:        #38BDF8;
   --color-primary-hover:  #7DD3FC;
   --color-on-primary:     #082F49;
 
-  /* 4 Characteristic Hacker Accent Families */
-  --accent-blue:          #38BDF8;   /* Telemetry / Secondary query */
-  --accent-teal:          #14532D;   /* Forest Green structural elements */
-  --accent-violet:        #A855F7;   /* Neural / Cryptographic indicators */
-  --accent-amber:         #EF4444;   /* Crimson system alert & primary focus */
-  --accent-amber-text:    #EF4444;
+  /* 4 Characteristic Accent Families */
+  --accent-blue:          #38BDF8;   /* Telemetry / Primary Action */
+  --accent-teal:          #14B8A6;   /* Systems & Bio-AI */
+  --accent-violet:        #A855F7;   /* Neural & Research */
+  --accent-amber:         #F59E0B;   /* Edge & Alerts */
+  --accent-amber-text:    #FCD34D;
 
-  /* Atlas clusters — Knowledge stays teal, Edge stays amber, Security stays crimson */
-  --cluster-agentic:      #38BDF8;
-  --cluster-security:     #EF4444;
+  /* 6 Semantic Domain Families (Radiant Neon on Dark) */
+  --domain-security:        #F43F5E;   /* Rose / Crimson */
+  --domain-security-glow:   rgba(244, 63, 94, 0.24);
+  --domain-security-tint:   rgba(244, 63, 94, 0.12);
+  --domain-security-border: rgba(244, 63, 94, 0.35);
+  --domain-security-text:   #FDA4AF;
+
+  --domain-health:          #10B981;   /* Emerald / Mint */
+  --domain-health-glow:     rgba(16, 185, 129, 0.24);
+  --domain-health-tint:     rgba(16, 185, 129, 0.12);
+  --domain-health-border:   rgba(16, 185, 129, 0.35);
+  --domain-health-text:     #6EE7B7;
+
+  --domain-mobility:        #F59E0B;   /* Solar Amber */
+  --domain-mobility-glow:   rgba(245, 158, 11, 0.24);
+  --domain-mobility-tint:   rgba(245, 158, 11, 0.12);
+  --domain-mobility-border: rgba(245, 158, 11, 0.35);
+  --domain-mobility-text:   #FCD34D;
+
+  --domain-edu:             #A855F7;   /* Royal Violet / Amethyst */
+  --domain-edu-glow:        rgba(168, 85, 247, 0.24);
+  --domain-edu-tint:        rgba(168, 85, 247, 0.12);
+  --domain-edu-border:      rgba(168, 85, 247, 0.35);
+  --domain-edu-text:        #D8B4FE;
+
+  --domain-agentic:         #06B6D4;   /* Quantum Cyan */
+  --domain-agentic-glow:    rgba(6, 182, 212, 0.24);
+  --domain-agentic-tint:    rgba(6, 182, 212, 0.12);
+  --domain-agentic-border:  rgba(6, 182, 212, 0.35);
+  --domain-agentic-text:    #67E8F9;
+
+  --domain-systems:         #3B82F6;   /* Electric Azure */
+  --domain-systems-glow:    rgba(59, 130, 246, 0.24);
+  --domain-systems-tint:    rgba(59, 130, 246, 0.12);
+  --domain-systems-border:  rgba(59, 130, 246, 0.35);
+  --domain-systems-text:    #93C5FD;
+
+  /* Atlas clusters */
+  --cluster-agentic:      #06B6D4;
+  --cluster-security:     #F43F5E;
   --cluster-memory:       #C084FC;
-  --cluster-knowledge:    #2DD4BF;
-  --cluster-edge:         #FBBF24;
-  --cluster-quantum:      #818CF8;
+  --cluster-knowledge:    #10B981;
+  --cluster-edge:         #F59E0B;
+  --cluster-quantum:      #38BDF8;
 
-  /* Surfaces: Black & Deep Forest Slate */
-  --color-bg:             #080D0B;
-  --color-surface:        #101915;
-  --color-surface-raised: #16241E;
-  --color-surface-sunken: #050807;
-  --color-border:         #1E3328;
-  --color-border-hover:   #22C55E;
-  --color-border-focus:   #22C55E;
+  /* Surfaces: Obsidian Midnight */
+  --color-bg:             #090D16;
+  --color-surface:        #0F172A;
+  --color-surface-raised: #1E293B;
+  --color-surface-sunken: #050811;
+  --color-border:         #334155;
+  --color-border-hover:   #64748B;
+  --color-border-focus:   #38BDF8;
 
   --color-research:       #A855F7;
-  --color-knowledge:      #2DD4BF;
+  --color-knowledge:      #10B981;
 
-  /* Text: Near-white & Terminal muted */
-  --color-text:           #F2F7F4;
-  --color-text-secondary: #A5B9AD;
-  --color-text-disabled:  #4B6355;
+  /* Text: Luminous white & metallic silver */
+  --color-text:           #F8FAFC;
+  --color-text-secondary: #94A3B8;
+  --color-text-disabled:  #475569;
 
   /* Semantic Feedback */
-  --color-success:        #22C55E;   /* Terminal Green (>8.5:1 on #080D0B) */
+  --color-success:        #10B981;
   --color-warning:        #F59E0B;
-  --color-error:          #EF4444;
-  --color-info:           #22C55E;
+  --color-error:          #F43F5E;
+  --color-info:           #38BDF8;
 
   /* Focus Indicator */
-  --focus-ring:           #22C55E;
+  --focus-ring:           #38BDF8;
   --focus-ring-offset:    2px;
 
   /* Glow Shadows */
-  --shadow-sm:   0 1px 3px 0 rgb(0 0 0 / 0.6);
-  --shadow-md:   0 4px 6px -1px rgb(0 0 0 / 0.7), 0 0 10px rgb(34 197 94 / 0.08);
-  --shadow-lg:   0 12px 20px -3px rgb(0 0 0 / 0.8), 0 0 20px rgb(239 68 68 / 0.12);
+  --shadow-sm:   0 1px 3px 0 rgb(0 0 0 / 0.5);
+  --shadow-md:   0 4px 10px -2px rgb(0 0 0 / 0.6), 0 0 16px rgba(56, 189, 248, 0.08);
+  --shadow-lg:   0 14px 28px -4px rgb(0 0 0 / 0.7), 0 0 24px rgba(168, 85, 247, 0.12);
+  --shadow-prismatic: 0 16px 36px -4px rgba(56, 189, 248, 0.20), 0 0 28px rgba(168, 85, 247, 0.16);
 
-  /* Hero Canvas FX: Cybersecurity Subtle Grid */
-  --hero-bg-gradient: radial-gradient(circle at 80% 20%, rgb(239 68 68 / 0.08) 0%, rgb(20 83 45 / 0.12) 50%, transparent 75%);
-  --grid-pattern: linear-gradient(to right, rgb(34 197 94 / 0.04) 1px, transparent 1px),
-                  linear-gradient(to bottom, rgb(34 197 94 / 0.04) 1px, transparent 1px);
+  /* Hero Canvas FX: Cyber Aurora Subtle Glow */
+  --hero-bg-gradient: radial-gradient(circle at 80% 20%, rgba(56, 189, 248, 0.14) 0%, rgba(168, 85, 247, 0.12) 35%, rgba(244, 63, 94, 0.08) 65%, transparent 80%);
+  --grid-pattern: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                  linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
 
 /* ─── GLOBAL RESET & BASE RULES ─────────────────────────────────────────── */
@@ -371,4 +485,139 @@ article[id] {
   ::view-transition-new(*) {
     animation: none !important;
   }
+}
+
+/* ─── PRISMATIC COLORFUL & PROFESSIONAL UTILITIES ───────────────────────── */
+
+/* Multi-stop Prismatic Text Gradients */
+.text-gradient-prismatic {
+  background: linear-gradient(135deg, #2563EB 0%, #7C3AED 35%, #059669 70%, #D97706 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+:root[data-theme="dark"] .text-gradient-prismatic,
+:root[data-theme="hacker"] .text-gradient-prismatic {
+  background: linear-gradient(135deg, #38BDF8 0%, #818CF8 30%, #C084FC 60%, #F43F5E 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-azure {
+  background: linear-gradient(135deg, #2563EB 0%, #0284C7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+:root[data-theme="dark"] .text-gradient-azure,
+:root[data-theme="hacker"] .text-gradient-azure {
+  background: linear-gradient(135deg, #38BDF8 0%, #60A5FA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-emerald {
+  background: linear-gradient(135deg, #059669 0%, #0D9488 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+:root[data-theme="dark"] .text-gradient-emerald,
+:root[data-theme="hacker"] .text-gradient-emerald {
+  background: linear-gradient(135deg, #10B981 0%, #2DD4BF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-amber {
+  background: linear-gradient(135deg, #D97706 0%, #EA580C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+:root[data-theme="dark"] .text-gradient-amber,
+:root[data-theme="hacker"] .text-gradient-amber {
+  background: linear-gradient(135deg, #F59E0B 0%, #F97316 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-violet {
+  background: linear-gradient(135deg, #7C3AED 0%, #9333EA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+:root[data-theme="dark"] .text-gradient-violet,
+:root[data-theme="hacker"] .text-gradient-violet {
+  background: linear-gradient(135deg, #A855F7 0%, #C084FC 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-rose {
+  background: linear-gradient(135deg, #E11D48 0%, #BE123C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+:root[data-theme="dark"] .text-gradient-rose,
+:root[data-theme="hacker"] .text-gradient-rose {
+  background: linear-gradient(135deg, #F43F5E 0%, #FB7185 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Ambient Aurora Mesh Atmosphere */
+.hero-ambient-mesh {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100vw, 1200px);
+  height: 550px;
+  background: radial-gradient(circle at 20% 30%, rgba(37, 99, 235, 0.08) 0%, transparent 60%),
+              radial-gradient(circle at 80% 25%, rgba(124, 58, 237, 0.08) 0%, transparent 60%),
+              radial-gradient(circle at 50% 70%, rgba(5, 150, 105, 0.06) 0%, transparent 60%);
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.8;
+}
+
+:root[data-theme="dark"] .hero-ambient-mesh,
+:root[data-theme="hacker"] .hero-ambient-mesh {
+  background: radial-gradient(circle at 20% 30%, rgba(56, 189, 248, 0.16) 0%, transparent 60%),
+              radial-gradient(circle at 80% 25%, rgba(168, 85, 247, 0.15) 0%, transparent 60%),
+              radial-gradient(circle at 50% 70%, rgba(244, 63, 94, 0.12) 0%, transparent 60%);
+  filter: blur(75px);
+  opacity: 0.9;
+}
+
+/* 2-Tone Semantic Domain Badges (WCAG AA Compliant) */
+.badge-domain-security {
+  color: var(--domain-security-text);
+  background: var(--domain-security-tint);
+  border: 1px solid var(--domain-security-border);
+}
+.badge-domain-health {
+  color: var(--domain-health-text);
+  background: var(--domain-health-tint);
+  border: 1px solid var(--domain-health-border);
+}
+.badge-domain-mobility {
+  color: var(--domain-mobility-text);
+  background: var(--domain-mobility-tint);
+  border: 1px solid var(--domain-mobility-border);
+}
+.badge-domain-edu {
+  color: var(--domain-edu-text);
+  background: var(--domain-edu-tint);
+  border: 1px solid var(--domain-edu-border);
+}
+.badge-domain-agentic {
+  color: var(--domain-agentic-text);
+  background: var(--domain-agentic-tint);
+  border: 1px solid var(--domain-agentic-border);
+}
+.badge-domain-systems {
+  color: var(--domain-systems-text);
+  background: var(--domain-systems-tint);
+  border: 1px solid var(--domain-systems-border);
 }

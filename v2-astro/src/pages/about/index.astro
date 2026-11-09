@@ -74,22 +74,22 @@ const resumeHref = `${base}/resume.pdf`;
       <section class="domains-section" data-reveal data-reveal-delay="2">
         <h2>What I Work On</h2>
         <div class="about-domains-grid">
-          <div class="domain-card interactive-card">
+          <div class="domain-card domain-card-security interactive-card">
             <span class="domain-icon">🛡️</span>
             <h4>Software Security</h4>
             <p>Autonomous tools that find and repair code vulnerabilities locally, protecting proprietary code without sending IP to external clouds.</p>
           </div>
-          <div class="domain-card interactive-card">
+          <div class="domain-card domain-card-health interactive-card">
             <span class="domain-icon">🏥</span>
             <h4>Digital Healthcare</h4>
             <p>Clinical decision-support and triage tools for frontline healthcare workers across 20+ village centers in rural Maharashtra.</p>
           </div>
-          <div class="domain-card interactive-card">
+          <div class="domain-card domain-card-mobility interactive-card">
             <span class="domain-icon">🚗</span>
             <h4>Connected Mobility</h4>
             <p>Deterministic edge systems processing 100k+ vehicle sensor messages per second under a strict 12W power ceiling with zero data loss.</p>
           </div>
-          <div class="domain-card interactive-card">
+          <div class="domain-card domain-card-edu interactive-card">
             <span class="domain-icon">🎓</span>
             <h4>Engineering Education</h4>
             <p>Mentoring the next generation of engineers through competitive programming, hackathons, and research publication guidance.</p>
@@ -318,13 +318,29 @@ const resumeHref = `${base}/resume.pdf`;
     padding: var(--space-5);
     display: flex;
     flex-direction: column;
-    transition: transform var(--duration-fast) var(--ease-default), border-color var(--duration-fast);
+    transition: transform var(--duration-fast) var(--ease-default), border-color var(--duration-fast), box-shadow var(--duration-fast);
   }
 
   .domain-card:hover {
     transform: translateY(-2px);
     border-color: var(--color-primary);
   }
+
+  .domain-card-security { border-top: 3px solid var(--domain-security); }
+  .domain-card-security:hover { border-color: var(--domain-security); box-shadow: 0 10px 24px -4px var(--domain-security-glow); }
+  .domain-card-security h4 { color: var(--domain-security); }
+
+  .domain-card-health { border-top: 3px solid var(--domain-health); }
+  .domain-card-health:hover { border-color: var(--domain-health); box-shadow: 0 10px 24px -4px var(--domain-health-glow); }
+  .domain-card-health h4 { color: var(--domain-health); }
+
+  .domain-card-mobility { border-top: 3px solid var(--domain-mobility); }
+  .domain-card-mobility:hover { border-color: var(--domain-mobility); box-shadow: 0 10px 24px -4px var(--domain-mobility-glow); }
+  .domain-card-mobility h4 { color: var(--domain-mobility); }
+
+  .domain-card-edu { border-top: 3px solid var(--domain-edu); }
+  .domain-card-edu:hover { border-color: var(--domain-edu); box-shadow: 0 10px 24px -4px var(--domain-edu-glow); }
+  .domain-card-edu h4 { color: var(--domain-edu); }
 
   .domain-icon {
     font-size: 24px;
@@ -361,13 +377,19 @@ const resumeHref = `${base}/resume.pdf`;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     padding: var(--space-5);
-    transition: transform var(--duration-fast) var(--ease-default), border-color var(--duration-fast);
+    transition: transform var(--duration-fast) var(--ease-default), border-color var(--duration-fast), box-shadow var(--duration-fast);
   }
 
   .lead-card:hover {
     transform: translateY(-2px);
     border-color: var(--color-primary);
   }
+
+  .lead-card:nth-child(1) { border-top: 3px solid var(--domain-edu); }
+  .lead-card:nth-child(1):hover { border-color: var(--domain-edu); box-shadow: 0 10px 24px -4px var(--domain-edu-glow); }
+
+  .lead-card:nth-child(2) { border-top: 3px solid var(--domain-mobility); }
+  .lead-card:nth-child(2):hover { border-color: var(--domain-mobility); box-shadow: 0 10px 24px -4px var(--domain-mobility-glow); }
 
   .lead-header {
     display: flex;
@@ -428,6 +450,21 @@ const resumeHref = `${base}/resume.pdf`;
     background: var(--color-primary);
     border: 2px solid var(--color-bg);
   }
+
+  .timeline-item:nth-child(1)::before { background: var(--domain-security); box-shadow: 0 0 10px var(--domain-security-glow); }
+  .timeline-item:nth-child(1) .item-year { color: var(--domain-security); }
+
+  .timeline-item:nth-child(2)::before { background: var(--domain-edu); box-shadow: 0 0 10px var(--domain-edu-glow); }
+  .timeline-item:nth-child(2) .item-year { color: var(--domain-edu); }
+
+  .timeline-item:nth-child(3)::before { background: var(--domain-mobility); box-shadow: 0 0 10px var(--domain-mobility-glow); }
+  .timeline-item:nth-child(3) .item-year { color: var(--domain-mobility); }
+
+  .timeline-item:nth-child(4)::before { background: var(--domain-health); box-shadow: 0 0 10px var(--domain-health-glow); }
+  .timeline-item:nth-child(4) .item-year { color: var(--domain-health); }
+
+  .timeline-item:nth-child(5)::before { background: var(--domain-systems); box-shadow: 0 0 10px var(--domain-systems-glow); }
+  .timeline-item:nth-child(5) .item-year { color: var(--domain-systems); }
 
   .item-year {
     font-family: var(--font-mono);

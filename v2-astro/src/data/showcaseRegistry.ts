@@ -517,6 +517,8 @@ export interface ProjectIdentityMeta {
   humanMetric: { value: string; label: string };
   domainLabel: string;
   domainIcon: string;
+  domainKey?: 'security' | 'health' | 'mobility' | 'edu' | 'agentic' | 'systems';
+  domainColor?: string;
   highlightTag?: string;
 }
 
@@ -528,6 +530,8 @@ export const PROJECT_IDENTITY_REGISTRY: Record<string, ProjectIdentityMeta> = {
     humanMetric: { value: '100%', label: 'SARIF Compliance & Zero Regressions' },
     domainLabel: 'Software Security',
     domainIcon: 'shield',
+    domainKey: 'security',
+    domainColor: '#F43F5E',
     highlightTag: 'Privacy-First'
   },
   'vehiclegpt': {
@@ -537,6 +541,8 @@ export const PROJECT_IDENTITY_REGISTRY: Record<string, ProjectIdentityMeta> = {
     humanMetric: { value: '100k+', label: 'Vehicle Signals/sec Under 12W' },
     domainLabel: 'Smart Mobility',
     domainIcon: 'cpu',
+    domainKey: 'mobility',
+    domainColor: '#F59E0B',
     highlightTag: 'Deterministic RTOS'
   },
   'agentic-browser-defense': {
@@ -546,6 +552,8 @@ export const PROJECT_IDENTITY_REGISTRY: Record<string, ProjectIdentityMeta> = {
     humanMetric: { value: '< 1 ms', label: 'Cryptographic Action Gating' },
     domainLabel: 'AI Safety & Security',
     domainIcon: 'shield',
+    domainKey: 'security',
+    domainColor: '#F43F5E',
     highlightTag: 'Zero-Replay'
   },
   'mc-ctvit-eeg-transformer': {
@@ -555,6 +563,8 @@ export const PROJECT_IDENTITY_REGISTRY: Record<string, ProjectIdentityMeta> = {
     humanMetric: { value: '99.95%', label: 'Less Attention Computation' },
     domainLabel: 'Neural AI & Healthcare',
     domainIcon: 'activity',
+    domainKey: 'health',
+    domainColor: '#10B981',
     highlightTag: 'FLOP Reduction'
   },
   'swasthya-health-network': {
@@ -564,6 +574,8 @@ export const PROJECT_IDENTITY_REGISTRY: Record<string, ProjectIdentityMeta> = {
     humanMetric: { value: '236', label: 'Statutory Health Duties Coordinated' },
     domainLabel: 'Digital Healthcare',
     domainIcon: 'heart',
+    domainKey: 'health',
+    domainColor: '#10B981',
     highlightTag: 'Rural Health'
   },
   'isro-route-resilience': {
@@ -573,6 +585,8 @@ export const PROJECT_IDENTITY_REGISTRY: Record<string, ProjectIdentityMeta> = {
     humanMetric: { value: '-38.4%', label: 'Emergency Evacuation Time Saved' },
     domainLabel: 'Disaster & Space AI',
     domainIcon: 'map-pin',
+    domainKey: 'mobility',
+    domainColor: '#F59E0B',
     highlightTag: 'ISRO BAH 2026'
   },
   'blockchain-ehr-bcfl': {
@@ -582,6 +596,8 @@ export const PROJECT_IDENTITY_REGISTRY: Record<string, ProjectIdentityMeta> = {
     humanMetric: { value: '0%', label: 'Patient Data Leaked to Central Servers' },
     domainLabel: 'Healthcare Privacy',
     domainIcon: 'lock',
+    domainKey: 'health',
+    domainColor: '#10B981',
     highlightTag: 'Federated Trust'
   },
   'vulrag-security': {
@@ -591,6 +607,8 @@ export const PROJECT_IDENTITY_REGISTRY: Record<string, ProjectIdentityMeta> = {
     humanMetric: { value: '100%', label: 'Air-Gapped Sovereign Execution' },
     domainLabel: 'Software Security',
     domainIcon: 'code',
+    domainKey: 'security',
+    domainColor: '#F43F5E',
     highlightTag: 'Zero-Cloud Egress'
   },
   'trustwise-adaptiverag': {
@@ -600,6 +618,8 @@ export const PROJECT_IDENTITY_REGISTRY: Record<string, ProjectIdentityMeta> = {
     humanMetric: { value: '195/197', label: 'Information Isolation Tests Passed' },
     domainLabel: 'Enterprise AI',
     domainIcon: 'search',
+    domainKey: 'agentic',
+    domainColor: '#06B6D4',
     highlightTag: 'Confidential RAG'
   },
   'supper-ide': {
@@ -609,6 +629,8 @@ export const PROJECT_IDENTITY_REGISTRY: Record<string, ProjectIdentityMeta> = {
     humanMetric: { value: '80%', label: 'Local Model Zero-Cloud Routing' },
     domainLabel: 'Developer Tools',
     domainIcon: 'terminal',
+    domainKey: 'agentic',
+    domainColor: '#06B6D4',
     highlightTag: 'Autonomous IDE'
   },
   'hierarchical-ids': {
@@ -618,6 +640,8 @@ export const PROJECT_IDENTITY_REGISTRY: Record<string, ProjectIdentityMeta> = {
     humanMetric: { value: '< 10 µs', label: 'Industrial Attack Interception' },
     domainLabel: 'Cybersecurity',
     domainIcon: 'shield',
+    domainKey: 'security',
+    domainColor: '#F43F5E',
     highlightTag: 'Sub-10µs Gating'
   },
   'quantum-cryptography': {
@@ -627,6 +651,8 @@ export const PROJECT_IDENTITY_REGISTRY: Record<string, ProjectIdentityMeta> = {
     humanMetric: { value: 'FIPS 203', label: 'NIST Quantum Standards Aligned' },
     domainLabel: 'Cryptography',
     domainIcon: 'key',
+    domainKey: 'security',
+    domainColor: '#F43F5E',
     highlightTag: 'Lattice Security'
   },
   'operon-extension': {
@@ -636,6 +662,8 @@ export const PROJECT_IDENTITY_REGISTRY: Record<string, ProjectIdentityMeta> = {
     humanMetric: { value: '307/308', label: 'Automated Extension Checks Passed' },
     domainLabel: 'Developer Tools',
     domainIcon: 'git-branch',
+    domainKey: 'agentic',
+    domainColor: '#06B6D4',
     highlightTag: 'Open VSX'
   },
   'engineering-knowledge-rag': {
@@ -645,6 +673,8 @@ export const PROJECT_IDENTITY_REGISTRY: Record<string, ProjectIdentityMeta> = {
     humanMetric: { value: '< 100 ms', label: 'Query Retrieval on Constrained RAM' },
     domainLabel: 'Knowledge Retrieval',
     domainIcon: 'file-text',
+    domainKey: 'systems',
+    domainColor: '#3B82F6',
     highlightTag: 'Sub-100ms Search'
   },
   'stockai-platform': {
@@ -654,6 +684,8 @@ export const PROJECT_IDENTITY_REGISTRY: Record<string, ProjectIdentityMeta> = {
     humanMetric: { value: '100%', label: 'Decision Traceability & Risk Bounds' },
     domainLabel: 'Quantitative Analytics',
     domainIcon: 'trending-up',
+    domainKey: 'systems',
+    domainColor: '#3B82F6',
     highlightTag: 'Explainable AI'
   },
   'sanjaya-ai': {
@@ -663,6 +695,8 @@ export const PROJECT_IDENTITY_REGISTRY: Record<string, ProjectIdentityMeta> = {
     humanMetric: { value: '3 Dialects', label: 'Edge Audio Intent Recognition' },
     domainLabel: 'Accessible AI',
     domainIcon: 'mic',
+    domainKey: 'agentic',
+    domainColor: '#06B6D4',
     highlightTag: 'Regional Voice'
   },
   'flipkart-ml-platform': {
@@ -672,6 +706,8 @@ export const PROJECT_IDENTITY_REGISTRY: Record<string, ProjectIdentityMeta> = {
     humanMetric: { value: 'Real-Time', label: 'Logistics Disruption Mitigation' },
     domainLabel: 'Enterprise ML',
     domainIcon: 'truck',
+    domainKey: 'systems',
+    domainColor: '#3B82F6',
     highlightTag: 'E-Commerce ML'
   },
   'paradox-ai': {
@@ -681,6 +717,8 @@ export const PROJECT_IDENTITY_REGISTRY: Record<string, ProjectIdentityMeta> = {
     humanMetric: { value: 'Multi-Agent', label: 'Game-Theoretic Crisis Simulation' },
     domainLabel: 'Behavioral AI',
     domainIcon: 'users',
+    domainKey: 'agentic',
+    domainColor: '#06B6D4',
     highlightTag: 'Crisis Modeling'
   },
   'private-memory-os': {
@@ -690,6 +728,8 @@ export const PROJECT_IDENTITY_REGISTRY: Record<string, ProjectIdentityMeta> = {
     humanMetric: { value: '0 bytes', label: 'Cloud Egress on Personal Context' },
     domainLabel: 'Personal AI',
     domainIcon: 'hard-drive',
+    domainKey: 'systems',
+    domainColor: '#3B82F6',
     highlightTag: 'Hardware Privacy'
   }
 };
@@ -704,6 +744,8 @@ export function getProjectIdentity(projectId: string): ProjectIdentityMeta {
     humanSummary: 'Engineered for reliability, privacy, and performance under rigorous validation standards.',
     humanMetric: { value: 'VERIFIED', label: 'Automated Test Pass' },
     domainLabel: 'AI Systems',
-    domainIcon: 'cpu'
+    domainIcon: 'cpu',
+    domainKey: 'systems',
+    domainColor: '#3B82F6'
   };
 }

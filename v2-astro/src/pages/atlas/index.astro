@@ -45,29 +45,29 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <section class="cluster-summary-section" data-reveal data-reveal-delay="2">
         <h3 class="cluster-summary-heading">Ecosystem Cluster Taxonomy</h3>
         <div class="cluster-cards-grid">
-          <div class="cluster-card interactive-card">
-            <span class="cluster-badge badge-blue">Agentic Core</span>
+          <div class="cluster-card cluster-card-agentic interactive-card">
+            <span class="cluster-badge badge-domain-agentic">Agentic Core</span>
             <h4>Autonomous Orchestration & AST Repair</h4>
             <p>CodeAgent, VulRAG, Supper-IDE, Operon-ext. Closed-loop tree-sitter AST validation and deterministic tool gating.</p>
             <a href={`${base}/projects/`} class="cluster-link">View Systems →</a>
           </div>
 
-          <div class="cluster-card interactive-card">
-            <span class="cluster-badge badge-teal">Security & Zero-Trust</span>
+          <div class="cluster-card cluster-card-security interactive-card">
+            <span class="cluster-badge badge-domain-security">Security & Zero-Trust</span>
             <h4>Runtime Mediation & MicroVMs</h4>
             <p>Agentic Browser Defense, Hierarchical IDS, Post-Quantum Lattice (QGuard). 8-tuple HMAC tokens and sub-10µs gating.</p>
             <a href={`${base}/projects/agentic-browser-defense/`} class="cluster-link">Inspect Proxy →</a>
           </div>
 
-          <div class="cluster-card interactive-card">
-            <span class="cluster-badge badge-violet">Theoretical & Neural</span>
+          <div class="cluster-card cluster-card-health interactive-card">
+            <span class="cluster-badge badge-domain-health">Theoretical & Neural</span>
             <h4>Decoupled Scalp Attention & RAG</h4>
             <p>MC-CTViT EEG Transformer, TrustWise AdaptiveRag. Quad-branch spatial-temporal decoupling reducing FLOPs by 99.95%.</p>
             <a href={`${base}/projects/mc-ctvit-eeg-transformer/`} class="cluster-link">Read Proof →</a>
           </div>
 
-          <div class="cluster-card interactive-card">
-            <span class="cluster-badge badge-amber">Edge & Embedded</span>
+          <div class="cluster-card cluster-card-mobility interactive-card">
+            <span class="cluster-badge badge-domain-mobility">Edge & Embedded</span>
             <h4>Deterministic RTOS & Space Geodesy</h4>
             <p>VehicleGPT C++20 SCHED_FIFO, ISRO Disaster Routing. Sub-millisecond ring buffers and angle-aware DSU gap healing.</p>
             <a href={`${base}/projects/vehiclegpt/`} class="cluster-link">View Telemetry →</a>
@@ -185,13 +185,29 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    transition: transform var(--duration-fast) var(--ease-default), border-color var(--duration-fast) var(--ease-default), box-shadow var(--duration-fast) var(--ease-default);
   }
 
   .cluster-card:hover {
     transform: translateY(-2px);
     border-color: var(--color-primary);
   }
+
+  .cluster-card-agentic { border-top: 3px solid var(--domain-agentic); }
+  .cluster-card-agentic:hover { border-color: var(--domain-agentic); box-shadow: 0 10px 24px -4px var(--domain-agentic-glow); }
+  .cluster-card-agentic .cluster-link { color: var(--domain-agentic); }
+
+  .cluster-card-security { border-top: 3px solid var(--domain-security); }
+  .cluster-card-security:hover { border-color: var(--domain-security); box-shadow: 0 10px 24px -4px var(--domain-security-glow); }
+  .cluster-card-security .cluster-link { color: var(--domain-security); }
+
+  .cluster-card-health { border-top: 3px solid var(--domain-health); }
+  .cluster-card-health:hover { border-color: var(--domain-health); box-shadow: 0 10px 24px -4px var(--domain-health-glow); }
+  .cluster-card-health .cluster-link { color: var(--domain-health); }
+
+  .cluster-card-mobility { border-top: 3px solid var(--domain-mobility); }
+  .cluster-card-mobility:hover { border-color: var(--domain-mobility); box-shadow: 0 10px 24px -4px var(--domain-mobility-glow); }
+  .cluster-card-mobility .cluster-link { color: var(--domain-mobility); }
 
   .cluster-badge {
     align-self: flex-start;

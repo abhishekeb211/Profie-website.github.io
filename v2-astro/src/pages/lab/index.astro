@@ -30,7 +30,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <span class="status-indicator"></span>
           <span>Interactive Micro-Simulators // Live Client-Side Runtime</span>
         </div>
-        <h1 class="page-title">AI Engineering Lab</h1>
+        <h1 class="page-title"><span class="text-gradient-prismatic">AI Engineering Lab</span></h1>
         <p class="page-subtitle">
           Interactive browser simulations derived from real system architectures. Test and verify deterministic edge ingestion, cryptographic token mediation, quad-branch attention scaling, and angle-aware graph continuity live.
         </p>
@@ -231,12 +231,34 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    transition: transform var(--duration-fast) var(--ease-default), border-color var(--duration-fast) var(--ease-default), box-shadow var(--duration-fast) var(--ease-default);
   }
 
   .nav-card:hover {
     transform: translateY(-2px);
     border-color: var(--color-primary);
+  }
+
+  .nav-card:nth-child(1) {
+    border-top: 3px solid var(--domain-agentic);
+  }
+  .nav-card:nth-child(1):hover {
+    border-color: var(--domain-agentic);
+    box-shadow: 0 10px 24px -4px var(--domain-agentic-glow);
+  }
+  .nav-card:nth-child(1) a {
+    color: var(--domain-agentic);
+  }
+
+  .nav-card:nth-child(2) {
+    border-top: 3px solid var(--domain-edu);
+  }
+  .nav-card:nth-child(2):hover {
+    border-color: var(--domain-edu);
+    box-shadow: 0 10px 24px -4px var(--domain-edu-glow);
+  }
+  .nav-card:nth-child(2) a {
+    color: var(--domain-edu);
   }
 
   .nav-card h4 {

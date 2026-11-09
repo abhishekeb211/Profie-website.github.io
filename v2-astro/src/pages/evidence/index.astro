@@ -29,7 +29,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <span class="status-indicator"></span>
           <span>Formal Verification & Reproducibility // 70 Repositories</span>
         </div>
-        <h1 class="page-title">Engineering Evidence & Verification Hub</h1>
+        <h1 class="page-title"><span class="text-gradient-prismatic">Engineering Evidence &amp; Verification Hub</span></h1>
         <p class="page-subtitle">
           Empirical validation across 70 repositories (86,727 files, 59.4 GB). Every architectural claim is verified through reproducible automated test suites, physical hardware benchmarks, formal journal entries, and cryptographic hashes.
         </p>
@@ -446,13 +446,29 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     display: flex;
     flex-direction: column;
     gap: var(--space-1);
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    transition: transform var(--duration-fast) var(--ease-default), border-color var(--duration-fast) var(--ease-default), box-shadow var(--duration-fast) var(--ease-default);
   }
 
   .stat-card:hover {
     transform: translateY(-2px);
     border-color: var(--color-primary);
   }
+
+  .stat-card:nth-child(1) { border-top: 3px solid var(--domain-systems); }
+  .stat-card:nth-child(1):hover { border-color: var(--domain-systems); box-shadow: 0 8px 20px -4px var(--domain-systems-glow); }
+  .stat-card:nth-child(1) .stat-val { color: var(--domain-systems); }
+
+  .stat-card:nth-child(2) { border-top: 3px solid var(--domain-edu); }
+  .stat-card:nth-child(2):hover { border-color: var(--domain-edu); box-shadow: 0 8px 20px -4px var(--domain-edu-glow); }
+  .stat-card:nth-child(2) .stat-val { color: var(--domain-edu); }
+
+  .stat-card:nth-child(3) { border-top: 3px solid var(--domain-health); }
+  .stat-card:nth-child(3):hover { border-color: var(--domain-health); box-shadow: 0 8px 20px -4px var(--domain-health-glow); }
+  .stat-card:nth-child(3) .stat-val { color: var(--domain-health); }
+
+  .stat-card:nth-child(4) { border-top: 3px solid var(--domain-mobility); }
+  .stat-card:nth-child(4):hover { border-color: var(--domain-mobility); box-shadow: 0 8px 20px -4px var(--domain-mobility-glow); }
+  .stat-card:nth-child(4) .stat-val { color: var(--domain-mobility); }
 
   .stat-badge {
     align-self: flex-start;

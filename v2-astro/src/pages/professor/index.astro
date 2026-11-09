@@ -24,7 +24,7 @@ const base = import.meta.env.BASE_URL;
         </div>
         <h1 class="hero-title">
           Inspiring Engineers to Build<br/>
-          <span class="text-gradient">Systems That Matter</span>
+          <span class="text-gradient-prismatic">Systems That Matter</span>
         </h1>
         <p class="hero-subtitle">Educator · Researcher · Student Mentor</p>
         <p class="hero-bio">
@@ -391,7 +391,28 @@ const base = import.meta.env.BASE_URL;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   padding: var(--space-6);
+  transition: transform var(--duration-fast) var(--ease-default), border-color var(--duration-fast) var(--ease-default), box-shadow var(--duration-fast) var(--ease-default);
 }
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+}
+
+.grid-cards .card:nth-child(1) { border-top: 3px solid var(--domain-edu); }
+.grid-cards .card:nth-child(1):hover { border-color: var(--domain-edu); box-shadow: 0 10px 24px -4px var(--domain-edu-glow); }
+
+.grid-cards .card:nth-child(2) { border-top: 3px solid var(--domain-health); }
+.grid-cards .card:nth-child(2):hover { border-color: var(--domain-health); box-shadow: 0 10px 24px -4px var(--domain-health-glow); }
+
+.grid-cards .card:nth-child(3) { border-top: 3px solid var(--domain-systems); }
+.grid-cards .card:nth-child(3):hover { border-color: var(--domain-systems); box-shadow: 0 10px 24px -4px var(--domain-systems-glow); }
+
+.clubs-list .card:nth-child(1) { border-top: 3px solid var(--domain-edu); }
+.clubs-list .card:nth-child(1):hover { border-color: var(--domain-edu); box-shadow: 0 10px 24px -4px var(--domain-edu-glow); }
+
+.clubs-list .card:nth-child(2) { border-top: 3px solid var(--domain-mobility); }
+.clubs-list .card:nth-child(2):hover { border-color: var(--domain-mobility); box-shadow: 0 10px 24px -4px var(--domain-mobility-glow); }
 
 .card h3 {
   font-size: var(--text-lg);

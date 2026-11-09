@@ -210,10 +210,16 @@ const navItems = activePersona === 'professor'
   position: sticky;
   top: 0;
   z-index: var(--z-nav);
-  background: var(--color-bg);
+  background: rgba(248, 250, 252, 0.88);
   border-bottom: 1px solid var(--color-border);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   transition: background-color var(--duration-base) var(--ease-default), border-color var(--duration-base) var(--ease-default);
+}
+
+:root[data-theme="dark"] .site-header,
+:root[data-theme="hacker"] .site-header {
+  background: rgba(9, 13, 22, 0.88);
 }
 
 .header-inner {
