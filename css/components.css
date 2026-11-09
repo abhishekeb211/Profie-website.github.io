@@ -48,92 +48,91 @@
     box-shadow: 0 10px 24px color-mix(in srgb, var(--glow) 42%, transparent);
 }
 
-/* --- THEME SWITCHER (dropdown) --- */
-.theme-switcher {
+/* --- TACTILE 2-STATE THEME TOGGLE PILL --- */
+.theme-toggle-pill {
     position: relative;
+    display: inline-flex;
+    align-items: center;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 9999px;
+    padding: 3px;
+    gap: 2px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    z-index: 10;
 }
 
-.theme-switcher-trigger {
+body.light-theme .theme-toggle-pill {
+    background: rgba(241, 245, 249, 0.9);
+    border-color: rgba(15, 23, 42, 0.1);
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+}
+
+.theme-pill-btn {
+    position: relative;
+    z-index: 2;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 8px 14px;
-    background: var(--card);
-    border: 1px solid var(--card-border);
-    border-radius: 9px;
-    color: var(--text);
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.theme-switcher-trigger:hover {
-    border-color: var(--accent);
-    background: var(--bg2);
-}
-
-.theme-switcher-trigger:focus-visible {
-    outline: 2px solid var(--focus-ring);
-    outline-offset: 2px;
-}
-
-.theme-switcher-chevron {
-    font-size: 0.7rem;
-    opacity: 0.8;
-    transition: transform 0.2s ease;
-}
-
-.theme-switcher-trigger[aria-expanded="true"] .theme-switcher-chevron {
-    transform: rotate(180deg);
-}
-
-.theme-switcher-dropdown {
-    position: absolute;
-    top: calc(100% + 6px);
-    right: 0;
-    min-width: 120px;
-    background: var(--card);
-    border: 1px solid var(--card-border);
-    border-radius: var(--radius);
-    box-shadow: var(--card-shadow-hover);
-    padding: 6px;
-    z-index: 1001;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.theme-switcher-dropdown[hidden] {
-    display: none !important;
-}
-
-.theme-option {
-    padding: 10px 14px;
+    padding: 5px 12px;
+    border-radius: 9999px;
     border: none;
-    border-radius: 6px;
     background: transparent;
-    color: var(--text);
-    font-size: 0.85rem;
-    font-weight: 500;
-    text-align: left;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: var(--transition);
+    transition: color 0.25s ease, transform 0.2s ease;
 }
 
-.theme-option:hover {
-    background: var(--bg2);
+.theme-pill-btn:hover {
+    color: var(--text);
 }
 
-.theme-option[aria-current="true"],
-.theme-option.active {
-    background: var(--accent-soft);
-    color: var(--accent);
+.theme-pill-btn .theme-icon {
+    display: inline-block;
+    vertical-align: middle;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), stroke 0.3s ease;
 }
 
-.theme-option:focus-visible {
-    outline: 2px solid var(--focus-ring);
-    outline-offset: 2px;
+.theme-pill-btn.active {
+    color: #ffffff;
+}
+
+body.light-theme .theme-pill-btn.active {
+    color: #0f172a;
+}
+
+.theme-pill-slider {
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    left: 3px;
+    width: calc(50% - 3px);
+    border-radius: 9999px;
+    background: linear-gradient(135deg, #0ea5e9, #8b5cf6);
+    box-shadow: 0 2px 10px rgba(14, 165, 233, 0.4);
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.theme-toggle-pill[data-active="light"] .theme-pill-slider {
+    transform: translateX(100%);
+    background: #ffffff;
+    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.16);
+}
+
+.theme-toggle-pill[data-active="light"] .sun-icon {
+    transform: rotate(45deg);
+    stroke: #f59e0b;
+}
+
+.theme-toggle-pill[data-active="dark"] .moon-icon {
+    transform: rotate(-15deg);
+    stroke: #38bdf8;
 }
 
 /* --- CARDS --- */
@@ -278,23 +277,6 @@
     overflow-y: auto;
 }
 
-/* --- GLASS THEME: frosted panels --- */
-body.glass-theme .card,
-body.glass-theme .expertise-card,
-body.glass-theme .education-card,
-body.glass-theme .project-card,
-body.glass-theme .highlight-item,
-body.glass-theme .cert-card,
-body.glass-theme .award-item {
-    backdrop-filter: blur(16px) saturate(150%);
-    -webkit-backdrop-filter: blur(16px) saturate(150%);
-}
-
-body.glass-theme .modal-content {
-    backdrop-filter: blur(20px) saturate(150%);
-    -webkit-backdrop-filter: blur(20px) saturate(150%);
-}
-
 /* --- TIMELINES --- */
 .timeline {
     position: relative;
@@ -428,227 +410,6 @@ body.glass-theme .modal-content {
     visibility: visible;
 }
 
-.hacker-scanline {
-    position: fixed;
-    inset: 0;
-    background: linear-gradient(to bottom, transparent 50%, rgba(220, 20, 60, 0.05) 50%);
-    background-size: 100% 4px;
-    z-index: 9998;
-    pointer-events: none;
-    display: none;
-    animation: scanline 10s linear infinite;
-    opacity: var(--scanline-opacity);
-}
-
-/* Professional/Hacker contrast balancing */
-body.hacker-theme .section-label,
-body.hacker-theme .project-tag {
-    letter-spacing: 0.08em;
-}
-
-body.hacker-theme .section-label,
-body.hacker-theme .project-tag,
-body.hacker-theme .hero-role-chip,
-body.hacker-theme .stack-chip {
-    font-family: var(--font-mono);
-}
-
-/* --- HACKER THEME: RED INTERACTIVE GRAPHICS --- */
-
-/* Animated red grid overlay on body */
-body.hacker-theme::after {
-    background:
-        linear-gradient(var(--hacker-grid-color) 1px, transparent 1px),
-        linear-gradient(90deg, var(--hacker-grid-color) 1px, transparent 1px),
-        radial-gradient(60vw 60vw at 95% -10%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%),
-        radial-gradient(55vw 55vw at -10% 105%, color-mix(in srgb, var(--accent2) 8%, transparent), transparent 64%);
-    background-size: 40px 40px, 40px 40px, 100% 100%, 100% 100%;
-    animation: hacker-grid-drift 8s linear infinite;
-    opacity: 0.7;
-}
-
-/* Moving bright red sweep line */
-body.hacker-theme .hacker-scanline::after {
-    content: '';
-    position: fixed;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent 0%, rgba(255, 26, 26, 0.6) 20%, rgba(255, 80, 80, 1) 50%, rgba(255, 26, 26, 0.6) 80%, transparent 100%);
-    box-shadow: 0 0 18px 4px rgba(255, 26, 26, 0.5);
-    animation: hacker-scanline-drift 5s linear infinite;
-    pointer-events: none;
-}
-
-body.hacker-theme .hacker-scanline {
-    display: block;
-}
-
-/* Card glows ΓÇö pulsing red border */
-body.hacker-theme .project-card,
-body.hacker-theme .expertise-card,
-body.hacker-theme .highlight-item {
-    box-shadow:
-        0 0 0 1px rgba(255, 26, 26, 0.22),
-        0 0 22px rgba(255, 26, 26, 0.12);
-    animation: hacker-border-flare 3s ease-in-out infinite;
-}
-
-body.hacker-theme .project-card:hover,
-body.hacker-theme .expertise-card:hover,
-body.hacker-theme .highlight-item:hover {
-    box-shadow:
-        0 0 0 1px rgba(255, 26, 26, 0.6),
-        0 0 30px rgba(255, 26, 26, 0.3),
-        0 0 60px rgba(255, 26, 26, 0.12);
-    animation: none;
-    transform: translateY(-6px);
-}
-
-/* Buttons ΓÇö red neon glow with flicker */
-body.hacker-theme .btn-primary,
-body.hacker-theme .resume-btn {
-    text-shadow: 0 0 8px rgba(255, 26, 26, 0.6), 0 0 20px rgba(255, 26, 26, 0.3);
-    box-shadow: 0 0 14px rgba(255, 26, 26, 0.35), inset 0 0 12px rgba(255, 26, 26, 0.08);
-    animation: hacker-red-pulse 2.8s ease-in-out infinite;
-}
-
-body.hacker-theme .btn-secondary {
-    border-color: rgba(255, 26, 26, 0.5);
-    color: var(--accent);
-    text-shadow: 0 0 6px rgba(255, 26, 26, 0.4);
-}
-
-/* Chips */
-body.hacker-theme .hero-role-chip,
-body.hacker-theme .stack-chip {
-    background: color-mix(in srgb, var(--accent) 12%, transparent);
-    border-color: rgba(255, 26, 26, 0.38);
-    text-shadow: 0 0 5px rgba(255, 26, 26, 0.35);
-}
-
-/* Hero name ΓÇö glitch effect */
-body.hacker-theme .hero-name {
-    animation: hacker-text-flicker 8s step-start infinite;
-    text-shadow: 0 0 12px var(--glow), 0 0 30px rgba(255, 26, 26, 0.3);
-    position: relative;
-}
-
-body.hacker-theme .hero-name::before,
-body.hacker-theme .hero-name::after {
-    content: attr(data-text);
-    position: absolute;
-    inset: 0;
-    color: var(--accent);
-    font: inherit;
-}
-
-body.hacker-theme .hero-name::before {
-    left: -2px;
-    text-shadow: 3px 0 rgba(255, 26, 26, 0.7);
-    animation: hacker-glitch 9s infinite linear alternate-reverse;
-}
-
-body.hacker-theme .hero-name::after {
-    left: 2px;
-    text-shadow: -3px 0 rgba(255, 100, 100, 0.5);
-    animation: hacker-glitch 6s infinite linear alternate;
-}
-
-/* Section titles ΓÇö red glow */
-body.hacker-theme .section-title {
-    text-shadow: 0 0 14px rgba(255, 26, 26, 0.25);
-    animation: hacker-text-flicker 12s step-start infinite;
-}
-
-body.hacker-theme .section-title span {
-    text-shadow: 0 0 18px var(--glow), 0 0 40px rgba(255, 26, 26, 0.3);
-}
-
-/* Logo ΓÇö flicker */
-body.hacker-theme .logo {
-    text-shadow: 0 0 10px var(--glow);
-    animation: hacker-text-flicker 7s step-start infinite;
-}
-
-/* Timeline dot ΓÇö red pulse */
-body.hacker-theme .timeline-dot {
-    animation: hacker-red-pulse 2s ease-in-out infinite;
-}
-
-/* Highlight numbers ΓÇö red glow */
-body.hacker-theme .highlight-num {
-    text-shadow: 0 0 16px var(--glow), 0 0 40px rgba(255, 26, 26, 0.25);
-}
-
-/* Scroll progress bar ΓÇö red */
-body.hacker-theme .scroll-progress-bar {
-    background: linear-gradient(90deg, #8b0000, #ff1a1a, #ff6666);
-    box-shadow: 0 0 8px rgba(255, 26, 26, 0.6);
-}
-
-/* Cursor dot/outline ΓÇö red in hacker mode */
-body.hacker-theme .cursor-dot {
-    background: #ff1a1a;
-    box-shadow: 0 0 8px rgba(255, 26, 26, 0.9), 0 0 16px rgba(255, 26, 26, 0.5);
-}
-
-body.hacker-theme .cursor-outline {
-    border-color: rgba(255, 26, 26, 0.7);
-    box-shadow: 0 0 10px rgba(255, 26, 26, 0.3);
-}
-
-/* Input/focus highlight ΓÇö red */
-body.hacker-theme a:focus-visible,
-body.hacker-theme button:focus-visible,
-body.hacker-theme .project-card:focus-visible {
-    outline-color: rgba(255, 26, 26, 0.8);
-    box-shadow: 0 0 0 3px rgba(255, 26, 26, 0.25);
-}
-
-/* Hero orbs ΓÇö red glow */
-body.hacker-theme .hero-orb {
-    filter: hue-rotate(220deg) saturate(2.5) brightness(1.2);
-}
-
-/* Header ΓÇö red accent border */
-body.hacker-theme #header.scrolled {
-    border-bottom-color: rgba(255, 26, 26, 0.3);
-    box-shadow: 0 4px 24px rgba(255, 26, 26, 0.12);
-}
-
-/* Modal ΓÇö red glow */
-body.hacker-theme .modal-content {
-    box-shadow: 0 0 0 1px rgba(255, 26, 26, 0.3), 0 24px 64px rgba(255, 26, 26, 0.18);
-}
-
-/* Text description muted ΓÇö reddish dark, not greenish */
-body.hacker-theme .hero-desc,
-body.hacker-theme .project-summary,
-body.hacker-theme .expertise-desc {
-    color: rgba(255, 102, 102, 0.82);
-}
-
-/* Back-to-top ΓÇö red pulse */
-body.hacker-theme .back-to-top {
-    animation: hacker-red-pulse 2.4s ease-in-out infinite;
-}
-
-/* Cert / award / education cards */
-body.hacker-theme .cert-card,
-body.hacker-theme .award-item,
-body.hacker-theme .education-card {
-    box-shadow:
-        0 0 0 1px rgba(255, 26, 26, 0.18),
-        0 0 18px rgba(255, 26, 26, 0.08);
-    animation: hacker-border-flare 4s ease-in-out infinite;
-}
-
-/* Theme switcher active hacker pill */
-body.hacker-theme .theme-option[aria-current="true"] {
-    box-shadow: 0 0 10px rgba(255, 26, 26, 0.5);
-}
-
 /* --- TWEAKS AND ANIMATIONS --- */
 
 /* T1-A: Hero image rotating glow ring */
@@ -764,7 +525,7 @@ body.hacker-theme .theme-option[aria-current="true"] {
     background-position: -200% center;
 }
 
-/* T5-D: Marquee pause on hover + hacker speed */
+/* Marquee pause on hover */
 .marquee-content {
     display: flex;
     gap: 48px;
@@ -786,7 +547,6 @@ body.hacker-theme .theme-option[aria-current="true"] {
     }
 }
 
-body.hacker-theme .marquee-content {
     animation-duration: 12s;
 }
 
@@ -895,17 +655,14 @@ body.reduce-motion-mobile .orbit-chip {
     }
 }
 
-body.hacker-theme .skills-block {
     border-color: var(--accent);
     background: rgba(0, 255, 65, 0.03);
 }
 
-body.hacker-theme .skills-block:hover {
     background: rgba(0, 255, 65, 0.07);
     box-shadow: 0 0 24px color-mix(in srgb, var(--accent) 20%, transparent);
 }
 
-body.glass-theme .skills-block {
     background: rgba(255, 255, 255, 0.06);
     border-color: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(8px);
@@ -1196,16 +953,13 @@ body.glass-theme .skills-block {
 }
 
 /* Theme specifics for Footer */
-body.glass-theme .footer {
     background: rgba(var(--bg-rgb), 0.7);
     backdrop-filter: blur(20px);
 }
 
-body.hacker-theme .footer-heading {
     font-family: var(--font-mono);
 }
 
-body.hacker-theme .badge-pill {
     font-family: var(--font-mono);
 }
 
@@ -1277,15 +1031,6 @@ body.hacker-theme .badge-pill {
     animation: ring-expand 1.8s ease-out infinite;
 }
 
-/* Glass theme: enhanced blur panels */
-body.glass-theme .expertise-card,
-body.glass-theme .project-card,
-body.glass-theme .highlight-item {
-    background: rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(18px) saturate(160%);
-    -webkit-backdrop-filter: blur(18px) saturate(160%);
-    border-color: rgba(255, 255, 255, 0.14);
-}
 
 /* Reduce motion: disable new animations */
 @media (prefers-reduced-motion: reduce) {
@@ -1324,16 +1069,24 @@ body.glass-theme .highlight-item {
 
 /* --- TOP SYSTEM STATUS BAR --- */
 .system-status-bar {
-    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
     background: #030712;
     border-bottom: 1px solid rgba(148, 163, 184, 0.14);
-    padding: 6px 18px;
+    padding: 0 16px;
     font-family: var(--font-mono);
     font-size: 0.72rem;
     letter-spacing: 0.05em;
     color: var(--text-dim);
-    z-index: 1001;
-    position: relative;
+    z-index: 1002;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 body.light-theme .system-status-bar {
@@ -1344,12 +1097,33 @@ body.light-theme .system-status-bar {
 
 .system-status-inner {
     max-width: 1360px;
+    width: 100%;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 16px;
-    flex-wrap: wrap;
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .system-status-inner .status-item,
+    .system-status-inner .status-divider {
+        display: none !important;
+    }
+    .logo-sub {
+        display: none !important;
+    }
+    #header {
+        padding: 0 16px !important;
+    }
+    .theme-toggle-pill {
+        padding: 2px;
+    }
+    .theme-pill-btn {
+        padding: 4px 8px;
+        font-size: 0.72rem;
+    }
 }
 
 .status-indicator {
@@ -1837,8 +1611,27 @@ body.light-theme .quantum-code-console::before {
 
 .synapse-line {
     stroke-width: 1.5;
-    opacity: 0.65;
+    opacity: 0.7;
+    stroke-dasharray: 6, 4;
+    animation: synapsePulse 3s linear infinite;
     transition: opacity 0.3s;
+}
+
+@keyframes synapsePulse {
+    to {
+        stroke-dashoffset: -20;
+    }
+}
+
+.t-node {
+    cursor: pointer;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    transform-origin: center;
+}
+
+.t-node:hover {
+    transform: scale(1.3);
+    filter: brightness(1.3);
 }
 
 .syn-red-orange { stroke: #fb7185; }

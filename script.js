@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initTabs();
     initOrbitChips();
     initPrismaticTerminal();
+    initBenchmarkGauges();
 
     if (!shouldReduceMotion) {
         initTiltEffects();
@@ -402,150 +403,105 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- THEME SWITCHER (Light, Dark, Hacker, Glass) ---
+    // --- TACTILE 2-STATE THEME SWITCHER (Titanium Light & Obsidian Dark) ---
     function initTheme() {
-        const trigger = document.getElementById('theme-switcher-trigger');
-        const dropdown = document.getElementById('theme-switcher-dropdown');
-        const currentLabel = document.getElementById('theme-current-label');
-        const options = document.querySelectorAll('.theme-option');
+        const togglePill = document.getElementById('theme-toggle');
+        const darkBtn = document.getElementById('theme-dark-btn');
+        const lightBtn = document.getElementById('theme-light-btn');
         const body = document.body;
 
-        if (!trigger || !dropdown || !currentLabel) return;
+        if (!togglePill || !darkBtn || !lightBtn) return;
 
-        const THEMES = ['light', 'dark', 'hacker', 'glass'];
+        function applyTheme(theme, animate = true) {
+            const isDark = theme !== 'light';
+            const targetTheme = isDark ? 'dark' : 'light';
 
-        // T4-D: inject theme-flash overlay once
-        let flashEl = document.querySelector('.theme-flash');
-        if (!flashEl) {
-            flashEl = document.createElement('div');
-            flashEl.className = 'theme-flash';
-            document.body.appendChild(flashEl);
-        }
-
-        function triggerFlash() {
-            if (shouldReduceMotion) return;
-            flashEl.classList.add('active');
-            setTimeout(() => flashEl.classList.remove('active'), 300);
-        }
-
-        // T3-C: confetti burst when switching TO light theme
-        function spawnConfetti() {
-            if (shouldReduceMotion) return;
-            const colors = ['#22d3ee', '#14b8a6', '#f59e0b', '#ec4899', '#a78bfa', '#34d399'];
-            for (let i = 0; i < 32; i++) {
-                const dot = document.createElement('div');
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                const size = 6 + Math.random() * 8;
-                const startX = 30 + Math.random() * 40;
-                dot.style.cssText = `
-                    position:fixed; z-index:99998; pointer-events:none; border-radius:50%;
-                    width:${size}px; height:${size}px; background:${color};
-                    left:${startX}vw; top:50vh;
-                    animation: confetti-fall ${1.8 + Math.random() * 1.2}s ease-out ${Math.random() * 0.4}s forwards;
-                    transform: translateX(${(Math.random() - 0.5) * 40}vw);
-                `;
-                document.body.appendChild(dot);
-                dot.addEventListener('animationend', () => dot.remove());
+            if (animate && !shouldReduceMotion) {
+                body.classList.add('theme-transitioning');
+                setTimeout(() => body.classList.remove('theme-transitioning'), 380);
             }
-        }
-
-        let prevTheme = '';
-
-        function applyTheme(theme) {
-            if (!THEMES.includes(theme)) theme = 'dark';
-            if (prevTheme && prevTheme !== theme) triggerFlash();
-            if (theme === 'light' && prevTheme && prevTheme !== 'light') spawnConfetti();
-            prevTheme = theme;
 
             body.classList.remove('light-theme', 'dark-theme', 'hacker-theme', 'glass-theme');
-            body.classList.add(`${theme}-theme`);
-            body.setAttribute('data-mode', theme);
+            body.classList.add(isDark ? 'dark-theme' : 'light-theme');
+            document.documentElement.setAttribute('data-theme', targetTheme);
+            body.setAttribute('data-mode', targetTheme);
 
-            const labels = { light: 'Light', dark: 'Dark', hacker: 'Hacker', glass: 'Glass' };
-            currentLabel.textContent = labels[theme];
+            darkBtn.classList.toggle('active', isDark);
+            darkBtn.setAttribute('aria-checked', isDark ? 'true' : 'false');
+            lightBtn.classList.toggle('active', !isDark);
+            lightBtn.setAttribute('aria-checked', !isDark ? 'true' : 'false');
 
-            options.forEach(opt => {
-                const isActive = opt.getAttribute('data-theme') === theme;
-                opt.setAttribute('aria-current', isActive ? 'true' : 'false');
-                opt.classList.toggle('active', isActive);
-            });
-
-            localStorage.setItem('portfolio-theme', theme);
-            dropdown.setAttribute('hidden', '');
-            trigger.setAttribute('aria-expanded', 'false');
+            togglePill.setAttribute('data-active', targetTheme);
+            localStorage.setItem('portfolio-theme', targetTheme);
         }
 
-        const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
-        applyTheme(savedTheme);
+        // Initialize from localStorage or prefers-color-scheme
+        const savedTheme = localStorage.getItem('portfolio-theme') || 
+            (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        applyTheme(savedTheme, false);
 
-        trigger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const isOpen = dropdown.getAttribute('hidden') == null;
-            if (isOpen) {
-                dropdown.setAttribute('hidden', '');
-                trigger.setAttribute('aria-expanded', 'false');
-            } else {
-                dropdown.removeAttribute('hidden');
-                trigger.setAttribute('aria-expanded', 'true');
+        darkBtn.addEventListener('click', () => applyTheme('dark'));
+        lightBtn.addEventListener('click', () => applyTheme('light'));
+
+        // Keyboard accessibility
+        togglePill.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowLeft' || e.key === ' ') {
+                e.preventDefault();
+                const current = togglePill.getAttribute('data-active') === 'dark' ? 'light' : 'dark';
+                applyTheme(current);
+                (current === 'dark' ? darkBtn : lightBtn).focus();
             }
         });
+    }
 
-        dropdown.addEventListener('click', (e) => e.stopPropagation());
+    // --- BENCHMARK GAUGES & COUNTER ANIMATIONS ---
+    function initBenchmarkGauges() {
+        const benchmarkSection = document.getElementById('swarms-benchmarks');
+        if (!benchmarkSection) return;
 
-        options.forEach(opt => {
-            opt.addEventListener('click', () => {
-                applyTheme(opt.getAttribute('data-theme'));
+        let animated = false;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !animated) {
+                    animated = true;
+                    animateGauges();
+                    observer.disconnect();
+                }
             });
-        });
+        }, { threshold: 0.25 });
 
-        document.addEventListener('click', () => {
-            if (dropdown.getAttribute('hidden') == null) {
-                dropdown.setAttribute('hidden', '');
-                trigger.setAttribute('aria-expanded', 'false');
-            }
-        });
+        observer.observe(benchmarkSection);
 
-        document.addEventListener('keydown', (e) => {
-            if (dropdown.getAttribute('hidden') != null) return;
-            if (e.key === 'Escape') {
-                dropdown.setAttribute('hidden', '');
-                trigger.setAttribute('aria-expanded', 'false');
-                trigger.focus();
-                e.preventDefault();
-                return;
-            }
-            const opts = Array.from(options);
-            const current = document.activeElement;
-            const idx = opts.indexOf(current);
-            if (idx === -1) return;
-            if (e.key === 'ArrowDown' && idx < opts.length - 1) {
-                e.preventDefault();
-                opts[idx + 1].focus();
-            } else if (e.key === 'ArrowUp' && idx > 0) {
-                e.preventDefault();
-                opts[idx - 1].focus();
-            } else if (e.key === 'ArrowUp' && idx === 0) {
-                e.preventDefault();
-                trigger.focus();
-            } else if (e.key === 'Home') {
-                e.preventDefault();
-                opts[0].focus();
-            } else if (e.key === 'End') {
-                e.preventDefault();
-                opts[opts.length - 1].focus();
-            }
-        });
+        function animateGauges() {
+            // Gauge 1: 320 Tokens/sec
+            animateValue(document.querySelector('.card-samanvay .gauge-item:nth-child(1) .gauge-value'), 0, 320, 1400, '');
+            // Gauge 2: 99.4% Accuracy
+            animateValue(document.querySelector('.card-samanvay .gauge-item:nth-child(2) .gauge-value'), 0, 99.4, 1400, '%', 1);
+            // Gauge 3: 98 Tokens/sec
+            animateValue(document.querySelector('.card-coding-agent .gauge-item:nth-child(1) .gauge-value'), 0, 98, 1400, '');
+            // Gauge 4: 99.4% Accuracy
+            animateValue(document.querySelector('.card-coding-agent .gauge-item:nth-child(2) .gauge-value'), 0, 99.4, 1400, '%', 1);
+        }
 
-        trigger.addEventListener('keydown', (e) => {
-            if (dropdown.getAttribute('hidden') == null) return;
-            if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
-                e.preventDefault();
-                dropdown.removeAttribute('hidden');
-                trigger.setAttribute('aria-expanded', 'true');
-                const first = options[0];
-                if (first) first.focus();
+        function animateValue(el, start, end, duration, suffix = '', decimals = 0) {
+            if (!el) return;
+            const startTime = performance.now();
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                // Ease out cubic
+                const ease = 1 - Math.pow(1 - progress, 3);
+                const current = start + (end - start) * ease;
+                el.textContent = current.toFixed(decimals) + suffix;
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    el.textContent = end.toFixed(decimals) + suffix;
+                }
             }
-        });
+            requestAnimationFrame(update);
+        }
     }
 
     // --- PROJECT MODAL ENGINE ---
@@ -660,9 +616,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let lastFrame = 0;
         let animationFrame;
 
-        const isHacker = () => document.body.classList.contains('hacker-theme');
-        const isGlass = () => document.body.classList.contains('glass-theme');
-        const isDark = () => document.body.classList.contains('dark-theme');
+        const isDark = () => !document.body.classList.contains('light-theme');
         const isProf = () => document.body.hasAttribute('data-persona');
 
         // T4-B: DPR-aware resize
@@ -684,10 +638,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let particles = [];
 
         const getParticleCount = () => {
-            const base = W() < 760 ? 22 : 42;
-            if (isHacker()) return base + 28;
-            if (isGlass()) return Math.max(16, base - 10);
-            return base;
+            return W() < 760 ? 24 : 45;
         };
 
         class Particle {
@@ -695,146 +646,39 @@ document.addEventListener('DOMContentLoaded', () => {
             init() {
                 this.x = Math.random() * W();
                 this.y = Math.random() * H();
-                const hacker = isHacker();
-                this.size = hacker ? Math.random() * 2.2 + 0.8 : Math.random() * 2 + 1;
-                const speed = hacker ? 1.1 : 0.5;
-                this.speedX = (Math.random() - 0.5) * speed;
-                this.speedY = (Math.random() - 0.5) * speed;
-                this.opacity = hacker ? Math.random() * 0.65 + 0.25 : Math.random() * 0.5 + 0.2;
-                // T3-A: twinkling phase
+                this.size = Math.random() * 2 + 0.8;
+                this.speedX = (Math.random() - 0.5) * 0.45;
+                this.speedY = (Math.random() - 0.5) * 0.45;
+                this.opacity = Math.random() * 0.45 + 0.15;
                 this.twinklePhase = Math.random() * Math.PI * 2;
                 this.twinkleSpeed = 0.008 + Math.random() * 0.012;
                 this.baseOpacity = this.opacity;
-                // T3-B: hacker flicker
-                this.flickerOffset = Math.random() * Math.PI * 2;
-                this.flickerSpeed = 0.02 + Math.random() * 0.03;
             }
             update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
                 if (this.x < 0 || this.x > W()) this.speedX *= -1;
                 if (this.y < 0 || this.y > H()) this.speedY *= -1;
-                if (isHacker()) {
-                    this.flickerOffset += this.flickerSpeed;
-                    this.opacity = 0.25 + Math.abs(Math.sin(this.flickerOffset)) * 0.55;
-                } else if (isDark()) {
-                    // T3-A: twinkling
+
+                if (isDark()) {
                     this.twinklePhase += this.twinkleSpeed;
                     this.opacity = this.baseOpacity + Math.sin(this.twinklePhase) * 0.2;
-                    this.opacity = Math.max(0.05, Math.min(0.85, this.opacity));
+                    this.opacity = Math.max(0.08, Math.min(0.75, this.opacity));
+                } else {
+                    this.opacity = 0.12 + Math.sin(this.twinklePhase) * 0.06;
                 }
             }
             draw() {
                 const computed = getComputedStyle(document.body);
                 const tint = (computed.getPropertyValue('--particle-tint') || '34, 211, 238').trim();
-                if (isHacker()) {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size * 0.55, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(255, 180, 180, ${this.opacity * 0.85})`;
-                    ctx.fill();
-                    const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 2.8);
-                    g.addColorStop(0, `rgba(${tint}, ${this.opacity * 0.9})`);
-                    g.addColorStop(0.5, `rgba(${tint}, ${this.opacity * 0.35})`);
-                    g.addColorStop(1, `rgba(${tint}, 0)`);
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size * 2.8, 0, Math.PI * 2);
-                    ctx.fillStyle = g;
-                    ctx.fill();
-                } else {
-                    ctx.fillStyle = `rgba(${tint}, ${this.opacity})`;
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-            }
-        }
-
-        function drawHackerConnections() {
-            const computed = getComputedStyle(document.body);
-            const tint = (computed.getPropertyValue('--particle-tint') || '255, 26, 26').trim();
-            const maxDist = 130;
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < maxDist) {
-                        const alpha = (1 - dist / maxDist) * 0.28;
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.strokeStyle = `rgba(${tint}, ${alpha})`;
-                        ctx.lineWidth = 0.7;
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
-
-        // T3-B: Glass bokeh blobs
-        let bokehBlobs = [];
-
-        class BokehBlob {
-            constructor() { this.init(); }
-            init() {
-                this.x = Math.random() * W();
-                this.y = Math.random() * H();
-                this.r = 20 + Math.random() * 40;
-                this.speedX = (Math.random() - 0.5) * 0.18;
-                this.speedY = (Math.random() - 0.5) * 0.18;
-                this.opacity = 0.03 + Math.random() * 0.06;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x < -this.r) this.x = W() + this.r;
-                if (this.x > W() + this.r) this.x = -this.r;
-                if (this.y < -this.r) this.y = H() + this.r;
-                if (this.y > H() + this.r) this.y = -this.r;
-            }
-            draw() {
-                const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r);
-                g.addColorStop(0, `rgba(56, 189, 248, ${this.opacity})`);
-                g.addColorStop(1, 'rgba(56, 189, 248, 0)');
+                ctx.fillStyle = 'rgba(' + tint + ', ' + this.opacity + ')';
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-                ctx.fillStyle = g;
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
             }
         }
 
-        // T3-D: Hacker binary rain
-        let rainCols = [];
-        let rainSkip = 0;
-        const RAIN_CHARS = '01';
-        const RAIN_FONT_SIZE = 14;
-
-        function initRain() {
-            const cols = Math.floor(W() / RAIN_FONT_SIZE);
-            rainCols = Array.from({ length: cols }, () => Math.random() * -H());
-        }
-
-        function drawRain() {
-            rainSkip++;
-            if (rainSkip < 3) return;
-            rainSkip = 0;
-            ctx.fillStyle = 'rgba(10, 0, 0, 0.08)';
-            ctx.fillRect(0, 0, W(), H());
-            ctx.font = `${RAIN_FONT_SIZE}px monospace`;
-            rainCols.forEach((y, i) => {
-                const ch = RAIN_CHARS[Math.floor(Math.random() * RAIN_CHARS.length)];
-                const x = i * RAIN_FONT_SIZE;
-                const bright = y > 0 && y < RAIN_FONT_SIZE * 2;
-                ctx.fillStyle = bright ? 'rgba(255, 120, 120, 0.95)' : `rgba(180, 0, 0, ${0.15 + Math.random() * 0.25})`;
-                ctx.fillText(ch, x, y > 0 ? y : 0);
-                rainCols[i] += RAIN_FONT_SIZE;
-                if (y > H() + RAIN_FONT_SIZE) {
-                    rainCols[i] = Math.random() * -H() * 0.5;
-                }
-            });
-        }
-
-        // T3-E: Professor drifting formula symbols
+        // Professor drifting formula symbols
         let formulaSymbols = [];
         const FORMULA_CHARS = ['∑', '∫', 'λ', '∇', '∂', '⊕', '{}', '</>', 'π', 'Δ', '≈', '∞'];
 
@@ -866,7 +710,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.rotate(this.rotation);
                 ctx.globalAlpha = this.opacity;
                 ctx.fillStyle = 'rgba(45, 212, 191, 1)';
-                ctx.font = `${this.size}px monospace`;
+                ctx.font = this.size + 'px monospace';
                 ctx.fillText(this.char, 0, 0);
                 ctx.restore();
                 ctx.globalAlpha = 1;
@@ -875,9 +719,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function init() {
             particles = Array.from({ length: getParticleCount() }, () => new Particle());
-            bokehBlobs = isGlass() ? Array.from({ length: 10 }, () => new BokehBlob()) : [];
-            formulaSymbols = isProf() && !isHacker() ? Array.from({ length: 18 }, () => new FormulaSymbol()) : [];
-            if (isHacker()) initRain();
+            formulaSymbols = isProf() ? Array.from({ length: 18 }, () => new FormulaSymbol()) : [];
         }
 
         function animate(timestamp) {
@@ -887,22 +729,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             lastFrame = timestamp;
 
-            if (isHacker()) {
-                drawRain();
-                drawHackerConnections();
-            } else {
-                ctx.clearRect(0, 0, W(), H());
-                if (isGlass()) bokehBlobs.forEach(b => { b.update(); b.draw(); });
-            }
+            ctx.clearRect(0, 0, W(), H());
 
-            if (isProf() && !isHacker()) {
+            if (isProf()) {
                 formulaSymbols.forEach(s => { s.update(); s.draw(); });
             }
 
             particles.forEach(p => { p.update(); p.draw(); });
             animationFrame = requestAnimationFrame(animate);
         }
-
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) { cancelAnimationFrame(animationFrame); return; }
             animationFrame = requestAnimationFrame(animate);

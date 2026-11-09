@@ -110,79 +110,6 @@ body.dark-theme {
     --scanline-opacity: 0;
 }
 
-body.hacker-theme {
-    --bg: #0a0000;
-    --bg2: #0f0202;
-    --bg3: #180404;
-    --card: #0c0101;
-    --card-border: rgba(220, 20, 60, 0.35);
-    --text: #ff2a2a;
-    --text-muted: #ff6666;
-    --text-dim: #992020;
-    --header-bg: rgba(10, 0, 0, 0.88);
-    --header-border: rgba(220, 20, 60, 0.25);
-    --particle-color: rgba(220, 20, 60, 0.22);
-
-    /* Hacker AI Accent — Crimson / Blood Red */
-    --accent: #ff1a1a;
-    --accent2: #cc0000;
-    --glow: rgba(255, 26, 26, 0.5);
-    --grad: linear-gradient(135deg, #ff2a2a 0%, #8b0000 100%);
-
-    /* Hacker Professor Accent — Deep Scarlet */
-    --prof-accent: #e8173d;
-    --prof-accent2: #9b1224;
-    --prof-glow: rgba(232, 23, 61, 0.45);
-    --prof-grad: linear-gradient(135deg, #e8173d 0%, #9b1224 100%);
-
-    --overlay-bg: rgba(10, 0, 0, 0.65);
-    --card-shadow-hover: 0 20px 50px rgba(220, 20, 60, 0.2);
-    --surface-elev: rgba(12, 1, 1, 0.92);
-    --surface-strong: rgba(22, 3, 3, 0.94);
-    --particle-tint: 255, 26, 26;
-    --noise-opacity: 0.38;
-    --scanline-opacity: 0.5;
-
-    /* Glitch & flicker extras */
-    --hacker-glow-soft: rgba(255, 26, 26, 0.18);
-    --hacker-glow-mid: rgba(255, 26, 26, 0.38);
-    --hacker-glow-hot: rgba(255, 80, 80, 0.65);
-    --hacker-grid-color: rgba(180, 10, 10, 0.12);
-    --hacker-flicker-color: rgba(255, 26, 26, 0.07);
-}
-
-/* Modern Glass (glassmorphism) — dark base so frosted panels show through */
-body.glass-theme {
-    --bg: #0c1222;
-    --bg2: rgba(30, 41, 59, 0.4);
-    --bg3: rgba(51, 65, 85, 0.35);
-    --card: rgba(255, 255, 255, 0.08);
-    --card-border: rgba(255, 255, 255, 0.12);
-    --text: #F8FAFC;
-    --text-muted: #c7d6ea;
-    --text-dim: #9fb4cf;
-    --header-bg: rgba(255, 255, 255, 0.06);
-    --header-border: rgba(255, 255, 255, 0.1);
-    --particle-color: rgba(255, 255, 255, 0.12);
-    --overlay-bg: rgba(12, 18, 34, 0.6);
-    --card-shadow-hover: 0 20px 50px rgba(0, 0, 0, 0.35);
-
-    /* Glass keeps default accent; optional softer glow */
-    --accent: #38BDF8;
-    --accent2: #06B6D4;
-    --glow: rgba(56, 189, 248, 0.3);
-    --grad: linear-gradient(135deg, #38BDF8 0%, #06B6D4 100%);
-    --prof-accent: #10B981;
-    --prof-accent2: #059669;
-    --prof-glow: rgba(16, 185, 129, 0.3);
-    --prof-grad: linear-gradient(135deg, #10B981 0%, #059669 100%);
-    --surface-elev: rgba(10, 18, 34, 0.58);
-    --surface-strong: rgba(255, 255, 255, 0.12);
-    --particle-tint: 56, 189, 248;
-    --noise-opacity: 0.08;
-    --scanline-opacity: 0;
-}
-
 /* Persona state stays declarative in CSS; JS only toggles data-persona */
 body[data-persona="prof"] {
     --accent: var(--prof-accent);
@@ -195,8 +122,15 @@ body[data-persona="prof"] {
     --particle-tint: 45, 212, 191;
 }
 
-body.hacker-theme[data-persona="prof"] {
-    --particle-tint: 232, 23, 61;
+/* --- SMOOTH DUAL-THEME CROSSFADE TRANSITION --- */
+body.theme-transitioning,
+body.theme-transitioning *,
+body.theme-transitioning *::before,
+body.theme-transitioning *::after {
+    transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.25s ease,
+                box-shadow 0.35s ease !important;
 }
 
 /* ============================================================

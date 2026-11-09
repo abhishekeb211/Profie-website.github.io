@@ -79,7 +79,6 @@
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
     <div class="scroll-progress-bar"></div>
-    <div class="hacker-scanline"></div>
 
     <!-- TOP SYSTEM STATUS BAR (As in website-uiux-terminal-prismatic-spectrum.jpg) -->
     <div class="system-status-bar" role="status" aria-label="System status telemetry">
@@ -114,20 +113,28 @@
                 <button class="tab-btn active" type="button" role="tab" aria-selected="true" aria-controls="ai-pane" id="tab-ai" data-target="ai">AI Architect</button>
                 <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="prof-pane" id="tab-prof" data-target="prof">Professor</button>
             </div>
-            <div class="theme-switcher">
-                <button id="theme-switcher-trigger" class="theme-switcher-trigger" type="button"
-                    aria-expanded="false" aria-haspopup="true"
-                    aria-label="Switch theme: Light, Dark, Hacker, Glass" title="Switch theme">
-                    <span class="theme-switcher-current" id="theme-current-label">Dark</span>
-                    <span class="theme-switcher-chevron" aria-hidden="true">▾</span>
+            <div class="theme-toggle-pill" role="radiogroup" aria-label="Theme mode" id="theme-toggle">
+                <button type="button" class="theme-pill-btn active" data-theme="dark" aria-checked="true" id="theme-dark-btn" title="Switch to Obsidian Dark Mode">
+                    <svg class="theme-icon moon-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <span class="pill-label">Dark</span>
                 </button>
-                <div id="theme-switcher-dropdown" class="theme-switcher-dropdown" role="menu"
-                    aria-label="Theme options" hidden>
-                    <button type="button" role="menuitem" data-theme="light" class="theme-option">Light</button>
-                    <button type="button" role="menuitem" data-theme="dark" class="theme-option">Dark</button>
-                    <button type="button" role="menuitem" data-theme="hacker" class="theme-option">Hacker</button>
-                    <button type="button" role="menuitem" data-theme="glass" class="theme-option">Glass</button>
-                </div>
+                <button type="button" class="theme-pill-btn" data-theme="light" aria-checked="false" id="theme-light-btn" title="Switch to Titanium White Mode">
+                    <svg class="theme-icon sun-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <span class="pill-label">Light</span>
+                </button>
+                <span class="theme-pill-slider" aria-hidden="true"></span>
             </div>
             <button type="button" id="resume-btn" class="resume-btn">Resume</button>
         </div>
