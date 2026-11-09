@@ -509,3 +509,201 @@ export function getShowcaseForProject(projectId: string): ShowcaseData {
     }
   };
 }
+
+export interface ProjectIdentityMeta {
+  publicTitle: string;
+  engineeringSubtitle: string;
+  humanSummary: string;
+  humanMetric: { value: string; label: string };
+  domainLabel: string;
+  domainIcon: string;
+  highlightTag?: string;
+}
+
+export const PROJECT_IDENTITY_REGISTRY: Record<string, ProjectIdentityMeta> = {
+  'codeagent': {
+    publicTitle: 'AI That Finds and Repairs Software Vulnerabilities',
+    engineeringSubtitle: 'Sovereign Autonomous Program Repair Engine',
+    humanSummary: 'Scans software repositories completely offline and automatically generates verified security fixes before code ships, keeping proprietary source code safe from cloud leaks.',
+    humanMetric: { value: '100%', label: 'SARIF Compliance & Zero Regressions' },
+    domainLabel: 'Software Security',
+    domainIcon: 'shield',
+    highlightTag: 'Privacy-First'
+  },
+  'vehiclegpt': {
+    publicTitle: 'AI That Understands Connected Vehicles in Real Time',
+    engineeringSubtitle: 'Edge Automotive CAN Telemetry & Dual-Plane Architecture',
+    humanSummary: 'Monitors, filters, and diagnoses vehicle sensor signals in real time on low-power automotive hardware without dropping critical safety frames during network blackouts.',
+    humanMetric: { value: '100k+', label: 'Vehicle Signals/sec Under 12W' },
+    domainLabel: 'Smart Mobility',
+    domainIcon: 'cpu',
+    highlightTag: 'Deterministic RTOS'
+  },
+  'agentic-browser-defense': {
+    publicTitle: 'Stopping AI Agents Before They Perform Unsafe Actions',
+    engineeringSubtitle: 'Host-Side L2/L3 Capability-Token Mediation Proxy',
+    humanSummary: 'An out-of-band security mediation layer that inspects and validates every tool action an AI agent attempts, neutralizing prompt injection and preventing rogue actions.',
+    humanMetric: { value: '< 1 ms', label: 'Cryptographic Action Gating' },
+    domainLabel: 'AI Safety & Security',
+    domainIcon: 'shield',
+    highlightTag: 'Zero-Replay'
+  },
+  'mc-ctvit-eeg-transformer': {
+    publicTitle: 'Making Emotion-Aware AI 99% More Compute-Efficient',
+    engineeringSubtitle: 'Decoupled Spatial-Temporal Quad-Branch EEG Attention',
+    humanSummary: 'Separates brainwave electrode spatial geometries from time dynamics to detect human emotional states with 99.9% less compute, enabling wearable brain interfaces.',
+    humanMetric: { value: '99.95%', label: 'Less Attention Computation' },
+    domainLabel: 'Neural AI & Healthcare',
+    domainIcon: 'activity',
+    highlightTag: 'FLOP Reduction'
+  },
+  'swasthya-health-network': {
+    publicTitle: 'Digital Public Health Workflows for Frontline Workers',
+    engineeringSubtitle: '5-Tier Rural Clinical Decision Support & Tele-Triage Funnel',
+    humanSummary: 'Assists rural healthcare teams across 20+ village centers with offline maternal health tracking, statutory vaccination schedules, and doctor tele-consultations.',
+    humanMetric: { value: '236', label: 'Statutory Health Duties Coordinated' },
+    domainLabel: 'Digital Healthcare',
+    domainIcon: 'heart',
+    highlightTag: 'Rural Health'
+  },
+  'isro-route-resilience': {
+    publicTitle: 'Rebuilding Broken Road Maps After Floods and Disasters',
+    engineeringSubtitle: 'Topological Satellite Gap Healing & Evacuation Routing',
+    humanSummary: 'Reconstructs continuous road networks from occluded satellite images during severe floods, finding the fastest safe evacuation routes for rescue teams.',
+    humanMetric: { value: '-38.4%', label: 'Emergency Evacuation Time Saved' },
+    domainLabel: 'Disaster & Space AI',
+    domainIcon: 'map-pin',
+    highlightTag: 'ISRO BAH 2026'
+  },
+  'blockchain-ehr-bcfl': {
+    publicTitle: 'Secure Medical Records Shared Without Losing Privacy',
+    engineeringSubtitle: 'Byzantine-Resilient Lipschitz PoCC Federated Learning',
+    humanSummary: 'Enables multiple hospitals to collaboratively train medical diagnostic models without ever sharing private patient records or risking data tampering.',
+    humanMetric: { value: '0%', label: 'Patient Data Leaked to Central Servers' },
+    domainLabel: 'Healthcare Privacy',
+    domainIcon: 'lock',
+    highlightTag: 'Federated Trust'
+  },
+  'vulrag-security': {
+    publicTitle: 'Offline Security Scanner for Sensitive Repositories',
+    engineeringSubtitle: 'Multi-Analyzer Consensus & Local Tree-sitter APR Engine',
+    humanSummary: 'Combines multiple security analyzers with local AI models to discover and patch vulnerabilities entirely on an air-gapped machine with zero cloud connectivity.',
+    humanMetric: { value: '100%', label: 'Air-Gapped Sovereign Execution' },
+    domainLabel: 'Software Security',
+    domainIcon: 'code',
+    highlightTag: 'Zero-Cloud Egress'
+  },
+  'trustwise-adaptiverag': {
+    publicTitle: 'Private AI Search for Confidential Organizational Data',
+    engineeringSubtitle: 'Tri-Isolated Mathematical Privacy-Bounded Enterprise RAG',
+    humanSummary: 'Enables employees to search proprietary company knowledge and documents without risking confidential intellectual property leaking between internal teams.',
+    humanMetric: { value: '195/197', label: 'Information Isolation Tests Passed' },
+    domainLabel: 'Enterprise AI',
+    domainIcon: 'search',
+    highlightTag: 'Confidential RAG'
+  },
+  'supper-ide': {
+    publicTitle: 'Autonomous AI Coding Partner Built for Developer Privacy',
+    engineeringSubtitle: 'AMAWS Multi-Agent Orchestrator & Local Routing Core',
+    humanSummary: 'An autonomous developer pairing tool that executes coding tasks, runs test suites, and refactors code using local private models with minimal cloud latency.',
+    humanMetric: { value: '80%', label: 'Local Model Zero-Cloud Routing' },
+    domainLabel: 'Developer Tools',
+    domainIcon: 'terminal',
+    highlightTag: 'Autonomous IDE'
+  },
+  'hierarchical-ids': {
+    publicTitle: 'Microsecond Defense Against Industrial Network Attacks',
+    engineeringSubtitle: 'Dual-Tier Sub-10µs Anomaly Gating & Signature Firewall',
+    humanSummary: 'Protects critical factory and infrastructure communications by detecting and neutralizing malicious telemetry spikes in under 10 microseconds.',
+    humanMetric: { value: '< 10 µs', label: 'Industrial Attack Interception' },
+    domainLabel: 'Cybersecurity',
+    domainIcon: 'shield',
+    highlightTag: 'Sub-10µs Gating'
+  },
+  'quantum-cryptography': {
+    publicTitle: 'Post-Quantum Cryptographic Guard for Next-Decade Trust',
+    engineeringSubtitle: 'NIST FIPS 203 ML-KEM Module-LWE Key Encapsulation',
+    humanSummary: 'Upgrades secure communication channels with mathematical lattice cryptography designed to resist decryption by future quantum supercomputers.',
+    humanMetric: { value: 'FIPS 203', label: 'NIST Quantum Standards Aligned' },
+    domainLabel: 'Cryptography',
+    domainIcon: 'key',
+    highlightTag: 'Lattice Security'
+  },
+  'operon-extension': {
+    publicTitle: 'Visual Diff Review for Autonomous Code Refactoring',
+    engineeringSubtitle: 'Open VSX Extension & Multi-Agent Safety Visualizer',
+    humanSummary: 'A code editor extension that provides transparent side-by-side diffs and verification checkpoints before AI-generated code edits are merged into projects.',
+    humanMetric: { value: '307/308', label: 'Automated Extension Checks Passed' },
+    domainLabel: 'Developer Tools',
+    domainIcon: 'git-branch',
+    highlightTag: 'Open VSX'
+  },
+  'engineering-knowledge-rag': {
+    publicTitle: 'Instant Search Across Millions of Technical Blueprints',
+    engineeringSubtitle: 'SQLite FTS5 BM25 Engine Bounded to 80% Memory Quotas',
+    humanSummary: 'Enables aerospace, electrical, and mechanical engineers to search thousands of dense specification documents with sub-100 millisecond response times.',
+    humanMetric: { value: '< 100 ms', label: 'Query Retrieval on Constrained RAM' },
+    domainLabel: 'Knowledge Retrieval',
+    domainIcon: 'file-text',
+    highlightTag: 'Sub-100ms Search'
+  },
+  'stockai-platform': {
+    publicTitle: 'Autonomous Market Intelligence with Audit Trails',
+    engineeringSubtitle: 'Multi-Factor Quantitative Sentiment & Risk Engine',
+    humanSummary: 'Analyzes financial markets and news sentiment using transparent risk boundaries and verifiable reasoning steps rather than unexplainable predictions.',
+    humanMetric: { value: '100%', label: 'Decision Traceability & Risk Bounds' },
+    domainLabel: 'Quantitative Analytics',
+    domainIcon: 'trending-up',
+    highlightTag: 'Explainable AI'
+  },
+  'sanjaya-ai': {
+    publicTitle: 'Multilingual Audio Intelligence for Regional Access',
+    engineeringSubtitle: 'End-to-End Edge Speech-to-Intent Pipeline',
+    humanSummary: 'Enables rural citizens to interact with digital public services and healthcare information using spoken regional dialects on standard mobile devices.',
+    humanMetric: { value: '3 Dialects', label: 'Edge Audio Intent Recognition' },
+    domainLabel: 'Accessible AI',
+    domainIcon: 'mic',
+    highlightTag: 'Regional Voice'
+  },
+  'flipkart-ml-platform': {
+    publicTitle: 'Detecting Supply Chain Anomalies Before Orders Fail',
+    engineeringSubtitle: 'Distributed High-Throughput E-Commerce ML Pipeline',
+    humanSummary: 'Monitors e-commerce supply chains and fulfillment streams in real time to catch logistics bottlenecks and delivery disruptions before they impact customers.',
+    humanMetric: { value: 'Real-Time', label: 'Logistics Disruption Mitigation' },
+    domainLabel: 'Enterprise ML',
+    domainIcon: 'truck',
+    highlightTag: 'E-Commerce ML'
+  },
+  'paradox-ai': {
+    publicTitle: 'Simulating Dynamic Human Decision Making',
+    engineeringSubtitle: 'Agentic Behavioral Game-Theoretic Simulation Engine',
+    humanSummary: 'Models how groups of people make decisions during emergencies and resource shortages, helping disaster managers stress-test response policies.',
+    humanMetric: { value: 'Multi-Agent', label: 'Game-Theoretic Crisis Simulation' },
+    domainLabel: 'Behavioral AI',
+    domainIcon: 'users',
+    highlightTag: 'Crisis Modeling'
+  },
+  'private-memory-os': {
+    publicTitle: 'Private Personal Assistant That Never Forgets or Leaks',
+    engineeringSubtitle: 'Local Vector Memory Store with Cryptographic Erasure',
+    humanSummary: 'Stores long-term conversation history strictly on personal devices, allowing users to securely query past insights without third-party tracking or profiling.',
+    humanMetric: { value: '0 bytes', label: 'Cloud Egress on Personal Context' },
+    domainLabel: 'Personal AI',
+    domainIcon: 'hard-drive',
+    highlightTag: 'Hardware Privacy'
+  }
+};
+
+export function getProjectIdentity(projectId: string): ProjectIdentityMeta {
+  if (PROJECT_IDENTITY_REGISTRY[projectId]) {
+    return PROJECT_IDENTITY_REGISTRY[projectId];
+  }
+  return {
+    publicTitle: projectId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+    engineeringSubtitle: 'Verified System Architecture & Implementation',
+    humanSummary: 'Engineered for reliability, privacy, and performance under rigorous validation standards.',
+    humanMetric: { value: 'VERIFIED', label: 'Automated Test Pass' },
+    domainLabel: 'AI Systems',
+    domainIcon: 'cpu'
+  };
+}

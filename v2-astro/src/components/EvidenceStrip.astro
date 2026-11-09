@@ -13,13 +13,13 @@ const { class: className = '' } = Astro.props;
 
 <aside id="forensic-audit" class={`evidence-strip-container ${className}`} aria-label="Verified Engineering Impact Summary">
   <div class="evidence-strip interactive-card">
-    <a href={`${base}/evidence/`} class="strip-item" title="Inspect 708/712 automated passing checks in the Evidence Hub">
+    <a href={`${base}/evidence/`} class="strip-item" title="Inspect 708 automated passing checks in the Evidence Hub">
       <div class="item-head">
         <span class="status-dot dot-green"></span>
         <span class="strip-val" data-count-target="708" data-count-suffix="/712">708/712</span>
       </div>
       <span class="strip-lbl">Passing Live Checks</span>
-      <span class="strip-badge">99.44% VERIFIED</span>
+      <span class="strip-badge">99.4% AUTOMATED</span>
     </a>
 
     <div class="strip-divider" aria-hidden="true"></div>
@@ -27,10 +27,10 @@ const { class: className = '' } = Astro.props;
     <a href={`${base}/projects/`} class="strip-item" title="Explore 20 production and research systems">
       <div class="item-head">
         <span class="status-dot dot-cyan"></span>
-        <span class="strip-val" data-count-target="20" data-count-suffix="">20</span>
+        <span class="strip-val" data-count-target="20" data-count-suffix="+">20+</span>
       </div>
-      <span class="strip-lbl">Flagship Architectures</span>
-      <span class="strip-badge">TIER-3 SYSTEMS</span>
+      <span class="strip-lbl">AI Systems Built</span>
+      <span class="strip-badge">REAL-WORLD CODE</span>
     </a>
 
     <div class="strip-divider" aria-hidden="true"></div>
@@ -51,8 +51,8 @@ const { class: className = '' } = Astro.props;
         <span class="status-dot dot-amber"></span>
         <span class="strip-val" data-count-target="500" data-count-suffix="+">500+</span>
       </div>
-      <span class="strip-lbl">Engineers Mentored</span>
-      <span class="strip-badge">PCCOE CODING CLUB</span>
+      <span class="strip-lbl">Students Mentored</span>
+      <span class="strip-badge">PCCOE CLUBS</span>
     </a>
   </div>
 </aside>

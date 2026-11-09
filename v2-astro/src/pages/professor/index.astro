@@ -20,20 +20,26 @@ const base = import.meta.env.BASE_URL;
     <div class="container hero-grid">
       <div class="hero-content" data-reveal>
         <div class="badge-pill">
-          <span>Pune, India · PCCOE Faculty</span>
+          <span>Pune, India · PCCOE Faculty &amp; Student Mentor</span>
         </div>
-        <h1 class="hero-title">{profile.identity.name}</h1>
-        <p class="hero-subtitle">Educator · Researcher · Faculty In-charge</p>
+        <h1 class="hero-title">
+          Inspiring Engineers to Build<br/>
+          <span class="text-gradient">Systems That Matter</span>
+        </h1>
+        <p class="hero-subtitle">Educator · Researcher · Student Mentor</p>
         <p class="hero-bio">
-          Dedicated to engineering pedagogy, applied AI innovation, and competitive student mentorship. Faculty In-charge of the PCCOE Coding Club and the Institute-Level Motorsports Club.
+          Dedicated to hands-on engineering pedagogy, bridging theoretical computer science with real-world prototypes. As Faculty In-charge of the PCCOE Coding Club and Institute Motorsports Club, I guide over 500 student developers to turn classroom concepts into working systems, research publications, and national competition victories.
         </p>
 
         <div class="hero-actions" style="display: flex; gap: var(--space-3); flex-wrap: wrap; margin-bottom: var(--space-6);">
-          <a href={`${base}/COMPREHENSIVE_PORTFOLIO_FORENSIC_MASTER_REPORT.pdf`} target="_blank" rel="noopener noreferrer" class="contact-btn contact-btn-primary">
-            Forensic Master Report (79p PDF) ↗
+          <a href="#teaching" class="contact-btn contact-btn-primary">
+            Courses &amp; Labs ↓
+          </a>
+          <a href="#leadership" class="contact-btn">
+            Mentorship &amp; Clubs ↓
           </a>
           <a href="#research" class="contact-btn">
-            Research Tracks ↓
+            Research &amp; Publications ↓
           </a>
         </div>
 
@@ -122,26 +128,26 @@ const base = import.meta.env.BASE_URL;
   <section id="research" class="section section-research">
     <div class="container">
       <div class="section-header" data-reveal>
-        <span class="section-tag">Research & Forensic Inquiry</span>
-        <h2 class="section-title">Active Investigation Tracks & Forensic Audit</h2>
+        <span class="section-tag">Research &amp; Publications</span>
+        <h2 class="section-title">Active Investigation Tracks &amp; Research Monograph</h2>
         <p class="section-desc" style="color: var(--color-text-secondary); max-width: 720px; margin-top: var(--space-2);">
           Empirical systems research across Affective Computing, Agentic Security, Post-Quantum Cryptography, and Decentralized Healthcare. Backed by 708 live passing automated test suites (99.44% pass rate).
         </p>
       </div>
 
-      <!-- Featured Forensic Master Monograph Card -->
+      <!-- Featured Research Monograph Card -->
       <div class="card forensic-hero-card" data-reveal data-reveal-delay="1" style="margin-bottom: var(--space-8); border: 1px solid var(--color-primary); background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(30, 41, 59, 0.2) 100%);">
-        <div class="badge" style="margin-bottom: var(--space-2); display: inline-block;">Doctoral-Grade Forensic Synthesis // Nov 2026</div>
+        <div class="badge" style="margin-bottom: var(--space-2); display: inline-block;">Research Monograph // Systems &amp; Evidence</div>
         <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-2); color: var(--color-text);">Comprehensive Portfolio Forensic Master Report</h3>
         <p style="color: var(--color-text-secondary); line-height: 1.6; margin-bottom: var(--space-4);">
-          79-page comprehensive research monograph covering 70 repositories (86,727 files, 59.4 GB), 16 deep project dossiers, 45 evidence journal entries, and 708 live passing unit and integration tests across 6 engineering pillars. Final Disposition: <strong>APPROVED & DEFENSE READY</strong>.
+          79-page comprehensive research monograph covering 70 repositories (86,727 files, 59.4 GB), 16 deep project dossiers, 45 evidence journal entries, and 708 live passing unit and integration tests across 6 engineering pillars. Verification Status: <strong>708 Automated Tests Passing (99.44%)</strong>.
         </p>
         <div style="display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: center;">
           <a href={`${base}/COMPREHENSIVE_PORTFOLIO_FORENSIC_MASTER_REPORT.pdf`} target="_blank" rel="noopener noreferrer" class="contact-btn contact-btn-primary">
             Download 79-Page Report (PDF) ↗
           </a>
           <span style="font-size: var(--text-xs); color: var(--color-text-secondary); font-family: var(--font-mono);">
-            1.06 MB · Defense Ready · 708/712 Tests Verified
+            1.06 MB · 708/712 Tests Verified
           </span>
         </div>
       </div>

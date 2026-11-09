@@ -1,5 +1,5 @@
 ---
-// src/pages/about/index.astro — Biography, Career Journey & Resume
+// src/pages/about/index.astro — Biography, Personal Journey & Career
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Icon from '../../components/Icon.astro';
@@ -11,7 +11,7 @@ const resumeHref = `${base}/resume.pdf`;
 
 <BaseLayout
   title="About Abhishek S. Raut — AI Research Engineer & Systems Architect"
-  description="Biography, engineering philosophy, institutional leadership at PCCOE Pune, and career trajectory of Abhishek S. Raut."
+  description="Biography, personal motivation, institutional leadership at PCCOE Pune, and career journey of Abhishek S. Raut."
   persona="architect"
 >
   <Header slot="header" activePersona="architect" />
@@ -29,40 +29,77 @@ const resumeHref = `${base}/resume.pdf`;
       <header class="about-header" data-reveal>
         <div class="badge-pill">
           <span class="status-indicator"></span>
-          <span>Pune, India · PCCOE Faculty & Researcher</span>
+          <span>Pune, India · AI Research Engineer &amp; PCCOE Faculty</span>
         </div>
         <h1 class="page-title">{profile.identity.name}</h1>
-        <p class="role-subtitle">AI Research Engineer · Systems Architect · Faculty In-charge</p>
+        <p class="role-subtitle">AI Research Engineer · Systems Architect · Student Mentor</p>
 
         <div class="header-action-row">
           <a href={resumeHref} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
             Download Resume (PDF) ↗
           </a>
           <a href={`${base}/evidence/`} class="btn btn-secondary">
-            Review Engineering Evidence →
+            Review Technical Evidence →
           </a>
         </div>
       </header>
 
-      <!-- Biography Narrative -->
+      <!-- Section 1: Who I Am & Why I Build -->
       <section class="bio-section" data-reveal data-reveal-delay="1">
-        <h2>Engineering Philosophy & Background</h2>
+        <h2>Biography &amp; Who I Am</h2>
         <div class="bio-body">
           <p>
-            I am an <strong>AI Research Engineer</strong> and systems architect based in Pune, India, serving as faculty and researcher at Pimpri Chinchwad College of Engineering (PCCOE Pune). My engineering investigations focus on bridging the gap between theoretical foundation models and deterministic, reliable production software.
+            I am an <strong>AI Research Engineer</strong>, systems architect, and educator based in Pune, India. I serve as faculty and researcher at Pimpri Chinchwad College of Engineering (PCCOE Pune), where I direct applied research in reliable artificial intelligence, sovereign local model routing, and edge telematics.
           </p>
           <p>
-            Modern AI systems often suffer from unpredictable regressions, opaque prompt injection vectors, and fragile cloud dependencies. My work focuses on <strong>sovereign edge intelligence</strong>: building autonomous closed-loop program repair (CodeAgent/VulRAG), host-side zero-trust mediation proxies (Agentic Browser Defense), and hardware-in-the-loop real-time telemetry ingestion (VehicleGPT C++20).
-          </p>
-          <p>
-            Across 70 audited repositories (86,727 files, 59.4 GB), every novel architecture I design is supported by reproducible empirical evidence: 708 automated test passes (99.44% pass rate), formal complexity derivations (e.g., MC-CTViT reducing EEG attention FLOPs by 99.95%), and open-source verification harnesses.
+            I believe engineering is fundamentally about building systems that serve people with predictable guarantees. Beyond authoring code, I serve as Faculty In-charge of the <strong>PCCOE Coding Club</strong>, guiding over 500 active student developers, and the <strong>Institute Motorsports Club</strong>, advising telemetry and vehicle data acquisition.
           </p>
         </div>
       </section>
 
-      <!-- Leadership & Institutional Impact -->
+      <!-- Section 2: Why I Build -->
+      <section class="bio-section" data-reveal data-reveal-delay="1">
+        <h2>Engineering Philosophy &amp; Why I Build</h2>
+        <div class="bio-body">
+          <p>
+            My motivation is not simply making AI more powerful. I want to understand how it can be made <strong>reliable, private, and human-centered enough to operate in the real world</strong>. Modern foundation models are impressive in benchmarks, but when deployed into production, they often introduce unpredictable regressions, opaque security vectors, and fragile third-party cloud dependencies.
+          </p>
+          <p>
+            My work focuses on <strong>sovereign edge intelligence</strong>: building autonomous closed-loop program repair (CodeAgent/VulRAG), host-side zero-trust mediation proxies (Agentic Browser Defense), and deterministic sub-millisecond vehicular telemetry ingestion (VehicleGPT C++20). Across 70 audited repositories (86,727 files, 59.4 GB), every novel architecture I design is supported by reproducible empirical evidence: 708 automated test passes (99.44% pass rate) and open-source verification harnesses.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 3: What I Work On (4 Domains) -->
+      <section class="domains-section" data-reveal data-reveal-delay="2">
+        <h2>What I Work On</h2>
+        <div class="about-domains-grid">
+          <div class="domain-card interactive-card">
+            <span class="domain-icon">🛡️</span>
+            <h4>Software Security</h4>
+            <p>Autonomous tools that find and repair code vulnerabilities locally, protecting proprietary code without sending IP to external clouds.</p>
+          </div>
+          <div class="domain-card interactive-card">
+            <span class="domain-icon">🏥</span>
+            <h4>Digital Healthcare</h4>
+            <p>Clinical decision-support and triage tools for frontline healthcare workers across 20+ village centers in rural Maharashtra.</p>
+          </div>
+          <div class="domain-card interactive-card">
+            <span class="domain-icon">🚗</span>
+            <h4>Connected Mobility</h4>
+            <p>Deterministic edge systems processing 100k+ vehicle sensor messages per second under a strict 12W power ceiling with zero data loss.</p>
+          </div>
+          <div class="domain-card interactive-card">
+            <span class="domain-icon">🎓</span>
+            <h4>Engineering Education</h4>
+            <p>Mentoring the next generation of engineers through competitive programming, hackathons, and research publication guidance.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Leadership & Institutional Impact -->
       <section class="leadership-section" data-reveal data-reveal-delay="2">
-        <h2>Institutional Leadership & Community Mentorship</h2>
+        <h2>Institutional Leadership &amp; Community Mentorship</h2>
         <div class="leadership-cards">
           <div class="lead-card interactive-card">
             <div class="lead-header">
@@ -77,7 +114,7 @@ const resumeHref = `${base}/resume.pdf`;
           <div class="lead-card interactive-card">
             <div class="lead-header">
               <h3>Faculty In-charge · Institute Motorsports Club</h3>
-              <span class="lead-badge badge-amber">Avionics & Telemetry</span>
+              <span class="lead-badge badge-amber">Avionics &amp; Telemetry</span>
             </div>
             <p>
               Advising student automotive engineers on deterministic telemetry data acquisition (CAN bus protocol), sensor logging pipelines, and race strategy analytics for competitive electric and combustion vehicles.
@@ -86,24 +123,24 @@ const resumeHref = `${base}/resume.pdf`;
 
           <div class="lead-card interactive-card">
             <div class="lead-header">
-              <h3>Academic Pedagogy & Labs</h3>
-              <span class="lead-badge badge-blue">Theory & Practice</span>
+              <h3>Academic Pedagogy &amp; Practical Labs</h3>
+              <span class="lead-badge badge-blue">Theory &amp; Practice</span>
             </div>
             <p>
-              Lecturing in Theory of Computation (TOC), formal grammars, Turing machines, Data Exploration & Analytics, and Full Stack Distributed Engineering at PCCOE Pune.
+              Lecturing in Theory of Computation (TOC), formal grammars, Turing machines, Data Exploration &amp; Analytics, and Full Stack Distributed Engineering at PCCOE Pune.
             </p>
           </div>
         </div>
       </section>
 
-      <!-- Career Progression Timeline -->
+      <!-- Section 5: Career Progression Timeline -->
       <section class="timeline-section" data-reveal data-reveal-delay="2">
-        <h2>Career Milestones</h2>
+        <h2>Career Milestones &amp; Journey</h2>
         <div class="about-timeline">
           <div class="timeline-item">
             <div class="item-year">2023–Present</div>
             <div class="item-content">
-              <h4>AI Research Engineer & Innovation Lead</h4>
+              <h4>AI Research Engineer &amp; Innovation Lead</h4>
               <span class="item-org">PCCOE Pune</span>
               <p>Directing multi-agent closed-loop repair research, sovereign local LLMs, and real-time vehicular telematics.</p>
             </div>
@@ -129,11 +166,11 @@ const resumeHref = `${base}/resume.pdf`;
         </div>
       </section>
 
-      <!-- Contact & Connect Block -->
+      <!-- Section 6: Purposeful Collaboration & Contact -->
       <section class="contact-section" data-reveal data-reveal-delay="3">
         <div class="contact-box interactive-card">
           <span class="section-tag badge-cyan">Connect</span>
-          <h2>Direct Collaboration & Inquiries</h2>
+          <h2>Direct Collaboration &amp; Inquiries</h2>
           <p>Open for applied AI research partnerships, systems architecture consultations, and institutional mentorship.</p>
           <div class="contact-links">
             <a href={`mailto:${profile.identity.email}`} class="btn btn-primary">
@@ -156,7 +193,7 @@ const resumeHref = `${base}/resume.pdf`;
 
   <footer slot="footer" class="site-footer">
     <div class="container-content footer-content">
-      <p>© {new Date().getFullYear()} Abhishek S. Raut · Systems & AI Engineering</p>
+      <p>© {new Date().getFullYear()} Abhishek S. Raut · Systems &amp; AI Engineering</p>
       <div class="footer-links">
         <a href="#top">Top ↑</a>
       </div>
@@ -218,14 +255,15 @@ const resumeHref = `${base}/resume.pdf`;
     font-size: var(--text-4xl);
     font-weight: 800;
     color: var(--color-text);
-    margin: 0 0 var(--space-1) 0;
+    margin: 0 0 var(--space-2) 0;
     letter-spacing: -0.02em;
   }
 
   .role-subtitle {
     font-size: var(--text-base);
-    color: var(--color-text-secondary);
-    margin: 0 0 var(--space-4) 0;
+    color: var(--color-primary);
+    font-family: var(--font-mono);
+    margin: 0 0 var(--space-5) 0;
   }
 
   .header-action-row {
@@ -234,36 +272,82 @@ const resumeHref = `${base}/resume.pdf`;
     flex-wrap: wrap;
   }
 
-  /* Bio Section */
+  /* Bio Sections */
   .bio-section {
     margin-bottom: var(--space-8);
-    border-top: 1px solid var(--color-border);
-    padding-top: var(--space-6);
   }
 
-  .bio-section h2, .leadership-section h2, .timeline-section h2 {
+  .bio-section h2,
+  .domains-section h2,
+  .leadership-section h2,
+  .timeline-section h2 {
     font-size: var(--text-xl);
-    font-weight: 700;
+    font-weight: 800;
     color: var(--color-text);
     margin: 0 0 var(--space-4) 0;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--space-2);
   }
 
   .bio-body p {
     font-size: var(--text-sm);
     color: var(--color-text-secondary);
     line-height: 1.7;
-    margin: 0 0 var(--space-4) 0;
+    margin-bottom: var(--space-4);
   }
 
   .bio-body strong {
     color: var(--color-text);
   }
 
+  /* What I Work On Domains Grid */
+  .domains-section {
+    margin-bottom: var(--space-8);
+  }
+
+  .about-domains-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: var(--space-4);
+  }
+
+  .domain-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--duration-fast) var(--ease-default), border-color var(--duration-fast);
+  }
+
+  .domain-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-primary);
+  }
+
+  .domain-icon {
+    font-size: 24px;
+    margin-bottom: var(--space-2);
+  }
+
+  .domain-card h4 {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 var(--space-1) 0;
+  }
+
+  .domain-card p {
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    margin: 0;
+  }
+
   /* Leadership Cards */
   .leadership-section {
     margin-bottom: var(--space-8);
-    border-top: 1px solid var(--color-border);
-    padding-top: var(--space-6);
   }
 
   .leadership-cards {
@@ -277,15 +361,19 @@ const resumeHref = `${base}/resume.pdf`;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     padding: var(--space-5);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
+    transition: transform var(--duration-fast) var(--ease-default), border-color var(--duration-fast);
+  }
+
+  .lead-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-primary);
   }
 
   .lead-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: var(--space-2);
     flex-wrap: wrap;
     gap: var(--space-2);
   }
@@ -297,60 +385,69 @@ const resumeHref = `${base}/resume.pdf`;
   }
 
   .lead-badge {
+    font-size: 11px;
     font-family: var(--font-mono);
-    font-size: 10px;
     font-weight: 700;
-    padding: 2px 6px;
+    padding: 2px 8px;
     border-radius: var(--radius-sm);
   }
 
   .lead-card p {
     font-size: var(--text-xs);
     color: var(--color-text-secondary);
-    line-height: 1.5;
+    line-height: 1.6;
     margin: 0;
   }
 
   /* Timeline */
   .timeline-section {
     margin-bottom: var(--space-8);
-    border-top: 1px solid var(--color-border);
-    padding-top: var(--space-6);
   }
 
   .about-timeline {
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
+    border-left: 2px solid var(--color-border);
+    padding-left: var(--space-5);
+    margin-left: var(--space-2);
   }
 
   .timeline-item {
-    display: grid;
-    grid-template-columns: 100px 1fr;
-    gap: var(--space-4);
-    align-items: baseline;
-    padding: var(--space-3) 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: calc(var(--space-5) * -1 - 6px);
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    border: 2px solid var(--color-bg);
   }
 
   .item-year {
     font-family: var(--font-mono);
-    font-size: var(--text-xs);
+    font-size: 11px;
     font-weight: 700;
     color: var(--color-primary);
+    margin-bottom: var(--space-1);
   }
 
   .item-content h4 {
     font-size: var(--text-sm);
     color: var(--color-text);
-    margin: 0;
+    margin: 0 0 2px 0;
   }
 
   .item-org {
+    display: inline-block;
     font-size: 11px;
     color: var(--color-text-secondary);
-    display: inline-block;
-    margin-bottom: var(--space-1);
+    margin-bottom: var(--space-2);
   }
 
   .item-content p {
@@ -360,11 +457,7 @@ const resumeHref = `${base}/resume.pdf`;
     margin: 0;
   }
 
-  /* Contact Section */
-  .contact-section {
-    margin-top: var(--space-8);
-  }
-
+  /* Contact Box */
   .contact-box {
     background: var(--color-surface);
     border: 1px solid var(--color-border);
@@ -375,21 +468,40 @@ const resumeHref = `${base}/resume.pdf`;
 
   .contact-box h2 {
     font-size: var(--text-2xl);
-    color: var(--color-text);
     margin: var(--space-2) 0;
+    color: var(--color-text);
   }
 
   .contact-box p {
-    font-size: var(--text-sm);
     color: var(--color-text-secondary);
-    margin: 0 0 var(--space-5) 0;
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-6);
   }
 
   .contact-links {
     display: flex;
     justify-content: center;
-    gap: var(--space-3);
+    gap: var(--space-4);
     flex-wrap: wrap;
+  }
+
+  /* Badges & Buttons */
+  .badge-teal {
+    background: rgba(20, 184, 166, 0.12);
+    color: #14b8a6;
+    border: 1px solid rgba(20, 184, 166, 0.3);
+  }
+
+  .badge-amber {
+    background: rgba(245, 158, 11, 0.12);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+  }
+
+  .badge-blue {
+    background: rgba(59, 130, 246, 0.12);
+    color: #3b82f6;
+    border: 1px solid rgba(59, 130, 246, 0.3);
   }
 
   .btn {
@@ -397,24 +509,23 @@ const resumeHref = `${base}/resume.pdf`;
     align-items: center;
     justify-content: center;
     gap: var(--space-2);
-    padding: var(--space-3) var(--space-5);
-    border-radius: var(--radius-md);
+    padding: var(--space-2) var(--space-5);
+    font-size: var(--text-sm);
     font-weight: 600;
-    font-size: var(--text-xs);
+    border-radius: var(--radius-md);
     text-decoration: none;
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.2s ease;
+    transition: color var(--duration-fast), background-color var(--duration-fast), border-color var(--duration-fast);
   }
 
   .btn-primary {
     background: var(--color-primary);
-    color: var(--color-on-primary, #ffffff);
-    border: 1px solid transparent;
+    color: var(--color-on-primary);
+    border: 1px solid var(--color-primary);
   }
 
   .btn-primary:hover {
-    filter: brightness(1.1);
-    transform: translateY(-1px);
+    background: var(--color-primary-hover);
   }
 
   .btn-secondary {
@@ -425,28 +536,6 @@ const resumeHref = `${base}/resume.pdf`;
 
   .btn-secondary:hover {
     border-color: var(--color-primary);
-    color: var(--color-primary);
-  }
-
-  .badge-cyan {
-    background: rgba(56, 189, 248, 0.12);
-    color: #38bdf8;
-    border: 1px solid rgba(56, 189, 248, 0.3);
-  }
-  .badge-blue {
-    background: rgba(59, 130, 246, 0.12);
-    color: #3b82f6;
-    border: 1px solid rgba(59, 130, 246, 0.3);
-  }
-  .badge-teal {
-    background: rgba(20, 184, 166, 0.12);
-    color: #14b8a6;
-    border: 1px solid rgba(20, 184, 166, 0.3);
-  }
-  .badge-amber {
-    background: rgba(245, 158, 11, 0.12);
-    color: #f59e0b;
-    border: 1px solid rgba(245, 158, 11, 0.3);
   }
 
   .site-footer {
