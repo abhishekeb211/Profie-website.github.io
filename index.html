@@ -70,7 +70,7 @@
     </script>
 </head>
 
-<body class="dark-theme">
+<body class="hacker-theme">
 
     <a href="#main" class="skip-link">Skip to main content</a>
 
@@ -79,6 +79,7 @@
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
     <div class="scroll-progress-bar"></div>
+    <div class="hacker-scanline"></div>
 
     <!-- TOP SYSTEM STATUS BAR (As in website-uiux-terminal-prismatic-spectrum.jpg) -->
     <div class="system-status-bar" role="status" aria-label="System status telemetry">
@@ -113,14 +114,15 @@
                 <button class="tab-btn active" type="button" role="tab" aria-selected="true" aria-controls="ai-pane" id="tab-ai" data-target="ai">AI Architect</button>
                 <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="prof-pane" id="tab-prof" data-target="prof">Professor</button>
             </div>
-            <div class="theme-toggle-pill" role="radiogroup" aria-label="Theme mode" id="theme-toggle">
-                <button type="button" class="theme-pill-btn active" data-theme="dark" aria-checked="true" id="theme-dark-btn" title="Switch to Obsidian Dark Mode">
-                    <svg class="theme-icon moon-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            <div class="theme-toggle-pill" role="radiogroup" aria-label="Theme mode: Hacker or White" id="theme-toggle" data-active="hacker">
+                <button type="button" class="theme-pill-btn active" data-theme="hacker" aria-checked="true" id="theme-hacker-btn" title="Switch to Hacker Mode">
+                    <svg class="theme-icon hacker-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="4 17 10 11 4 5"></polyline>
+                        <line x1="12" y1="19" x2="20" y2="19"></line>
                     </svg>
-                    <span class="pill-label">Dark</span>
+                    <span class="pill-label">Hacker</span>
                 </button>
-                <button type="button" class="theme-pill-btn" data-theme="light" aria-checked="false" id="theme-light-btn" title="Switch to Titanium White Mode">
+                <button type="button" class="theme-pill-btn" data-theme="light" aria-checked="false" id="theme-light-btn" title="Switch to Pure White Mode">
                     <svg class="theme-icon sun-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <circle cx="12" cy="12" r="5"></circle>
                         <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -132,7 +134,7 @@
                         <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
                         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                     </svg>
-                    <span class="pill-label">Light</span>
+                    <span class="pill-label">White</span>
                 </button>
                 <span class="theme-pill-slider" aria-hidden="true"></span>
             </div>

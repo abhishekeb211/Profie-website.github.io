@@ -403,53 +403,52 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- TACTILE 2-STATE THEME SWITCHER (Titanium Light & Obsidian Dark) ---
+    // --- TACTILE 2-STATE THEME SWITCHER (Hacker Cyber & Titanium White) ---
     function initTheme() {
         const togglePill = document.getElementById('theme-toggle');
-        const darkBtn = document.getElementById('theme-dark-btn');
+        const hackerBtn = document.getElementById('theme-hacker-btn') || document.getElementById('theme-dark-btn');
         const lightBtn = document.getElementById('theme-light-btn');
         const body = document.body;
 
-        if (!togglePill || !darkBtn || !lightBtn) return;
+        if (!togglePill || !hackerBtn || !lightBtn) return;
 
         function applyTheme(theme, animate = true) {
-            const isDark = theme !== 'light';
-            const targetTheme = isDark ? 'dark' : 'light';
+            const isHacker = theme !== 'light';
+            const targetTheme = isHacker ? 'hacker' : 'light';
 
             if (animate && !shouldReduceMotion) {
                 body.classList.add('theme-transitioning');
                 setTimeout(() => body.classList.remove('theme-transitioning'), 380);
             }
 
-            body.classList.remove('light-theme', 'dark-theme', 'hacker-theme', 'glass-theme');
-            body.classList.add(isDark ? 'dark-theme' : 'light-theme');
+            body.classList.remove('light-theme', 'dark-theme', 'glass-theme', 'hacker-theme');
+            body.classList.add(isHacker ? 'hacker-theme' : 'light-theme');
             document.documentElement.setAttribute('data-theme', targetTheme);
             body.setAttribute('data-mode', targetTheme);
 
-            darkBtn.classList.toggle('active', isDark);
-            darkBtn.setAttribute('aria-checked', isDark ? 'true' : 'false');
-            lightBtn.classList.toggle('active', !isDark);
-            lightBtn.setAttribute('aria-checked', !isDark ? 'true' : 'false');
+            hackerBtn.classList.toggle('active', isHacker);
+            hackerBtn.setAttribute('aria-checked', isHacker ? 'true' : 'false');
+            lightBtn.classList.toggle('active', !isHacker);
+            lightBtn.setAttribute('aria-checked', !isHacker ? 'true' : 'false');
 
             togglePill.setAttribute('data-active', targetTheme);
             localStorage.setItem('portfolio-theme', targetTheme);
         }
 
-        // Initialize from localStorage or prefers-color-scheme
-        const savedTheme = localStorage.getItem('portfolio-theme') || 
-            (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        // Initialize from localStorage (defaulting to 'hacker')
+        const savedTheme = localStorage.getItem('portfolio-theme') || 'hacker';
         applyTheme(savedTheme, false);
 
-        darkBtn.addEventListener('click', () => applyTheme('dark'));
+        hackerBtn.addEventListener('click', () => applyTheme('hacker'));
         lightBtn.addEventListener('click', () => applyTheme('light'));
 
         // Keyboard accessibility
         togglePill.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight' || e.key === 'ArrowLeft' || e.key === ' ') {
                 e.preventDefault();
-                const current = togglePill.getAttribute('data-active') === 'dark' ? 'light' : 'dark';
+                const current = togglePill.getAttribute('data-active') === 'hacker' ? 'light' : 'hacker';
                 applyTheme(current);
-                (current === 'dark' ? darkBtn : lightBtn).focus();
+                (current === 'hacker' ? hackerBtn : lightBtn).focus();
             }
         });
     }
@@ -616,6 +615,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let lastFrame = 0;
         let animationFrame;
 
+        const isHacker = () => document.body.classList.contains('hacker-theme');
         const isDark = () => !document.body.classList.contains('light-theme');
         const isProf = () => document.body.hasAttribute('data-persona');
 
@@ -660,7 +660,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (this.x < 0 || this.x > W()) this.speedX *= -1;
                 if (this.y < 0 || this.y > H()) this.speedY *= -1;
 
-                if (isDark()) {
+                if (isHacker()) {
+                    this.twinklePhase += this.twinkleSpeed * 1.6;
+                    this.opacity = this.baseOpacity + Math.sin(this.twinklePhase) * 0.35;
+                    this.opacity = Math.max(0.15, Math.min(0.85, this.opacity));
+                } else if (isDark()) {
                     this.twinklePhase += this.twinkleSpeed;
                     this.opacity = this.baseOpacity + Math.sin(this.twinklePhase) * 0.2;
                     this.opacity = Math.max(0.08, Math.min(0.75, this.opacity));
@@ -675,6 +679,55 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
+            }
+        }
+
+        // Cyber matrix digital telemetry for Hacker mode
+        let rainCols = [];
+        let rainSkip = 0;
+        const RAIN_CHARS = '01λ∂π⊕0x';
+        const RAIN_FONT_SIZE = 14;
+
+        function initRain() {
+            const cols = Math.floor(W() / RAIN_FONT_SIZE);
+            rainCols = Array.from({ length: cols }, () => Math.random() * -H());
+        }
+
+        function drawRain() {
+            rainSkip++;
+            if (rainSkip < 3) return;
+            rainSkip = 0;
+            ctx.font = `${RAIN_FONT_SIZE}px monospace`;
+            rainCols.forEach((y, i) => {
+                const ch = RAIN_CHARS[Math.floor(Math.random() * RAIN_CHARS.length)];
+                const x = i * RAIN_FONT_SIZE;
+                const bright = y > 0 && y < RAIN_FONT_SIZE * 2;
+                ctx.fillStyle = bright ? 'rgba(255, 120, 120, 0.65)' : 'rgba(255, 26, 26, 0.12)';
+                ctx.fillText(ch, x, y > 0 ? y : 0);
+                rainCols[i] += RAIN_FONT_SIZE * 0.75;
+                if (y > H() + RAIN_FONT_SIZE) {
+                    rainCols[i] = Math.random() * -H() * 0.5;
+                }
+            });
+        }
+
+        function drawHackerConnections() {
+            const maxDist = 110;
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < maxDist) {
+                        const alpha = (1 - dist / maxDist) * 0.22;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(255, 42, 42, ${alpha})`;
+                        ctx.lineWidth = 0.6;
+                        ctx.stroke();
+                    }
+                }
             }
         }
 
@@ -720,6 +773,7 @@ document.addEventListener('DOMContentLoaded', () => {
         function init() {
             particles = Array.from({ length: getParticleCount() }, () => new Particle());
             formulaSymbols = isProf() ? Array.from({ length: 18 }, () => new FormulaSymbol()) : [];
+            if (isHacker()) initRain();
         }
 
         function animate(timestamp) {
@@ -730,6 +784,11 @@ document.addEventListener('DOMContentLoaded', () => {
             lastFrame = timestamp;
 
             ctx.clearRect(0, 0, W(), H());
+
+            if (isHacker()) {
+                drawRain();
+                drawHackerConnections();
+            }
 
             if (isProf()) {
                 formulaSymbols.forEach(s => { s.update(); s.draw(); });

@@ -48,26 +48,32 @@
     box-shadow: 0 10px 24px color-mix(in srgb, var(--glow) 42%, transparent);
 }
 
-/* --- TACTILE 2-STATE THEME TOGGLE PILL --- */
+/* --- TACTILE 2-STATE THEME TOGGLE PILL (HACKER vs WHITE) --- */
 .theme-toggle-pill {
     position: relative;
     display: inline-flex;
     align-items: center;
-    background: rgba(15, 23, 42, 0.65);
+    background: rgba(14, 3, 7, 0.85);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 42, 42, 0.32);
     border-radius: 9999px;
     padding: 3px;
     gap: 2px;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), 0 0 14px rgba(255, 26, 26, 0.15);
     z-index: 10;
 }
 
 body.light-theme .theme-toggle-pill {
-    background: rgba(241, 245, 249, 0.9);
-    border-color: rgba(15, 23, 42, 0.1);
+    background: rgba(241, 245, 249, 0.92);
+    border-color: rgba(15, 23, 42, 0.12);
     box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+}
+
+body.hacker-theme .theme-toggle-pill {
+    background: rgba(14, 3, 7, 0.88);
+    border-color: rgba(255, 42, 42, 0.35);
+    box-shadow: 0 4px 18px rgba(255, 26, 26, 0.22);
 }
 
 .theme-pill-btn {
@@ -94,7 +100,7 @@ body.light-theme .theme-toggle-pill {
 .theme-pill-btn .theme-icon {
     display: inline-block;
     vertical-align: middle;
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), stroke 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), stroke 0.3s ease, filter 0.3s ease;
 }
 
 .theme-pill-btn.active {
@@ -105,6 +111,11 @@ body.light-theme .theme-pill-btn.active {
     color: #0f172a;
 }
 
+body.hacker-theme .theme-pill-btn.active {
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(255, 26, 26, 0.5);
+}
+
 .theme-pill-slider {
     position: absolute;
     top: 3px;
@@ -112,9 +123,9 @@ body.light-theme .theme-pill-btn.active {
     left: 3px;
     width: calc(50% - 3px);
     border-radius: 9999px;
-    background: linear-gradient(135deg, #0ea5e9, #8b5cf6);
-    box-shadow: 0 2px 10px rgba(14, 165, 233, 0.4);
-    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
+    background: linear-gradient(135deg, #ff1a1a 0%, #b30018 100%);
+    box-shadow: 0 2px 14px rgba(255, 26, 26, 0.55);
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease, box-shadow 0.3s ease;
     z-index: 1;
     pointer-events: none;
 }
@@ -130,9 +141,14 @@ body.light-theme .theme-pill-btn.active {
     stroke: #f59e0b;
 }
 
-.theme-toggle-pill[data-active="dark"] .moon-icon {
-    transform: rotate(-15deg);
-    stroke: #38bdf8;
+.theme-toggle-pill[data-active="hacker"] .hacker-icon {
+    stroke: #ffffff;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
+}
+
+.theme-toggle-pill[data-active="dark"] .hacker-icon {
+    stroke: #ffffff;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
 }
 
 /* --- CARDS --- */
@@ -151,6 +167,15 @@ body.light-theme .theme-pill-btn.active {
     position: relative;
     overflow: hidden;
     box-shadow: var(--shadow-soft);
+}
+
+body.hacker-theme .card:hover,
+body.hacker-theme .expertise-card:hover,
+body.hacker-theme .education-card:hover,
+body.hacker-theme .project-card:hover,
+body.hacker-theme .cert-card:hover {
+    border-color: rgba(255, 42, 42, 0.55);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 26, 26, 0.22);
 }
 
 /* T2-C: Mouse-tracking spotlight on cards */
@@ -525,7 +550,7 @@ body.light-theme .theme-pill-btn.active {
     background-position: -200% center;
 }
 
-/* Marquee pause on hover */
+/* T5-D: Marquee pause on hover + hacker speed */
 .marquee-content {
     display: flex;
     gap: 48px;
@@ -1031,6 +1056,12 @@ body.reduce-motion-mobile .orbit-chip {
     animation: ring-expand 1.8s ease-out infinite;
 }
 
+/* Glass theme: enhanced blur panels */
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border-color: rgba(255, 255, 255, 0.14);
+}
 
 /* Reduce motion: disable new animations */
 @media (prefers-reduced-motion: reduce) {
@@ -1095,6 +1126,12 @@ body.light-theme .system-status-bar {
     color: #475569;
 }
 
+body.hacker-theme .system-status-bar {
+    background: #080104;
+    border-bottom: 1px solid rgba(255, 42, 42, 0.25);
+    color: #ff9494;
+}
+
 .system-status-inner {
     max-width: 1360px;
     width: 100%;
@@ -1138,6 +1175,11 @@ body.light-theme .status-indicator {
     color: #0284c7;
 }
 
+body.hacker-theme .status-indicator {
+    color: #ff3b3b;
+    text-shadow: 0 0 8px rgba(255, 26, 26, 0.6);
+}
+
 .status-pulse-dot {
     width: 6px;
     height: 6px;
@@ -1145,6 +1187,11 @@ body.light-theme .status-indicator {
     background: #38bdf8;
     box-shadow: 0 0 8px #38bdf8;
     animation: pulseGlow 1.8s infinite ease-in-out;
+}
+
+body.hacker-theme .status-pulse-dot {
+    background: #ff1a1a;
+    box-shadow: 0 0 10px #ff1a1a, 0 0 18px rgba(255, 26, 26, 0.6);
 }
 
 .status-divider {
@@ -1450,6 +1497,34 @@ body.light-theme .portrait-quantum-img {
     filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.25)) drop-shadow(0 0 35px rgba(236, 72, 153, 0.15)) drop-shadow(0 12px 28px rgba(15, 23, 42, 0.1));
 }
 
+/* --- HACKER THEME PORTRAIT AURA & KICKERS --- */
+body.hacker-theme .portrait-chromatic-aura {
+    opacity: 0.85;
+    filter: blur(42px);
+    background: radial-gradient(circle at 20% 45%, rgba(255, 26, 26, 0.75) 0%, transparent 60%),
+                radial-gradient(circle at 80% 45%, rgba(168, 85, 247, 0.65) 0%, transparent 60%),
+                radial-gradient(circle at 50% 10%, rgba(244, 63, 94, 0.7) 0%, transparent 55%),
+                radial-gradient(circle at 50% 85%, rgba(255, 170, 0, 0.5) 0%, transparent 60%);
+}
+
+body.hacker-theme .portrait-light-beam {
+    opacity: 0.9;
+    filter: blur(24px);
+    background: linear-gradient(110deg, transparent 15%, rgba(255, 26, 26, 0.35) 38%, rgba(244, 63, 94, 0.3) 50%, rgba(168, 85, 247, 0.25) 62%, transparent 85%);
+}
+
+body.hacker-theme .portrait-quantum-img {
+    filter: drop-shadow(0 0 22px rgba(255, 26, 26, 0.45)) drop-shadow(0 0 45px rgba(244, 63, 94, 0.3)) drop-shadow(0 16px 36px rgba(0, 0, 0, 0.75));
+}
+
+body.hacker-theme .hero-portrait-stage::before {
+    background: radial-gradient(ellipse at center, rgba(255, 26, 26, 0.7) 0%, transparent 70%);
+}
+
+body.hacker-theme .hero-portrait-stage::after {
+    background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.6) 0%, transparent 70%);
+}
+
 /* 3. RIGHT CODE CONSOLE & NEURAL TOPOLOGY */
 .quantum-code-console {
     background: #030712;
@@ -1485,6 +1560,51 @@ body.light-theme .quantum-code-console {
 body.light-theme .quantum-code-console::before {
     background: linear-gradient(135deg, #f43f5e 0%, #8b5cf6 35%, #0ea5e9 70%, #10b981 100%);
     opacity: 0.9;
+}
+
+/* --- HACKER THEME CONSOLE STYLES --- */
+body.hacker-theme .quantum-code-console {
+    background: #090104;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 35px rgba(255, 26, 26, 0.35);
+}
+
+body.hacker-theme .quantum-code-console::before {
+    background: linear-gradient(135deg, rgba(255, 26, 26, 0.85) 0%, rgba(244, 63, 94, 0.75) 40%, rgba(168, 85, 247, 0.7) 75%, rgba(255, 170, 0, 0.8) 100%);
+    opacity: 0.95;
+}
+
+body.hacker-theme .console-top-bar {
+    background: #110207;
+    border-bottom: 1px solid rgba(255, 42, 42, 0.25);
+}
+
+body.hacker-theme .console-split-body {
+    background: #070103;
+}
+
+body.hacker-theme .console-stream-pane {
+    border-right: 1px solid rgba(255, 42, 42, 0.2);
+}
+
+body.hacker-theme .console-topology-pane {
+    background: radial-gradient(circle at center, rgba(255, 26, 26, 0.12) 0%, transparent 70%);
+}
+
+body.hacker-theme .console-footer-pills {
+    background: #0d0206;
+    border-top: 1px solid rgba(255, 42, 42, 0.22);
+}
+
+body.hacker-theme .action-pill {
+    background: rgba(255, 26, 26, 0.12);
+    border-color: rgba(255, 42, 42, 0.35);
+    color: #ffebeb;
+}
+
+body.hacker-theme .action-pill:hover {
+    background: rgba(255, 26, 26, 0.28);
+    border-color: #ff1a1a;
+    box-shadow: 0 0 10px rgba(255, 26, 26, 0.4);
 }
 
 .console-top-bar {

@@ -84,30 +84,40 @@ body.light-theme {
     --scanline-opacity: 0;
 }
 
+body.hacker-theme,
 body.dark-theme {
-    --bg: #060b15;
-    --bg2: #0e1625;
-    --bg3: #162235;
-    --card: #101a2b;
-    --card-border: rgba(148, 163, 184, 0.24);
-    --card-border-prismatic: var(--border-prismatic);
-    --text: #e5edf8;
-    --text-muted: #9db0c7;
-    --text-dim: #6f839c;
-    --header-bg: rgba(15, 23, 42, 0.78);
-    --header-border: rgba(148, 163, 184, 0.2);
-    --terminal-bg: #040812;
-    --terminal-surface: #0a101f;
-    --terminal-text: #f1f5f9;
-    --terminal-border: var(--border-prismatic);
-    --particle-color: rgba(255, 255, 255, 0.15);
-    --overlay-bg: rgba(6, 11, 21, 0.65);
-    --card-shadow-hover: 0 18px 40px rgba(2, 8, 23, 0.65);
-    --surface-elev: rgba(9, 16, 30, 0.84);
-    --surface-strong: rgba(16, 26, 43, 0.9);
-    --particle-tint: 168, 85, 247;
-    --noise-opacity: 0.18;
-    --scanline-opacity: 0;
+    --bg: #060205;
+    --bg2: #0e0307;
+    --bg3: #16060c;
+    --card: #0d0206;
+    --card-border: rgba(255, 42, 42, 0.28);
+    --card-border-prismatic: linear-gradient(135deg, rgba(255, 26, 26, 0.6) 0%, rgba(244, 63, 94, 0.5) 40%, rgba(168, 85, 247, 0.5) 75%, rgba(255, 170, 0, 0.5) 100%);
+    --text: #ffebeb;
+    --text-muted: #ff9494;
+    --text-dim: #c54a4a;
+    --header-bg: rgba(6, 2, 5, 0.88);
+    --header-border: rgba(255, 42, 42, 0.22);
+    --terminal-bg: #090104;
+    --terminal-surface: #120308;
+    --terminal-text: #ffebeb;
+    --terminal-border: linear-gradient(135deg, rgba(255, 26, 26, 0.8) 0%, rgba(244, 63, 94, 0.7) 45%, rgba(168, 85, 247, 0.7) 80%, rgba(255, 170, 0, 0.8) 100%);
+    --particle-color: rgba(255, 26, 26, 0.3);
+    --overlay-bg: rgba(6, 2, 5, 0.75);
+    --card-shadow-hover: 0 20px 50px rgba(255, 26, 26, 0.22);
+    --surface-elev: rgba(16, 4, 9, 0.88);
+    --surface-strong: rgba(24, 6, 14, 0.94);
+    --particle-tint: 255, 36, 36;
+    --accent: #ff1a1a;
+    --accent2: #f43f5e;
+    --glow: rgba(255, 26, 26, 0.52);
+    --grad: linear-gradient(135deg, #ff1a1a 0%, #f43f5e 40%, #a855f7 75%, #ff8800 100%);
+    --noise-opacity: 0.28;
+    --scanline-opacity: 0.25;
+
+    /* Hacker cyber glow extras */
+    --hacker-glow-soft: rgba(255, 26, 26, 0.2);
+    --hacker-glow-mid: rgba(255, 26, 26, 0.45);
+    --hacker-glow-hot: rgba(255, 80, 80, 0.75);
 }
 
 /* Persona state stays declarative in CSS; JS only toggles data-persona */
@@ -120,6 +130,10 @@ body[data-persona="prof"] {
     --accent-border-soft: color-mix(in srgb, var(--prof-accent) 42%, transparent);
     --focus-ring: color-mix(in srgb, var(--prof-accent) 72%, #ffffff);
     --particle-tint: 45, 212, 191;
+}
+
+body.hacker-theme[data-persona="prof"] {
+    --particle-tint: 232, 23, 61;
 }
 
 /* --- SMOOTH DUAL-THEME CROSSFADE TRANSITION --- */
