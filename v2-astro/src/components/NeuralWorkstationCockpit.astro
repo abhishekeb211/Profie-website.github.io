@@ -15,7 +15,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <span class="cockpit-ver">v2.6 // FORENSIC_SIMULATOR</span>
     </div>
     <div class="cockpit-telemetry-cluster">
-      <span class="telemetry-pill">RUNTIME: WebAssembly & SVG</span>
+      <button type="button" class="fast-demo-btn" id="btn-recruiter-demo" title="1-Click Automated Scenario Showcase for Recruiters & Visitors">
+        <span class="demo-bolt" aria-hidden="true">⚡</span> Recruiter / Fast Demo
+      </button>
+      <span class="telemetry-pill">RUNTIME: WebAssembly &amp; SVG</span>
       <span class="telemetry-pill live-pill">STATE: NOMINAL</span>
     </div>
   </div>
@@ -356,6 +359,30 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       };
     });
 
+    // 0. Recruiter / Fast Demo Preset Handler
+    const btnFastDemo = container.querySelector<HTMLButtonElement>('#btn-recruiter-demo');
+    if (btnFastDemo) {
+      btnFastDemo.onclick = () => {
+        const edgeTab = container.querySelector<HTMLButtonElement>('[data-cockpit-tab="edge"]');
+        if (edgeTab) edgeTab.click();
+
+        if (canSlider) {
+          canSlider.value = '1000';
+          canSlider.dispatchEvent(new Event('input'));
+        }
+
+        setTimeout(() => {
+          if (btnAnomaly) btnAnomaly.click();
+        }, 350);
+
+        const originalHtml = btnFastDemo.innerHTML;
+        btnFastDemo.innerHTML = '<span class="demo-bolt" aria-hidden="true">✓</span> Benchmark Verified!';
+        setTimeout(() => {
+          btnFastDemo.innerHTML = originalHtml;
+        }, 2800);
+      };
+    }
+
     // 1. VehicleGPT Simulator
     const canSlider = container.querySelector<HTMLInputElement>('#can-slider');
     const canFreqVal = container.querySelector<HTMLElement>('#can-freq-val');
@@ -559,7 +586,35 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 .cockpit-telemetry-cluster {
   display: flex;
+  align-items: center;
   gap: var(--space-2);
+}
+
+.fast-demo-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.2) 0%, rgba(124, 58, 237, 0.2) 100%);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+  transition: transform var(--duration-fast) var(--ease-out), background-color var(--duration-fast), box-shadow var(--duration-fast);
+}
+
+.fast-demo-btn:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.35) 0%, rgba(124, 58, 237, 0.35) 100%);
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.45);
+}
+
+.fast-demo-btn .demo-bolt {
+  color: #F59E0B;
 }
 
 .telemetry-pill {
@@ -726,6 +781,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   width: 100%;
   accent-color: var(--color-primary);
   cursor: pointer;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(to right, #10B981 0%, #10B981 40%, #F59E0B 75%, #F43F5E 100%);
 }
 
 .sim-select {

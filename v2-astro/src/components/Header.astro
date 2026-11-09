@@ -67,6 +67,7 @@ const navItems = activePersona === 'professor'
           class={`persona-btn ${activePersona === 'architect' ? 'active' : ''}`}
           aria-current={activePersona === 'architect' ? 'page' : undefined}
         >
+          <span class="persona-icon" aria-hidden="true">⚡</span>
           AI Architect
         </a>
         <a 
@@ -74,6 +75,7 @@ const navItems = activePersona === 'professor'
           class={`persona-btn ${activePersona === 'professor' ? 'active' : ''}`}
           aria-current={activePersona === 'professor' ? 'page' : undefined}
         >
+          <span class="persona-icon" aria-hidden="true">🎓</span>
           Professor
         </a>
       </div>
@@ -280,20 +282,36 @@ const navItems = activePersona === 'professor'
 }
 
 .nav-item {
+  position: relative;
   color: var(--color-text-secondary);
   text-decoration: none;
   font-size: var(--text-sm);
   font-weight: 500;
-  transition: color var(--duration-fast) var(--ease-default);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: color var(--duration-fast) var(--ease-default), background-color var(--duration-fast) var(--ease-default);
 }
 
-.nav-item:hover,
+.nav-item:hover {
+  color: var(--color-text);
+  background-color: var(--color-surface-sunken);
+}
+
 .nav-item[aria-current="page"] {
   color: var(--color-primary);
+  font-weight: 700;
+  background-color: var(--color-surface-sunken);
 }
 
-.nav-item[aria-current="page"] {
-  font-weight: 700;
+.nav-item[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 8px;
+  right: 8px;
+  height: 2px;
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
 }
 
 .header-actions {
@@ -312,13 +330,24 @@ const navItems = activePersona === 'professor'
 }
 
 .persona-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   padding: var(--space-1) var(--space-3);
   font-size: var(--text-xs);
   font-weight: 600;
   text-decoration: none;
   color: var(--color-text-secondary);
   border-radius: var(--radius-full);
-  transition: background-color var(--duration-fast), color var(--duration-fast);
+  transition: background-color var(--duration-fast), color var(--duration-fast), box-shadow var(--duration-fast);
+}
+
+.persona-btn:hover {
+  color: var(--color-text);
+}
+
+.persona-icon {
+  font-size: 11px;
 }
 
 .persona-btn.active {

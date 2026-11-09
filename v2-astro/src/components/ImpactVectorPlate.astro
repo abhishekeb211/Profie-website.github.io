@@ -1,0 +1,212 @@
+---
+// src/components/ImpactVectorPlate.astro
+// Dedicated 48px Dual-Tone Vector Micro-Schematics for the 4 Impact Domains
+// 1. Software Security (AST Repair Shield)
+// 2. Digital Health (Clinical Triage Pulse & Privacy Hash)
+// 3. Smart Mobility (Vehicle CAN Bus Stream)
+// 4. Engineering Education (Constellation Knowledge Mesh)
+
+interface Props {
+  variant: 'security' | 'health' | 'mobility' | 'education';
+  class?: string;
+}
+
+const { variant, class: className = '' } = Astro.props;
+---
+
+<div class={`impact-plate-wrap plate-${variant} ${className}`} aria-hidden="true">
+  {variant === 'security' && (
+    <svg viewBox="0 0 48 48" class="impact-plate-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sec-plate-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#F43F5E" stop-opacity="0.18" />
+          <stop offset="100%" stop-color="#BE123C" stop-opacity="0.05" />
+        </linearGradient>
+        <linearGradient id="sec-stroke-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#FDA4AF" />
+          <stop offset="100%" stop-color="#F43F5E" />
+        </linearGradient>
+      </defs>
+      <!-- Base Shield Plate -->
+      <path d="M 24 5 C 34 5 40 9 40 18 C 40 31 29 40 24 43 C 19 40 8 31 8 18 C 8 9 14 5 24 5 Z" 
+            fill="url(#sec-plate-grad)" stroke="url(#sec-stroke-grad)" stroke-width="2" stroke-linejoin="round" />
+      
+      <!-- AST Syntax Tree Lines inside Shield -->
+      <line x1="24" y1="13" x2="24" y2="20" stroke="#FDA4AF" stroke-width="2" stroke-linecap="round" />
+      <line x1="24" y1="20" x2="16" y2="27" stroke="#FDA4AF" stroke-width="1.75" stroke-linecap="round" />
+      <line x1="24" y1="20" x2="32" y2="27" stroke="#FDA4AF" stroke-width="1.75" stroke-linecap="round" />
+      <line x1="16" y1="27" x2="13" y2="34" stroke="#FDA4AF" stroke-width="1.5" stroke-linecap="round" />
+      <line x1="16" y1="27" x2="20" y2="34" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" />
+
+      <!-- AST Nodes: Root, Branches, Vulnerability Patch Node -->
+      <circle cx="24" cy="13" r="3" fill="#F43F5E" stroke="#FFFFFF" stroke-width="1.5" />
+      <circle cx="16" cy="27" r="2.5" fill="#F43F5E" />
+      <circle cx="32" cy="27" r="2.5" fill="#F43F5E" />
+      <circle cx="13" cy="34" r="2" fill="#E11D48" />
+      <!-- Repaired Safe AST Node (Green) -->
+      <circle cx="20" cy="34" r="2.5" fill="#10B981" stroke="#34D399" stroke-width="1" />
+      <!-- Subtle Verification Checkmark Arc -->
+      <path d="M 28 32 L 31 35 L 36 30" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  )}
+
+  {variant === 'health' && (
+    <svg viewBox="0 0 48 48" class="impact-plate-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="health-plate-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#10B981" stop-opacity="0.18" />
+          <stop offset="100%" stop-color="#059669" stop-opacity="0.05" />
+        </linearGradient>
+        <linearGradient id="health-stroke-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#6EE7B7" />
+          <stop offset="100%" stop-color="#10B981" />
+        </linearGradient>
+      </defs>
+      <!-- Base Plate Circle -->
+      <circle cx="24" cy="24" r="19" fill="url(#health-plate-grad)" stroke="url(#health-stroke-grad)" stroke-width="2" />
+      
+      <!-- ECG Cardiac Pulse Rhythm -->
+      <path d="M 9 25 L 17 25 L 20 16 L 23 33 L 26 21 L 28 27 L 31 25 L 39 25" 
+            stroke="#10B981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+      
+      <!-- Safe Triage Telemetry Cross/Lock Indicator -->
+      <circle cx="33" cy="14" r="4.5" fill="#059669" stroke="#A7F3D0" stroke-width="1.5" />
+      <path d="M 33 12 V 16 M 31 14 H 35" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" />
+      
+      <!-- Village Sensor Pulse Ring -->
+      <circle cx="20" cy="16" r="2" fill="#34D399" />
+    </svg>
+  )}
+
+  {variant === 'mobility' && (
+    <svg viewBox="0 0 48 48" class="impact-plate-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="mob-plate-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#F59E0B" stop-opacity="0.18" />
+          <stop offset="100%" stop-color="#D97706" stop-opacity="0.05" />
+        </linearGradient>
+        <linearGradient id="mob-stroke-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#FCD34D" />
+          <stop offset="100%" stop-color="#F59E0B" />
+        </linearGradient>
+      </defs>
+      <!-- Base Plate Squircle -->
+      <rect x="5" y="5" width="38" height="38" rx="10" 
+            fill="url(#mob-plate-grad)" stroke="url(#mob-stroke-grad)" stroke-width="2" />
+      
+      <!-- Connected Vehicle Chassis Top-Down Micro-Wireframe -->
+      <rect x="15" y="12" width="18" height="24" rx="5" stroke="#F59E0B" stroke-width="1.75" />
+      <!-- Wheels / Sensor Pods -->
+      <rect x="12" y="15" width="3" height="6" rx="1" fill="#FCD34D" />
+      <rect x="33" y="15" width="3" height="6" rx="1" fill="#FCD34D" />
+      <rect x="12" y="27" width="3" height="6" rx="1" fill="#FCD34D" />
+      <rect x="33" y="27" width="3" height="6" rx="1" fill="#FCD34D" />
+
+      <!-- High-Frequency CAN Bus Wave Stream -->
+      <path d="M 8 24 L 15 24 M 33 24 L 40 24" stroke="#FCD34D" stroke-width="1.75" stroke-dasharray="2 2" stroke-linecap="round" />
+      <circle cx="24" cy="20" r="2.5" fill="#F59E0B" stroke="#FFFFFF" stroke-width="1" />
+      <!-- Sensor Radar Arc -->
+      <path d="M 20 9 C 22 7 26 7 28 9" stroke="#FCD34D" stroke-width="1.5" stroke-linecap="round" />
+    </svg>
+  )}
+
+  {variant === 'education' && (
+    <svg viewBox="0 0 48 48" class="impact-plate-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="edu-plate-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.18" />
+          <stop offset="100%" stop-color="#6D28D9" stop-opacity="0.05" />
+        </linearGradient>
+        <linearGradient id="edu-stroke-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#C084FC" />
+          <stop offset="100%" stop-color="#8B5CF6" />
+        </linearGradient>
+      </defs>
+      <!-- Base Hexagonal Knowledge Lattice -->
+      <path d="M 24 5 L 39 14 V 32 L 24 41 L 9 32 V 14 Z" 
+            fill="url(#edu-plate-grad)" stroke="url(#edu-stroke-grad)" stroke-width="2" stroke-linejoin="round" />
+      
+      <!-- Central Academic Node & Mentor Constellation -->
+      <circle cx="24" cy="20" r="3.5" fill="#8B5CF6" stroke="#FFFFFF" stroke-width="1.5" />
+      
+      <!-- Radiating Mentorship Links -->
+      <line x1="24" y1="20" x2="17" y2="30" stroke="#C084FC" stroke-width="1.5" />
+      <line x1="24" y1="20" x2="31" y2="30" stroke="#C084FC" stroke-width="1.5" />
+      <line x1="17" y1="30" x2="31" y2="30" stroke="#C084FC" stroke-width="1.25" stroke-dasharray="2 2" />
+
+      <!-- Student Terminals / Competitive Graph Nodes -->
+      <circle cx="17" cy="30" r="2.5" fill="#A855F7" />
+      <circle cx="31" cy="30" r="2.5" fill="#A855F7" />
+      <circle cx="24" cy="34" r="1.5" fill="#D8B4FE" />
+      
+      <!-- Subtle Knowledge Sparkle -->
+      <path d="M 24 10 L 25 12 L 27 13 L 25 14 L 24 16 L 23 14 L 21 13 L 23 12 Z" fill="#D8B4FE" />
+    </svg>
+  )}
+</div>
+
+<style>
+.impact-plate-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.impact-plate-svg {
+  width: 44px;
+  height: 44px;
+  display: block;
+}
+
+.plate-security {
+  background: var(--domain-security-tint);
+  border: 1px solid var(--domain-security-border);
+  box-shadow: 0 4px 12px -2px var(--domain-security-glow);
+}
+.plate-security:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 18px var(--domain-security-glow);
+}
+
+.plate-health {
+  background: var(--domain-health-tint);
+  border: 1px solid var(--domain-health-border);
+  box-shadow: 0 4px 12px -2px var(--domain-health-glow);
+}
+.plate-health:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 18px var(--domain-health-glow);
+}
+
+.plate-mobility {
+  background: var(--domain-mobility-tint);
+  border: 1px solid var(--domain-mobility-border);
+  box-shadow: 0 4px 12px -2px var(--domain-mobility-glow);
+}
+.plate-mobility:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 18px var(--domain-mobility-glow);
+}
+
+.plate-education {
+  background: var(--domain-edu-tint);
+  border: 1px solid var(--domain-edu-border);
+  box-shadow: 0 4px 12px -2px var(--domain-edu-glow);
+}
+.plate-education:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 18px var(--domain-edu-glow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .impact-plate-wrap {
+    transition: none !important;
+  }
+}
+</style>

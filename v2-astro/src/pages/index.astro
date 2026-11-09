@@ -10,6 +10,8 @@ import ScrollArchitectureLine from '../components/ScrollArchitectureLine.astro';
 import ArchitectureExplorerModal from '../components/ArchitectureExplorerModal.astro';
 import CapabilityConstellation from '../components/CapabilityConstellation.astro';
 import NeuralHUDTicker from '../components/NeuralHUDTicker.astro';
+import WorkflowPipeline from '../components/WorkflowPipeline.astro';
+import ImpactVectorPlate from '../components/ImpactVectorPlate.astro';
 import Icon from '../components/Icon.astro';
 import profile from '../data/profile.json';
 import { getCollection } from 'astro:content';
@@ -136,8 +138,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <div class="impact-grid" data-reveal data-reveal-delay="1">
         <!-- Pillar 1: Software Security -->
         <div class="impact-card impact-card-security interactive-card">
-          <div class="impact-icon-badge badge-domain-security">
-            <Icon name="shield" />
+          <div class="impact-plate-container">
+            <ImpactVectorPlate variant="security" />
           </div>
           <span class="impact-domain">Software Security</span>
           <h3 class="impact-card-title">Fixing Vulnerabilities Before Code Ships</h3>
@@ -153,8 +155,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
         <!-- Pillar 2: Healthcare Access -->
         <div class="impact-card impact-card-health interactive-card">
-          <div class="impact-icon-badge badge-domain-health">
-            <Icon name="heart" />
+          <div class="impact-plate-container">
+            <ImpactVectorPlate variant="health" />
           </div>
           <span class="impact-domain">Digital Healthcare</span>
           <h3 class="impact-card-title">Frontline Care for Rural Communities</h3>
@@ -170,8 +172,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
         <!-- Pillar 3: Smart Mobility -->
         <div class="impact-card impact-card-mobility interactive-card">
-          <div class="impact-icon-badge badge-domain-mobility">
-            <Icon name="cpu" />
+          <div class="impact-plate-container">
+            <ImpactVectorPlate variant="mobility" />
           </div>
           <span class="impact-domain">Smart Mobility</span>
           <h3 class="impact-card-title">Intelligence Inside Connected Vehicles</h3>
@@ -187,8 +189,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
         <!-- Pillar 4: Engineering Education -->
         <div class="impact-card impact-card-edu interactive-card">
-          <div class="impact-icon-badge badge-domain-edu">
-            <Icon name="users" />
+          <div class="impact-plate-container">
+            <ImpactVectorPlate variant="education" />
           </div>
           <span class="impact-domain">Engineering Education</span>
           <h3 class="impact-card-title">Inspiring 500+ Engineers to Build</h3>
@@ -243,36 +245,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </p>
       </div>
 
-      <div class="workflow-steps-wrap" data-reveal data-reveal-delay="1">
-        <div class="workflow-step workflow-step-1 interactive-card">
-          <span class="step-num">01</span>
-          <h4 class="step-title">Identify Problem</h4>
-          <p class="step-desc">Focus on real-world friction: cloud leaks, emergency map occlusions, or vehicle packet loss.</p>
-        </div>
-        <div class="workflow-connector" aria-hidden="true">→</div>
-        <div class="workflow-step workflow-step-2 interactive-card">
-          <span class="step-num">02</span>
-          <h4 class="step-title">Research &amp; Math</h4>
-          <p class="step-desc">Formulate algorithmic novelties: decoupled quad-branch attention or Lipschitz bounds.</p>
-        </div>
-        <div class="workflow-connector" aria-hidden="true">→</div>
-        <div class="workflow-step workflow-step-3 interactive-card">
-          <span class="step-num">03</span>
-          <h4 class="step-title">Build &amp; Prototype</h4>
-          <p class="step-desc">Implement in C++20, Python, and local AI engines with strict memory and power ceilings.</p>
-        </div>
-        <div class="workflow-connector" aria-hidden="true">→</div>
-        <div class="workflow-step workflow-step-4 interactive-card">
-          <span class="step-num">04</span>
-          <h4 class="step-title">Verify &amp; Audit</h4>
-          <p class="step-desc">Run rigorous automated regression suites (708 passing checks, hardware test benches).</p>
-        </div>
-        <div class="workflow-connector" aria-hidden="true">→</div>
-        <div class="workflow-step workflow-step-5 interactive-card">
-          <span class="step-num">05</span>
-          <h4 class="step-title">Deploy &amp; Mentor</h4>
-          <p class="step-desc">Ship field pilots, open-source repositories, and mentor student engineers on the codebase.</p>
-        </div>
+      <div data-reveal data-reveal-delay="1">
+        <WorkflowPipeline />
       </div>
     </div>
   </section>
@@ -868,19 +842,20 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 }
 
 .impact-card {
-  background: var(--color-surface-raised);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   padding: var(--space-6);
   display: flex;
   flex-direction: column;
+  box-shadow: var(--shadow-sm);
   transition: transform var(--duration-fast) var(--ease-default), border-color var(--duration-fast) var(--ease-default), box-shadow var(--duration-fast) var(--ease-default);
 }
 
 .impact-card:hover {
   transform: translateY(-4px);
   border-color: var(--color-border-hover);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-card-elevated);
 }
 
 .impact-card-security {
@@ -888,7 +863,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 }
 .impact-card-security:hover {
   border-color: var(--domain-security);
-  box-shadow: 0 14px 30px -4px var(--domain-security-glow), 0 0 20px var(--domain-security-glow);
+  box-shadow: var(--shadow-card-elevated), 0 0 20px var(--domain-security-glow);
 }
 .impact-card-security .impact-domain,
 .impact-card-security .impact-link,
@@ -901,7 +876,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 }
 .impact-card-health:hover {
   border-color: var(--domain-health);
-  box-shadow: 0 14px 30px -4px var(--domain-health-glow), 0 0 20px var(--domain-health-glow);
+  box-shadow: var(--shadow-card-elevated), 0 0 20px var(--domain-health-glow);
 }
 .impact-card-health .impact-domain,
 .impact-card-health .impact-link,
@@ -914,7 +889,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 }
 .impact-card-mobility:hover {
   border-color: var(--domain-mobility);
-  box-shadow: 0 14px 30px -4px var(--domain-mobility-glow), 0 0 20px var(--domain-mobility-glow);
+  box-shadow: var(--shadow-card-elevated), 0 0 20px var(--domain-mobility-glow);
 }
 .impact-card-mobility .impact-domain,
 .impact-card-mobility .impact-link,
@@ -927,7 +902,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 }
 .impact-card-edu:hover {
   border-color: var(--domain-edu);
-  box-shadow: 0 14px 30px -4px var(--domain-edu-glow), 0 0 20px var(--domain-edu-glow);
+  box-shadow: var(--shadow-card-elevated), 0 0 20px var(--domain-edu-glow);
 }
 .impact-card-edu .impact-domain,
 .impact-card-edu .impact-link,
@@ -935,15 +910,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   color: var(--domain-edu);
 }
 
-.impact-icon-badge {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-md);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: var(--space-3);
-  font-size: 18px;
+.impact-plate-container {
+  margin-bottom: var(--space-4);
 }
 
 .impact-domain {
@@ -1020,91 +988,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   background: var(--color-surface-sunken);
   border-top: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
-}
-
-.workflow-steps-wrap {
-  display: flex;
-  align-items: stretch;
-  gap: var(--space-3);
-  overflow-x: auto;
-  padding-bottom: var(--space-2);
-}
-
-.workflow-step {
-  flex: 1;
-  min-width: 180px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-5);
-  display: flex;
-  flex-direction: column;
-  transition: transform var(--duration-fast) var(--ease-default), border-color var(--duration-fast);
-}
-
-.workflow-step:hover {
-  transform: translateY(-2px);
-  border-color: var(--color-primary);
-}
-
-.workflow-step-1 { border-top: 3px solid var(--domain-mobility); }
-.workflow-step-1 .step-num { color: var(--domain-mobility); }
-.workflow-step-1:hover { border-color: var(--domain-mobility); box-shadow: 0 8px 20px -4px var(--domain-mobility-glow); }
-
-.workflow-step-2 { border-top: 3px solid var(--domain-edu); }
-.workflow-step-2 .step-num { color: var(--domain-edu); }
-.workflow-step-2:hover { border-color: var(--domain-edu); box-shadow: 0 8px 20px -4px var(--domain-edu-glow); }
-
-.workflow-step-3 { border-top: 3px solid var(--domain-agentic); }
-.workflow-step-3 .step-num { color: var(--domain-agentic); }
-.workflow-step-3:hover { border-color: var(--domain-agentic); box-shadow: 0 8px 20px -4px var(--domain-agentic-glow); }
-
-.workflow-step-4 { border-top: 3px solid var(--domain-security); }
-.workflow-step-4 .step-num { color: var(--domain-security); }
-.workflow-step-4:hover { border-color: var(--domain-security); box-shadow: 0 8px 20px -4px var(--domain-security-glow); }
-
-.workflow-step-5 { border-top: 3px solid var(--domain-health); }
-.workflow-step-5 .step-num { color: var(--domain-health); }
-.workflow-step-5:hover { border-color: var(--domain-health); box-shadow: 0 8px 20px -4px var(--domain-health-glow); }
-
-.step-num {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  font-weight: 800;
-  color: var(--color-primary);
-  margin-bottom: var(--space-1);
-}
-
-.step-title {
-  font-size: var(--text-sm);
-  font-weight: 700;
-  color: var(--color-text);
-  margin: 0 0 var(--space-2) 0;
-}
-
-.step-desc {
-  font-size: 11px;
-  color: var(--color-text-secondary);
-  line-height: 1.5;
-  margin: 0;
-}
-
-.workflow-connector {
-  display: flex;
-  align-items: center;
-  color: var(--color-border-hover);
-  font-size: var(--text-lg);
-  font-weight: 700;
-}
-
-@media (max-width: 768px) {
-  .workflow-steps-wrap {
-    flex-direction: column;
-  }
-  .workflow-connector {
-    justify-content: center;
-    transform: rotate(90deg);
-  }
 }
 
 /* Teaser Section */

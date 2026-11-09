@@ -95,10 +95,11 @@
   --focus-ring:           #2563EB;
   --focus-ring-offset:    2px;
 
-  /* Soft Ambient Shadows */
-  --shadow-sm:   0 1px 3px 0 rgb(15 23 42 / 0.06);
-  --shadow-md:   0 4px 6px -1px rgb(15 23 42 / 0.08), 0 2px 4px -2px rgb(15 23 42 / 0.04);
-  --shadow-lg:   0 12px 20px -3px rgb(15 23 42 / 0.08), 0 4px 6px -4px rgb(15 23 42 / 0.04);
+  /* Layered Architectural Shadows */
+  --shadow-sm:   0 1px 3px 0 rgba(15, 23, 42, 0.05);
+  --shadow-md:   0 4px 8px -2px rgba(15, 23, 42, 0.06), 0 2px 4px -2px rgba(15, 23, 42, 0.03);
+  --shadow-lg:   0 12px 24px -4px rgba(15, 23, 42, 0.08), 0 4px 8px -4px rgba(15, 23, 42, 0.03);
+  --shadow-card-elevated: 0 16px 32px -8px rgba(15, 23, 42, 0.08), 0 0 1px rgba(15, 23, 42, 0.12);
   --shadow-prismatic: 0 16px 32px -4px rgba(37, 99, 235, 0.12), 0 4px 12px -2px rgba(124, 58, 237, 0.08);
 
   /* Radii */
@@ -238,6 +239,7 @@
     --shadow-sm:   0 1px 3px 0 rgb(0 0 0 / 0.5);
     --shadow-md:   0 4px 10px -2px rgb(0 0 0 / 0.6), 0 0 16px rgba(56, 189, 248, 0.08);
     --shadow-lg:   0 14px 28px -4px rgb(0 0 0 / 0.7), 0 0 24px rgba(168, 85, 247, 0.12);
+    --shadow-card-elevated: 0 16px 32px -8px rgba(0, 0, 0, 0.8), 0 0 1px rgba(255, 255, 255, 0.12), 0 0 24px rgba(56, 189, 248, 0.12);
     --shadow-prismatic: 0 16px 36px -4px rgba(56, 189, 248, 0.20), 0 0 28px rgba(168, 85, 247, 0.16);
 
     --hero-bg-gradient: radial-gradient(circle at 80% 20%, rgba(56, 189, 248, 0.14) 0%, rgba(168, 85, 247, 0.12) 35%, rgba(244, 63, 94, 0.08) 65%, transparent 80%);
@@ -338,6 +340,7 @@
   --shadow-sm:   0 1px 3px 0 rgb(0 0 0 / 0.5);
   --shadow-md:   0 4px 10px -2px rgb(0 0 0 / 0.6), 0 0 16px rgba(56, 189, 248, 0.08);
   --shadow-lg:   0 14px 28px -4px rgb(0 0 0 / 0.7), 0 0 24px rgba(168, 85, 247, 0.12);
+  --shadow-card-elevated: 0 16px 32px -8px rgba(0, 0, 0, 0.8), 0 0 1px rgba(255, 255, 255, 0.12), 0 0 24px rgba(56, 189, 248, 0.12);
   --shadow-prismatic: 0 16px 36px -4px rgba(56, 189, 248, 0.20), 0 0 28px rgba(168, 85, 247, 0.16);
 
   /* Hero Canvas FX: Cyber Aurora Subtle Glow */
@@ -616,4 +619,34 @@ article[id] {
   color: var(--domain-systems-text);
   background: var(--domain-systems-tint);
   border: 1px solid var(--domain-systems-border);
+}
+
+/* ─── SURFACE STRATIFICATION UTILITIES (APPLE / STRIPE / LINEAR STANDARD) ─── */
+.surface-elevated {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card-elevated);
+  border-radius: var(--radius-lg);
+}
+
+.surface-sunken,
+.chip-well {
+  background-color: var(--color-surface-sunken);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.surface-plate {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border);
+}
+
+:root[data-theme="dark"] .surface-plate,
+:root[data-theme="hacker"] .surface-plate {
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border);
 }
