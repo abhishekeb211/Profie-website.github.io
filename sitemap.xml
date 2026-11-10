@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://abhishekeb211.github.io/Profie-website.github.io/</loc>
-    <lastmod>2025-07-10</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://abhishekeb211.github.io/Profie-website.github.io/images/hero-abhishek-prismatic.webp</image:loc>
+      <image:title>Abhishek S. Raut - AI Systems Architect &amp; PCCOE Lead</image:title>
+      <image:caption>Official studio portrait of Abhishek S. Raut submerged in quantum prismatic spectrum stage</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://abhishekeb211.github.io/Profie-website.github.io/images/frontend-showcase-dashboard.webp</image:loc>
+      <image:title>Swasthya AI Healthcare Decentralized Network</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://abhishekeb211.github.io/Profie-website.github.io/images/frontend-showcase-code-ui.webp</image:loc>
+      <image:title>Coding Agent CLI - Autonomous Code Generation</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://abhishekeb211.github.io/Profie-website.github.io/images/ANHACK.webp</image:loc>
+      <image:title>SAMANVAY-7 Mental Health AI Companion Interface</image:title>
+    </image:image>
   </url>
 </urlset>
