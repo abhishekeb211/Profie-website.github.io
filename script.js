@@ -433,6 +433,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             togglePill.setAttribute('data-active', targetTheme);
             localStorage.setItem('portfolio-theme', targetTheme);
+
+            // Swap portrait asset for pure theme immersion
+            const heroImg = document.getElementById('hero-portrait-img') || document.querySelector('.portrait-quantum-img');
+            const heroSource = document.getElementById('hero-portrait-source') || document.querySelector('#hero-portrait-picture source');
+            if (heroImg) {
+                const newSrc = targetTheme === 'light' ? 'images/hero-abhishek-light.webp' : 'images/hero-abhishek-hacker.webp';
+                heroImg.src = newSrc;
+                if (heroSource) heroSource.srcset = newSrc;
+            }
         }
 
         // Initialize from localStorage (defaulting to 'hacker')

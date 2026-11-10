@@ -60,27 +60,27 @@
 /* --- THEME DEFINITIONS --- */
 body.light-theme {
     --bg: #FFFFFF;
-    --bg2: #F8FAFC;
-    --bg3: #F1F5F9;
+    --bg2: #FFFFFF;
+    --bg3: #FFFFFF;
     --card: #FFFFFF;
     --card-border: rgba(15, 23, 42, 0.08);
-    --card-border-prismatic: var(--border-prismatic-soft);
+    --card-border-prismatic: transparent;
     --text: #0F172A;
     --text-muted: #334155;
     --text-dim: #64748B;
-    --header-bg: rgba(255, 255, 255, 0.85);
+    --header-bg: rgba(255, 255, 255, 0.96);
     --header-border: rgba(15, 23, 42, 0.08);
     --terminal-bg: #090d16;
     --terminal-surface: #0f172a;
     --terminal-text: #f8fafc;
-    --terminal-border: var(--border-prismatic);
-    --particle-color: rgba(15, 23, 42, 0.08);
+    --terminal-border: rgba(15, 23, 42, 0.12);
+    --particle-color: transparent;
     --overlay-bg: rgba(0, 0, 0, 0.4);
-    --card-shadow-hover: 0 20px 50px rgba(15, 23, 42, 0.12);
-    --surface-elev: rgba(255, 255, 255, 0.92);
-    --surface-strong: rgba(248, 250, 252, 0.95);
-    --particle-tint: 56, 189, 248;
-    --noise-opacity: 0.06;
+    --card-shadow-hover: 0 16px 40px rgba(15, 23, 42, 0.08);
+    --surface-elev: #FFFFFF;
+    --surface-strong: #FFFFFF;
+    --particle-tint: 255, 255, 255;
+    --noise-opacity: 0;
     --scanline-opacity: 0;
 }
 

@@ -138,6 +138,26 @@ body::after {
     opacity: 0.55;
 }
 
+/* --- PURE TITANIUM WHITE MODE (ZERO NOISE, ZERO SHADOW, ZERO MURK) --- */
+body.light-theme {
+    background-color: #FFFFFF !important;
+}
+
+body.light-theme::before,
+body.light-theme::after {
+    display: none !important;
+    opacity: 0 !important;
+}
+
+body.light-theme .bg-canvas {
+    display: none !important;
+    opacity: 0 !important;
+}
+
+body.light-theme .hacker-scanline {
+    display: none !important;
+}
+
 @keyframes fadeIn {
     to {
         opacity: 1;

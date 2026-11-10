@@ -1443,20 +1443,6 @@ body.light-theme .btn-quantum-pill {
     pointer-events: none;
 }
 
-body.light-theme .hero-portrait-stage::before,
-body.light-theme .hero-portrait-stage::after {
-    opacity: 0.35;
-}
-
-body.light-theme .portrait-chromatic-aura {
-    opacity: 0.65;
-    filter: blur(48px);
-    background: radial-gradient(circle at 25% 40%, rgba(244, 114, 182, 0.4) 0%, transparent 60%),
-                radial-gradient(circle at 75% 45%, rgba(56, 189, 248, 0.45) 0%, transparent 60%),
-                radial-gradient(circle at 50% 15%, rgba(192, 132, 252, 0.35) 0%, transparent 55%),
-                radial-gradient(circle at 50% 80%, rgba(251, 146, 60, 0.3) 0%, transparent 60%);
-}
-
 /* Atmospheric Anamorphic Light Beam behind the Portrait */
 .portrait-light-beam {
     position: absolute;
@@ -1470,12 +1456,6 @@ body.light-theme .portrait-chromatic-aura {
     z-index: 1;
     pointer-events: none;
     opacity: 0.85;
-}
-
-body.light-theme .portrait-light-beam {
-    opacity: 0.55;
-    filter: blur(28px);
-    background: linear-gradient(110deg, transparent 15%, rgba(56, 189, 248, 0.28) 40%, rgba(244, 114, 182, 0.32) 50%, rgba(251, 146, 60, 0.22) 60%, transparent 85%);
 }
 
 .portrait-quantum-img {
@@ -1493,8 +1473,25 @@ body.light-theme .portrait-light-beam {
     transform: scale(1.02);
 }
 
+/* Light Theme: 100% Pure White - Zero Gradients, Zero Shadows, Zero Smudges */
+body.light-theme .hero-portrait-stage::before,
+body.light-theme .hero-portrait-stage::after {
+    display: none !important;
+    opacity: 0 !important;
+}
+
+body.light-theme .portrait-chromatic-aura {
+    display: none !important;
+    opacity: 0 !important;
+}
+
+body.light-theme .portrait-light-beam {
+    display: none !important;
+    opacity: 0 !important;
+}
+
 body.light-theme .portrait-quantum-img {
-    filter: drop-shadow(0 0 22px rgba(56, 189, 248, 0.22)) drop-shadow(0 0 38px rgba(236, 72, 153, 0.15));
+    filter: none !important;
 }
 
 /* --- HACKER THEME PORTRAIT AURA & KICKERS --- */

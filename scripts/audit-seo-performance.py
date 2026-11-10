@@ -168,9 +168,9 @@ def run_forensic_audit():
     sw_valid = False
     with open(sw_path, "r", encoding="utf-8") as f:
         sw_text = f.read()
-        sw_valid = "bundle.min.css" in sw_text and "hero-abhishek-prismatic.webp" in sw_text and "abhishek-raut-v26" in sw_text
-    check("Service Worker v26 Precaching", "PWA", sw_valid,
-          "Cache v26 precaches WebP media, bundle.min.css, and icons")
+        sw_valid = "bundle.min.css" in sw_text and "hero-abhishek-hacker.webp" in sw_text and "hero-abhishek-light.webp" in sw_text and "abhishek-raut-v" in sw_text
+    check("Service Worker Modern Precaching", "PWA", sw_valid,
+          "Service Worker cache precaches dual WebP media, bundle.min.css, and icons")
 
     # 19. Mobile Viewport & Theme Color
     viewport = soup.find("meta", attrs={"name": "viewport"})

@@ -396,6 +396,11 @@
     animation: mesh-float 20s infinite alternate ease-in-out;
 }
 
+body.light-theme .hero::after,
+body.light-theme .hero-orb {
+    display: none !important;
+}
+
 @keyframes mesh-float {
     0% {
         transform: rotate(0deg) scale(1);
