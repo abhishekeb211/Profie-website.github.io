@@ -1398,7 +1398,7 @@ body.light-theme .btn-quantum-pill {
     align-items: center;
     justify-content: center;
     height: 100%;
-    min-height: 480px;
+    min-height: 520px;
 }
 
 .portrait-chromatic-aura {
@@ -1482,7 +1482,7 @@ body.light-theme .portrait-light-beam {
     position: relative;
     z-index: 2;
     width: auto;
-    height: 480px;
+    height: 520px;
     max-width: 100%;
     object-fit: contain;
     filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.2)) drop-shadow(0 0 40px rgba(236, 72, 153, 0.18)) drop-shadow(0 16px 32px rgba(0, 0, 0, 0.45));
@@ -1494,7 +1494,7 @@ body.light-theme .portrait-light-beam {
 }
 
 body.light-theme .portrait-quantum-img {
-    filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.25)) drop-shadow(0 0 35px rgba(236, 72, 153, 0.15)) drop-shadow(0 12px 28px rgba(15, 23, 42, 0.1));
+    filter: drop-shadow(0 0 22px rgba(56, 189, 248, 0.22)) drop-shadow(0 0 38px rgba(236, 72, 153, 0.15));
 }
 
 /* --- HACKER THEME PORTRAIT AURA & KICKERS --- */
